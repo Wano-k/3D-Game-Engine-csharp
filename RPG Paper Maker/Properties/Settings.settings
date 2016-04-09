@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RPG_Paper_Maker.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ToolBarColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">225, 225, 245</Value>
+    </Setting>
+    <Setting Name="test" Type="System.Windows.Forms.ImageLayout" Scope="User">
+      <Value Profile="(Default)">Tile</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
