@@ -12,10 +12,13 @@ namespace RPG_Paper_Maker
 {
     public partial class Form1 : Form
     {
+        public string version = "1.0.0";
+
         public Form1()
         {
             InitializeComponent();
 
+            Text = "RPG Paper Maker " + version;
             ShowProjectContain(false);
         }
 
@@ -38,6 +41,7 @@ namespace RPG_Paper_Maker
             this.SplitContainerMain.Visible = b;
             this.SplitContainerTree.Visible = b;
             this.TreeMap.Visible = b;
+            this.mapEditor1.Visible = b;
         }
     }
 }
