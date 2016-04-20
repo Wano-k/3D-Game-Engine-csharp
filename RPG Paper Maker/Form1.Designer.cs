@@ -41,9 +41,13 @@
             this.ItemNewProject = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemOpenProject = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemOpenBrowse = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemTutorials = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolBar1 = new System.Windows.Forms.ToolBar();
             this.toolBarButtonNew = new System.Windows.Forms.ToolBarButton();
             this.toolBarButtonOpen = new System.Windows.Forms.ToolBarButton();
+            this.ItemDemo = new System.Windows.Forms.ToolStripMenuItem();
             this.mapEditor1 = new RPG_Paper_Maker.MapEditor();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerMain)).BeginInit();
@@ -122,7 +126,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(890, 24);
@@ -164,6 +169,30 @@
             this.ItemOpenBrowse.Text = "Browse...";
             this.ItemOpenBrowse.Click += new System.EventHandler(this.ItemOpenBrowse_Click);
             // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ItemTutorials,
+            this.ItemDemo,
+            this.ItemAbout});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // ItemTutorials
+            // 
+            this.ItemTutorials.Name = "ItemTutorials";
+            this.ItemTutorials.Size = new System.Drawing.Size(152, 22);
+            this.ItemTutorials.Text = "Tutorials";
+            this.ItemTutorials.Click += new System.EventHandler(this.ItemTutorials_Click);
+            // 
+            // ItemAbout
+            // 
+            this.ItemAbout.Name = "ItemAbout";
+            this.ItemAbout.Size = new System.Drawing.Size(152, 22);
+            this.ItemAbout.Text = "About...";
+            this.ItemAbout.Click += new System.EventHandler(this.ItemAbout_Click);
+            // 
             // toolBar1
             // 
             this.toolBar1.Appearance = System.Windows.Forms.ToolBarAppearance.Flat;
@@ -193,6 +222,13 @@
             this.toolBarButtonOpen.Text = "Open";
             this.toolBarButtonOpen.ToolTipText = "Open a project";
             // 
+            // ItemDemo
+            // 
+            this.ItemDemo.Name = "ItemDemo";
+            this.ItemDemo.Size = new System.Drawing.Size(152, 22);
+            this.ItemDemo.Text = "Demo!";
+            this.ItemDemo.Click += new System.EventHandler(this.ItemDemo_Click);
+            // 
             // mapEditor1
             // 
             this.mapEditor1.BackColor = System.Drawing.Color.Black;
@@ -215,6 +251,7 @@
             this.Controls.Add(this.menuStrip1);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "RPG Paper Maker 0.0.0";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -250,6 +287,10 @@
         private System.Windows.Forms.ToolStripMenuItem ItemOpenBrowse;
         private System.Windows.Forms.ToolBarButton toolBarButtonOpen;
         private System.Windows.Forms.ToolBarButton toolBarButtonNew;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ItemTutorials;
+        private System.Windows.Forms.ToolStripMenuItem ItemAbout;
+        private System.Windows.Forms.ToolStripMenuItem ItemDemo;
     }
 }
 

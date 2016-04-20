@@ -48,7 +48,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject />
+    <StartupObject>RPG_Paper_Maker.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -80,12 +83,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DialogDemoTip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\DialogDemoTip.Designer.cs">
+      <DependentUpon>DialogDemoTip.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\DialogNewProject.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogs\DialogNewProject.designer.cs">
       <DependentUpon>DialogNewProject.cs</DependentUpon>
     </Compile>
+    <Compile Include="EngineSettings.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +126,12 @@
     <Compile Include="MapEditor\Wanok.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\DialogDemoTip.resx">
+      <DependentUpon>DialogDemoTip.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\DialogNewProject.resx">
       <DependentUpon>DialogNewProject.cs</DependentUpon>
     </EmbeddedResource>
@@ -127,6 +149,9 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Basic\Game.rpm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\EngineSettings.JSON">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
@@ -165,6 +190,10 @@
     <Content Include="DLLs\MonoGame.Framework.dll" />
     <Content Include="DLLs\OpenTK.dll" />
     <Content Include="DLLs\OpenTK.GLControl.dll" />
+    <None Include="Resources\small_kate.png" />
+    <None Include="Resources\tuto1.png" />
+    <None Include="Resources\kate.png" />
+    <None Include="Resources\about.png" />
     <None Include="Resources\open_file.png" />
   </ItemGroup>
   <ItemGroup>

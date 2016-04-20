@@ -32,8 +32,8 @@ namespace RPG_Paper_Maker
         public static float SQUARESIZE = 16.0f;
         public static int PORTIONSIZE = 16;
         public static int PORTION_RADIUS = 10;
-        public static string CURDIR = ".";
-        public static string PROJECTNAME = null;
+        public static string CurrentDir = ".";
+        public static string ProjectName = null;
 
         // -------------------------------------------------------------------
         // CopyAll

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -15,7 +17,7 @@ namespace RPG_Paper_Maker
     public partial class Form1 : Form
     {
         public string TitleName = "RPG Paper Maker";
-        public string version = "1.0.4";
+        public string version = "1.0.5";
 
         // -------------------------------------------------------------------
         // Constructor
@@ -87,6 +89,40 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // ItemTutorials_Click
+        // -------------------------------------------------------------------
+
+        private void ItemTutorials_Click(object sender, EventArgs e)
+        {
+            ProcessStartInfo sInfo = new ProcessStartInfo("http://rpgpapermaker.com/index.php/tutorials");
+            Process.Start(sInfo);
+        }
+
+        // -------------------------------------------------------------------
+        // ItemDemo_Click
+        // -------------------------------------------------------------------
+
+        private void ItemDemo_Click(object sender, EventArgs e)
+        {
+            DialogDemoTip dialog = new DialogDemoTip();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // ItemAbout_Click
+        // -------------------------------------------------------------------
+
+        private void ItemAbout_Click(object sender, EventArgs e)
+        {
+            AboutBox box = new AboutBox();
+            box.Text = "About RPG Paper Maker";
+            box.ShowDialog();
+        }
+
+        // -------------------------------------------------------------------
         // ShowProjectContain
         // -------------------------------------------------------------------
 
@@ -104,8 +140,8 @@ namespace RPG_Paper_Maker
 
         public void SetTitle(string name, string dir)
         {
-            WANOK.PROJECTNAME = name;
-            WANOK.CURDIR = dir;
+            WANOK.ProjectName = name;
+            WANOK.CurrentDir = dir;
             this.Text = this.TitleName + " - " + name;
         }
     }
