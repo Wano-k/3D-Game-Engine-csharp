@@ -78,9 +78,11 @@
             // 
             // toolBar1
             // 
+            this.toolBar1.Appearance = System.Windows.Forms.ToolBarAppearance.Flat;
             this.toolBar1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(245)))));
             this.toolBar1.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.ToolButtonNew});
+            this.toolBar1.Cursor = System.Windows.Forms.Cursors.Default;
             this.toolBar1.Divider = false;
             this.toolBar1.DropDownArrows = true;
             this.toolBar1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(245)))));
@@ -88,7 +90,7 @@
             this.toolBar1.Location = new System.Drawing.Point(0, 0);
             this.toolBar1.Name = "toolBar1";
             this.toolBar1.ShowToolTips = true;
-            this.toolBar1.Size = new System.Drawing.Size(827, 40);
+            this.toolBar1.Size = new System.Drawing.Size(890, 40);
             this.toolBar1.TabIndex = 0;
             this.toolBar1.Wrappable = false;
             this.toolBar1.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar1_ButtonClick);
@@ -104,9 +106,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 310);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 54);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(827, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(890, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -129,8 +131,8 @@
             // SplitContainerMain.Panel2
             // 
             this.SplitContainerMain.Panel2.Controls.Add(this.mapEditor1);
-            this.SplitContainerMain.Size = new System.Drawing.Size(827, 270);
-            this.SplitContainerMain.SplitterDistance = 140;
+            this.SplitContainerMain.Size = new System.Drawing.Size(890, 14);
+            this.SplitContainerMain.SplitterDistance = 150;
             this.SplitContainerMain.TabIndex = 2;
             // 
             // SplitContainerTree
@@ -144,8 +146,8 @@
             // SplitContainerTree.Panel2
             // 
             this.SplitContainerTree.Panel2.Controls.Add(this.TreeMap);
-            this.SplitContainerTree.Size = new System.Drawing.Size(140, 270);
-            this.SplitContainerTree.SplitterDistance = 241;
+            this.SplitContainerTree.Size = new System.Drawing.Size(150, 14);
+            this.SplitContainerTree.SplitterDistance = 6;
             this.SplitContainerTree.TabIndex = 0;
             // 
             // TreeMap
@@ -153,7 +155,7 @@
             this.TreeMap.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TreeMap.Location = new System.Drawing.Point(0, 0);
             this.TreeMap.Name = "TreeMap";
-            this.TreeMap.Size = new System.Drawing.Size(136, 21);
+            this.TreeMap.Size = new System.Drawing.Size(146, 21);
             this.TreeMap.TabIndex = 0;
             // 
             // mapEditor1
@@ -162,7 +164,7 @@
             this.mapEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapEditor1.Location = new System.Drawing.Point(0, 0);
             this.mapEditor1.Name = "mapEditor1";
-            this.mapEditor1.Size = new System.Drawing.Size(679, 266);
+            this.mapEditor1.Size = new System.Drawing.Size(732, 10);
             this.mapEditor1.TabIndex = 0;
             this.mapEditor1.VSync = false;
             // 
@@ -170,8 +172,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(225)))));
-            this.ClientSize = new System.Drawing.Size(827, 332);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(245)))));
+            this.ClientSize = new System.Drawing.Size(890, 76);
             this.Controls.Add(this.SplitContainerMain);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolBar1);

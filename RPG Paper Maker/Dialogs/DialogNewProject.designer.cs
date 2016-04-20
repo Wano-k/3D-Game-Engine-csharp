@@ -87,17 +87,18 @@
             // 
             this.TextCtrlLocation.Location = new System.Drawing.Point(87, 38);
             this.TextCtrlLocation.Name = "TextCtrlLocation";
-            this.TextCtrlLocation.Size = new System.Drawing.Size(157, 20);
+            this.TextCtrlLocation.Size = new System.Drawing.Size(186, 20);
             this.TextCtrlLocation.TabIndex = 5;
             // 
             // ButtonSearch
             // 
-            this.ButtonSearch.Location = new System.Drawing.Point(250, 38);
+            this.ButtonSearch.Location = new System.Drawing.Point(279, 38);
             this.ButtonSearch.Name = "ButtonSearch";
-            this.ButtonSearch.Size = new System.Drawing.Size(75, 23);
+            this.ButtonSearch.Size = new System.Drawing.Size(46, 23);
             this.ButtonSearch.TabIndex = 6;
             this.ButtonSearch.Text = "...";
             this.ButtonSearch.UseVisualStyleBackColor = true;
+            this.ButtonSearch.Click += new System.EventHandler(this.ButtonSearch_Click);
             // 
             // DialogNewProject
             // 

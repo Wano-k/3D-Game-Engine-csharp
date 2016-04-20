@@ -37,7 +37,7 @@ namespace RPG_Paper_Maker
         private void CreateCamera()
         {
             View = Matrix.CreateLookAt(CameraPosition, CameraTarget, CameraUp);
-            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, this.GraphicsDevice.Viewport.Width / this.GraphicsDevice.Viewport.Height, 0.01f, 1000.0f);
+            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, this.GraphicsDevice.Viewport.AspectRatio, 0.01f, 1000.0f);
             World = Matrix.Identity;
         }
 
@@ -53,7 +53,8 @@ namespace RPG_Paper_Maker
         {
             base.Draw();
 
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.WhiteSmoke);
+            this.CreateCamera();
 
             effect.View = View;
             effect.Projection = Projection;

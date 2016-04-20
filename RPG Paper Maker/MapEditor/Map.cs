@@ -50,11 +50,13 @@ namespace RPG_Paper_Maker
                     sw.Close();
                     fs.Close();
                     */
+                    
                     FileStream fs = new FileStream("Content/Datas/Maps/MAP0001/" + i + "-" + j + ".JSON", FileMode.Open);
                     StreamReader sr = new StreamReader(fs);
                     string json = sr.ReadToEnd();
                     portions[k] = JsonConvert.DeserializeObject<Game_map_portion>(json);
                     k++;
+                    
                 }
             }
 
