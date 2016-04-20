@@ -13,7 +13,7 @@ namespace RPG_Paper_Maker
 {
     public partial class Form1 : Form
     {
-        public string version = "1.0.3";
+        public string version = "1.0.4";
 
         // -------------------------------------------------------------------
         // Constructor
@@ -46,7 +46,7 @@ namespace RPG_Paper_Maker
             {
                 ShowProjectContain(true);
             }
-            
+
         }
 
         // -------------------------------------------------------------------
@@ -55,7 +55,10 @@ namespace RPG_Paper_Maker
 
         private void toolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
-            ItemNewProject_Click(sender, e);
+            if (e.Button.Name.Equals("toolBarButtonNew"))
+            {
+                ItemNewProject_Click(sender, e);
+            }
         }
 
         // -------------------------------------------------------------------

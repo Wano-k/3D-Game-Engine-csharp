@@ -162,6 +162,7 @@
     <Content Include="DLLs\MonoGame.Framework.dll" />
     <Content Include="DLLs\OpenTK.dll" />
     <Content Include="DLLs\OpenTK.GLControl.dll" />
+    <None Include="Resources\open_file.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="RTP\" />
