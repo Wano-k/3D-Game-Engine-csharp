@@ -39,8 +39,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemNewProject = new System.Windows.Forms.ToolStripMenuItem();
-            this.openAProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.browseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemOpenProject = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemOpenBrowse = new System.Windows.Forms.ToolStripMenuItem();
             this.toolBar1 = new System.Windows.Forms.ToolBar();
             this.toolBarButtonNew = new System.Windows.Forms.ToolBarButton();
             this.toolBarButtonOpen = new System.Windows.Forms.ToolBarButton();
@@ -67,7 +67,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 240);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 508);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(890, 22);
             this.statusStrip1.TabIndex = 1;
@@ -92,7 +92,7 @@
             // SplitContainerMain.Panel2
             // 
             this.SplitContainerMain.Panel2.Controls.Add(this.mapEditor1);
-            this.SplitContainerMain.Size = new System.Drawing.Size(890, 174);
+            this.SplitContainerMain.Size = new System.Drawing.Size(890, 442);
             this.SplitContainerMain.SplitterDistance = 150;
             this.SplitContainerMain.TabIndex = 2;
             // 
@@ -107,8 +107,8 @@
             // SplitContainerTree.Panel2
             // 
             this.SplitContainerTree.Panel2.Controls.Add(this.TreeMap);
-            this.SplitContainerTree.Size = new System.Drawing.Size(150, 174);
-            this.SplitContainerTree.SplitterDistance = 89;
+            this.SplitContainerTree.Size = new System.Drawing.Size(150, 442);
+            this.SplitContainerTree.SplitterDistance = 275;
             this.SplitContainerTree.TabIndex = 0;
             // 
             // TreeMap
@@ -116,7 +116,7 @@
             this.TreeMap.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TreeMap.Location = new System.Drawing.Point(0, 0);
             this.TreeMap.Name = "TreeMap";
-            this.TreeMap.Size = new System.Drawing.Size(146, 77);
+            this.TreeMap.Size = new System.Drawing.Size(146, 159);
             this.TreeMap.TabIndex = 0;
             // 
             // menuStrip1
@@ -133,7 +133,7 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ItemNewProject,
-            this.openAProjectToolStripMenuItem});
+            this.ItemOpenProject});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -147,21 +147,22 @@
             this.ItemNewProject.Text = "New project...";
             this.ItemNewProject.Click += new System.EventHandler(this.ItemNewProject_Click);
             // 
-            // openAProjectToolStripMenuItem
+            // ItemOpenProject
             // 
-            this.openAProjectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.browseToolStripMenuItem});
-            this.openAProjectToolStripMenuItem.Image = global::RPG_Paper_Maker.Properties.Resources.open_file;
-            this.openAProjectToolStripMenuItem.Name = "openAProjectToolStripMenuItem";
-            this.openAProjectToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.openAProjectToolStripMenuItem.Text = "Open a project";
+            this.ItemOpenProject.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ItemOpenBrowse});
+            this.ItemOpenProject.Image = global::RPG_Paper_Maker.Properties.Resources.open_file;
+            this.ItemOpenProject.Name = "ItemOpenProject";
+            this.ItemOpenProject.Size = new System.Drawing.Size(190, 22);
+            this.ItemOpenProject.Text = "Open a project";
             // 
-            // browseToolStripMenuItem
+            // ItemOpenBrowse
             // 
-            this.browseToolStripMenuItem.Name = "browseToolStripMenuItem";
-            this.browseToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.browseToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.browseToolStripMenuItem.Text = "Browse...";
+            this.ItemOpenBrowse.Name = "ItemOpenBrowse";
+            this.ItemOpenBrowse.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.ItemOpenBrowse.Size = new System.Drawing.Size(164, 22);
+            this.ItemOpenBrowse.Text = "Browse...";
+            this.ItemOpenBrowse.Click += new System.EventHandler(this.ItemOpenBrowse_Click);
             // 
             // toolBar1
             // 
@@ -198,7 +199,7 @@
             this.mapEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapEditor1.Location = new System.Drawing.Point(0, 0);
             this.mapEditor1.Name = "mapEditor1";
-            this.mapEditor1.Size = new System.Drawing.Size(732, 170);
+            this.mapEditor1.Size = new System.Drawing.Size(732, 438);
             this.mapEditor1.TabIndex = 0;
             this.mapEditor1.VSync = false;
             // 
@@ -207,7 +208,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(245)))));
-            this.ClientSize = new System.Drawing.Size(890, 262);
+            this.ClientSize = new System.Drawing.Size(890, 530);
             this.Controls.Add(this.SplitContainerMain);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolBar1);
@@ -245,8 +246,8 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolBar toolBar1;
         private System.Windows.Forms.ToolStripMenuItem ItemNewProject;
-        private System.Windows.Forms.ToolStripMenuItem openAProjectToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem browseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ItemOpenProject;
+        private System.Windows.Forms.ToolStripMenuItem ItemOpenBrowse;
         private System.Windows.Forms.ToolBarButton toolBarButtonOpen;
         private System.Windows.Forms.ToolBarButton toolBarButtonNew;
     }

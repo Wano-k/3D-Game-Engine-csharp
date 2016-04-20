@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 // -------------------------------------------------------------------
@@ -31,6 +32,8 @@ namespace RPG_Paper_Maker
         public static float SQUARESIZE = 16.0f;
         public static int PORTIONSIZE = 16;
         public static int PORTION_RADIUS = 10;
+        public static string CURDIR = ".";
+        public static string PROJECTNAME = null;
 
         // -------------------------------------------------------------------
         // CopyAll
@@ -49,7 +52,7 @@ namespace RPG_Paper_Maker
                 Directory.CreateDirectory(target.FullName);
             }
 
-            // Copy each file into it's new directory.
+            // Copy each file into its new directory.
             foreach (FileInfo fi in source.GetFiles())
             {
                 fi.CopyTo(Path.Combine(target.ToString(), fi.Name), true);

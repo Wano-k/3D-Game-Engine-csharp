@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -13,6 +14,7 @@ namespace RPG_Paper_Maker
 {
     public partial class Form1 : Form
     {
+        public string TitleName = "RPG Paper Maker";
         public string version = "1.0.4";
 
         // -------------------------------------------------------------------
@@ -31,7 +33,8 @@ namespace RPG_Paper_Maker
             }
 
             // Updating special infos
-            Text = "RPG Paper Maker " + version;
+            this.TitleName = "RPG Paper Maker " + version;
+            this.Text = this.TitleName;
             ShowProjectContain(false);
         }
 
@@ -44,9 +47,27 @@ namespace RPG_Paper_Maker
             DialogNewProject dialog = new DialogNewProject();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
+                SetTitle(dialog.ProjectName, dialog.DirPath);
                 ShowProjectContain(true);
             }
+        }
 
+        // -------------------------------------------------------------------
+        // ItemOpenBrowse_Click
+        // -------------------------------------------------------------------
+
+        private void ItemOpenBrowse_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "RPG Paper Maker Files|*.rpm;";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string file = dialog.FileName;
+                DirectoryInfo dir = Directory.GetParent(file);
+                SetTitle(dir.Name, dir.FullName);
+
+                ShowProjectContain(true);
+            }
         }
 
         // -------------------------------------------------------------------
@@ -59,18 +80,33 @@ namespace RPG_Paper_Maker
             {
                 ItemNewProject_Click(sender, e);
             }
+            else if (e.Button.Name.Equals("toolBarButtonOpen"))
+            {
+                ItemOpenBrowse_Click(sender, e);
+            }
         }
 
         // -------------------------------------------------------------------
         // ShowProjectContain
         // -------------------------------------------------------------------
 
-        private void ShowProjectContain(bool b)
+        public void ShowProjectContain(bool b)
         {
             this.SplitContainerMain.Visible = b;
             this.SplitContainerTree.Visible = b;
             this.TreeMap.Visible = b;
             this.mapEditor1.Visible = b;
+        }
+
+        // -------------------------------------------------------------------
+        // SetTitle
+        // -------------------------------------------------------------------
+
+        public void SetTitle(string name, string dir)
+        {
+            WANOK.PROJECTNAME = name;
+            WANOK.CURDIR = dir;
+            this.Text = this.TitleName + " - " + name;
         }
     }
 }
