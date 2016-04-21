@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RPG_Paper_Maker
 {
-    class Cursor
+    class CursorEditor
     {
         GraphicsDevice device;
         public Vector3 Position;
@@ -27,7 +27,7 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
-        public Cursor(GraphicsDevice device)
+        public CursorEditor(GraphicsDevice device)
         {
             this.device = device;
 

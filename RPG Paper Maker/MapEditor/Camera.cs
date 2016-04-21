@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RPG_Paper_Maker
 {
-    class Camera : GameComponent
+    class Camera
     {
         private Vector3 Position;
         private Vector3 Target;
@@ -26,12 +26,11 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
-        public Camera(Game game)
-            :base(game)
+        public Camera(GraphicsDevice GraphicsDevice)
         {
             Position = Vector3.Zero;
             Target = Vector3.Zero;
-            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, game.GraphicsDevice.Viewport.AspectRatio, 1.0f, 10000.0f);
+            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 1.0f, 10000.0f);
             World = Matrix.Identity;
         }
 
@@ -39,7 +38,7 @@ namespace RPG_Paper_Maker
         // Update
         // -------------------------------------------------------------------
 
-        public void Update(GameTime gameTime, Cursor cursor, KeyboardState kb)
+        public void Update(GameTime gameTime, CursorEditor cursor, KeyboardState kb)
         {
             // Horizontal angle
             if (TargetAngle != HorizontalAngle)
@@ -64,11 +63,11 @@ namespace RPG_Paper_Maker
             // Keyboard 
             if (TargetAngle == HorizontalAngle)
             {
-                if (kb.IsKeyDown(Keys.Left))
+                if (WANOK.KeyBoardStates[System.Windows.Forms.Keys.Left])
                 {
                     TargetAngle -= RotateSteps;
                 }
-                else if (kb.IsKeyDown(Keys.Right))
+                else if (WANOK.KeyBoardStates[System.Windows.Forms.Keys.Right])
                 {
                     TargetAngle += RotateSteps;
                 }

@@ -39,11 +39,23 @@ namespace RPG_Paper_Maker
         public static EngineSettings Settings = null;
         public static DemoSteps DemoStep = DemoSteps.None;
         public static Form CurrentDemoDialog = null;
+        public static Dictionary<Keys, bool> KeyBoardStates = new Dictionary<Keys, bool>();
 
         // PATHS
         public static string PATHSETTINGS = "Config/EngineSettings.JSON";
 
 
+
+        // -------------------------------------------------------------------
+        // InitializeKeyBoard
+        // -------------------------------------------------------------------
+        public static void InitializeKeyBoard()
+        {
+            foreach (Keys k in Enum.GetValues(typeof(Keys)))
+            {
+                KeyBoardStates[k] = false;
+            }
+        }
 
         // -------------------------------------------------------------------
         // CopyAll

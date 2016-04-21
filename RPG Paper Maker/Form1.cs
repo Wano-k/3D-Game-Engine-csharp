@@ -17,7 +17,7 @@ namespace RPG_Paper_Maker
     public partial class Form1 : Form
     {
         public string TitleName = "RPG Paper Maker";
-        public string version = "1.0.6";
+        public string version = "1.0.1.0";
 
 
         // -------------------------------------------------------------------
@@ -41,6 +41,7 @@ namespace RPG_Paper_Maker
             // Updating special infos
             this.TitleName = "RPG Paper Maker " + version;
             this.Text = this.TitleName;
+            WANOK.InitializeKeyBoard();
 
             // Contain shown
             EnableNoGame();
@@ -54,11 +55,6 @@ namespace RPG_Paper_Maker
 
         public class MainColorTable : ProfessionalColorTable
         {
-            public override Color SeparatorDark
-            {
-                get { return Color.FromArgb(64, 64, 64); }
-            }
-
             public override Color ToolStripDropDownBackground
             {
                 get { return Color.FromArgb(64, 64, 64); }
@@ -100,24 +96,22 @@ namespace RPG_Paper_Maker
 
             protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
             {
-                Rectangle rc = new Rectangle(Point.Empty, e.Item.Size);
+                Rectangle r = new Rectangle(Point.Empty, e.Item.Size);
                 if (!e.Item.Selected)
                 {
-                    SolidBrush myBrush;
+                    SolidBrush brush;
                     if (e.Item.Pressed)
                     {
-                        Color myColor = Color.FromArgb(100, 100, 100);
-                        myBrush = new SolidBrush(myColor);
+                        brush = new SolidBrush(Color.FromArgb(100, 100, 100));
                     }
                     else
                     {
-                        Color myColor = Color.FromArgb(64, 64, 64);
-                        myBrush = new SolidBrush(myColor);
+                        brush = new SolidBrush(Color.FromArgb(64, 64, 64));
                     }
-                    e.Graphics.FillRectangle(myBrush, rc);
+                    e.Graphics.FillRectangle(brush, r);
                 }
                 else {
-                    e.Graphics.FillRectangle(Brushes.CadetBlue, rc);
+                    e.Graphics.FillRectangle(Brushes.CadetBlue, r);
                 }
             }
 
@@ -125,7 +119,23 @@ namespace RPG_Paper_Maker
             {
                 
             }
-            
+
+            protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
+            {
+                Rectangle rc = new Rectangle(Point.Empty, e.Item.Size);
+                Color myColor = Color.FromArgb(64, 64, 64);
+                SolidBrush myBrush = new SolidBrush(myColor);
+                e.Graphics.FillRectangle(myBrush, rc);
+                int height = rc.Y + (rc.Height / 2);
+                e.Graphics.DrawLine(new Pen(Color.Silver),rc.X, height, rc.Width, height);
+            }
+
+            protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
+            {
+                e.ArrowColor = Color.White;
+                base.OnRenderArrow(e);
+            }
+
         }
 
         // -------------------------------------------------------------------
@@ -138,6 +148,56 @@ namespace RPG_Paper_Maker
             {
                 DemoTip();
             }
+        }
+
+        // -------------------------------------------------------------------
+        // mapEditor1_KeyDown
+        // -------------------------------------------------------------------
+
+        private void mapEditor1_KeyDown(object sender, KeyEventArgs e)
+        {
+            UpdateKeyBoard(e.KeyCode, true);
+        }
+
+        // -------------------------------------------------------------------
+        // ProcessCmdKey
+        // -------------------------------------------------------------------
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Left || keyData == Keys.Right || keyData == Keys.Up || keyData == Keys.Down)
+            {
+                UpdateKeyBoard(keyData, true);
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        // -------------------------------------------------------------------
+        // mapEditor1_KeyUp
+        // -------------------------------------------------------------------
+
+        private void mapEditor1_KeyUp(object sender, KeyEventArgs e)
+        {
+            UpdateKeyBoard(e.KeyCode, false);
+        }
+
+        // -------------------------------------------------------------------
+        // TreeMap_KeyDown
+        // -------------------------------------------------------------------
+
+        private void TreeMap_KeyDown(object sender, KeyEventArgs e)
+        {
+            UpdateKeyBoard(e.KeyCode, true);
+        }
+
+        // -------------------------------------------------------------------
+        // TreeMap_KeyUp
+        // -------------------------------------------------------------------
+
+        private void TreeMap_KeyUp(object sender, KeyEventArgs e)
+        {
+            UpdateKeyBoard(e.KeyCode, false);
         }
 
         // -------------------------------------------------------------------
@@ -177,6 +237,28 @@ namespace RPG_Paper_Maker
                 string file = dialog.FileName;
                 DirectoryInfo dir = Directory.GetParent(file);
                 OpenProject(dir.Name, dir.FullName);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // ItemCloseProject_Click
+        // -------------------------------------------------------------------
+
+        private void ItemCloseProject_Click(object sender, EventArgs e)
+        {
+            CloseProject();
+        }
+
+        // -------------------------------------------------------------------
+        // ItemExit_Click
+        // -------------------------------------------------------------------
+
+        private void ItemExit_Click(object sender, EventArgs e)
+        {
+            var dialog = MessageBox.Show("Are you sure you want to quit RPG Paper Maker?","Quit",MessageBoxButtons.YesNo);
+            if (dialog == DialogResult.Yes)
+            {
+                this.Close();
             }
         }
 
@@ -277,6 +359,8 @@ namespace RPG_Paper_Maker
             this.toolBarButtonNew.Enabled = b;
             this.ItemOpenBrowse.Enabled = b;
             this.toolBarButtonOpen.Enabled = b;
+            this.ItemCloseProject.Enabled = b;
+            this.ItemExit.Enabled = b;
             this.helpToolStripMenuItem.Enabled = b;
             this.ItemTutorials.Enabled = b;
             this.ItemDemo.Enabled = b;
@@ -295,6 +379,7 @@ namespace RPG_Paper_Maker
             this.toolBarButtonNew.Enabled = true;
             this.ItemOpenBrowse.Enabled = true;
             this.toolBarButtonOpen.Enabled = true;
+            this.ItemExit.Enabled = true;
             this.helpToolStripMenuItem.Enabled = true;
             this.ItemTutorials.Enabled = true;
             this.ItemDemo.Enabled = true;
@@ -308,6 +393,7 @@ namespace RPG_Paper_Maker
         public void EnableGame()
         {
             EnableNoGame();
+            this.ItemCloseProject.Enabled = true;
         }
 
         // -------------------------------------------------------------------
@@ -319,6 +405,29 @@ namespace RPG_Paper_Maker
             SetTitle(name, dir);
             ShowProjectContain(true);
             EnableGame();
+            this.mapEditor1.Select();
+        }
+
+        // -------------------------------------------------------------------
+        // CloseProject
+        // -------------------------------------------------------------------
+
+        public void CloseProject()
+        {
+            WANOK.ProjectName = null;
+            WANOK.CurrentDir = ".";
+            this.Text = this.TitleName;
+            ShowProjectContain(false);
+            EnableNoGame();
+        }
+
+        // -------------------------------------------------------------------
+        // UpdateKeyBoard
+        // -------------------------------------------------------------------
+
+        public void UpdateKeyBoard(Keys k, bool b)
+        {
+            WANOK.KeyBoardStates[k] = b;
         }
 
         // -------------------------------------------------------------------

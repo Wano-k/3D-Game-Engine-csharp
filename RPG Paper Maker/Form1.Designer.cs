@@ -36,11 +36,15 @@
             this.SplitContainerMain = new System.Windows.Forms.SplitContainer();
             this.SplitContainerTree = new System.Windows.Forms.SplitContainer();
             this.TreeMap = new System.Windows.Forms.TreeView();
+            this.mapEditor1 = new RPG_Paper_Maker.MapEditor();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemNewProject = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemOpenProject = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemOpenBrowse = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemCloseProject = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemTutorials = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemDemo = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,7 +52,6 @@
             this.toolBar1 = new System.Windows.Forms.ToolBar();
             this.toolBarButtonNew = new System.Windows.Forms.ToolBarButton();
             this.toolBarButtonOpen = new System.Windows.Forms.ToolBarButton();
-            this.mapEditor1 = new RPG_Paper_Maker.MapEditor();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerMain)).BeginInit();
             this.SplitContainerMain.Panel1.SuspendLayout();
@@ -122,6 +125,20 @@
             this.TreeMap.Name = "TreeMap";
             this.TreeMap.Size = new System.Drawing.Size(146, 159);
             this.TreeMap.TabIndex = 0;
+            this.TreeMap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeMap_KeyDown);
+            this.TreeMap.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TreeMap_KeyUp);
+            // 
+            // mapEditor1
+            // 
+            this.mapEditor1.BackColor = System.Drawing.Color.Black;
+            this.mapEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mapEditor1.Location = new System.Drawing.Point(0, 0);
+            this.mapEditor1.Name = "mapEditor1";
+            this.mapEditor1.Size = new System.Drawing.Size(732, 438);
+            this.mapEditor1.TabIndex = 0;
+            this.mapEditor1.VSync = false;
+            this.mapEditor1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.mapEditor1_KeyDown);
+            this.mapEditor1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.mapEditor1_KeyUp);
             // 
             // menuStrip1
             // 
@@ -140,7 +157,10 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ItemNewProject,
-            this.ItemOpenProject});
+            this.ItemOpenProject,
+            this.ItemCloseProject,
+            this.toolStripSeparator1,
+            this.ItemExit});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -177,6 +197,33 @@
             this.ItemOpenBrowse.Size = new System.Drawing.Size(164, 22);
             this.ItemOpenBrowse.Text = "Browse...";
             this.ItemOpenBrowse.Click += new System.EventHandler(this.ItemOpenBrowse_Click);
+            // 
+            // ItemCloseProject
+            // 
+            this.ItemCloseProject.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ItemCloseProject.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemCloseProject.Name = "ItemCloseProject";
+            this.ItemCloseProject.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+            this.ItemCloseProject.Size = new System.Drawing.Size(190, 22);
+            this.ItemCloseProject.Text = "Close project";
+            this.ItemCloseProject.Click += new System.EventHandler(this.ItemCloseProject_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.toolStripSeparator1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(187, 6);
+            // 
+            // ItemExit
+            // 
+            this.ItemExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ItemExit.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemExit.Name = "ItemExit";
+            this.ItemExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+            this.ItemExit.Size = new System.Drawing.Size(190, 22);
+            this.ItemExit.Text = "Quit";
+            this.ItemExit.Click += new System.EventHandler(this.ItemExit_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -245,16 +292,6 @@
             this.toolBarButtonOpen.Text = "Open";
             this.toolBarButtonOpen.ToolTipText = "Open a project";
             // 
-            // mapEditor1
-            // 
-            this.mapEditor1.BackColor = System.Drawing.Color.Black;
-            this.mapEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mapEditor1.Location = new System.Drawing.Point(0, 0);
-            this.mapEditor1.Name = "mapEditor1";
-            this.mapEditor1.Size = new System.Drawing.Size(732, 438);
-            this.mapEditor1.TabIndex = 0;
-            this.mapEditor1.VSync = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -308,6 +345,9 @@
         private System.Windows.Forms.ToolStripMenuItem ItemTutorials;
         private System.Windows.Forms.ToolStripMenuItem ItemAbout;
         private System.Windows.Forms.ToolStripMenuItem ItemDemo;
+        private System.Windows.Forms.ToolStripMenuItem ItemCloseProject;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem ItemExit;
     }
 }
 

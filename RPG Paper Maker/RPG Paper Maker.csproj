@@ -133,7 +133,7 @@
     <Compile Include="MapEditor\MapEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MapEditor\Cursor.cs" />
+    <Compile Include="MapEditor\CursorEditor.cs" />
     <Compile Include="MapEditor\Game_map_portion.cs" />
     <Compile Include="MapEditor\Map.cs" />
     <Compile Include="MapEditor\Wanok.cs" />
