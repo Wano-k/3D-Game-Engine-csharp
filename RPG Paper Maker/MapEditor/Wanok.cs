@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 // -------------------------------------------------------------------
 // STATIC Class for global variables
@@ -34,6 +36,14 @@ namespace RPG_Paper_Maker
         public static int PORTION_RADIUS = 10;
         public static string CurrentDir = ".";
         public static string ProjectName = null;
+        public static EngineSettings Settings = null;
+        public static DemoSteps DemoStep = DemoSteps.None;
+        public static Form CurrentDemoDialog = null;
+
+        // PATHS
+        public static string PATHSETTINGS = "Config/EngineSettings.JSON";
+
+
 
         // -------------------------------------------------------------------
         // CopyAll
@@ -65,6 +75,36 @@ namespace RPG_Paper_Maker
                     target.CreateSubdirectory(diSourceSubDir.Name);
                 CopyAll(diSourceSubDir, nextTargetSubDir);
             }
+        }
+
+        // -------------------------------------------------------------------
+        // SaveDatas
+        // -------------------------------------------------------------------
+
+        public static void SaveDatas(Object obj, string path)
+        {
+            string json = JsonConvert.SerializeObject(obj);
+            FileStream fs = new FileStream(path, FileMode.Create);
+            StreamWriter sw = new StreamWriter(fs);
+            sw.WriteLine(json);
+            sw.Close();
+            fs.Close();
+        }
+
+        // -------------------------------------------------------------------
+        // LoadDatas
+        // -------------------------------------------------------------------
+
+        public static T LoadDatas<T>(string path)
+        {
+            FileStream fs = new FileStream(path, FileMode.Open);
+            StreamReader sr = new StreamReader(fs);
+            string json = sr.ReadToEnd();
+            T obj = JsonConvert.DeserializeObject<T>(json);
+            sr.Close();
+            fs.Close();
+
+            return obj;
         }
     }
 }

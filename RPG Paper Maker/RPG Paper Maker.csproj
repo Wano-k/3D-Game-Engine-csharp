@@ -89,6 +89,19 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="DemoSteps.cs" />
+    <Compile Include="Dialogs\DemoTips\DialogDemoTipNewProject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\DemoTips\DialogDemoTipNewProject.Designer.cs">
+      <DependentUpon>DialogDemoTipNewProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DemoTips\DialogDemoTipNewProjectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\DemoTips\DialogDemoTipNewProjectForm.Designer.cs">
+      <DependentUpon>DialogDemoTipNewProjectForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\DialogDemoTip.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,6 +142,12 @@
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\DemoTips\DialogDemoTipNewProject.resx">
+      <DependentUpon>DialogDemoTipNewProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\DemoTips\DialogDemoTipNewProjectForm.resx">
+      <DependentUpon>DialogDemoTipNewProjectForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\DialogDemoTip.resx">
       <DependentUpon>DialogDemoTip.cs</DependentUpon>
     </EmbeddedResource>
@@ -152,7 +171,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Config\EngineSettings.JSON">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -190,6 +209,7 @@
     <Content Include="DLLs\MonoGame.Framework.dll" />
     <Content Include="DLLs\OpenTK.dll" />
     <Content Include="DLLs\OpenTK.GLControl.dll" />
+    <None Include="Resources\tuto2.png" />
     <None Include="Resources\small_kate.png" />
     <None Include="Resources\tuto1.png" />
     <None Include="Resources\kate.png" />

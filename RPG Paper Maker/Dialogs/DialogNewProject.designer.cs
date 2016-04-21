@@ -119,6 +119,8 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "New Project";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DialogNewProject_FormClosing);
+            this.Shown += new System.EventHandler(this.DialogNewProject_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

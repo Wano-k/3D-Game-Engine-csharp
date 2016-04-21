@@ -43,11 +43,11 @@
             this.ItemOpenBrowse = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemTutorials = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemDemo = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolBar1 = new System.Windows.Forms.ToolBar();
             this.toolBarButtonNew = new System.Windows.Forms.ToolBarButton();
             this.toolBarButtonOpen = new System.Windows.Forms.ToolBarButton();
-            this.ItemDemo = new System.Windows.Forms.ToolStripMenuItem();
             this.mapEditor1 = new RPG_Paper_Maker.MapEditor();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerMain)).BeginInit();
@@ -182,14 +182,21 @@
             // ItemTutorials
             // 
             this.ItemTutorials.Name = "ItemTutorials";
-            this.ItemTutorials.Size = new System.Drawing.Size(152, 22);
+            this.ItemTutorials.Size = new System.Drawing.Size(120, 22);
             this.ItemTutorials.Text = "Tutorials";
             this.ItemTutorials.Click += new System.EventHandler(this.ItemTutorials_Click);
+            // 
+            // ItemDemo
+            // 
+            this.ItemDemo.Name = "ItemDemo";
+            this.ItemDemo.Size = new System.Drawing.Size(120, 22);
+            this.ItemDemo.Text = "Demo!";
+            this.ItemDemo.Click += new System.EventHandler(this.ItemDemo_Click);
             // 
             // ItemAbout
             // 
             this.ItemAbout.Name = "ItemAbout";
-            this.ItemAbout.Size = new System.Drawing.Size(152, 22);
+            this.ItemAbout.Size = new System.Drawing.Size(120, 22);
             this.ItemAbout.Text = "About...";
             this.ItemAbout.Click += new System.EventHandler(this.ItemAbout_Click);
             // 
@@ -222,13 +229,6 @@
             this.toolBarButtonOpen.Text = "Open";
             this.toolBarButtonOpen.ToolTipText = "Open a project";
             // 
-            // ItemDemo
-            // 
-            this.ItemDemo.Name = "ItemDemo";
-            this.ItemDemo.Size = new System.Drawing.Size(152, 22);
-            this.ItemDemo.Text = "Demo!";
-            this.ItemDemo.Click += new System.EventHandler(this.ItemDemo_Click);
-            // 
             // mapEditor1
             // 
             this.mapEditor1.BackColor = System.Drawing.Color.Black;
@@ -255,6 +255,7 @@
             this.Name = "Form1";
             this.Text = "RPG Paper Maker 0.0.0";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Shown += new System.EventHandler(this.Form1_Shown);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.SplitContainerMain.Panel1.ResumeLayout(false);

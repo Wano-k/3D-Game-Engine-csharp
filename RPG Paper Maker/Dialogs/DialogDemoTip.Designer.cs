@@ -73,6 +73,7 @@
             this.ButtonLater.TabIndex = 3;
             this.ButtonLater.Text = "See later";
             this.ButtonLater.UseVisualStyleBackColor = false;
+            this.ButtonLater.Click += new System.EventHandler(this.ButtonLater_Click);
             // 
             // ButtonOk
             // 
@@ -135,6 +136,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(245)))));
             this.ClientSize = new System.Drawing.Size(584, 238);
+            this.ControlBox = false;
             this.Controls.Add(this.ButtonOk);
             this.Controls.Add(this.ButtonLater);
             this.Controls.Add(this.CheckBoxShow);
