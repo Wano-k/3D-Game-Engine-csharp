@@ -12,10 +12,18 @@ namespace RPG_Paper_Maker
 {
     public partial class DialogDemoTipNewProject : Form
     {
+        // -------------------------------------------------------------------
+        // Constructor
+        // -------------------------------------------------------------------
+
         public DialogDemoTipNewProject()
         {
             InitializeComponent();
         }
+
+        // -------------------------------------------------------------------
+        // ButtonCancel_Click
+        // -------------------------------------------------------------------
 
         private void ButtonCancel_Click(object sender, EventArgs e)
         {

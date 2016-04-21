@@ -125,11 +125,13 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.menuStrip1.Size = new System.Drawing.Size(890, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
@@ -139,12 +141,15 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ItemNewProject,
             this.ItemOpenProject});
+            this.fileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // ItemNewProject
             // 
+            this.ItemNewProject.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ItemNewProject.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemNewProject.Image = global::RPG_Paper_Maker.Properties.Resources.new_file;
             this.ItemNewProject.Name = "ItemNewProject";
             this.ItemNewProject.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
@@ -154,8 +159,10 @@
             // 
             // ItemOpenProject
             // 
+            this.ItemOpenProject.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ItemOpenProject.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ItemOpenBrowse});
+            this.ItemOpenProject.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemOpenProject.Image = global::RPG_Paper_Maker.Properties.Resources.open_file;
             this.ItemOpenProject.Name = "ItemOpenProject";
             this.ItemOpenProject.Size = new System.Drawing.Size(190, 22);
@@ -163,6 +170,8 @@
             // 
             // ItemOpenBrowse
             // 
+            this.ItemOpenBrowse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ItemOpenBrowse.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemOpenBrowse.Name = "ItemOpenBrowse";
             this.ItemOpenBrowse.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.ItemOpenBrowse.Size = new System.Drawing.Size(164, 22);
@@ -175,12 +184,15 @@
             this.ItemTutorials,
             this.ItemDemo,
             this.ItemAbout});
+            this.helpToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // ItemTutorials
             // 
+            this.ItemTutorials.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ItemTutorials.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemTutorials.Name = "ItemTutorials";
             this.ItemTutorials.Size = new System.Drawing.Size(120, 22);
             this.ItemTutorials.Text = "Tutorials";
@@ -188,6 +200,8 @@
             // 
             // ItemDemo
             // 
+            this.ItemDemo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ItemDemo.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemDemo.Name = "ItemDemo";
             this.ItemDemo.Size = new System.Drawing.Size(120, 22);
             this.ItemDemo.Text = "Demo!";
@@ -195,6 +209,8 @@
             // 
             // ItemAbout
             // 
+            this.ItemAbout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ItemAbout.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemAbout.Name = "ItemAbout";
             this.ItemAbout.Size = new System.Drawing.Size(120, 22);
             this.ItemAbout.Text = "About...";
@@ -243,7 +259,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(245)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(890, 530);
             this.Controls.Add(this.SplitContainerMain);
             this.Controls.Add(this.statusStrip1);

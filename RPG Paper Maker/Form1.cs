@@ -19,6 +19,7 @@ namespace RPG_Paper_Maker
         public string TitleName = "RPG Paper Maker";
         public string version = "1.0.6";
 
+
         // -------------------------------------------------------------------
         // Constructor
         // -------------------------------------------------------------------
@@ -44,6 +45,87 @@ namespace RPG_Paper_Maker
             // Contain shown
             EnableNoGame();
             ShowProjectContain(false);
+            this.menuStrip1.Renderer = new MainRender();
+        }
+
+        // -------------------------------------------------------------------
+        // MainColorTable
+        // -------------------------------------------------------------------
+
+        public class MainColorTable : ProfessionalColorTable
+        {
+            public override Color SeparatorDark
+            {
+                get { return Color.FromArgb(64, 64, 64); }
+            }
+
+            public override Color ToolStripDropDownBackground
+            {
+                get { return Color.FromArgb(64, 64, 64); }
+            }
+
+            public override Color MenuItemSelected
+            {
+                get { return Color.CadetBlue; }
+            }
+
+            public override Color MenuItemBorder
+            {
+                get { return Color.Transparent; }
+            }
+
+            public override Color MenuItemPressedGradientBegin
+            {
+                get { return Color.FromArgb(64, 64, 64); }
+            }
+
+            public override Color MenuItemPressedGradientEnd
+            {
+                get { return Color.FromArgb(64, 64, 64); }
+            }
+
+            public override Color MenuBorder
+            {
+                get { return Color.LightGray; }
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // MainRender
+        // -------------------------------------------------------------------
+
+        private class MainRender : ToolStripProfessionalRenderer
+        {
+            public MainRender() : base(new MainColorTable()) { }
+
+            protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
+            {
+                Rectangle rc = new Rectangle(Point.Empty, e.Item.Size);
+                if (!e.Item.Selected)
+                {
+                    SolidBrush myBrush;
+                    if (e.Item.Pressed)
+                    {
+                        Color myColor = Color.FromArgb(100, 100, 100);
+                        myBrush = new SolidBrush(myColor);
+                    }
+                    else
+                    {
+                        Color myColor = Color.FromArgb(64, 64, 64);
+                        myBrush = new SolidBrush(myColor);
+                    }
+                    e.Graphics.FillRectangle(myBrush, rc);
+                }
+                else {
+                    e.Graphics.FillRectangle(Brushes.CadetBlue, rc);
+                }
+            }
+
+            protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
+            {
+                
+            }
+            
         }
 
         // -------------------------------------------------------------------
@@ -67,13 +149,18 @@ namespace RPG_Paper_Maker
             DialogNewProject dialog = new DialogNewProject();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                SetTitle(dialog.ProjectName, dialog.DirPath);
-                ShowProjectContain(true);
-                MessageBox.Show("This is the end of the Demo for now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                OpenProject(dialog.ProjectName, dialog.DirPath);
+                if (WANOK.DemoStep != DemoSteps.None)
+                {
+                    MessageBox.Show("This is the end of the Demo for now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             else
             {
-                StartDemo();
+                if (WANOK.DemoStep != DemoSteps.None)
+                {
+                    StartDemo();
+                }
             }
         }
 
@@ -89,9 +176,7 @@ namespace RPG_Paper_Maker
             {
                 string file = dialog.FileName;
                 DirectoryInfo dir = Directory.GetParent(file);
-                SetTitle(dir.Name, dir.FullName);
-
-                ShowProjectContain(true);
+                OpenProject(dir.Name, dir.FullName);
             }
         }
 
@@ -226,6 +311,17 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // OpenProject
+        // -------------------------------------------------------------------
+
+        public void OpenProject(string name, string dir)
+        {
+            SetTitle(name, dir);
+            ShowProjectContain(true);
+            EnableGame();
+        }
+
+        // -------------------------------------------------------------------
         // DEMO STEPS --------------------------------------------------------
         // -------------------------------------------------------------------
 
@@ -238,7 +334,7 @@ namespace RPG_Paper_Maker
             Thread.Sleep(100);
             WANOK.CurrentDemoDialog = new DialogDemoTipNewProject();
             WANOK.CurrentDemoDialog.Location = new Point(this.Location.X + 100, this.Location.Y + 100);
-            WANOK.CurrentDemoDialog.Size = new Size(364, 235);
+            WANOK.CurrentDemoDialog.Size = new Size(364, 209);
             WANOK.CurrentDemoDialog.Show();
             WANOK.DemoStep = DemoSteps.New;
             this.Select();

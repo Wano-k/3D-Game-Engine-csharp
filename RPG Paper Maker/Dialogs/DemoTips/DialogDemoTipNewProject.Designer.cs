@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DialogDemoTipNewProject));
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -38,18 +39,18 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(255)))));
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.panel1.Controls.Add(this.pictureBox2);
             this.panel1.Controls.Add(this.richTextBox1);
             this.panel1.Location = new System.Drawing.Point(13, 13);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(323, 154);
+            this.panel1.Size = new System.Drawing.Size(323, 113);
             this.panel1.TabIndex = 1;
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Image = global::RPG_Paper_Maker.Properties.Resources.tuto2;
-            this.pictureBox2.Location = new System.Drawing.Point(121, 66);
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(242, 34);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(68, 76);
             this.pictureBox2.TabIndex = 1;
@@ -57,21 +58,21 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(255)))));
+            this.richTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox1.Location = new System.Drawing.Point(12, 13);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(298, 129);
+            this.richTextBox1.Size = new System.Drawing.Size(298, 93);
             this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "First of all, let\'s create a folder for your game.\n\nClick on the \"New\" button on " +
-    "the toolbar, or press Ctrl+N.";
+            this.richTextBox1.Text = "First of all, let\'s create a folder for your game. Click on the \"New\" button on t" +
+    "he toolbar, or press Ctrl+N.";
             // 
             // ButtonCancel
             // 
-            this.ButtonCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.ButtonCancel.BackColor = System.Drawing.Color.IndianRed;
             this.ButtonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ButtonCancel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ButtonCancel.Location = new System.Drawing.Point(118, 173);
+            this.ButtonCancel.Location = new System.Drawing.Point(122, 143);
             this.ButtonCancel.Name = "ButtonCancel";
             this.ButtonCancel.Size = new System.Drawing.Size(103, 23);
             this.ButtonCancel.TabIndex = 5;
@@ -83,8 +84,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(245)))));
-            this.ClientSize = new System.Drawing.Size(348, 201);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(348, 175);
             this.ControlBox = false;
             this.Controls.Add(this.ButtonCancel);
             this.Controls.Add(this.panel1);

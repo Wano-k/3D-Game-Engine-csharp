@@ -210,8 +210,8 @@
     <Content Include="DLLs\OpenTK.dll" />
     <Content Include="DLLs\OpenTK.GLControl.dll" />
     <None Include="Resources\tuto2.png" />
-    <None Include="Resources\small_kate.png" />
     <None Include="Resources\tuto1.png" />
+    <None Include="Resources\small_kate.png" />
     <None Include="Resources\kate.png" />
     <None Include="Resources\about.png" />
     <None Include="Resources\open_file.png" />
