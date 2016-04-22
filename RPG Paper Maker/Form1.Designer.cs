@@ -30,13 +30,18 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Maps");
             this.ImageListToolBar = new System.Windows.Forms.ImageList(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.SplitContainerMain = new System.Windows.Forms.SplitContainer();
             this.SplitContainerTree = new System.Windows.Forms.SplitContainer();
             this.TreeMap = new System.Windows.Forms.TreeView();
-            this.mapEditor1 = new RPG_Paper_Maker.MapEditor();
+            this.ImageListTreeMap = new System.Windows.Forms.ImageList(this.components);
+            this.menuStrip2 = new System.Windows.Forms.MenuStrip();
+            this.ItemFloor = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemFloor1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemFloor2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemNewProject = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,14 +57,19 @@
             this.toolBar1 = new System.Windows.Forms.ToolBar();
             this.toolBarButtonNew = new System.Windows.Forms.ToolBarButton();
             this.toolBarButtonOpen = new System.Windows.Forms.ToolBarButton();
+            this.ItemSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.TilesetSelector = new RPG_Paper_Maker.TilesetSelector();
+            this.MapEditor = new RPG_Paper_Maker.MapEditor();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerMain)).BeginInit();
             this.SplitContainerMain.Panel1.SuspendLayout();
             this.SplitContainerMain.Panel2.SuspendLayout();
             this.SplitContainerMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerTree)).BeginInit();
+            this.SplitContainerTree.Panel1.SuspendLayout();
             this.SplitContainerTree.Panel2.SuspendLayout();
             this.SplitContainerTree.SuspendLayout();
+            this.menuStrip2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -98,9 +108,10 @@
             // 
             // SplitContainerMain.Panel2
             // 
-            this.SplitContainerMain.Panel2.Controls.Add(this.mapEditor1);
+            this.SplitContainerMain.Panel2.Controls.Add(this.MapEditor);
+            this.SplitContainerMain.Panel2.Controls.Add(this.menuStrip2);
             this.SplitContainerMain.Size = new System.Drawing.Size(890, 442);
-            this.SplitContainerMain.SplitterDistance = 150;
+            this.SplitContainerMain.SplitterDistance = 177;
             this.SplitContainerMain.TabIndex = 2;
             // 
             // SplitContainerTree
@@ -111,34 +122,85 @@
             this.SplitContainerTree.Name = "SplitContainerTree";
             this.SplitContainerTree.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
+            // SplitContainerTree.Panel1
+            // 
+            this.SplitContainerTree.Panel1.AutoScroll = true;
+            this.SplitContainerTree.Panel1.Controls.Add(this.TilesetSelector);
+            // 
             // SplitContainerTree.Panel2
             // 
             this.SplitContainerTree.Panel2.Controls.Add(this.TreeMap);
-            this.SplitContainerTree.Size = new System.Drawing.Size(150, 442);
-            this.SplitContainerTree.SplitterDistance = 275;
+            this.SplitContainerTree.Size = new System.Drawing.Size(177, 442);
+            this.SplitContainerTree.SplitterDistance = 269;
             this.SplitContainerTree.TabIndex = 0;
             // 
             // TreeMap
             // 
             this.TreeMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TreeMap.ImageIndex = 0;
+            this.TreeMap.ImageList = this.ImageListTreeMap;
             this.TreeMap.Location = new System.Drawing.Point(0, 0);
             this.TreeMap.Name = "TreeMap";
-            this.TreeMap.Size = new System.Drawing.Size(146, 159);
+            treeNode1.ImageKey = "dir.png";
+            treeNode1.Name = "RootMapSelector";
+            treeNode1.Text = "Maps";
+            this.TreeMap.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode1});
+            this.TreeMap.SelectedImageIndex = 0;
+            this.TreeMap.ShowRootLines = false;
+            this.TreeMap.Size = new System.Drawing.Size(173, 165);
             this.TreeMap.TabIndex = 0;
             this.TreeMap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeMap_KeyDown);
             this.TreeMap.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TreeMap_KeyUp);
             // 
-            // mapEditor1
+            // ImageListTreeMap
             // 
-            this.mapEditor1.BackColor = System.Drawing.Color.Black;
-            this.mapEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mapEditor1.Location = new System.Drawing.Point(0, 0);
-            this.mapEditor1.Name = "mapEditor1";
-            this.mapEditor1.Size = new System.Drawing.Size(732, 438);
-            this.mapEditor1.TabIndex = 0;
-            this.mapEditor1.VSync = false;
-            this.mapEditor1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.mapEditor1_KeyDown);
-            this.mapEditor1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.mapEditor1_KeyUp);
+            this.ImageListTreeMap.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageListTreeMap.ImageStream")));
+            this.ImageListTreeMap.TransparentColor = System.Drawing.Color.Transparent;
+            this.ImageListTreeMap.Images.SetKeyName(0, "dir.png");
+            // 
+            // menuStrip2
+            // 
+            this.menuStrip2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ItemFloor});
+            this.menuStrip2.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip2.Name = "menuStrip2";
+            this.menuStrip2.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.menuStrip2.Size = new System.Drawing.Size(705, 24);
+            this.menuStrip2.TabIndex = 1;
+            this.menuStrip2.Text = "menuStrip2";
+            // 
+            // ItemFloor
+            // 
+            this.ItemFloor.DoubleClickEnabled = true;
+            this.ItemFloor.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ItemFloor1,
+            this.ItemFloor2});
+            this.ItemFloor.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemFloor.Image = global::RPG_Paper_Maker.Properties.Resources.floor1;
+            this.ItemFloor.Name = "ItemFloor";
+            this.ItemFloor.Size = new System.Drawing.Size(62, 24);
+            this.ItemFloor.Text = "Floor";
+            this.ItemFloor.DoubleClick += new System.EventHandler(this.ItemFloor_DoubleClick);
+            // 
+            // ItemFloor1
+            // 
+            this.ItemFloor1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ItemFloor1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemFloor1.Image = global::RPG_Paper_Maker.Properties.Resources.floor1;
+            this.ItemFloor1.Name = "ItemFloor1";
+            this.ItemFloor1.Size = new System.Drawing.Size(121, 22);
+            this.ItemFloor1.Text = "Floor";
+            // 
+            // ItemFloor2
+            // 
+            this.ItemFloor2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ItemFloor2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemFloor2.Image = global::RPG_Paper_Maker.Properties.Resources.floor2;
+            this.ItemFloor2.Name = "ItemFloor2";
+            this.ItemFloor2.Size = new System.Drawing.Size(121, 22);
+            this.ItemFloor2.Text = "Autotiles";
             // 
             // menuStrip1
             // 
@@ -158,6 +220,7 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ItemNewProject,
             this.ItemOpenProject,
+            this.ItemSave,
             this.ItemCloseProject,
             this.toolStripSeparator1,
             this.ItemExit});
@@ -292,6 +355,37 @@
             this.toolBarButtonOpen.Text = "Open";
             this.toolBarButtonOpen.ToolTipText = "Open a project";
             // 
+            // ItemSave
+            // 
+            this.ItemSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ItemSave.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemSave.Name = "ItemSave";
+            this.ItemSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.ItemSave.Size = new System.Drawing.Size(190, 22);
+            this.ItemSave.Text = "Save";
+            // 
+            // TilesetSelector
+            // 
+            this.TilesetSelector.BackColor = System.Drawing.Color.Black;
+            this.TilesetSelector.Location = new System.Drawing.Point(4, 4);
+            this.TilesetSelector.Margin = new System.Windows.Forms.Padding(0);
+            this.TilesetSelector.Name = "TilesetSelector";
+            this.TilesetSelector.Size = new System.Drawing.Size(256, 256);
+            this.TilesetSelector.TabIndex = 0;
+            this.TilesetSelector.VSync = false;
+            // 
+            // MapEditor
+            // 
+            this.MapEditor.BackColor = System.Drawing.Color.Black;
+            this.MapEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MapEditor.Location = new System.Drawing.Point(0, 24);
+            this.MapEditor.Name = "MapEditor";
+            this.MapEditor.Size = new System.Drawing.Size(705, 414);
+            this.MapEditor.TabIndex = 0;
+            this.MapEditor.VSync = false;
+            this.MapEditor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.mapEditor1_KeyDown);
+            this.MapEditor.KeyUp += new System.Windows.Forms.KeyEventHandler(this.mapEditor1_KeyUp);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -313,11 +407,15 @@
             this.statusStrip1.PerformLayout();
             this.SplitContainerMain.Panel1.ResumeLayout(false);
             this.SplitContainerMain.Panel2.ResumeLayout(false);
+            this.SplitContainerMain.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerMain)).EndInit();
             this.SplitContainerMain.ResumeLayout(false);
+            this.SplitContainerTree.Panel1.ResumeLayout(false);
             this.SplitContainerTree.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerTree)).EndInit();
             this.SplitContainerTree.ResumeLayout(false);
+            this.menuStrip2.ResumeLayout(false);
+            this.menuStrip2.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -332,7 +430,7 @@
         private System.Windows.Forms.SplitContainer SplitContainerMain;
         private System.Windows.Forms.SplitContainer SplitContainerTree;
         private System.Windows.Forms.TreeView TreeMap;
-        private MapEditor mapEditor1;
+        private MapEditor MapEditor;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolBar toolBar1;
@@ -348,6 +446,13 @@
         private System.Windows.Forms.ToolStripMenuItem ItemCloseProject;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem ItemExit;
+        private System.Windows.Forms.ImageList ImageListTreeMap;
+        private System.Windows.Forms.MenuStrip menuStrip2;
+        private System.Windows.Forms.ToolStripMenuItem ItemFloor;
+        private System.Windows.Forms.ToolStripMenuItem ItemFloor1;
+        private System.Windows.Forms.ToolStripMenuItem ItemFloor2;
+        private TilesetSelector TilesetSelector;
+        private System.Windows.Forms.ToolStripMenuItem ItemSave;
     }
 }
 

@@ -38,7 +38,7 @@ namespace RPG_Paper_Maker
         // Update
         // -------------------------------------------------------------------
 
-        public void Update(GameTime gameTime, CursorEditor cursor, KeyboardState kb)
+        public void Update(GameTime gameTime, CursorEditor cursor)
         {
             // Horizontal angle
             if (TargetAngle != HorizontalAngle)

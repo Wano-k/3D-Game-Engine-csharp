@@ -28,37 +28,6 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // DialogNewProject_Shown
-        // -------------------------------------------------------------------
-
-        private void DialogNewProject_Shown(object sender, EventArgs e)
-        {
-            if (WANOK.DemoStep == DemoSteps.New)
-            {
-                WANOK.CurrentDemoDialog.Close();
-                Thread.Sleep(100);
-                WANOK.CurrentDemoDialog = new DialogDemoTipNewProjectForm();
-                WANOK.CurrentDemoDialog.Location = new Point(this.Location.X + this.Size.Width + 10, this.Location.Y);
-                WANOK.CurrentDemoDialog.Size = new Size(321, 144);
-                WANOK.CurrentDemoDialog.Show();
-                WANOK.DemoStep = DemoSteps.NewForm;
-                this.Select();
-            }
-        }
-
-        // -------------------------------------------------------------------
-        // DialogNewProject_FormClosing
-        // -------------------------------------------------------------------
-
-        private void DialogNewProject_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (WANOK.DemoStep == DemoSteps.NewForm)
-            {
-                WANOK.CurrentDemoDialog.Close();
-            }
-        }
-
-        // -------------------------------------------------------------------
         // ok_Click
         // -------------------------------------------------------------------
 

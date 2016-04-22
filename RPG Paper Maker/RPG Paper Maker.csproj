@@ -136,6 +136,9 @@
     <Compile Include="MapEditor\CursorEditor.cs" />
     <Compile Include="MapEditor\Game_map_portion.cs" />
     <Compile Include="MapEditor\Map.cs" />
+    <Compile Include="MapEditor\TilesetSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="MapEditor\Wanok.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -144,9 +147,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\DemoTips\DialogDemoTipNewProject.resx">
       <DependentUpon>DialogDemoTipNewProject.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\DemoTips\DialogDemoTipNewProjectForm.resx">
-      <DependentUpon>DialogDemoTipNewProjectForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\DialogDemoTip.resx">
       <DependentUpon>DialogDemoTip.cs</DependentUpon>
@@ -206,9 +206,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Basic\Content\Pictures\Textures2D\Tilesets\plains.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DLLs\MonoGame.Framework.dll" />
     <Content Include="DLLs\OpenTK.dll" />
     <Content Include="DLLs\OpenTK.GLControl.dll" />
+    <None Include="Resources\1.png" />
+    <None Include="Resources\0.png" />
     <None Include="Resources\tuto2.png" />
     <None Include="Resources\tuto1.png" />
     <None Include="Resources\small_kate.png" />

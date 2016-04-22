@@ -17,7 +17,7 @@ namespace RPG_Paper_Maker
     public partial class Form1 : Form
     {
         public string TitleName = "RPG Paper Maker";
-        public string version = "1.0.1.0";
+        public string version = "1.0.2.0";
 
 
         // -------------------------------------------------------------------
@@ -42,11 +42,13 @@ namespace RPG_Paper_Maker
             this.TitleName = "RPG Paper Maker " + version;
             this.Text = this.TitleName;
             WANOK.InitializeKeyBoard();
+            WANOK.ABSOLUTEENGINEPATH = Path.GetDirectoryName(Application.ExecutablePath);
 
             // Contain shown
             EnableNoGame();
             ShowProjectContain(false);
-            this.menuStrip1.Renderer = new MainRender();
+            this.menuStrip1.Renderer = new MainRender(this);
+            this.menuStrip2.Renderer = new MainRender(this);
         }
 
         // -------------------------------------------------------------------
@@ -92,26 +94,33 @@ namespace RPG_Paper_Maker
 
         private class MainRender : ToolStripProfessionalRenderer
         {
-            public MainRender() : base(new MainColorTable()) { }
+            public Form1 MainForm;
+
+            public MainRender(Form1 mainForm) : base(new MainColorTable())
+            {
+                this.MainForm = mainForm;
+            }
 
             protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
             {
                 Rectangle r = new Rectangle(Point.Empty, e.Item.Size);
-                if (!e.Item.Selected)
+                if (e.Item.Name == this.MainForm.MapEditor.SelectedDrawType)
                 {
-                    SolidBrush brush;
-                    if (e.Item.Pressed)
-                    {
-                        brush = new SolidBrush(Color.FromArgb(100, 100, 100));
-                    }
-                    else
-                    {
-                        brush = new SolidBrush(Color.FromArgb(64, 64, 64));
-                    }
-                    e.Graphics.FillRectangle(brush, r);
+                    if (e.Item.Selected) e.Graphics.FillRectangle(Brushes.DarkCyan, r);
+                    else e.Graphics.FillRectangle(Brushes.CadetBlue, r);
                 }
-                else {
-                    e.Graphics.FillRectangle(Brushes.CadetBlue, r);
+                else
+                {
+                    if (!e.Item.Selected)
+                    {
+                        SolidBrush brush;
+                        if (e.Item.Pressed) brush = new SolidBrush(Color.FromArgb(100, 100, 100));
+                        else brush = new SolidBrush(Color.FromArgb(64, 64, 64));
+                        e.Graphics.FillRectangle(brush, r);
+                    }
+                    else {
+                        e.Graphics.FillRectangle(Brushes.CadetBlue, r);
+                    }
                 }
             }
 
@@ -135,11 +144,10 @@ namespace RPG_Paper_Maker
                 e.ArrowColor = Color.White;
                 base.OnRenderArrow(e);
             }
-
         }
 
         // -------------------------------------------------------------------
-        // Form1_Shown
+        // Form1
         // -------------------------------------------------------------------
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -151,16 +159,7 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // mapEditor1_KeyDown
-        // -------------------------------------------------------------------
-
-        private void mapEditor1_KeyDown(object sender, KeyEventArgs e)
-        {
-            UpdateKeyBoard(e.KeyCode, true);
-        }
-
-        // -------------------------------------------------------------------
-        // ProcessCmdKey
+        // Keyboard management
         // -------------------------------------------------------------------
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -173,27 +172,20 @@ namespace RPG_Paper_Maker
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        // -------------------------------------------------------------------
-        // mapEditor1_KeyUp
-        // -------------------------------------------------------------------
+        private void mapEditor1_KeyDown(object sender, KeyEventArgs e)
+        {
+            UpdateKeyBoard(e.KeyCode, true);
+        }
 
         private void mapEditor1_KeyUp(object sender, KeyEventArgs e)
         {
             UpdateKeyBoard(e.KeyCode, false);
         }
 
-        // -------------------------------------------------------------------
-        // TreeMap_KeyDown
-        // -------------------------------------------------------------------
-
         private void TreeMap_KeyDown(object sender, KeyEventArgs e)
         {
             UpdateKeyBoard(e.KeyCode, true);
         }
-
-        // -------------------------------------------------------------------
-        // TreeMap_KeyUp
-        // -------------------------------------------------------------------
 
         private void TreeMap_KeyUp(object sender, KeyEventArgs e)
         {
@@ -201,11 +193,16 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // ItemNewProject_Click
+        // Main menu bar
         // -------------------------------------------------------------------
 
         private void ItemNewProject_Click(object sender, EventArgs e)
         {
+            if (WANOK.DemoStep == DemoSteps.New)
+            {
+                WANOK.CurrentDemoDialog.Close();
+            }
+
             DialogNewProject dialog = new DialogNewProject();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -224,10 +221,6 @@ namespace RPG_Paper_Maker
             }
         }
 
-        // -------------------------------------------------------------------
-        // ItemOpenBrowse_Click
-        // -------------------------------------------------------------------
-
         private void ItemOpenBrowse_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -240,18 +233,10 @@ namespace RPG_Paper_Maker
             }
         }
 
-        // -------------------------------------------------------------------
-        // ItemCloseProject_Click
-        // -------------------------------------------------------------------
-
         private void ItemCloseProject_Click(object sender, EventArgs e)
         {
             CloseProject();
         }
-
-        // -------------------------------------------------------------------
-        // ItemExit_Click
-        // -------------------------------------------------------------------
 
         private void ItemExit_Click(object sender, EventArgs e)
         {
@@ -262,8 +247,26 @@ namespace RPG_Paper_Maker
             }
         }
 
+        private void ItemTutorials_Click(object sender, EventArgs e)
+        {
+            ProcessStartInfo sInfo = new ProcessStartInfo("http://rpgpapermaker.com/index.php/tutorials");
+            Process.Start(sInfo);
+        }
+
+        private void ItemDemo_Click(object sender, EventArgs e)
+        {
+            DemoTip();
+        }
+
+        private void ItemAbout_Click(object sender, EventArgs e)
+        {
+            AboutBox box = new AboutBox();
+            box.Text = "About RPG Paper Maker";
+            box.ShowDialog();
+        }
+
         // -------------------------------------------------------------------
-        // toolBar1_ButtonClick
+        // Toolbar
         // -------------------------------------------------------------------
 
         private void toolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
@@ -279,33 +282,12 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // ItemTutorials_Click
+        // Map editor menu bar
         // -------------------------------------------------------------------
 
-        private void ItemTutorials_Click(object sender, EventArgs e)
+        private void ItemFloor_DoubleClick(object sender, EventArgs e)
         {
-            ProcessStartInfo sInfo = new ProcessStartInfo("http://rpgpapermaker.com/index.php/tutorials");
-            Process.Start(sInfo);
-        }
-
-        // -------------------------------------------------------------------
-        // ItemDemo_Click
-        // -------------------------------------------------------------------
-
-        private void ItemDemo_Click(object sender, EventArgs e)
-        {
-            DemoTip();
-        }
-
-        // -------------------------------------------------------------------
-        // ItemAbout_Click
-        // -------------------------------------------------------------------
-
-        private void ItemAbout_Click(object sender, EventArgs e)
-        {
-            AboutBox box = new AboutBox();
-            box.Text = "About RPG Paper Maker";
-            box.ShowDialog();
+            //MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         // -------------------------------------------------------------------
@@ -316,7 +298,8 @@ namespace RPG_Paper_Maker
         {
             this.SplitContainerMain.Visible = b;
             this.SplitContainerTree.Visible = b;
-            this.mapEditor1.Visible = b;
+            this.MapEditor.Visible = b;
+            this.TilesetSelector.Visible = b;
             this.TreeMap.Visible = b;
         }
 
@@ -359,6 +342,7 @@ namespace RPG_Paper_Maker
             this.toolBarButtonNew.Enabled = b;
             this.ItemOpenBrowse.Enabled = b;
             this.toolBarButtonOpen.Enabled = b;
+            this.ItemSave.Enabled = b;
             this.ItemCloseProject.Enabled = b;
             this.ItemExit.Enabled = b;
             this.helpToolStripMenuItem.Enabled = b;
@@ -393,6 +377,7 @@ namespace RPG_Paper_Maker
         public void EnableGame()
         {
             EnableNoGame();
+            this.ItemSave.Enabled = true;
             this.ItemCloseProject.Enabled = true;
         }
 
@@ -405,7 +390,7 @@ namespace RPG_Paper_Maker
             SetTitle(name, dir);
             ShowProjectContain(true);
             EnableGame();
-            this.mapEditor1.Select();
+            this.MapEditor.Select();
         }
 
         // -------------------------------------------------------------------
@@ -442,7 +427,7 @@ namespace RPG_Paper_Maker
         {
             Thread.Sleep(100);
             WANOK.CurrentDemoDialog = new DialogDemoTipNewProject();
-            WANOK.CurrentDemoDialog.Location = new Point(this.Location.X + 100, this.Location.Y + 100);
+            WANOK.CurrentDemoDialog.Location = new Point(this.Location.X + 50, this.Location.Y + 100);
             WANOK.CurrentDemoDialog.Size = new Size(364, 209);
             WANOK.CurrentDemoDialog.Show();
             WANOK.DemoStep = DemoSteps.New;

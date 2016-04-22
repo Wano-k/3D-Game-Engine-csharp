@@ -83,7 +83,7 @@
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Demo";
+            this.Text = "Demo!";
             this.TopMost = true;
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

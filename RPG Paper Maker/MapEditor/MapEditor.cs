@@ -15,6 +15,7 @@ namespace RPG_Paper_Maker
         Map Map;
         CursorEditor CursorEditor;
         BasicEffect effect;
+        public string SelectedDrawType = "ItemFloor";
 
         // Content
         public static Texture2D currentFloorTex;
@@ -57,11 +58,8 @@ namespace RPG_Paper_Maker
 
         protected override void Update(GameTime gameTime)
         {
-            // Keyboard
-            KeyboardState kb = Keyboard.GetState();
-
             // Update camera
-            Camera.Update(gameTime, CursorEditor, kb);
+            Camera.Update(gameTime, CursorEditor);
         }
 
         // -------------------------------------------------------------------
