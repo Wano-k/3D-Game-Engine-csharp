@@ -11,13 +11,25 @@ namespace RPG_Paper_Maker
 {
     class TilesetSelector : WinFormsGraphicsDevice.MapEditorControl
     {
-        public Texture2D Tileset;
+        protected Texture2D TexTileset, TexSelector;
+        protected SelectionRectangle SelectionRectangle;
+
+
+        // -------------------------------------------------------------------
+        // Initialize
+        // -------------------------------------------------------------------
 
         protected override void Initialize()
         {
             base.Initialize();
-            FileStream fs = new FileStream(WANOK.CurrentDir + "\\Content\\Pictures\\Textures2D\\Tilesets\\plains.png", FileMode.Open);
-            Tileset = Texture2D.FromStream(GraphicsDevice,fs);
+            FileStream fs;
+            
+            // Loading images
+            fs = new FileStream(WANOK.CurrentDir + "\\Content\\Pictures\\Textures2D\\Tilesets\\plains.png", FileMode.Open);
+            TexTileset = Texture2D.FromStream(GraphicsDevice,fs);
+            fs = new FileStream("Config/bmp/editor_cursor.png", FileMode.Open);
+            TexSelector = Texture2D.FromStream(GraphicsDevice, fs);
+            SelectionRectangle = new SelectionRectangle(GraphicsDevice, TexSelector, 0, 0, 32, 32);
         }
 
         // -------------------------------------------------------------------
@@ -38,7 +50,8 @@ namespace RPG_Paper_Maker
             GraphicsDevice.Clear(new Color(224,224,224));
 
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
-            spriteBatch.Draw(Tileset, new Rectangle(0, 0, 256, 256), Color.White);
+            spriteBatch.Draw(TexTileset, new Rectangle(0, 0, 256, 256), Color.White);
+            SelectionRectangle.Draw(spriteBatch);
             spriteBatch.End();
         }
     }

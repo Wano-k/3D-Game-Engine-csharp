@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Maps");
             this.ImageListToolBar = new System.Windows.Forms.ImageList(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -47,6 +46,7 @@
             this.ItemNewProject = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemOpenProject = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemOpenBrowse = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemSave = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemCloseProject = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ItemExit = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,7 +57,6 @@
             this.toolBar1 = new System.Windows.Forms.ToolBar();
             this.toolBarButtonNew = new System.Windows.Forms.ToolBarButton();
             this.toolBarButtonOpen = new System.Windows.Forms.ToolBarButton();
-            this.ItemSave = new System.Windows.Forms.ToolStripMenuItem();
             this.TilesetSelector = new RPG_Paper_Maker.TilesetSelector();
             this.MapEditor = new RPG_Paper_Maker.MapEditor();
             this.statusStrip1.SuspendLayout();
@@ -141,15 +140,11 @@
             this.TreeMap.ImageList = this.ImageListTreeMap;
             this.TreeMap.Location = new System.Drawing.Point(0, 0);
             this.TreeMap.Name = "TreeMap";
-            treeNode1.ImageKey = "dir.png";
-            treeNode1.Name = "RootMapSelector";
-            treeNode1.Text = "Maps";
-            this.TreeMap.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
             this.TreeMap.SelectedImageIndex = 0;
             this.TreeMap.ShowRootLines = false;
             this.TreeMap.Size = new System.Drawing.Size(173, 165);
             this.TreeMap.TabIndex = 0;
+            this.TreeMap.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeMap_AfterSelect);
             this.TreeMap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeMap_KeyDown);
             this.TreeMap.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TreeMap_KeyUp);
             // 
@@ -158,6 +153,7 @@
             this.ImageListTreeMap.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageListTreeMap.ImageStream")));
             this.ImageListTreeMap.TransparentColor = System.Drawing.Color.Transparent;
             this.ImageListTreeMap.Images.SetKeyName(0, "dir.png");
+            this.ImageListTreeMap.Images.SetKeyName(1, "map.png");
             // 
             // menuStrip2
             // 
@@ -261,6 +257,15 @@
             this.ItemOpenBrowse.Text = "Browse...";
             this.ItemOpenBrowse.Click += new System.EventHandler(this.ItemOpenBrowse_Click);
             // 
+            // ItemSave
+            // 
+            this.ItemSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ItemSave.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemSave.Name = "ItemSave";
+            this.ItemSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.ItemSave.Size = new System.Drawing.Size(190, 22);
+            this.ItemSave.Text = "Save";
+            // 
             // ItemCloseProject
             // 
             this.ItemCloseProject.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -355,24 +360,17 @@
             this.toolBarButtonOpen.Text = "Open";
             this.toolBarButtonOpen.ToolTipText = "Open a project";
             // 
-            // ItemSave
-            // 
-            this.ItemSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ItemSave.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ItemSave.Name = "ItemSave";
-            this.ItemSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.ItemSave.Size = new System.Drawing.Size(190, 22);
-            this.ItemSave.Text = "Save";
-            // 
             // TilesetSelector
             // 
             this.TilesetSelector.BackColor = System.Drawing.Color.Black;
-            this.TilesetSelector.Location = new System.Drawing.Point(4, 4);
+            this.TilesetSelector.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.TilesetSelector.Location = new System.Drawing.Point(0, 1);
             this.TilesetSelector.Margin = new System.Windows.Forms.Padding(0);
             this.TilesetSelector.Name = "TilesetSelector";
             this.TilesetSelector.Size = new System.Drawing.Size(256, 256);
             this.TilesetSelector.TabIndex = 0;
-            this.TilesetSelector.VSync = false;
+            this.TilesetSelector.VSync = true;
+            this.TilesetSelector.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TilesetSelector_MouseDown);
             // 
             // MapEditor
             // 

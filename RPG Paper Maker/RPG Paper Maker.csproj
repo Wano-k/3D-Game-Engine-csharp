@@ -142,6 +142,8 @@
     <Compile Include="MapEditor\Wanok.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectionRectangle.cs" />
+    <Compile Include="TreeTag.cs" />
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -167,6 +169,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Basic\Content\Datas\Maps\TreeMapDatas.rpmdatas">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Basic\Game.rpm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -207,6 +212,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Basic\Content\Pictures\Textures2D\Tilesets\plains.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\bmp\editor_cursor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DLLs\MonoGame.Framework.dll" />

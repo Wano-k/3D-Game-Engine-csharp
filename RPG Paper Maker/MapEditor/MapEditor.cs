@@ -21,6 +21,10 @@ namespace RPG_Paper_Maker
         public static Texture2D currentFloorTex;
 
 
+        // -------------------------------------------------------------------
+        // Initialize
+        // -------------------------------------------------------------------
+
         protected override void Initialize()
         {
             base.Initialize();

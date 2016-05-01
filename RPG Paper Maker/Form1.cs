@@ -17,7 +17,7 @@ namespace RPG_Paper_Maker
     public partial class Form1 : Form
     {
         public string TitleName = "RPG Paper Maker";
-        public string version = "1.0.2.0";
+        public string version = "1.0.2.1";
 
 
         // -------------------------------------------------------------------
@@ -43,6 +43,18 @@ namespace RPG_Paper_Maker
             this.Text = this.TitleName;
             WANOK.InitializeKeyBoard();
             WANOK.ABSOLUTEENGINEPATH = Path.GetDirectoryName(Application.ExecutablePath);
+
+            // This code created the basic tree map nodes settings
+            /*
+            TreeNode rootNode, directoryNode, mapNode;
+            rootNode = this.TreeMap.Nodes.Add("Maps");
+            rootNode.Tag = TreeTag.CreateRoot();
+            directoryNode = rootNode.Nodes.Add("Plains");
+            directoryNode.Tag = TreeTag.CreateDirectory();
+            mapNode = directoryNode.Nodes.Add("MAP0001");
+            mapNode.Tag = TreeTag.CreateMap("MAP0001");
+            WANOK.SaveTree(this.TreeMap, "TreeMapDatas.rpmdatas");
+            */
 
             // Contain shown
             EnableNoGame();
@@ -287,7 +299,25 @@ namespace RPG_Paper_Maker
 
         private void ItemFloor_DoubleClick(object sender, EventArgs e)
         {
-            //MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        // -------------------------------------------------------------------
+        // Tree Map
+        // -------------------------------------------------------------------
+        
+        private void TreeMap_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
+        }
+
+        // -------------------------------------------------------------------
+        // TilesetSelector
+        // -------------------------------------------------------------------
+
+        private void TilesetSelector_MouseDown(object sender, MouseEventArgs e)
+        {
+            
         }
 
         // -------------------------------------------------------------------
@@ -388,6 +418,9 @@ namespace RPG_Paper_Maker
         public void OpenProject(string name, string dir)
         {
             SetTitle(name, dir);
+            this.TreeMap.Nodes.Clear();
+            WANOK.LoadTree(this.TreeMap, WANOK.CurrentDir + "\\Content\\Datas\\Maps\\TreeMapDatas.rpmdatas");
+            this.TreeMap.ExpandAll();
             ShowProjectContain(true);
             EnableGame();
             this.MapEditor.Select();

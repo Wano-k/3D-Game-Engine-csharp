@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -40,6 +42,8 @@ namespace RPG_Paper_Maker
         public static DemoSteps DemoStep = DemoSteps.None;
         public static Form CurrentDemoDialog = null;
         public static Dictionary<Keys, bool> KeyBoardStates = new Dictionary<Keys, bool>();
+        public static Vector2 MouseSelector = Vector2.Zero;
+        public static Vector2 MouseMapEditor = Vector2.Zero;
 
         // PATHS
         public static string ABSOLUTEENGINEPATH;
@@ -50,6 +54,7 @@ namespace RPG_Paper_Maker
         // -------------------------------------------------------------------
         // InitializeKeyBoard
         // -------------------------------------------------------------------
+
         public static void InitializeKeyBoard()
         {
             foreach (Keys k in Enum.GetValues(typeof(Keys)))
@@ -121,59 +126,81 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // MakeRelative
+        // GetImageData
         // -------------------------------------------------------------------
 
-        public static string MakeRelative(string fromPath, string toPath)
+        public static Color[] GetImageData(Color[] colorData, int width, Rectangle rectangle)
         {
-            if (string.IsNullOrEmpty(fromPath))
-            {
-                throw new ArgumentNullException("fromPath");
-            }
-
-            if (string.IsNullOrEmpty(toPath))
-            {
-                throw new ArgumentNullException("toPath");
-            }
-
-            Uri fromUri = new Uri(AppendDirectorySeparatorChar(fromPath));
-            Uri toUri = new Uri(AppendDirectorySeparatorChar(toPath));
-
-            if (fromUri.Scheme != toUri.Scheme)
-            {
-                return toPath;
-            }
-
-            Uri relativeUri = fromUri.MakeRelativeUri(toUri);
-            string relativePath = Uri.UnescapeDataString(relativeUri.ToString());
-
-            if (string.Equals(toUri.Scheme, Uri.UriSchemeFile, StringComparison.OrdinalIgnoreCase))
-            {
-                //relativePath = relativePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
-            }
-
-            return relativePath;
-        }
-
-        private static string AppendDirectorySeparatorChar(string path)
-        {
-            // Append a slash only if the path is a directory and does not have a slash.
-            if (!Path.HasExtension(path) &&
-                !path.EndsWith(Path.DirectorySeparatorChar.ToString()))
-            {
-                return path + Path.DirectorySeparatorChar;
-            }
-
-            return path;
+            Color[] color = new Color[rectangle.Width * rectangle.Height];
+            for (int x = 0; x < rectangle.Width; x++)
+                for (int y = 0; y < rectangle.Height; y++)
+                    color[x + y * rectangle.Width] = colorData[x + rectangle.X + (y + rectangle.Y) * width];
+            return color;
         }
 
         // -------------------------------------------------------------------
-        // GetContentPath
+        // GetSubImage
         // -------------------------------------------------------------------
 
-        public static string GetContentPath(string path)
+        public static Texture2D GetSubImage(GraphicsDevice GraphicsDevice, Texture2D image, Rectangle rectangle)
         {
-            return MakeRelative(ABSOLUTEENGINEPATH, CurrentDir + "\\" + path);
+            Color[] imageData = new Color[image.Width * image.Height];
+            image.GetData<Color>(imageData);
+            Color[] imagePiece = WANOK.GetImageData(imageData, image.Width, rectangle);
+            Texture2D subtexture = new Texture2D(GraphicsDevice, rectangle.Width, rectangle.Height);
+            subtexture.SetData<Color>(imagePiece);
+
+            return subtexture;
         }
+
+        // -------------------------------------------------------------------
+        // SaveTree
+        // -------------------------------------------------------------------
+
+        public static void SaveTree(TreeView tree, string filename)
+        {
+            using (Stream file = File.Open(filename, FileMode.Create))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                bf.Serialize(file, tree.Nodes.Cast<TreeNode>().ToList());
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // LoadTree
+        // -------------------------------------------------------------------
+
+        public static void LoadTree(TreeView tree, string filename)
+        {
+            using (Stream file = File.Open(filename, FileMode.Open))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                object obj = bf.Deserialize(file);
+                TreeNode[] nodeList = (obj as IEnumerable<TreeNode>).ToArray();
+                SetIconsTreeNodes(nodeList);
+                tree.Nodes.AddRange(nodeList);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // SetIconsTreeNodes
+        // -------------------------------------------------------------------
+
+        public static void SetIconsTreeNodes(IEnumerable<TreeNode> treeNodeCollection)
+        {
+            foreach (TreeNode node in treeNodeCollection)
+            {
+                if (((TreeTag)node.Tag).IsMap)
+                {
+                    node.ImageIndex = 1;
+                    node.SelectedImageIndex = 1;
+                }
+
+                TreeNode[] nodes = new TreeNode[node.Nodes.Count];
+                node.Nodes.CopyTo(nodes, 0);
+                SetIconsTreeNodes(nodes);
+            }
+        }
+
     }
 }
