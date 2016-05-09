@@ -88,7 +88,7 @@ namespace WinFormsGraphicsDevice
 
         protected override void OnPaint (PaintEventArgs e)
         {
-            UpdateInput();
+            //UpdateInput();
 
             string beginDrawError = BeginDraw();
 
@@ -147,7 +147,6 @@ namespace WinFormsGraphicsDevice
         private string HandleDeviceReset ()
         {
             bool needsReset = false;
-
             switch (GraphicsDevice.GraphicsDeviceStatus) {
                 case GraphicsDeviceStatus.Lost:
                     return "Graphics device lost";

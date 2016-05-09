@@ -125,6 +125,7 @@
             // 
             this.SplitContainerTree.Panel1.AutoScroll = true;
             this.SplitContainerTree.Panel1.Controls.Add(this.TilesetSelector);
+            this.SplitContainerTree.Panel1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.SplitContainerTree_Panel1_Scroll);
             // 
             // SplitContainerTree.Panel2
             // 
@@ -145,8 +146,6 @@
             this.TreeMap.Size = new System.Drawing.Size(173, 165);
             this.TreeMap.TabIndex = 0;
             this.TreeMap.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeMap_AfterSelect);
-            this.TreeMap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeMap_KeyDown);
-            this.TreeMap.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TreeMap_KeyUp);
             // 
             // ImageListTreeMap
             // 
@@ -381,8 +380,6 @@
             this.MapEditor.Size = new System.Drawing.Size(705, 414);
             this.MapEditor.TabIndex = 0;
             this.MapEditor.VSync = false;
-            this.MapEditor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.mapEditor1_KeyDown);
-            this.MapEditor.KeyUp += new System.Windows.Forms.KeyEventHandler(this.mapEditor1_KeyUp);
             // 
             // Form1
             // 
@@ -401,6 +398,8 @@
             this.Text = "RPG Paper Maker 0.0.0";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Shown += new System.EventHandler(this.Form1_Shown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.SplitContainerMain.Panel1.ResumeLayout(false);

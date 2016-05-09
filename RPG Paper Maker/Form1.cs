@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace RPG_Paper_Maker
     public partial class Form1 : Form
     {
         public string TitleName = "RPG Paper Maker";
-        public string version = "1.0.2.1";
+        public string version = "1.0.2.2";
 
 
         // -------------------------------------------------------------------
@@ -27,7 +28,6 @@ namespace RPG_Paper_Maker
         public Form1()
         {
             InitializeComponent();
-
             // Creating RPG Paper Maker Games folder
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\RPG Paper Maker Games";
             if (!Directory.Exists(path))
@@ -41,6 +41,7 @@ namespace RPG_Paper_Maker
             // Updating special infos
             this.TitleName = "RPG Paper Maker " + version;
             this.Text = this.TitleName;
+            this.KeyPreview = true;
             WANOK.InitializeKeyBoard();
             WANOK.ABSOLUTEENGINEPATH = Path.GetDirectoryName(Application.ExecutablePath);
 
@@ -184,24 +185,14 @@ namespace RPG_Paper_Maker
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        private void mapEditor1_KeyDown(object sender, KeyEventArgs e)
-        {
-            UpdateKeyBoard(e.KeyCode, true);
-        }
-
-        private void mapEditor1_KeyUp(object sender, KeyEventArgs e)
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             UpdateKeyBoard(e.KeyCode, false);
         }
 
-        private void TreeMap_KeyDown(object sender, KeyEventArgs e)
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             UpdateKeyBoard(e.KeyCode, true);
-        }
-
-        private void TreeMap_KeyUp(object sender, KeyEventArgs e)
-        {
-            UpdateKeyBoard(e.KeyCode, false);
         }
 
         // -------------------------------------------------------------------
@@ -210,6 +201,7 @@ namespace RPG_Paper_Maker
 
         private void ItemNewProject_Click(object sender, EventArgs e)
         {
+            OpenNewDialog();
             if (WANOK.DemoStep == DemoSteps.New)
             {
                 WANOK.CurrentDemoDialog.Close();
@@ -315,6 +307,15 @@ namespace RPG_Paper_Maker
         // TilesetSelector
         // -------------------------------------------------------------------
 
+        private void SplitContainerTree_Panel1_Scroll(object sender, ScrollEventArgs e)
+        {
+            this.SplitContainerTree.Panel1.Visible = false;
+            this.SplitContainerTree.Panel1.Invalidate();
+            this.SplitContainerTree.Panel1.Update();
+            this.SplitContainerTree.Panel1.Refresh();
+            this.SplitContainerTree.Panel1.Visible = true;
+        }
+
         private void TilesetSelector_MouseDown(object sender, MouseEventArgs e)
         {
             
@@ -342,6 +343,15 @@ namespace RPG_Paper_Maker
             WANOK.ProjectName = name;
             WANOK.CurrentDir = dir;
             this.Text = this.TitleName + " - " + name;
+        }
+
+        // -------------------------------------------------------------------
+        // OpenNewDialog
+        // -------------------------------------------------------------------
+
+        public void OpenNewDialog()
+        {
+            WANOK.InitializeKeyBoard();
         }
 
         // -------------------------------------------------------------------

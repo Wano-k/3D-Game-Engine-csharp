@@ -47,8 +47,9 @@ namespace RPG_Paper_Maker
 
         protected override void Draw(GameTime gameTime)
         {
+            //GraphicsDevice.Clear(Color.Black);
             GraphicsDevice.Clear(new Color(224,224,224));
-
+            
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
             spriteBatch.Draw(TexTileset, new Rectangle(0, 0, 256, 256), Color.White);
             SelectionRectangle.Draw(spriteBatch);
