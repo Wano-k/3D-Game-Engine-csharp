@@ -11,12 +11,13 @@ namespace RPG_Paper_Maker
     class SelectionRectangle
     {
         int BORDER_SIZE = 4;
-        public int X { get; }
-        public int Y { get; }
-        public int Width { get; }
-        public int Height { get; }
+        public int X;
+        public int Y;
+        public int Width;
+        public int Height;
         protected Texture2D BorderTopLeft;
         protected Texture2D BorderTop;
+        protected int RealX, RealY;
 
 
         // -------------------------------------------------------------------
@@ -25,14 +26,38 @@ namespace RPG_Paper_Maker
 
         public SelectionRectangle(GraphicsDevice GraphicsDevice, Texture2D image, int x, int y, int width, int height)
         {
-            this.X = x;
-            this.Y = y;
-            this.Width = width;
-            this.Height = height;
+            X = x;
+            Y = y;
+            Width = width;
+            Height = height;
+            RealX = 0;
+            RealY = 0;
 
             // Loading borders
-            this.BorderTopLeft = WANOK.GetSubImage(GraphicsDevice, image, new Rectangle(0, 0, BORDER_SIZE, BORDER_SIZE));
-            this.BorderTop = WANOK.GetSubImage(GraphicsDevice, image, new Rectangle(BORDER_SIZE, 0, 1, BORDER_SIZE));
+            BorderTopLeft = WANOK.GetSubImage(GraphicsDevice, image, new Rectangle(0, 0, BORDER_SIZE, BORDER_SIZE));
+            BorderTop = WANOK.GetSubImage(GraphicsDevice, image, new Rectangle(BORDER_SIZE, 0, 1, BORDER_SIZE));
+        }
+
+        // -------------------------------------------------------------------
+        // SetRectangle
+        // -------------------------------------------------------------------
+
+        public void SetRectangle(int x, int y, int width, int height)
+        {
+            X = (x / WANOK.BASIC_SQUARE_SIZE) * WANOK.BASIC_SQUARE_SIZE;
+            Y = (y / WANOK.BASIC_SQUARE_SIZE) * WANOK.BASIC_SQUARE_SIZE;
+            Width = width * WANOK.BASIC_SQUARE_SIZE;
+            Height = height * WANOK.BASIC_SQUARE_SIZE;
+        }
+
+        // -------------------------------------------------------------------
+        // SetRealPosition
+        // -------------------------------------------------------------------
+
+        public void SetRealPosition()
+        {
+            X = RealX;
+            Y = RealY;
         }
 
         // -------------------------------------------------------------------
@@ -41,23 +66,47 @@ namespace RPG_Paper_Maker
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            // Setting coords
+            int x = X;
+            int x_width = 0;
+
+            if (Width < 0)
+            {
+                x += Width + WANOK.BASIC_SQUARE_SIZE;
+                Width = -Width;
+                x_width = Width - WANOK.BASIC_SQUARE_SIZE;
+            }
+
+            int y = Y;
+            int y_height = 0;
+
+            if (Height < 0)
+            {
+                y += Height + WANOK.BASIC_SQUARE_SIZE;
+                Height = -Height;
+                y_height = Height - WANOK.BASIC_SQUARE_SIZE;
+            }
+
             // Left-Top
-            spriteBatch.Draw(this.BorderTopLeft, new Vector2(this.X + BORDER_SIZE, this.Y + BORDER_SIZE), null, Color.White, 0, new Vector2(BORDER_SIZE, BORDER_SIZE), 1.0f, SpriteEffects.None, 0);
+            spriteBatch.Draw(BorderTopLeft, new Vector2(x + BORDER_SIZE, y + BORDER_SIZE), null, Color.White, 0, new Vector2(BORDER_SIZE, BORDER_SIZE), 1.0f, SpriteEffects.None, 0);
             // Right-Top
-            spriteBatch.Draw(this.BorderTopLeft, new Vector2(this.X + this.Width - BORDER_SIZE, this.Y + BORDER_SIZE), null, Color.White, (float)Math.PI/2, new Vector2(BORDER_SIZE, BORDER_SIZE), 1.0f, SpriteEffects.None, 0);
+            spriteBatch.Draw(BorderTopLeft, new Vector2(x + Width - BORDER_SIZE, y + BORDER_SIZE), null, Color.White, (float)Math.PI/2, new Vector2(BORDER_SIZE, BORDER_SIZE), 1.0f, SpriteEffects.None, 0);
             // Right-Bot
-            spriteBatch.Draw(this.BorderTopLeft, new Vector2(this.X + this.Width - BORDER_SIZE, this.Y + this.Height - BORDER_SIZE), null, Color.White, (float)Math.PI, new Vector2(BORDER_SIZE, BORDER_SIZE), 1.0f, SpriteEffects.None, 0);
+            spriteBatch.Draw(BorderTopLeft, new Vector2(x + Width - BORDER_SIZE, y + Height - BORDER_SIZE), null, Color.White, (float)Math.PI, new Vector2(BORDER_SIZE, BORDER_SIZE), 1.0f, SpriteEffects.None, 0);
             // Left-Bot
-            spriteBatch.Draw(this.BorderTopLeft, new Vector2(this.X + BORDER_SIZE, this.Y + this.Height - BORDER_SIZE), null, Color.White, (float)Math.PI*1.5f, new Vector2(BORDER_SIZE, BORDER_SIZE), 1.0f, SpriteEffects.None, 0);
+            spriteBatch.Draw(BorderTopLeft, new Vector2(x + BORDER_SIZE, y + Height - BORDER_SIZE), null, Color.White, (float)Math.PI*1.5f, new Vector2(BORDER_SIZE, BORDER_SIZE), 1.0f, SpriteEffects.None, 0);
 
             // Top
-            spriteBatch.Draw(this.BorderTop, new Vector2(this.X + (BORDER_SIZE*(1+this.Width-(BORDER_SIZE*2))), this.Y + BORDER_SIZE), null, Color.White, 0, new Vector2(BORDER_SIZE, BORDER_SIZE), new Vector2(this.Width - (BORDER_SIZE*2), 1), SpriteEffects.None, 0);
+            spriteBatch.Draw(BorderTop, new Vector2(x + (BORDER_SIZE*(1 + Width-(BORDER_SIZE * 2))), y + BORDER_SIZE), null, Color.White, 0, new Vector2(BORDER_SIZE, BORDER_SIZE), new Vector2(Width - (BORDER_SIZE*2), 1), SpriteEffects.None, 0);
             // Right
-            spriteBatch.Draw(this.BorderTop, new Vector2(this.X + this.Width - BORDER_SIZE, this.Y + (BORDER_SIZE*(1 + this.Height - (BORDER_SIZE * 2)))), null, Color.White, (float)Math.PI / 2, new Vector2(BORDER_SIZE, BORDER_SIZE), new Vector2(this.Height - (BORDER_SIZE * 2), 1), SpriteEffects.None, 0);
+            spriteBatch.Draw(BorderTop, new Vector2(x + Width - BORDER_SIZE, y + (BORDER_SIZE*(1 + Height - (BORDER_SIZE * 2)))), null, Color.White, (float)Math.PI / 2, new Vector2(BORDER_SIZE, BORDER_SIZE), new Vector2(Height - (BORDER_SIZE * 2), 1), SpriteEffects.None, 0);
             // Bot
-            spriteBatch.Draw(this.BorderTop, new Vector2(this.X + this.Width - (BORDER_SIZE* (1 + this.Width - (BORDER_SIZE * 2))), this.Y + this.Height - BORDER_SIZE), null, Color.White, (float)Math.PI, new Vector2(BORDER_SIZE, BORDER_SIZE), new Vector2(this.Width - (BORDER_SIZE * 2), 1), SpriteEffects.None, 0);
+            spriteBatch.Draw(BorderTop, new Vector2(x + Width - (BORDER_SIZE* (1 + Width - (BORDER_SIZE * 2))), y + Height - BORDER_SIZE), null, Color.White, (float)Math.PI, new Vector2(BORDER_SIZE, BORDER_SIZE), new Vector2(Width - (BORDER_SIZE * 2), 1), SpriteEffects.None, 0);
             // Left
-            spriteBatch.Draw(this.BorderTop, new Vector2(this.X + BORDER_SIZE, this.Y + this.Height - (BORDER_SIZE * (1 + this.Height - (BORDER_SIZE * 2)))), null, Color.White, (float)Math.PI * 1.5f, new Vector2(BORDER_SIZE, BORDER_SIZE), new Vector2(this.Height - (BORDER_SIZE * 2), 1), SpriteEffects.None, 0);
+            spriteBatch.Draw(BorderTop, new Vector2(x + BORDER_SIZE, y + Height - (BORDER_SIZE * (1 + Height - (BORDER_SIZE * 2)))), null, Color.White, (float)Math.PI * 1.5f, new Vector2(BORDER_SIZE, BORDER_SIZE), new Vector2(Height - (BORDER_SIZE * 2), 1), SpriteEffects.None, 0);
+
+            RealX = X - x_width;
+            RealY = Y - y_height;
         }
     }
 }

@@ -57,6 +57,7 @@
             this.toolBar1 = new System.Windows.Forms.ToolBar();
             this.toolBarButtonNew = new System.Windows.Forms.ToolBarButton();
             this.toolBarButtonOpen = new System.Windows.Forms.ToolBarButton();
+            this.scrollPanel1 = new RPG_Paper_Maker.ScrollPanel();
             this.TilesetSelector = new RPG_Paper_Maker.TilesetSelector();
             this.MapEditor = new RPG_Paper_Maker.MapEditor();
             this.statusStrip1.SuspendLayout();
@@ -70,6 +71,7 @@
             this.SplitContainerTree.SuspendLayout();
             this.menuStrip2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.scrollPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ImageListToolBar
@@ -123,9 +125,7 @@
             // 
             // SplitContainerTree.Panel1
             // 
-            this.SplitContainerTree.Panel1.AutoScroll = true;
-            this.SplitContainerTree.Panel1.Controls.Add(this.TilesetSelector);
-            this.SplitContainerTree.Panel1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.SplitContainerTree_Panel1_Scroll);
+            this.SplitContainerTree.Panel1.Controls.Add(this.scrollPanel1);
             // 
             // SplitContainerTree.Panel2
             // 
@@ -359,17 +359,30 @@
             this.toolBarButtonOpen.Text = "Open";
             this.toolBarButtonOpen.ToolTipText = "Open a project";
             // 
+            // scrollPanel1
+            // 
+            this.scrollPanel1.AutoScroll = true;
+            this.scrollPanel1.Controls.Add(this.TilesetSelector);
+            this.scrollPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scrollPanel1.Location = new System.Drawing.Point(0, 0);
+            this.scrollPanel1.Name = "scrollPanel1";
+            this.scrollPanel1.Size = new System.Drawing.Size(173, 265);
+            this.scrollPanel1.TabIndex = 0;
+            this.scrollPanel1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.scrollPanel1_Scroll);
+            // 
             // TilesetSelector
             // 
             this.TilesetSelector.BackColor = System.Drawing.Color.Black;
             this.TilesetSelector.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.TilesetSelector.Location = new System.Drawing.Point(0, 1);
+            this.TilesetSelector.Location = new System.Drawing.Point(0, 0);
             this.TilesetSelector.Margin = new System.Windows.Forms.Padding(0);
             this.TilesetSelector.Name = "TilesetSelector";
             this.TilesetSelector.Size = new System.Drawing.Size(256, 256);
             this.TilesetSelector.TabIndex = 0;
             this.TilesetSelector.VSync = true;
             this.TilesetSelector.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TilesetSelector_MouseDown);
+            this.TilesetSelector.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TilesetSelector_MouseMove);
+            this.TilesetSelector.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TilesetSelector_MouseUp);
             // 
             // MapEditor
             // 
@@ -415,6 +428,7 @@
             this.menuStrip2.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.scrollPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -450,6 +464,7 @@
         private System.Windows.Forms.ToolStripMenuItem ItemFloor2;
         private TilesetSelector TilesetSelector;
         private System.Windows.Forms.ToolStripMenuItem ItemSave;
+        private ScrollPanel scrollPanel1;
     }
 }
 

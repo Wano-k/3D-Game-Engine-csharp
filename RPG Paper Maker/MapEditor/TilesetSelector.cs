@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
@@ -13,6 +14,8 @@ namespace RPG_Paper_Maker
     {
         protected Texture2D TexTileset, TexSelector;
         protected SelectionRectangle SelectionRectangle;
+        protected int Width;
+        protected int Height;
 
 
         // -------------------------------------------------------------------
@@ -29,7 +32,47 @@ namespace RPG_Paper_Maker
             TexTileset = Texture2D.FromStream(GraphicsDevice,fs);
             fs = new FileStream("Config/bmp/editor_cursor.png", FileMode.Open);
             TexSelector = Texture2D.FromStream(GraphicsDevice, fs);
-            SelectionRectangle = new SelectionRectangle(GraphicsDevice, TexSelector, 0, 0, 32, 32);
+            SelectionRectangle = new SelectionRectangle(GraphicsDevice, TexSelector, 0, 0, (int)WANOK.BASIC_SQUARE_SIZE, (int)WANOK.BASIC_SQUARE_SIZE);
+
+            // Calcul size
+            Width = (int)(TexTileset.Width * WANOK.RELATION_SIZE);
+            Height = (int)(TexTileset.Height * WANOK.RELATION_SIZE);
+        }
+
+        // -------------------------------------------------------------------
+        // MakeRectangleSelection
+        // -------------------------------------------------------------------
+
+        protected void MakeRectangleSelection()
+        {
+            // If first pressure
+            if (WANOK.TilesetMouseManager.IsButtonDown(MouseButtons.Left))
+            {
+                int x = WANOK.TilesetMouseManager.GetPosition().X;
+                int y = WANOK.TilesetMouseManager.GetPosition().Y;
+
+                if (x >= 0 && x < Width && y >= 0 && y < Height) SelectionRectangle.SetRectangle(x, y, 1, 1);
+            }
+            else
+            {
+                int x = WANOK.TilesetMouseManager.GetPosition().X;
+                if (x < 0) x = 0;
+                if (x >= Width) x = Width - 1;
+                int init_pos_x = SelectionRectangle.X / WANOK.BASIC_SQUARE_SIZE;
+                int pos_x = x / WANOK.BASIC_SQUARE_SIZE;
+                int i_x = init_pos_x <= pos_x ? 1 : -1;
+                int width = (pos_x - init_pos_x) + i_x;
+                SelectionRectangle.Width = width * WANOK.BASIC_SQUARE_SIZE;
+
+                int y = WANOK.TilesetMouseManager.GetPosition().Y;
+                if (y < 0) y = 0;
+                if (y >= Height) y = Height - 1;
+                int init_pos_y = SelectionRectangle.Y / WANOK.BASIC_SQUARE_SIZE;
+                int pos_y = y / WANOK.BASIC_SQUARE_SIZE;
+                int i_y = init_pos_y <= pos_y ? 1 : -1;
+                int height = (pos_y - init_pos_y) + i_y;
+                SelectionRectangle.Height = height * WANOK.BASIC_SQUARE_SIZE;
+            }
         }
 
         // -------------------------------------------------------------------
@@ -38,7 +81,20 @@ namespace RPG_Paper_Maker
 
         protected override void Update(GameTime gameTime)
         {
+            // Button Down
+            if (WANOK.TilesetMouseManager.IsButtonDownRepeat(MouseButtons.Left))
+            {
+                MakeRectangleSelection();
+            }
 
+            // Button Up
+            if (WANOK.TilesetMouseManager.IsButtonUp(MouseButtons.Left))
+            {
+                SelectionRectangle.SetRealPosition();
+            }
+
+            // Update mouse
+            WANOK.TilesetMouseManager.Update();
         }
 
         // -------------------------------------------------------------------
@@ -47,11 +103,10 @@ namespace RPG_Paper_Maker
 
         protected override void Draw(GameTime gameTime)
         {
-            //GraphicsDevice.Clear(Color.Black);
-            GraphicsDevice.Clear(new Color(224,224,224));
+            GraphicsDevice.Clear(new Color(224, 224, 224));
             
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
-            spriteBatch.Draw(TexTileset, new Rectangle(0, 0, 256, 256), Color.White);
+            spriteBatch.Draw(TexTileset, new Rectangle(0, 0, Width, Height), Color.White);
             SelectionRectangle.Draw(spriteBatch);
             spriteBatch.End();
         }

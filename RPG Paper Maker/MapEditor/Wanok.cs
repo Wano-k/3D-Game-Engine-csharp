@@ -33,7 +33,9 @@ namespace RPG_Paper_Maker
             new Vector3(1.0f, 0.0f, 0.0f),
             new Vector3(0.0f, 0.0f, 0.0f)
         };
-        public static float SQUARESIZE = 16.0f;
+        public static int BASIC_SQUARE_SIZE = 32;
+        public static int SQUARE_SIZE = 16;
+        public static float RELATION_SIZE { get { return (float)(BASIC_SQUARE_SIZE) / SQUARE_SIZE; } }
         public static int PORTIONSIZE = 16;
         public static int PORTION_RADIUS = 10;
         public static string CurrentDir = ".";
@@ -42,8 +44,8 @@ namespace RPG_Paper_Maker
         public static DemoSteps DemoStep = DemoSteps.None;
         public static Form CurrentDemoDialog = null;
         public static Dictionary<Keys, bool> KeyBoardStates = new Dictionary<Keys, bool>();
-        public static Vector2 MouseSelector = Vector2.Zero;
-        public static Vector2 MouseMapEditor = Vector2.Zero;
+        public static MouseManager TilesetMouseManager = new MouseManager();
+        public static MouseManager MapMouseManager = new MouseManager();
 
         // PATHS
         public static string ABSOLUTEENGINEPATH;

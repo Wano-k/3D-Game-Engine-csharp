@@ -47,7 +47,7 @@ namespace RPG_Paper_Maker
 
         public int GetX()
         {
-            return (int)((Position.X + 1) / WANOK.SQUARESIZE);
+            return (int)((Position.X + 1) / WANOK.SQUARE_SIZE);
         }
 
         // -------------------------------------------------------------------
@@ -56,7 +56,7 @@ namespace RPG_Paper_Maker
 
         public int GetY()
         {
-            return (int)((Position.Z + 1) / WANOK.SQUARESIZE);
+            return (int)((Position.Z + 1) / WANOK.SQUARE_SIZE);
         }
 
         // -------------------------------------------------------------------

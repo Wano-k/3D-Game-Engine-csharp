@@ -140,8 +140,12 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MapEditor\Wanok.cs" />
+    <Compile Include="MouseManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScrollPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SelectionRectangle.cs" />
     <Compile Include="TreeTag.cs" />
     <EmbeddedResource Include="AboutBox.resx">

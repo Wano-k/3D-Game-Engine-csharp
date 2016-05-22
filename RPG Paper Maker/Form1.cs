@@ -28,6 +28,7 @@ namespace RPG_Paper_Maker
         public Form1()
         {
             InitializeComponent();
+
             // Creating RPG Paper Maker Games folder
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\RPG Paper Maker Games";
             if (!Directory.Exists(path))
@@ -307,18 +308,28 @@ namespace RPG_Paper_Maker
         // TilesetSelector
         // -------------------------------------------------------------------
 
-        private void SplitContainerTree_Panel1_Scroll(object sender, ScrollEventArgs e)
+        private void scrollPanel1_Scroll(object sender, ScrollEventArgs e)
         {
-            this.SplitContainerTree.Panel1.Visible = false;
-            this.SplitContainerTree.Panel1.Invalidate();
-            this.SplitContainerTree.Panel1.Update();
-            this.SplitContainerTree.Panel1.Refresh();
-            this.SplitContainerTree.Panel1.Visible = true;
+            this.scrollPanel1.Visible = false;
+            this.scrollPanel1.Invalidate();
+            this.scrollPanel1.Update();
+            this.scrollPanel1.Refresh();
+            this.scrollPanel1.Visible = true;
         }
 
         private void TilesetSelector_MouseDown(object sender, MouseEventArgs e)
         {
-            
+            WANOK.TilesetMouseManager.SetMouseDownStatus(e);
+        }
+
+        private void TilesetSelector_MouseUp(object sender, MouseEventArgs e)
+        {
+            WANOK.TilesetMouseManager.SetMouseUpStatus(e);
+        }
+
+        private void TilesetSelector_MouseMove(object sender, MouseEventArgs e)
+        {
+            WANOK.TilesetMouseManager.SetPosition(e.Location);
         }
 
         // -------------------------------------------------------------------
@@ -493,5 +504,6 @@ namespace RPG_Paper_Maker
             }
             WANOK.DemoStep = DemoSteps.None;
         }
+
     }
 }
