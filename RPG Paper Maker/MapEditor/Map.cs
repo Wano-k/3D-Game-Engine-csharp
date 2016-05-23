@@ -71,6 +71,7 @@ namespace RPG_Paper_Maker
         {
             // Effect settings
             effect.VertexColorEnabled = true;
+            effect.TextureEnabled = false;
             effect.World = Matrix.Identity * Matrix.CreateScale(16.0f,1.0f,16.0f);
 
             // Drawing grid

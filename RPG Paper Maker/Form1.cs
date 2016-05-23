@@ -504,6 +504,5 @@ namespace RPG_Paper_Maker
             }
             WANOK.DemoStep = DemoSteps.None;
         }
-
     }
 }

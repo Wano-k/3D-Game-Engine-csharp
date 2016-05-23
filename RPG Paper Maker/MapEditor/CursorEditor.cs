@@ -14,13 +14,11 @@ namespace RPG_Paper_Maker
         GraphicsDevice device;
         public Vector3 Position;
         public Vector2 Size;
-        private VertexPositionTexture[] verticesHero;
+        private VertexPositionTexture[] vertices;
         private VertexBuffer vb;
         private IndexBuffer ib;
         private int[] indexes;
-        private int Frame = 0, FrameInactive = 0, FrameTick = 0, FrameTickInactive = 0, FrameDuration = 200, FrameDurationInactive = 200;
-        private int Frame_inactive = 0;
-        private bool Act = true;
+        private int Frame = 0, FrameTick = 0, FrameDuration = 100;
 
 
         // -------------------------------------------------------------------
@@ -60,10 +58,10 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // CreateHeroWithTex : coords = [x,y,width,height]
+        // CreateTex : coords = [x,y,width,height]
         // -------------------------------------------------------------------
 
-        private void CreateHeroWithTex(int[] coords, Texture2D texture)
+        protected void CreateTex(int[] coords, Texture2D texture)
         {
             // Texture coords
             float left = ((float)coords[0]) / texture.Width;
@@ -71,13 +69,22 @@ namespace RPG_Paper_Maker
             float bot = ((float)(coords[1] + coords[3])) / texture.Height;
             float right = ((float)(coords[0] + coords[2])) / texture.Width;
 
+            // Adjust in order to limit risk of textures flood
+            float width = left + right;
+            float height = top + bot;
+            int coef = 10000;
+            left += width / coef;
+            right -= width / coef;
+            top += height / coef;
+            bot -= height / coef;
+
             // Vertex Position and Texture
-            this.verticesHero = new VertexPositionTexture[]
+            this.vertices = new VertexPositionTexture[]
            {
-               new VertexPositionTexture(WANOK.VERTICESSPRITE[0], new Vector2(left,top)),
-               new VertexPositionTexture(WANOK.VERTICESSPRITE[1], new Vector2(right,top)),
-               new VertexPositionTexture(WANOK.VERTICESSPRITE[2], new Vector2(right,bot)),
-               new VertexPositionTexture(WANOK.VERTICESSPRITE[3], new Vector2(left,bot))
+               new VertexPositionTexture(WANOK.VERTICESFLOOR[0], new Vector2(left,top)),
+               new VertexPositionTexture(WANOK.VERTICESFLOOR[1], new Vector2(right,top)),
+               new VertexPositionTexture(WANOK.VERTICESFLOOR[2], new Vector2(right,bot)),
+               new VertexPositionTexture(WANOK.VERTICESFLOOR[3], new Vector2(left,bot))
            };
 
             // Vertex Indexes
@@ -87,7 +94,7 @@ namespace RPG_Paper_Maker
             };
 
             // Update buffers
-            this.vb.SetData(this.verticesHero);
+            this.vb.SetData(this.vertices);
             this.ib.SetData(this.indexes);
         }
 
@@ -95,77 +102,14 @@ namespace RPG_Paper_Maker
         // Update
         // -------------------------------------------------------------------
 
-        public void Update(GameTime gameTime, Camera camera, Map map, KeyboardState kb)
+        public void Update(GameTime gameTime)
         {
-            double angle = camera.HorizontalAngle;
-            int x = GetX(), y = GetY(), x_plus, z_plus;
-            double speed = 1.1 * camera.RotateVelocity * (gameTime.ElapsedGameTime.Milliseconds) / 1000.0;
-
-            // Updating diag speed
-            if (kb.IsKeyDown(Keys.W) || kb.IsKeyDown(Keys.S)) // Up / Down
+            FrameTick += gameTime.ElapsedGameTime.Milliseconds;
+            if (FrameTick >= FrameDuration)
             {
-                if (kb.IsKeyDown(Keys.A) || kb.IsKeyDown(Keys.D)) // Left / Right
-                {
-                    speed *= 0.7;
-                }
-            }
-
-            float previous_x = Position.X, previous_y = Position.Y, previous_z = Position.Z;
-            if (kb.IsKeyDown(Keys.W))
-            {
-                x_plus = (int)(speed * (Math.Cos(angle * Math.PI / 180.0)));
-                z_plus = (int)(speed * (Math.Sin(angle * Math.PI / 180.0)));
-                Position.Z += z_plus;
-                Position.X += x_plus;
-                //if ((y > 0 && y_plus < 0) || (y < map.Size[1] && y_plus > 0)) Position.Y += y_plus;
-                //if (y_plus == 0 && ((x > 0 && x_plus < 0) || (x < map.Size[0] && x_plus > 0))) Position.X += x_plus;
-            }
-            if (kb.IsKeyDown(Keys.S))
-            {
-                x_plus = (int)(speed * (Math.Cos(angle * Math.PI / 180.0)));
-                z_plus = (int)(speed * (Math.Sin(angle * Math.PI / 180.0)));
-                Position.Z -= z_plus;
-                Position.X -= x_plus;
-            }
-            if (kb.IsKeyDown(Keys.A))
-            {
-                x_plus = (int)(speed * (Math.Cos((angle - 90.0) * Math.PI / 180.0)));
-                z_plus = (int)(speed * (Math.Sin((angle - 90.0) * Math.PI / 180.0)));
-                Position.Z += z_plus;
-                Position.X += x_plus;
-            }
-            if (kb.IsKeyDown(Keys.D))
-            {
-                x_plus = (int)(speed * (Math.Cos((angle - 90.0) * Math.PI / 180.0)));
-                z_plus = (int)(speed * (Math.Sin((angle - 90.0) * Math.PI / 180.0)));
-                Position.Z -= z_plus;
-                Position.X -= x_plus;
-            }
-
-            // Frame update
-            if (previous_x != Position.X || previous_y != Position.Y || previous_z != Position.Z)
-            {
-                FrameInactive = 0;
-                Act = false;
-                FrameTick += gameTime.ElapsedGameTime.Milliseconds;
-                if (FrameTick >= FrameDuration)
-                {
-                    Frame += 1;
-                    if (Frame > 3) Frame = 0;
-                    FrameTick = 0;
-                }
-            }
-            else
-            {
-                Frame = 0;
-                Act = true;
-                FrameTickInactive += gameTime.ElapsedGameTime.Milliseconds;
-                if (FrameTickInactive >= FrameDurationInactive)
-                {
-                    FrameInactive += 1;
-                    if (FrameInactive > 3) FrameInactive = 0;
-                    FrameTickInactive = 0;
-                }
+                Frame += 1;
+                if (Frame > 3) Frame = 0;
+                FrameTick = 0;
             }
         }
 
@@ -173,9 +117,21 @@ namespace RPG_Paper_Maker
         // Draw
         // -------------------------------------------------------------------
 
-        public void Draw(GameTime gameTime, Camera camera, BasicEffect effect)
+        public void Draw(GameTime gameTime, BasicEffect effect)
         {
-            
+            // Setting effect
+            effect.VertexColorEnabled = false;
+            effect.TextureEnabled = true;
+            effect.Texture = MapEditor.TexCursor;
+            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
+
+            CreateTex(new int[] { WANOK.BASIC_SQUARE_SIZE * Frame, 0, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE }, MapEditor.TexCursor);
+
+            foreach (EffectPass pass in effect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                device.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, indexes, 0, 2);
+            }
         }
     }
 }

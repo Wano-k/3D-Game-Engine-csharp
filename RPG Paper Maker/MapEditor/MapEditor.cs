@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace RPG_Paper_Maker
         public string SelectedDrawType = "ItemFloor";
 
         // Content
-        public static Texture2D currentFloorTex;
+        public static Texture2D TexCursor;
 
 
         // -------------------------------------------------------------------
@@ -28,6 +29,11 @@ namespace RPG_Paper_Maker
         protected override void Initialize()
         {
             base.Initialize();
+
+            // Load textures
+            FileStream fs;
+            fs = new FileStream("Config/bmp/editor_cursor.png", FileMode.Open);
+            TexCursor = Texture2D.FromStream(GraphicsDevice, fs);
 
             // Create game components
             Camera = new Camera(this.GraphicsDevice);
@@ -64,6 +70,7 @@ namespace RPG_Paper_Maker
         {
             // Update camera
             Camera.Update(gameTime, CursorEditor);
+            CursorEditor.Update(gameTime);
         }
 
         // -------------------------------------------------------------------
@@ -80,6 +87,7 @@ namespace RPG_Paper_Maker
             effect.World = Matrix.Identity;
 
             Map.Draw(gameTime, effect);
+            CursorEditor.Draw(gameTime, effect);
         }
     }
 }
