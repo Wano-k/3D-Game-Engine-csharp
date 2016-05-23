@@ -301,7 +301,16 @@ namespace RPG_Paper_Maker
         
         private void TreeMap_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            TreeTag tag = (TreeTag)e.Node.Tag;
 
+            if (tag.IsMap)
+            {
+                ShowMapEditor(true);
+            }
+            else
+            {
+                ShowMapEditor(false);
+            }
         }
 
         // -------------------------------------------------------------------
@@ -340,9 +349,19 @@ namespace RPG_Paper_Maker
         {
             this.SplitContainerMain.Visible = b;
             this.SplitContainerTree.Visible = b;
-            this.MapEditor.Visible = b;
+            MapEditor.Visible = b;
             this.TilesetSelector.Visible = b;
             this.TreeMap.Visible = b;
+        }
+
+        // -------------------------------------------------------------------
+        // ShowMapEditor
+        // -------------------------------------------------------------------
+
+        public void ShowMapEditor(bool b)
+        {
+            MapEditor.Visible = b;
+            menuStrip2.Visible = b;
         }
 
         // -------------------------------------------------------------------
@@ -444,7 +463,7 @@ namespace RPG_Paper_Maker
             this.TreeMap.ExpandAll();
             ShowProjectContain(true);
             EnableGame();
-            this.MapEditor.Select();
+            ShowMapEditor(false);
         }
 
         // -------------------------------------------------------------------
