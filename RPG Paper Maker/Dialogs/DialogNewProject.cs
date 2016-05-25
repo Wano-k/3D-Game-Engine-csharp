@@ -24,9 +24,9 @@ namespace RPG_Paper_Maker
         public DialogNewProject()
         {
             InitializeComponent();
-			string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-			path = Path.Combine (path, "RPG Paper Maker Games");
-			this.TextCtrlLocation.Text = path;
+			      string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+			      path = Path.Combine (path, "RPG Paper Maker Games");
+			      this.TextCtrlLocation.Text = path;
         }
 
         // -------------------------------------------------------------------
@@ -43,7 +43,7 @@ namespace RPG_Paper_Maker
                 }
                 else
                 {
-					string dirPath = Path.Combine (this.TextCtrlLocation.Text, this.TextCtrlProjectName.Text);
+					          string dirPath = Path.Combine (this.TextCtrlLocation.Text, this.TextCtrlProjectName.Text);
                     if (!Directory.Exists(dirPath))
                     {
                         try
@@ -51,12 +51,11 @@ namespace RPG_Paper_Maker
                             Directory.CreateDirectory(dirPath);
                             try
                             {
-								string executablePath = Path.GetDirectoryName(Application.ExecutablePath);
-								string basicPath = Path.Combine(executablePath, "Basic");
-								WANOK.CopyAll(new DirectoryInfo(basicPath), new DirectoryInfo(dirPath));
+								                string executablePath = Path.GetDirectoryName(Application.ExecutablePath);
+								                string basicPath = Path.Combine(executablePath, "Basic");
+								                WANOK.CopyAll(new DirectoryInfo(basicPath), new DirectoryInfo(dirPath));
                                 this.ProjectName = this.TextCtrlProjectName.Text.Trim();
-								this.DirPath = Path.Combine(this.TextCtrlLocation.Text, this.ProjectName);
-
+								                this.DirPath = Path.Combine(this.TextCtrlLocation.Text, this.ProjectName);
                                 this.DialogResult = DialogResult.OK;
                                 this.Close();
                             }

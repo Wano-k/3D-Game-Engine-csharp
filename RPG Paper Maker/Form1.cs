@@ -31,7 +31,7 @@ namespace RPG_Paper_Maker
 
             // Creating RPG Paper Maker Games folder
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-			path = Path.Combine (path, "RPG Paper Maker Games");
+			      path = Path.Combine (path, "RPG Paper Maker Games");
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -141,7 +141,7 @@ namespace RPG_Paper_Maker
 
             protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
             {
-                
+
             }
 
             protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
@@ -299,7 +299,7 @@ namespace RPG_Paper_Maker
         // -------------------------------------------------------------------
         // Tree Map
         // -------------------------------------------------------------------
-        
+
         private void TreeMap_AfterSelect(object sender, TreeViewEventArgs e)
         {
             TreeTag tag = (TreeTag)e.Node.Tag;
