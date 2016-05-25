@@ -43,7 +43,7 @@ namespace RPG_Paper_Maker
                 }
                 else
                 {
-					          string dirPath = Path.Combine (this.TextCtrlLocation.Text, this.TextCtrlProjectName.Text);
+		    string dirPath = Path.Combine (this.TextCtrlLocation.Text, this.TextCtrlProjectName.Text);
                     if (!Directory.Exists(dirPath))
                     {
                         try
