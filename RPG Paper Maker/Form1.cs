@@ -30,7 +30,8 @@ namespace RPG_Paper_Maker
             InitializeComponent();
 
             // Creating RPG Paper Maker Games folder
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\RPG Paper Maker Games";
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+			path = Path.Combine (path, "RPG Paper Maker Games");
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
