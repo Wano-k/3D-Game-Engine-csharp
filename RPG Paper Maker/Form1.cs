@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace RPG_Paper_Maker
 {
     public partial class Form1 : Form
@@ -306,6 +307,7 @@ namespace RPG_Paper_Maker
             if (tag.IsMap)
             {
                 ShowMapEditor(true);
+                MapEditor.ReLoadMap("test");
             }
             else
             {

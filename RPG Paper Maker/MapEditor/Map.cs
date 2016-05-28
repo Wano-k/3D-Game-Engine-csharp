@@ -26,27 +26,40 @@ namespace RPG_Paper_Maker
         {
             this.Device = Device;
 
-            // Create grid
-            int size = 20;
-            List<VertexPositionColor> gridVerticesList = new List<VertexPositionColor>();
-            for (int i = 0; i <= size; i++)
-            {
-                foreach (VertexPositionColor vertex in CreateGridLine(0,i,size,i))
-                {
-                    gridVerticesList.Add(vertex);
-                }
-            }
-            for (int i = 0; i <= size; i++)
-            {
-                foreach (VertexPositionColor vertex in CreateGridLine(i,0,i,size))
-                {
-                    gridVerticesList.Add(vertex);
-                }
-            }
+            LoadMap(mapName);
 
-            this.GridVerticesArray = gridVerticesList.ToArray();
             vb = new VertexBuffer(this.Device, VertexPositionTexture.VertexDeclaration, this.GridVerticesArray.Length, BufferUsage.None);
             vb.SetData(this.GridVerticesArray);
+        }
+
+        // -------------------------------------------------------------------
+        // ReLoadMap
+        // -------------------------------------------------------------------
+
+        public void LoadMap(String mapName)
+        {
+            // Create grid
+
+            int width = 20;
+            int height = 20;
+            List<VertexPositionColor> gridVerticesList = new List<VertexPositionColor>();
+            // Columns
+            for (int i = 0; i <= width; i++)
+            {
+                foreach (VertexPositionColor vertex in CreateGridLine(i, 0, i, height))
+                {
+                    gridVerticesList.Add(vertex);
+                }
+            }
+            // Rows
+            for (int i = 0; i <= height; i++)
+            {
+                foreach (VertexPositionColor vertex in CreateGridLine(0, i, width, i))
+                {
+                    gridVerticesList.Add(vertex);
+                }
+            } 
+            this.GridVerticesArray = gridVerticesList.ToArray();
         }
 
         // -------------------------------------------------------------------
@@ -58,8 +71,8 @@ namespace RPG_Paper_Maker
             // Vertex Position and Texture
             return new VertexPositionColor[]
             {
-                new VertexPositionColor(new Vector3(x1, 0, z1), Color.White),
-                new VertexPositionColor(new Vector3(x2, 0, z2), Color.White)
+                new VertexPositionColor(new Vector3(x1, MapEditor.Height, z1), Color.White),
+                new VertexPositionColor(new Vector3(x2, MapEditor.Height, z2), Color.White)
             };
         }
 

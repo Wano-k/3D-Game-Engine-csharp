@@ -16,7 +16,9 @@ namespace RPG_Paper_Maker
         Map Map;
         CursorEditor CursorEditor;
         BasicEffect effect;
+        Boolean isMapReloading = false;
         public string SelectedDrawType = "ItemFloor";
+        public static int Height = 0;
 
         // Content
         public static Texture2D TexCursor;
@@ -63,6 +65,19 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // ReLoadMap
+        // -------------------------------------------------------------------
+
+        public void ReLoadMap(String mapName)
+        {
+            // Recreate game components
+            isMapReloading = true;
+            Camera.ReLoadMap();
+            Map.LoadMap(mapName);
+            isMapReloading = false;
+        }
+
+        // -------------------------------------------------------------------
         // Update
         // -------------------------------------------------------------------
 
@@ -81,13 +96,17 @@ namespace RPG_Paper_Maker
         {
             GraphicsDevice.Clear(new Color(32,32,32));
 
-            // Effect settings
-            effect.View = Camera.View;
-            effect.Projection = Camera.Projection;
-            effect.World = Matrix.Identity;
+            if (!isMapReloading)
+            {
+                // Effect settings
+                effect.View = Camera.View;
+                effect.Projection = Camera.Projection;
+                effect.World = Matrix.Identity;
 
-            Map.Draw(gameTime, effect);
-            CursorEditor.Draw(gameTime, effect);
+                // Drawings components
+                Map.Draw(gameTime, effect);
+                CursorEditor.Draw(gameTime, effect);
+            }
         }
     }
 }
