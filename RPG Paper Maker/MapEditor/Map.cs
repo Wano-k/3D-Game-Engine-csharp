@@ -14,8 +14,9 @@ namespace RPG_Paper_Maker
     {
         GraphicsDevice Device;
         VertexPositionColor[] GridVerticesArray;
-        VertexBuffer vb;
-        IndexBuffer ib;
+        VertexBuffer VBGrid;
+        VertexBuffer VBMap;
+        IndexBuffer IBMap;
 
 
         // -------------------------------------------------------------------
@@ -28,20 +29,21 @@ namespace RPG_Paper_Maker
 
             LoadMap(mapName);
 
-            vb = new VertexBuffer(this.Device, VertexPositionTexture.VertexDeclaration, this.GridVerticesArray.Length, BufferUsage.None);
-            vb.SetData(this.GridVerticesArray);
+            VBGrid = new VertexBuffer(Device, typeof(VertexPositionColor), this.GridVerticesArray.Length, BufferUsage.WriteOnly);
+            VBGrid.SetData(this.GridVerticesArray);
         }
 
         // -------------------------------------------------------------------
         // ReLoadMap
         // -------------------------------------------------------------------
 
-        public void LoadMap(String mapName)
+        public void LoadMap(String mapName, bool reLoad = false)
         {
             // Create grid
 
-            int width = 20;
-            int height = 20;
+            Random rnd = new Random();
+            int width = rnd.Next(1, 13);
+            int height = rnd.Next(1, 13);
             List<VertexPositionColor> gridVerticesList = new List<VertexPositionColor>();
             // Columns
             for (int i = 0; i <= width; i++)
@@ -60,6 +62,16 @@ namespace RPG_Paper_Maker
                 }
             } 
             this.GridVerticesArray = gridVerticesList.ToArray();
+        }
+
+        // -------------------------------------------------------------------
+        // DisposeVertexBuffer
+        // -------------------------------------------------------------------
+
+        public void DisposeVertexBuffer()
+        {
+            Device.SetVertexBuffer(null);
+            VBGrid.Dispose();
         }
 
         // -------------------------------------------------------------------
@@ -88,10 +100,11 @@ namespace RPG_Paper_Maker
             effect.World = Matrix.Identity * Matrix.CreateScale(16.0f,1.0f,16.0f);
 
             // Drawing grid
+            Device.SetVertexBuffer(VBGrid);
             foreach (EffectPass pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                this.Device.DrawUserPrimitives(PrimitiveType.LineList, this.GridVerticesArray, 0, this.GridVerticesArray.Count<VertexPositionColor>() / 2);
+                Device.DrawPrimitives(PrimitiveType.LineList, 0, this.GridVerticesArray.Length / 2);
             }
         }
     }

@@ -15,8 +15,8 @@ namespace RPG_Paper_Maker
         public Vector3 Position;
         public Vector2 Size;
         private VertexPositionTexture[] vertices;
-        private VertexBuffer vb;
-        private IndexBuffer ib;
+        private VertexBuffer VB;
+        private IndexBuffer IB;
         private int[] indexes;
         private int Frame = 0, FrameTick = 0, FrameDuration = 100;
 
@@ -34,9 +34,9 @@ namespace RPG_Paper_Maker
             this.Size = new Vector2(32, 32);
 
             // Init buffers
-            this.vb = new VertexBuffer(this.device, typeof(VertexPositionTexture), 4, BufferUsage.WriteOnly);
-            this.ib = new IndexBuffer(this.device, IndexElementSize.ThirtyTwoBits, 6, BufferUsage.WriteOnly);
-            this.device.SetVertexBuffer(this.vb);
+            VB = new VertexBuffer(this.device, typeof(VertexPositionTexture), 4, BufferUsage.WriteOnly);
+            IB = new IndexBuffer(this.device, IndexElementSize.ThirtyTwoBits, 6, BufferUsage.WriteOnly);
+            this.device.SetVertexBuffer(VB);
         }
 
         // -------------------------------------------------------------------
@@ -94,8 +94,8 @@ namespace RPG_Paper_Maker
             };
 
             // Update buffers
-            this.vb.SetData(this.vertices);
-            this.ib.SetData(this.indexes);
+            VB.SetData(this.vertices);
+            IB.SetData(this.indexes);
         }
 
         // -------------------------------------------------------------------
@@ -127,6 +127,8 @@ namespace RPG_Paper_Maker
 
             CreateTex(new int[] { WANOK.BASIC_SQUARE_SIZE * Frame, 0, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE }, MapEditor.TexCursor);
 
+            device.SetVertexBuffer(VB);
+            device.Indices = IB;
             foreach (EffectPass pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();

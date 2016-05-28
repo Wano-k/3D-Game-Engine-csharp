@@ -73,7 +73,8 @@ namespace RPG_Paper_Maker
             // Recreate game components
             isMapReloading = true;
             Camera.ReLoadMap();
-            Map.LoadMap(mapName);
+            Map.DisposeVertexBuffer(); // Dispose the previous vertexBuffer to create a new one for the object
+            Map = new Map(GraphicsDevice, mapName);
             isMapReloading = false;
         }
 
