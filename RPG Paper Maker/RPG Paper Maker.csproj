@@ -136,6 +136,7 @@
     <Compile Include="MapEditor\CursorEditor.cs" />
     <Compile Include="MapEditor\Game_map_portion.cs" />
     <Compile Include="MapEditor\Map.cs" />
+    <Compile Include="MapEditor\MapInfos.cs" />
     <Compile Include="MapEditor\TilesetSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -173,6 +174,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Basic\Content\Datas\Maps\MAP0001\infos.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Basic\Content\Datas\Maps\TreeMapDatas.rpmdatas">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -237,6 +241,7 @@
     <None Include="Resources\open_file.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Basic\Content\Datas\Maps\MAP0001\temp\" />
     <Folder Include="RTP\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

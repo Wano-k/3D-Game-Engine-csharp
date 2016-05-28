@@ -14,8 +14,6 @@ namespace RPG_Paper_Maker
     {
         protected Texture2D TexTileset, TexSelector;
         protected SelectionRectangle SelectionRectangle;
-        protected int Width;
-        protected int Height;
 
 
         // -------------------------------------------------------------------
@@ -33,10 +31,6 @@ namespace RPG_Paper_Maker
             fs = new FileStream("Config/bmp/tileset_cursor.png", FileMode.Open);
             TexSelector = Texture2D.FromStream(GraphicsDevice, fs);
             SelectionRectangle = new SelectionRectangle(GraphicsDevice, TexSelector, 0, 0, (int)WANOK.BASIC_SQUARE_SIZE, (int)WANOK.BASIC_SQUARE_SIZE);
-
-            // Calcul size
-            Width = (int)(TexTileset.Width * WANOK.RELATION_SIZE);
-            Height = (int)(TexTileset.Height * WANOK.RELATION_SIZE);
         }
 
         // -------------------------------------------------------------------

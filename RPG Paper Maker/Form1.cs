@@ -60,6 +60,11 @@ namespace RPG_Paper_Maker
             WANOK.SaveTree(this.TreeMap, "TreeMapDatas.rpmdatas");
             */
 
+            // This code created the basic first map settings
+            /*
+            WANOK.SaveDatas(new MapInfos(25, 25), "infos.map");
+            */
+
             // Contain shown
             EnableNoGame();
             ShowProjectContain(false);
@@ -308,7 +313,7 @@ namespace RPG_Paper_Maker
             if (tag.IsMap)
             {
                 ShowMapEditor(true);
-                MapEditor.ReLoadMap("test");
+                MapEditor.ReLoadMap(tag.RealMapName);
             }
             else
             {

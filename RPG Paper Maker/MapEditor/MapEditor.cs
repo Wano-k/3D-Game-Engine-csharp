@@ -13,12 +13,12 @@ namespace RPG_Paper_Maker
     class MapEditor : WinFormsGraphicsDevice.MapEditorControl
     {
         Camera Camera;
-        Map Map;
+        Map Map = null;
         CursorEditor CursorEditor;
         BasicEffect effect;
-        Boolean isMapReloading = false;
+        bool isMapReloading = false;
         public string SelectedDrawType = "ItemFloor";
-        public static int Height = 0;
+        public static int GridHeight = 0;
 
         // Content
         public static Texture2D TexCursor;
@@ -39,7 +39,6 @@ namespace RPG_Paper_Maker
 
             // Create game components
             Camera = new Camera(this.GraphicsDevice);
-            Map = new Map(this.GraphicsDevice, "testmap");
             CursorEditor = new CursorEditor(this.GraphicsDevice);
 
             // Load Settings
@@ -68,12 +67,12 @@ namespace RPG_Paper_Maker
         // ReLoadMap
         // -------------------------------------------------------------------
 
-        public void ReLoadMap(String mapName)
+        public void ReLoadMap(string mapName)
         {
             // Recreate game components
             isMapReloading = true;
             Camera.ReLoadMap();
-            Map.DisposeVertexBuffer(); // Dispose the previous vertexBuffer to create a new one for the object
+            if (Map != null) Map.DisposeVertexBuffer(); // Dispose the previous vertexBuffer to create a new one for the object
             Map = new Map(GraphicsDevice, mapName);
             isMapReloading = false;
         }
@@ -97,7 +96,7 @@ namespace RPG_Paper_Maker
         {
             GraphicsDevice.Clear(new Color(32,32,32));
 
-            if (!isMapReloading)
+            if (!isMapReloading && Map != null)
             {
                 // Effect settings
                 effect.View = Camera.View;

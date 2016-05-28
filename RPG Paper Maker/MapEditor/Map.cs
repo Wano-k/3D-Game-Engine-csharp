@@ -15,35 +15,29 @@ namespace RPG_Paper_Maker
         GraphicsDevice Device;
         VertexPositionColor[] GridVerticesArray;
         VertexBuffer VBGrid;
-        VertexBuffer VBMap;
-        IndexBuffer IBMap;
+        MapInfos MapInfos;
+        //VertexBuffer VBMap;
+        //IndexBuffer IBMap;
 
 
         // -------------------------------------------------------------------
         // Constructor
         // -------------------------------------------------------------------
 
-        public Map(GraphicsDevice Device, string mapName)
+        public Map(GraphicsDevice device, string mapName)
         {
-            this.Device = Device;
+            Device = device;
+            MapInfos = WANOK.LoadDatas<MapInfos>(WANOK.CurrentDir + "\\Content\\Datas\\Maps\\" + mapName + "\\infos.map");
 
-            LoadMap(mapName);
-
-            VBGrid = new VertexBuffer(Device, typeof(VertexPositionColor), this.GridVerticesArray.Length, BufferUsage.WriteOnly);
-            VBGrid.SetData(this.GridVerticesArray);
+            CreateGrid(MapInfos.Width, MapInfos.Height);
         }
 
         // -------------------------------------------------------------------
-        // ReLoadMap
+        // CreateGrid
         // -------------------------------------------------------------------
 
-        public void LoadMap(String mapName, bool reLoad = false)
+        public void CreateGrid(int width, int height)
         {
-            // Create grid
-
-            Random rnd = new Random();
-            int width = rnd.Next(1, 13);
-            int height = rnd.Next(1, 13);
             List<VertexPositionColor> gridVerticesList = new List<VertexPositionColor>();
             // Columns
             for (int i = 0; i <= width; i++)
@@ -62,6 +56,8 @@ namespace RPG_Paper_Maker
                 }
             } 
             this.GridVerticesArray = gridVerticesList.ToArray();
+            VBGrid = new VertexBuffer(Device, typeof(VertexPositionColor), GridVerticesArray.Length, BufferUsage.WriteOnly);
+            VBGrid.SetData(GridVerticesArray);
         }
 
         // -------------------------------------------------------------------
@@ -83,8 +79,8 @@ namespace RPG_Paper_Maker
             // Vertex Position and Texture
             return new VertexPositionColor[]
             {
-                new VertexPositionColor(new Vector3(x1, MapEditor.Height, z1), Color.White),
-                new VertexPositionColor(new Vector3(x2, MapEditor.Height, z2), Color.White)
+                new VertexPositionColor(new Vector3(x1, MapEditor.GridHeight, z1), Color.White),
+                new VertexPositionColor(new Vector3(x2, MapEditor.GridHeight, z2), Color.White)
             };
         }
 

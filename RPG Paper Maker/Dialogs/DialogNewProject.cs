@@ -35,15 +35,15 @@ namespace RPG_Paper_Maker
 
         private void ok_Click(object sender, EventArgs e)
         {
-            if (Directory.Exists(this.TextCtrlLocation.Text))
+            if (Directory.Exists(TextCtrlLocation.Text))
             {
-                if (this.TextCtrlProjectName.Text.Contains("/") || this.TextCtrlProjectName.Text.Contains("\\")  || this.TextCtrlProjectName.Text.Contains(":") || this.TextCtrlProjectName.Text.Contains("*") || this.TextCtrlProjectName.Text.Contains("?") || this.TextCtrlProjectName.Text.Contains("<") || this.TextCtrlProjectName.Text.Contains(">") || this.TextCtrlProjectName.Text.Contains("\"") || this.TextCtrlProjectName.Text.Contains("|") || this.TextCtrlProjectName.Text.Trim().Equals("") || this.TextCtrlProjectName.Text.Replace('.', ' ').Trim().Equals("") || this.TextCtrlProjectName.Text.Contains("..") || this.TextCtrlProjectName.Text.Trim()[this.TextCtrlProjectName.Text.Trim().Length-1] == '.')
+                if (TextCtrlProjectName.Text.Contains("/") || this.TextCtrlProjectName.Text.Contains("\\")  || this.TextCtrlProjectName.Text.Contains(":") || this.TextCtrlProjectName.Text.Contains("*") || this.TextCtrlProjectName.Text.Contains("?") || this.TextCtrlProjectName.Text.Contains("<") || this.TextCtrlProjectName.Text.Contains(">") || this.TextCtrlProjectName.Text.Contains("\"") || this.TextCtrlProjectName.Text.Contains("|") || this.TextCtrlProjectName.Text.Trim().Equals("") || this.TextCtrlProjectName.Text.Replace('.', ' ').Trim().Equals("") || this.TextCtrlProjectName.Text.Contains("..") || this.TextCtrlProjectName.Text.Trim()[this.TextCtrlProjectName.Text.Trim().Length-1] == '.')
                 {
                     MessageBox.Show("Could not create a directory with that name. Do not use / \\ : ? * | < > \". You can't name with an empty field, or \".\" or \"..\" field.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                 {
-                    string dirPath = Path.Combine(this.TextCtrlLocation.Text, this.TextCtrlProjectName.Text);
+                    string dirPath = Path.Combine(TextCtrlLocation.Text, TextCtrlProjectName.Text);
                     if (!Directory.Exists(dirPath))
                     {
                         try
@@ -54,11 +54,11 @@ namespace RPG_Paper_Maker
                                 string executablePath = Path.GetDirectoryName(Application.ExecutablePath);
                                 string basicPath = Path.Combine(executablePath, "Basic");
                                 WANOK.CopyAll(new DirectoryInfo(basicPath), new DirectoryInfo(dirPath));
-                                this.ProjectName = this.TextCtrlProjectName.Text.Trim();
-                                this.DirPath = Path.Combine(this.TextCtrlLocation.Text, this.ProjectName);
+                                ProjectName = TextCtrlProjectName.Text.Trim();
+                                DirPath = Path.Combine(TextCtrlLocation.Text, ProjectName);
 
-                                this.DialogResult = DialogResult.OK;
-                                this.Close();
+                                DialogResult = DialogResult.OK;
+                                Close();
                             }
                             catch
                             {

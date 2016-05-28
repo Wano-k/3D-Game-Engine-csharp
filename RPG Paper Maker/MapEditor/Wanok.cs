@@ -103,12 +103,18 @@ namespace RPG_Paper_Maker
 
         public static void SaveDatas(Object obj, string path)
         {
-            string json = JsonConvert.SerializeObject(obj);
-            FileStream fs = new FileStream(path, FileMode.Create);
-            StreamWriter sw = new StreamWriter(fs);
-            sw.WriteLine(json);
-            sw.Close();
-            fs.Close();
+            try
+            {
+                string json = JsonConvert.SerializeObject(obj);
+                FileStream fs = new FileStream(path, FileMode.Create);
+                StreamWriter sw = new StreamWriter(fs);
+                sw.WriteLine(json);
+                sw.Close();
+                fs.Close();
+            } catch(Exception e)
+            {
+                PathErrorMessage(e);
+            }
         }
 
         // -------------------------------------------------------------------
@@ -117,12 +123,21 @@ namespace RPG_Paper_Maker
 
         public static T LoadDatas<T>(string path)
         {
-            FileStream fs = new FileStream(path, FileMode.Open);
-            StreamReader sr = new StreamReader(fs);
-            string json = sr.ReadToEnd();
-            T obj = JsonConvert.DeserializeObject<T>(json);
-            sr.Close();
-            fs.Close();
+            T obj;
+            try
+            {
+                FileStream fs = new FileStream(path, FileMode.Open);
+                StreamReader sr = new StreamReader(fs);
+                string json = sr.ReadToEnd();
+                obj = JsonConvert.DeserializeObject<T>(json);
+                sr.Close();
+                fs.Close();
+            }
+            catch (Exception e)
+            {
+                obj = default(T);
+                PathErrorMessage(e);
+            }
 
             return obj;
         }
@@ -204,5 +219,13 @@ namespace RPG_Paper_Maker
             }
         }
 
+        // -------------------------------------------------------------------
+        // PathErrorMessage
+        // -------------------------------------------------------------------
+
+        public static void PathErrorMessage(Exception e)
+        {
+            MessageBox.Show("You get a path error. You can send a report to Wanok.rpm@gmail.com.\n" + e.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 }
