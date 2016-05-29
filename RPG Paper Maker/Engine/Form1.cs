@@ -28,6 +28,8 @@ namespace RPG_Paper_Maker
 
         public Form1()
         {
+            #region Constructor
+
             InitializeComponent();
 
             // Creating RPG Paper Maker Games folder
@@ -65,17 +67,22 @@ namespace RPG_Paper_Maker
             WANOK.SaveDatas(new MapInfos(25, 25), "infos.map");
             */
 
+
             // Contain shown
             EnableNoGame();
             ShowProjectContain(false);
             this.menuStrip1.Renderer = new MainRender(this);
             this.menuStrip2.Renderer = new MainRender(this);
+
+            #endregion
         }
 
         // -------------------------------------------------------------------
-        // MainColorTable
+        // Renders : All settings for main menu strip (color etc.)
         // -------------------------------------------------------------------
 
+        #region Renders
+            
         public class MainColorTable : ProfessionalColorTable
         {
             public override Color ToolStripDropDownBackground
@@ -108,10 +115,6 @@ namespace RPG_Paper_Maker
                 get { return Color.LightGray; }
             }
         }
-
-        // -------------------------------------------------------------------
-        // MainRender
-        // -------------------------------------------------------------------
 
         private class MainRender : ToolStripProfessionalRenderer
         {
@@ -167,9 +170,13 @@ namespace RPG_Paper_Maker
             }
         }
 
+        #endregion
+
         // -------------------------------------------------------------------
         // Form1
         // -------------------------------------------------------------------
+
+        #region Form1 events
 
         private void Form1_Shown(object sender, EventArgs e)
         {
@@ -179,9 +186,13 @@ namespace RPG_Paper_Maker
             }
         }
 
+        #endregion
+
         // -------------------------------------------------------------------
         // Keyboard management
         // -------------------------------------------------------------------
+
+        #region Keyboard management
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
@@ -203,9 +214,13 @@ namespace RPG_Paper_Maker
             UpdateKeyBoard(e.KeyCode, true);
         }
 
+        #endregion
+
         // -------------------------------------------------------------------
         // Main menu bar
         // -------------------------------------------------------------------
+
+        #region Main menu bar
 
         private void ItemNewProject_Click(object sender, EventArgs e)
         {
@@ -277,9 +292,13 @@ namespace RPG_Paper_Maker
             box.ShowDialog();
         }
 
+        #endregion
+
         // -------------------------------------------------------------------
         // Toolbar
         // -------------------------------------------------------------------
+
+        #region Toolbar
 
         private void toolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
@@ -293,19 +312,45 @@ namespace RPG_Paper_Maker
             }
         }
 
+        #endregion
+
         // -------------------------------------------------------------------
         // Map editor menu bar
         // -------------------------------------------------------------------
+
+        #region Map editor menu bar
 
         private void ItemFloor_DoubleClick(object sender, EventArgs e)
         {
             MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
+        #endregion
+
         // -------------------------------------------------------------------
         // Tree Map
         // -------------------------------------------------------------------
-        
+
+        #region Tree Map
+
+        private void TreeMap_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                TreeMap.SelectedNode = e.Node;
+
+                TreeTag tag = (TreeTag)e.Node.Tag;
+                if (tag.IsMap)
+                {
+                    ContextMenuMap.Show(TreeMap, e.Location);
+                }
+                else
+                {
+                    ContextMenuDir.Show(TreeMap, e.Location);
+                }
+            }
+        }
+
         private void TreeMap_AfterSelect(object sender, TreeViewEventArgs e)
         {
             TreeTag tag = (TreeTag)e.Node.Tag;
@@ -321,9 +366,48 @@ namespace RPG_Paper_Maker
             }
         }
 
+        private void MenuItemDeleteDir_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void MenuItemNewDir_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void MenuItemNewMap_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void MenuItemSetDirName_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void MenuItemSetMap_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void MenuItemMoveMap_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void MenuItemDeleteMap_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        #endregion
+
         // -------------------------------------------------------------------
         // TilesetSelector
         // -------------------------------------------------------------------
+
+        #region TilesetSelector
 
         private void scrollPanel1_Scroll(object sender, ScrollEventArgs e)
         {
@@ -348,6 +432,14 @@ namespace RPG_Paper_Maker
         {
             WANOK.TilesetMouseManager.SetPosition(e.Location);
         }
+
+        #endregion
+
+        // -------------------------------------------------------------------
+        // SET OF FUNCTIONS --------------------------------------------------
+        // -------------------------------------------------------------------
+
+        #region functions
 
         // -------------------------------------------------------------------
         // ShowProjectContain
@@ -496,6 +588,8 @@ namespace RPG_Paper_Maker
             WANOK.KeyBoardStates[k] = b;
         }
 
+        #endregion
+
         // -------------------------------------------------------------------
         // DEMO STEPS --------------------------------------------------------
         // -------------------------------------------------------------------
@@ -503,6 +597,8 @@ namespace RPG_Paper_Maker
         // -------------------------------------------------------------------
         // StartDemo
         // -------------------------------------------------------------------
+
+        #region Demo
 
         public void StartDemo()
         {
@@ -531,5 +627,7 @@ namespace RPG_Paper_Maker
             }
             WANOK.DemoStep = DemoSteps.None;
         }
+
+        #endregion
     }
 }

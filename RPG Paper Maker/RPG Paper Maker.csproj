@@ -89,7 +89,7 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="DemoSteps.cs" />
+    <Compile Include="Engine\DemoSteps.cs" />
     <Compile Include="Dialogs\DemoTips\DialogDemoTipNewProject.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,11 +114,11 @@
     <Compile Include="Dialogs\DialogNewProject.designer.cs">
       <DependentUpon>DialogNewProject.cs</DependentUpon>
     </Compile>
-    <Compile Include="EngineSettings.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Engine\EngineSettings.cs" />
+    <Compile Include="Engine\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="Engine\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="MapEditorControls\GraphicsDeviceControl.cs">
@@ -141,14 +141,14 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MapEditor\Wanok.cs" />
-    <Compile Include="MouseManager.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Engine\MouseManager.cs" />
+    <Compile Include="Engine\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScrollPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SelectionRectangle.cs" />
-    <Compile Include="TreeTag.cs" />
+    <Compile Include="MapEditor\SelectionRectangle.cs" />
+    <Compile Include="Engine\TreeTag.cs" />
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -161,7 +161,7 @@
     <EmbeddedResource Include="Dialogs\DialogNewProject.resx">
       <DependentUpon>DialogNewProject.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="Engine\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
