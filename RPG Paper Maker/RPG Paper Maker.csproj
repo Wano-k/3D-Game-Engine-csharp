@@ -83,48 +83,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dialogs\AboutBox.cs">
+    <Compile Include="Engine\Forms\DialogNewProject\DialogNewProjectControl.cs" />
+    <Compile Include="Engine\Forms\DialogNewProject\Project.cs" />
+    <Compile Include="Engine\Forms\Dialogs\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\AboutBox.Designer.cs">
+    <Compile Include="Engine\Forms\Dialogs\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\DialogNewDir.cs">
+    <Compile Include="Engine\Forms\Dialogs\DialogNewDir.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\DialogNewDir.Designer.cs">
+    <Compile Include="Engine\Forms\Dialogs\DialogNewDir.Designer.cs">
       <DependentUpon>DialogNewDir.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\DemoSteps.cs" />
-    <Compile Include="Dialogs\DemoTips\DialogDemoTipNewProject.cs">
+    <Compile Include="Engine\Forms\Dialogs\DemoTips\DialogDemoTipNewProject.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\DemoTips\DialogDemoTipNewProject.Designer.cs">
+    <Compile Include="Engine\Forms\Dialogs\DemoTips\DialogDemoTipNewProject.Designer.cs">
       <DependentUpon>DialogDemoTipNewProject.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\DemoTips\DialogDemoTipNewProjectForm.cs">
+    <Compile Include="Engine\Forms\Dialogs\DemoTips\DialogDemoTipNewProjectForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\DemoTips\DialogDemoTipNewProjectForm.Designer.cs">
+    <Compile Include="Engine\Forms\Dialogs\DemoTips\DialogDemoTipNewProjectForm.Designer.cs">
       <DependentUpon>DialogDemoTipNewProjectForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\DialogDemoTip.cs">
+    <Compile Include="Engine\Forms\Dialogs\DialogDemoTip.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\DialogDemoTip.Designer.cs">
+    <Compile Include="Engine\Forms\Dialogs\DialogDemoTip.Designer.cs">
       <DependentUpon>DialogDemoTip.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\DialogNewProject.cs">
+    <Compile Include="Engine\Forms\DialogNewProject\DialogNewProject.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\DialogNewProject.designer.cs">
+    <Compile Include="Engine\Forms\DialogNewProject\DialogNewProject.designer.cs">
       <DependentUpon>DialogNewProject.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\EngineSettings.cs" />
-    <Compile Include="Engine\Form1.cs">
+    <Compile Include="Engine\Forms\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Engine\Form1.Designer.cs">
+    <Compile Include="Engine\Forms\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="MapEditorControls\GraphicsDeviceControl.cs">
@@ -155,22 +157,22 @@
     </Compile>
     <Compile Include="MapEditor\SelectionRectangle.cs" />
     <Compile Include="Engine\TreeTag.cs" />
-    <EmbeddedResource Include="Dialogs\AboutBox.resx">
+    <EmbeddedResource Include="Engine\Forms\Dialogs\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\DemoTips\DialogDemoTipNewProject.resx">
+    <EmbeddedResource Include="Engine\Forms\Dialogs\DemoTips\DialogDemoTipNewProject.resx">
       <DependentUpon>DialogDemoTipNewProject.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\DialogDemoTip.resx">
+    <EmbeddedResource Include="Engine\Forms\Dialogs\DialogDemoTip.resx">
       <DependentUpon>DialogDemoTip.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\DialogNewDir.resx">
+    <EmbeddedResource Include="Engine\Forms\Dialogs\DialogNewDir.resx">
       <DependentUpon>DialogNewDir.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\DialogNewProject.resx">
+    <EmbeddedResource Include="Engine\Forms\DialogNewProject\DialogNewProject.resx">
       <DependentUpon>DialogNewProject.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Engine\Form1.resx">
+    <EmbeddedResource Include="Engine\Forms\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
