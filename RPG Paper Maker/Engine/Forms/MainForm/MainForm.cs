@@ -169,6 +169,8 @@ namespace RPG_Paper_Maker
             if (keyData == Keys.Left || keyData == Keys.Right || keyData == Keys.Up || keyData == Keys.Down)
             {
                 UpdateKeyBoard(keyData, true);
+                if (keyData == Keys.Up) UpdateTreeMapKeyUp();
+                if (keyData == Keys.Down) UpdateTreeMapKeyDown();
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
@@ -308,12 +310,78 @@ namespace RPG_Paper_Maker
             Control.SaveTreeMap(TreeMap);
         }
 
+        // Drag & drop
+
+        private void TreeMap_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            DoDragDrop(e.Item, DragDropEffects.Move);
+        }
+
+        private void TreeMap_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+        }
+
+        private void TreeMap_DragDrop(object sender, DragEventArgs e)
+        {
+            Point targetPoint = TreeMap.PointToClient(new Point(e.X, e.Y));
+            TreeNode targetNode = TreeMap.GetNodeAt(targetPoint);
+            TreeNode draggedNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
+            if (!draggedNode.Equals(targetNode) && targetNode != null && !((TreeTag)targetNode.Tag).IsMap && !Control.IsATreeChild(targetNode, draggedNode))
+            {
+                draggedNode.Remove();
+                targetNode.Nodes.Add(draggedNode);
+                targetNode.Expand();
+            }
+        }
+
+        public void UpdateTreeMapKeyUp()
+        {
+            TreeNode movingNode = TreeMap.SelectedNode;
+            TreeNode parentNode = movingNode.Parent;
+            if (parentNode != null)
+            {
+                int index = movingNode.Index;
+
+                if (index > 0)
+                {
+                    movingNode.Remove();
+                    parentNode.Nodes.Insert(index - 1, movingNode);
+                    TreeMap.SelectedNode = movingNode;
+                }
+            }
+        }
+
+        public void UpdateTreeMapKeyDown()
+        {
+            TreeNode movingNode = TreeMap.SelectedNode;
+            TreeNode parentNode = movingNode.Parent;
+
+            if (parentNode != null)
+            {
+                int index = movingNode.Index;
+
+                if (index < movingNode.Parent.Nodes.Count - 1)
+                {
+                    movingNode.Remove();
+                    parentNode.Nodes.Insert(index + 1, movingNode);
+                    TreeMap.SelectedNode = movingNode;
+                }
+            }
+        }
+
+        // On right click
+
         private void TreeMap_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
                 TreeMap.SelectedNode = e.Node;
 
+                // Enable/disable
+                EnableTreePopUpDir(TreeMap.SelectedNode != Control.FindRootNode(TreeMap.SelectedNode));
+
+                // Show context menu
                 TreeTag tag = (TreeTag)e.Node.Tag;
                 if (tag.IsMap)
                 {
@@ -325,6 +393,8 @@ namespace RPG_Paper_Maker
                 }
             }
         }
+
+        // Showing map or not
 
         private void TreeMap_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -340,6 +410,8 @@ namespace RPG_Paper_Maker
                 ShowMapEditor(false);
             }
         }
+
+        // Popup menus
 
         private void MenuItemNewDir_Click(object sender, EventArgs e)
         {
@@ -357,17 +429,23 @@ namespace RPG_Paper_Maker
             }
         }
 
+        private void MenuItemSetDirName_Click(object sender, EventArgs e)
+        {
+            Control.OpenNewDialog();
+            DialogNewDir dialog = new DialogNewDir(TreeMap.SelectedNode.Text);
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                TreeMap.SelectedNode.Text = dialog.DirectoryName;
+                SaveTreeMap();
+            }
+        }
+
         private void MenuItemDeleteDir_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void MenuItemNewMap_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
-
-        private void MenuItemSetDirName_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
@@ -525,6 +603,16 @@ namespace RPG_Paper_Maker
             EnableNoGame();
             ItemSave.Enabled = true;
             ItemCloseProject.Enabled = true;
+        }
+
+        // -------------------------------------------------------------------
+        // EnableTreePopUpDir
+        // -------------------------------------------------------------------
+
+        public void EnableTreePopUpDir(bool b)
+        {
+            MenuItemSetDirName.Enabled = b;
+            MenuItemDeleteDir.Enabled = b;
         }
 
         // -------------------------------------------------------------------

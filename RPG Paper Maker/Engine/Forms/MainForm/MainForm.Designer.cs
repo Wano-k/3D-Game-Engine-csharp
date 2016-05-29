@@ -62,15 +62,15 @@
             this.MenuItemMoveMap = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuItemDeleteMap = new System.Windows.Forms.ToolStripMenuItem();
-            this.scrollPanel1 = new RPG_Paper_Maker.ScrollPanel();
-            this.TilesetSelector = new RPG_Paper_Maker.TilesetSelector();
-            this.MapEditor = new RPG_Paper_Maker.MapEditor();
             this.ContextMenuDir = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.MenuItemNewMap = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemNewDir = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuItemSetDirName = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemDeleteDir = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.scrollPanel1 = new RPG_Paper_Maker.ScrollPanel();
+            this.TilesetSelector = new RPG_Paper_Maker.TilesetSelector();
+            this.MapEditor = new RPG_Paper_Maker.MapEditor();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerMain)).BeginInit();
             this.SplitContainerMain.Panel1.SuspendLayout();
@@ -83,8 +83,8 @@
             this.menuStrip2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.ContextMenuMap.SuspendLayout();
-            this.scrollPanel1.SuspendLayout();
             this.ContextMenuDir.SuspendLayout();
+            this.scrollPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ImageListToolBar
@@ -149,6 +149,7 @@
             // 
             // TreeMap
             // 
+            this.TreeMap.AllowDrop = true;
             this.TreeMap.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TreeMap.HideSelection = false;
             this.TreeMap.ImageIndex = 0;
@@ -159,8 +160,11 @@
             this.TreeMap.ShowRootLines = false;
             this.TreeMap.Size = new System.Drawing.Size(173, 165);
             this.TreeMap.TabIndex = 0;
+            this.TreeMap.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TreeMap_ItemDrag);
             this.TreeMap.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeMap_AfterSelect);
             this.TreeMap.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeMap_NodeMouseClick);
+            this.TreeMap.DragDrop += new System.Windows.Forms.DragEventHandler(this.TreeMap_DragDrop);
+            this.TreeMap.DragEnter += new System.Windows.Forms.DragEventHandler(this.TreeMap_DragEnter);
             // 
             // ImageListTreeMap
             // 
@@ -412,6 +416,50 @@
             this.MenuItemDeleteMap.Text = "Delete map";
             this.MenuItemDeleteMap.Click += new System.EventHandler(this.MenuItemDeleteMap_Click);
             // 
+            // ContextMenuDir
+            // 
+            this.ContextMenuDir.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItemNewMap,
+            this.MenuItemNewDir,
+            this.toolStripSeparator3,
+            this.MenuItemSetDirName,
+            this.MenuItemDeleteDir});
+            this.ContextMenuDir.Name = "ContextMenuDir";
+            this.ContextMenuDir.Size = new System.Drawing.Size(183, 98);
+            // 
+            // MenuItemNewMap
+            // 
+            this.MenuItemNewMap.Name = "MenuItemNewMap";
+            this.MenuItemNewMap.Size = new System.Drawing.Size(182, 22);
+            this.MenuItemNewMap.Text = "New map...";
+            this.MenuItemNewMap.Click += new System.EventHandler(this.MenuItemNewMap_Click);
+            // 
+            // MenuItemNewDir
+            // 
+            this.MenuItemNewDir.Name = "MenuItemNewDir";
+            this.MenuItemNewDir.Size = new System.Drawing.Size(182, 22);
+            this.MenuItemNewDir.Text = "New directory...";
+            this.MenuItemNewDir.Click += new System.EventHandler(this.MenuItemNewDir_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(179, 6);
+            // 
+            // MenuItemSetDirName
+            // 
+            this.MenuItemSetDirName.Name = "MenuItemSetDirName";
+            this.MenuItemSetDirName.Size = new System.Drawing.Size(182, 22);
+            this.MenuItemSetDirName.Text = "Set directory name...";
+            this.MenuItemSetDirName.Click += new System.EventHandler(this.MenuItemSetDirName_Click);
+            // 
+            // MenuItemDeleteDir
+            // 
+            this.MenuItemDeleteDir.Name = "MenuItemDeleteDir";
+            this.MenuItemDeleteDir.Size = new System.Drawing.Size(182, 22);
+            this.MenuItemDeleteDir.Text = "Delete directory";
+            this.MenuItemDeleteDir.Click += new System.EventHandler(this.MenuItemDeleteDir_Click);
+            // 
             // scrollPanel1
             // 
             this.scrollPanel1.AutoScroll = true;
@@ -447,51 +495,7 @@
             this.MapEditor.TabIndex = 0;
             this.MapEditor.VSync = false;
             // 
-            // ContextMenuDir
-            // 
-            this.ContextMenuDir.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MenuItemNewMap,
-            this.MenuItemNewDir,
-            this.toolStripSeparator3,
-            this.MenuItemSetDirName,
-            this.MenuItemDeleteDir});
-            this.ContextMenuDir.Name = "ContextMenuDir";
-            this.ContextMenuDir.Size = new System.Drawing.Size(183, 98);
-            // 
-            // MenuItemNewMap
-            // 
-            this.MenuItemNewMap.Name = "MenuItemNewMap";
-            this.MenuItemNewMap.Size = new System.Drawing.Size(182, 22);
-            this.MenuItemNewMap.Text = "New map...";
-            this.MenuItemNewMap.Click += new System.EventHandler(this.MenuItemNewMap_Click);
-            // 
-            // MenuItemNewDir
-            // 
-            this.MenuItemNewDir.Name = "MenuItemNewDir";
-            this.MenuItemNewDir.Size = new System.Drawing.Size(182, 22);
-            this.MenuItemNewDir.Text = "New directory...";
-            this.MenuItemNewDir.Click += new System.EventHandler(this.MenuItemNewDir_Click);
-            // 
-            // MenuItemSetDirName
-            // 
-            this.MenuItemSetDirName.Name = "MenuItemSetDirName";
-            this.MenuItemSetDirName.Size = new System.Drawing.Size(182, 22);
-            this.MenuItemSetDirName.Text = "Set directory name...";
-            this.MenuItemSetDirName.Click += new System.EventHandler(this.MenuItemSetDirName_Click);
-            // 
-            // MenuItemDeleteDir
-            // 
-            this.MenuItemDeleteDir.Name = "MenuItemDeleteDir";
-            this.MenuItemDeleteDir.Size = new System.Drawing.Size(182, 22);
-            this.MenuItemDeleteDir.Text = "Delete directory";
-            this.MenuItemDeleteDir.Click += new System.EventHandler(this.MenuItemDeleteDir_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(179, 6);
-            // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -504,7 +508,7 @@
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "RPG Paper Maker 0.0.0";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Shown += new System.EventHandler(this.Form1_Shown);
@@ -526,8 +530,8 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ContextMenuMap.ResumeLayout(false);
-            this.scrollPanel1.ResumeLayout(false);
             this.ContextMenuDir.ResumeLayout(false);
+            this.scrollPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

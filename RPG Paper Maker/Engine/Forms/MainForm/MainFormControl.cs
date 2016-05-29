@@ -74,6 +74,7 @@ namespace RPG_Paper_Maker
             WANOK.CurrentDir = ".";
         }
 
+
         // -------------------------------------------------------------------
         // SaveTreeMap()
         // -------------------------------------------------------------------
@@ -81,6 +82,33 @@ namespace RPG_Paper_Maker
         public void SaveTreeMap(TreeView treeMap)
         {
             WANOK.SaveTree(treeMap, Path.Combine(new string[] { WANOK.CurrentDir, "Content", "Datas", "Maps", "TreeMapDatas.rpmdatas" }));
+        }
+
+        // -------------------------------------------------------------------
+        // FindRootNode
+        // -------------------------------------------------------------------
+
+        public TreeNode FindRootNode(TreeNode treeNode)
+        {
+            while (treeNode.Parent != null)
+            {
+                treeNode = treeNode.Parent;
+            }
+            return treeNode;
+        }
+
+        // -------------------------------------------------------------------
+        // IsAChild
+        // -------------------------------------------------------------------
+
+        public bool IsATreeChild(TreeNode node, TreeNode parent)
+        {
+            while (node.Parent != null)
+            {
+                if (node == parent) return true;
+                node = node.Parent;
+            }
+            return false;
         }
     }
 }
