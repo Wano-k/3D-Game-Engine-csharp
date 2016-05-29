@@ -12,11 +12,17 @@ namespace RPG_Paper_Maker
 {
     public partial class DialogNewDir : Form
     {
-        public string DirectoryName;
+        public string DirectoryName { get; set; }
 
-        public DialogNewDir()
+        public DialogNewDir(string dirName = null)
         {
             InitializeComponent();
+
+            if (dirName != null)
+            {
+                Text = "Set directory name";
+                TextCtrlDirectory.Text = dirName;
+            }
         }
 
         private void ok_Click(object sender, EventArgs e)

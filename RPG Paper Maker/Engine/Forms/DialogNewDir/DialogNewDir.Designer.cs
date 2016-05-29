@@ -84,7 +84,8 @@
             this.Controls.Add(this.TextCtrlDirectory);
             this.Name = "DialogNewDir";
             this.ShowIcon = false;
-            this.Text = "DialogNewDir";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "New directory";
             this.ResumeLayout(false);
             this.PerformLayout();
 

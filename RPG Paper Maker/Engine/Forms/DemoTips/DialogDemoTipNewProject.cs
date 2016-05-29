@@ -28,7 +28,7 @@ namespace RPG_Paper_Maker
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
-            ((Form1)Application.OpenForms[0]).CancelDemo();
+            ((MainForm)Application.OpenForms[0]).CancelDemo();
             this.Close();
         }
     }

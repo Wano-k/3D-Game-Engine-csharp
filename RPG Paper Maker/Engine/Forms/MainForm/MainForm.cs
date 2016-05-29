@@ -16,63 +16,33 @@ using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public string TitleName = "RPG Paper Maker";
-        public string version = "1.0.2.2";
+        public string TitleName = "RPG Paper Maker " + Application.ProductVersion;
+        public MainFormControl Control = new MainFormControl();
 
 
         // -------------------------------------------------------------------
         // Constructor
         // -------------------------------------------------------------------
 
-        public Form1()
+        public MainForm()
         {
             #region Constructor
 
             InitializeComponent();
 
-            // Creating RPG Paper Maker Games folder
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            path = Path.Combine(path, "RPG Paper Maker Games");
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-
-            // Getting engine settings
-            WANOK.Settings = WANOK.LoadDatas<EngineSettings>(WANOK.PATHSETTINGS);
+            Control.InitializeMain();
 
             // Updating special infos
-            this.TitleName = "RPG Paper Maker " + version;
-            this.Text = this.TitleName;
-            this.KeyPreview = true;
-            WANOK.InitializeKeyBoard();
-            WANOK.ABSOLUTEENGINEPATH = Path.GetDirectoryName(Application.ExecutablePath);
-
-            // This code created the basic tree map nodes settings
-            /*
-            TreeNode rootNode, directoryNode, mapNode;
-            rootNode = this.TreeMap.Nodes.Add("Maps");
-            rootNode.Tag = TreeTag.CreateRoot();
-            directoryNode = rootNode.Nodes.Add("Plains");
-            directoryNode.Tag = TreeTag.CreateDirectory();
-            mapNode = directoryNode.Nodes.Add("MAP0001");
-            mapNode.Tag = TreeTag.CreateMap("MAP0001");
-            WANOK.SaveTree(this.TreeMap, "TreeMapDatas.rpmdatas");
-            */
-
-            // This code created the basic first map settings
-            /*
-            WANOK.SaveDatas(new MapInfos(25, 25), "infos.map");
-            */
-
+            Text = TitleName;
+            KeyPreview = true;
 
             // Contain shown
             EnableNoGame();
             ShowProjectContain(false);
-            this.menuStrip1.Renderer = new MainRender(this);
-            this.menuStrip2.Renderer = new MainRender(this);
+            menuStrip1.Renderer = new MainRender(this);
+            menuStrip2.Renderer = new MainRender(this);
 
             #endregion
         }
@@ -118,9 +88,9 @@ namespace RPG_Paper_Maker
 
         private class MainRender : ToolStripProfessionalRenderer
         {
-            public Form1 MainForm;
+            public MainForm MainForm;
 
-            public MainRender(Form1 mainForm) : base(new MainColorTable())
+            public MainRender(MainForm mainForm) : base(new MainColorTable())
             {
                 this.MainForm = mainForm;
             }
@@ -224,7 +194,7 @@ namespace RPG_Paper_Maker
 
         private void ItemNewProject_Click(object sender, EventArgs e)
         {
-            OpenNewDialog();
+            Control.OpenNewDialog();
             if (WANOK.DemoStep == DemoSteps.New)
             {
                 WANOK.CurrentDemoDialog.Close();
@@ -233,7 +203,7 @@ namespace RPG_Paper_Maker
             DialogNewProject dialog = new DialogNewProject();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                OpenProject(dialog.ProjectName, dialog.DirPath);
+                OpenProject(dialog.GetProjectName(), dialog.GetDirPath());
                 if (WANOK.DemoStep != DemoSteps.None)
                 {
                     MessageBox.Show("This is the end of the Demo for now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -270,7 +240,7 @@ namespace RPG_Paper_Maker
             var dialog = MessageBox.Show("Are you sure you want to quit RPG Paper Maker?","Quit",MessageBoxButtons.YesNo);
             if (dialog == DialogResult.Yes)
             {
-                this.Close();
+                Close();
             }
         }
 
@@ -335,11 +305,7 @@ namespace RPG_Paper_Maker
 
         public void SaveTreeMap()
         {
-            string path = Path.Combine(WANOK.CurrentDir, "Content");
-            path = Path.Combine(path, "Datas");
-            path = Path.Combine(path, "Maps");
-            path = Path.Combine(path, "TreeMapDatas.rpmdatas");
-            WANOK.SaveTree(TreeMap, path);
+            Control.SaveTreeMap(TreeMap);
         }
 
         private void TreeMap_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -377,7 +343,7 @@ namespace RPG_Paper_Maker
 
         private void MenuItemNewDir_Click(object sender, EventArgs e)
         {
-            OpenNewDialog();
+            Control.OpenNewDialog();
             DialogNewDir dialog = new DialogNewDir();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -431,11 +397,11 @@ namespace RPG_Paper_Maker
 
         private void scrollPanel1_Scroll(object sender, ScrollEventArgs e)
         {
-            this.scrollPanel1.Visible = false;
-            this.scrollPanel1.Invalidate();
-            this.scrollPanel1.Update();
-            this.scrollPanel1.Refresh();
-            this.scrollPanel1.Visible = true;
+            scrollPanel1.Visible = false;
+            scrollPanel1.Invalidate();
+            scrollPanel1.Update();
+            scrollPanel1.Refresh();
+            scrollPanel1.Visible = true;
         }
 
         private void TilesetSelector_MouseDown(object sender, MouseEventArgs e)
@@ -467,11 +433,11 @@ namespace RPG_Paper_Maker
 
         public void ShowProjectContain(bool b)
         {
-            this.SplitContainerMain.Visible = b;
-            this.SplitContainerTree.Visible = b;
+            SplitContainerMain.Visible = b;
+            SplitContainerTree.Visible = b;
             MapEditor.Visible = b;
-            this.TilesetSelector.Visible = b;
-            this.TreeMap.Visible = b;
+            TilesetSelector.Visible = b;
+            TreeMap.Visible = b;
         }
 
         // -------------------------------------------------------------------
@@ -490,18 +456,8 @@ namespace RPG_Paper_Maker
 
         public void SetTitle(string name, string dir)
         {
-            WANOK.ProjectName = name;
-            WANOK.CurrentDir = dir;
-            this.Text = this.TitleName + " - " + name;
-        }
-
-        // -------------------------------------------------------------------
-        // OpenNewDialog
-        // -------------------------------------------------------------------
-
-        public void OpenNewDialog()
-        {
-            WANOK.InitializeKeyBoard();
+            Control.SetTitle(name, dir);
+            Text = TitleName + " - " + name;
         }
 
         // -------------------------------------------------------------------
@@ -514,9 +470,9 @@ namespace RPG_Paper_Maker
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 EnableAll(false);
-                this.ItemNewProject.Enabled = true;
-                this.toolBarButtonNew.Enabled = true;
-                this.fileToolStripMenuItem.Enabled = true;
+                ItemNewProject.Enabled = true;
+                toolBarButtonNew.Enabled = true;
+                fileToolStripMenuItem.Enabled = true;
                 StartDemo();
             }
         }
@@ -527,18 +483,18 @@ namespace RPG_Paper_Maker
 
         public void EnableAll(bool b)
         {
-            this.fileToolStripMenuItem.Enabled = b;
-            this.ItemNewProject.Enabled = b;
-            this.toolBarButtonNew.Enabled = b;
-            this.ItemOpenBrowse.Enabled = b;
-            this.toolBarButtonOpen.Enabled = b;
-            this.ItemSave.Enabled = b;
-            this.ItemCloseProject.Enabled = b;
-            this.ItemExit.Enabled = b;
-            this.helpToolStripMenuItem.Enabled = b;
-            this.ItemTutorials.Enabled = b;
-            this.ItemDemo.Enabled = b;
-            this.ItemAbout.Enabled = b;
+            fileToolStripMenuItem.Enabled = b;
+            ItemNewProject.Enabled = b;
+            toolBarButtonNew.Enabled = b;
+            ItemOpenBrowse.Enabled = b;
+            toolBarButtonOpen.Enabled = b;
+            ItemSave.Enabled = b;
+            ItemCloseProject.Enabled = b;
+            ItemExit.Enabled = b;
+            helpToolStripMenuItem.Enabled = b;
+            ItemTutorials.Enabled = b;
+            ItemDemo.Enabled = b;
+            ItemAbout.Enabled = b;
         }
 
         // -------------------------------------------------------------------
@@ -548,16 +504,16 @@ namespace RPG_Paper_Maker
         public void EnableNoGame()
         {
             EnableAll(false);
-            this.fileToolStripMenuItem.Enabled = true;
-            this.ItemNewProject.Enabled = true;
-            this.toolBarButtonNew.Enabled = true;
-            this.ItemOpenBrowse.Enabled = true;
-            this.toolBarButtonOpen.Enabled = true;
-            this.ItemExit.Enabled = true;
-            this.helpToolStripMenuItem.Enabled = true;
-            this.ItemTutorials.Enabled = true;
-            this.ItemDemo.Enabled = true;
-            this.ItemAbout.Enabled = true;
+            fileToolStripMenuItem.Enabled = true;
+            ItemNewProject.Enabled = true;
+            toolBarButtonNew.Enabled = true;
+            ItemOpenBrowse.Enabled = true;
+            toolBarButtonOpen.Enabled = true;
+            ItemExit.Enabled = true;
+            helpToolStripMenuItem.Enabled = true;
+            ItemTutorials.Enabled = true;
+            ItemDemo.Enabled = true;
+            ItemAbout.Enabled = true;
         }
 
         // -------------------------------------------------------------------
@@ -567,8 +523,8 @@ namespace RPG_Paper_Maker
         public void EnableGame()
         {
             EnableNoGame();
-            this.ItemSave.Enabled = true;
-            this.ItemCloseProject.Enabled = true;
+            ItemSave.Enabled = true;
+            ItemCloseProject.Enabled = true;
         }
 
         // -------------------------------------------------------------------
@@ -578,9 +534,9 @@ namespace RPG_Paper_Maker
         public void OpenProject(string name, string dir)
         {
             SetTitle(name, dir);
-            this.TreeMap.Nodes.Clear();
-            WANOK.LoadTree(this.TreeMap, WANOK.CurrentDir + "\\Content\\Datas\\Maps\\TreeMapDatas.rpmdatas");
-            this.TreeMap.ExpandAll();
+            TreeMap.Nodes.Clear();
+            WANOK.LoadTree(TreeMap, Path.Combine(new string[]{WANOK.CurrentDir,"Content","Datas","Maps","TreeMapDatas.rpmdatas"}));
+            TreeMap.ExpandAll();
             ShowProjectContain(true);
             EnableGame();
             ShowMapEditor(false);
@@ -592,9 +548,8 @@ namespace RPG_Paper_Maker
 
         public void CloseProject()
         {
-            WANOK.ProjectName = null;
-            WANOK.CurrentDir = ".";
-            this.Text = this.TitleName;
+            Control.CloseProject();
+            Text = TitleName;
             ShowProjectContain(false);
             EnableNoGame();
         }
@@ -628,7 +583,7 @@ namespace RPG_Paper_Maker
             WANOK.CurrentDemoDialog.Size = new Size(364, 209);
             WANOK.CurrentDemoDialog.Show();
             WANOK.DemoStep = DemoSteps.New;
-            this.Select();
+            Select();
         }
 
         // -------------------------------------------------------------------

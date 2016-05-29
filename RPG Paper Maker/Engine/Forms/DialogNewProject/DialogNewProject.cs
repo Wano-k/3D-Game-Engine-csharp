@@ -17,8 +17,7 @@ namespace RPG_Paper_Maker
     {
         protected DialogNewProjectControl Control = new DialogNewProjectControl();
         protected BindingSource ViewModelBindingSource = new BindingSource();
-        public string ProjectName { get { return Control.ProjectName; } }
-        public string DirPath { get { return Control.DirPath; } }
+
 
         // -------------------------------------------------------------------
         // Constructor
@@ -40,6 +39,20 @@ namespace RPG_Paper_Maker
         {
             TextCtrlProjectName.DataBindings.Add("Text", this.ViewModelBindingSource, "ProjectName", true);
             TextCtrlLocation.DataBindings.Add("Text", this.ViewModelBindingSource, "DirPath", true);
+        }
+
+        // -------------------------------------------------------------------
+        // Get
+        // -------------------------------------------------------------------
+
+        public string GetProjectName()
+        {
+            return Control.ProjectName;
+        }
+
+        public string GetDirPath()
+        {
+            return Control.DirPath;
         }
 
         // -------------------------------------------------------------------

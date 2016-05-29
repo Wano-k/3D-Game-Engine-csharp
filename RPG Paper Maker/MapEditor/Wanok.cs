@@ -38,8 +38,6 @@ namespace RPG_Paper_Maker
         public static float RELATION_SIZE { get { return (float)(BASIC_SQUARE_SIZE) / SQUARE_SIZE; } }
         public static int PORTIONSIZE = 16;
         public static int PORTION_RADIUS = 10;
-        public static string CurrentDir = ".";
-        public static string ExcecutablePath { get { return Application.ExecutablePath; } }
         public static string ProjectName = null;
         public static EngineSettings Settings = null;
         public static DemoSteps DemoStep = DemoSteps.None;
@@ -51,6 +49,8 @@ namespace RPG_Paper_Maker
         // PATHS
         public static string ABSOLUTEENGINEPATH;
         public static string PATHSETTINGS = "Config/EngineSettings.JSON";
+        public static string CurrentDir = ".";
+        public static string ExcecutablePath { get { return Application.ExecutablePath; } }
 
 
 
