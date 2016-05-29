@@ -333,6 +333,15 @@ namespace RPG_Paper_Maker
 
         #region Tree Map
 
+        public void SaveTreeMap()
+        {
+            string path = Path.Combine(WANOK.CurrentDir, "Content");
+            path = Path.Combine(path, "Datas");
+            path = Path.Combine(path, "Maps");
+            path = Path.Combine(path, "TreeMapDatas.rpmdatas");
+            WANOK.SaveTree(TreeMap, path);
+        }
+
         private void TreeMap_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -366,12 +375,23 @@ namespace RPG_Paper_Maker
             }
         }
 
-        private void MenuItemDeleteDir_Click(object sender, EventArgs e)
+        private void MenuItemNewDir_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            OpenNewDialog();
+            DialogNewDir dialog = new DialogNewDir();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                TreeNode node = TreeMap.SelectedNode.Nodes.Insert(0, dialog.DirectoryName);
+                TreeMap.ExpandAll();
+                node.Tag = TreeTag.CreateDirectory();
+                TreeMap.SelectedNode = node;
+                SaveTreeMap();
+                //node.ImageIndex = 1;
+                //node.SelectedImageIndex = 1;
+            }
         }
 
-        private void MenuItemNewDir_Click(object sender, EventArgs e)
+        private void MenuItemDeleteDir_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
@@ -594,11 +614,11 @@ namespace RPG_Paper_Maker
         // DEMO STEPS --------------------------------------------------------
         // -------------------------------------------------------------------
 
+        #region Demo
+
         // -------------------------------------------------------------------
         // StartDemo
         // -------------------------------------------------------------------
-
-        #region Demo
 
         public void StartDemo()
         {
