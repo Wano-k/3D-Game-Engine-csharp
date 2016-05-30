@@ -102,7 +102,7 @@ namespace RPG_Paper_Maker
         // SaveDatas
         // -------------------------------------------------------------------
 
-        public static void SaveDatas(Object obj, string path)
+        public static void SaveDatas(object obj, string path)
         {
             try
             {

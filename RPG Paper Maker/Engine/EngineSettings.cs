@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace RPG_Paper_Maker
 {
+    [Serializable]
     class EngineSettings
     {
-        public bool showDemoTip = true;
+        public bool ShowDemoTip {get; set;}
+        public const int MAX_RECENT_SIZE = 10;
+        public List<string> ListRecentProjects { get; set; }
 
 
         // -------------------------------------------------------------------
@@ -17,7 +20,21 @@ namespace RPG_Paper_Maker
 
         public EngineSettings()
         {
+            ShowDemoTip = false;
+            ListRecentProjects = new List<string>();
+        }
 
+        // -------------------------------------------------------------------
+        // AddProjectPath
+        // -------------------------------------------------------------------
+
+        public int AddProjectPath(string path)
+        {
+            int index = ListRecentProjects.IndexOf(path);
+            if (index != -1) ListRecentProjects.RemoveAt(index);
+            ListRecentProjects.Insert(0, path);
+            if (ListRecentProjects.Count > MAX_RECENT_SIZE) ListRecentProjects.RemoveAt(ListRecentProjects.Count-1);
+            return index;
         }
     }
 }

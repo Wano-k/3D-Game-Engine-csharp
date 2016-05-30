@@ -20,7 +20,7 @@ namespace RPG_Paper_Maker
         {
             InitializeComponent();
 
-            this.CheckBoxShow.Checked = !WANOK.Settings.showDemoTip;
+            this.CheckBoxShow.Checked = !WANOK.Settings.ShowDemoTip;
         }
 
         // -------------------------------------------------------------------
@@ -51,7 +51,7 @@ namespace RPG_Paper_Maker
 
         private void SetOptions()
         {
-            WANOK.Settings.showDemoTip = !this.CheckBoxShow.Checked;
+            WANOK.Settings.ShowDemoTip = !this.CheckBoxShow.Checked;
             WANOK.SaveDatas(WANOK.Settings, WANOK.PATHSETTINGS);
         }
     }

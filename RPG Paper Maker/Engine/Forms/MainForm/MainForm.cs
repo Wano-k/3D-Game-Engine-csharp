@@ -34,6 +34,13 @@ namespace RPG_Paper_Maker
 
             Control.InitializeMain();
 
+            // Recent projects
+            List <string> listRecent = WANOK.Settings.ListRecentProjects;
+            for (int i = listRecent.Count-1; i >= 0; i--)
+            {
+                AddToRecentList(listRecent[i]);
+            }
+
             // Updating special infos
             Text = TitleName;
             KeyPreview = true;
@@ -52,7 +59,7 @@ namespace RPG_Paper_Maker
         // -------------------------------------------------------------------
 
         #region Renders
-            
+
         public class MainColorTable : ProfessionalColorTable
         {
             public override Color ToolStripDropDownBackground
@@ -150,7 +157,7 @@ namespace RPG_Paper_Maker
 
         private void Form1_Shown(object sender, EventArgs e)
         {
-            if (WANOK.Settings.showDemoTip)
+            if (WANOK.Settings.ShowDemoTip)
             {
                 DemoTip();
             }
@@ -625,9 +632,25 @@ namespace RPG_Paper_Maker
             TreeMap.Nodes.Clear();
             WANOK.LoadTree(TreeMap, Path.Combine(new string[]{WANOK.CurrentDir,"Content","Datas","Maps","TreeMapDatas.rpmdatas"}));
             TreeMap.ExpandAll();
+            AddToRecentList(dir, WANOK.Settings.AddProjectPath(dir));
+            WANOK.SaveDatas(WANOK.Settings, WANOK.PATHSETTINGS);
             ShowProjectContain(true);
             EnableGame();
             ShowMapEditor(false);
+        }
+
+        // -------------------------------------------------------------------
+        // AddToRecentList
+        // -------------------------------------------------------------------
+
+        public void AddToRecentList(string path, int index = -1)
+        {
+            if (index != -1) ItemOpenProject.DropDownItems.RemoveAt(index + 1);
+            ToolStripItem item = ItemOpenProject.DropDownItems.Add(path);
+            ItemOpenProject.DropDownItems.Insert(1, item);
+            if (ItemOpenProject.DropDownItems.Count-1 > EngineSettings.MAX_RECENT_SIZE) ItemOpenProject.DropDownItems.RemoveAt(ItemOpenProject.DropDownItems.Count - 1);
+            item.ForeColor = SystemColors.ControlLightLight;
+            item.Click += delegate (object sender, EventArgs e){ OpenProject(Path.GetFileName(path), path); };
         }
 
         // -------------------------------------------------------------------
@@ -638,8 +661,8 @@ namespace RPG_Paper_Maker
         {
             Control.CloseProject();
             Text = TitleName;
-            ShowProjectContain(false);
             EnableNoGame();
+            ShowProjectContain(false);
         }
 
         // -------------------------------------------------------------------

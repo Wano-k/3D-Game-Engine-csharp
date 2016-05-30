@@ -71,6 +71,7 @@
             this.scrollPanel1 = new RPG_Paper_Maker.ScrollPanel();
             this.TilesetSelector = new RPG_Paper_Maker.TilesetSelector();
             this.MapEditor = new RPG_Paper_Maker.MapEditor();
+            this.MainPanel = new System.Windows.Forms.Panel();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerMain)).BeginInit();
             this.SplitContainerMain.Panel1.SuspendLayout();
@@ -85,6 +86,7 @@
             this.ContextMenuMap.SuspendLayout();
             this.ContextMenuDir.SuspendLayout();
             this.scrollPanel1.SuspendLayout();
+            this.MainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // ImageListToolBar
@@ -113,7 +115,7 @@
             // 
             this.SplitContainerMain.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.SplitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SplitContainerMain.Location = new System.Drawing.Point(0, 66);
+            this.SplitContainerMain.Location = new System.Drawing.Point(0, 0);
             this.SplitContainerMain.Name = "SplitContainerMain";
             // 
             // SplitContainerMain.Panel1
@@ -495,13 +497,22 @@
             this.MapEditor.TabIndex = 0;
             this.MapEditor.VSync = false;
             // 
+            // MainPanel
+            // 
+            this.MainPanel.Controls.Add(this.SplitContainerMain);
+            this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainPanel.Location = new System.Drawing.Point(0, 66);
+            this.MainPanel.Name = "MainPanel";
+            this.MainPanel.Size = new System.Drawing.Size(890, 442);
+            this.MainPanel.TabIndex = 5;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(890, 530);
-            this.Controls.Add(this.SplitContainerMain);
+            this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolBar1);
             this.Controls.Add(this.menuStrip1);
@@ -532,6 +543,7 @@
             this.ContextMenuMap.ResumeLayout(false);
             this.ContextMenuDir.ResumeLayout(false);
             this.scrollPanel1.ResumeLayout(false);
+            this.MainPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -579,6 +591,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem MenuItemSetDirName;
         private System.Windows.Forms.ToolStripMenuItem MenuItemDeleteDir;
+        private System.Windows.Forms.Panel MainPanel;
     }
 }
 
