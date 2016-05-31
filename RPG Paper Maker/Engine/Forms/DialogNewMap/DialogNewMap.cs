@@ -16,12 +16,12 @@ namespace RPG_Paper_Maker
         protected DialogNewMapControl Control;
         protected BindingSource ViewModelBindingSource = new BindingSource();
 
-        public DialogNewMap(string mapName)
+        public DialogNewMap(MapInfos mapInfos = null)
         {
             InitializeComponent();
 
             // Control
-            Control = new DialogNewMapControl(mapName);
+            Control = (mapInfos == null) ? new DialogNewMapControl() : new DialogNewMapControl(mapInfos);
             ViewModelBindingSource.DataSource = Control;
             InitializeDataBindings();
 
@@ -31,6 +31,12 @@ namespace RPG_Paper_Maker
 
             // ComboBox
             if (ComboBoxTileset.Items.Count > 0) ComboBoxTileset.SelectedItem = ComboBoxTileset.Items[0];
+
+            // Is setting
+            if (mapInfos != null)
+            {
+                Text = "Set map";
+            }
         }
 
         // -------------------------------------------------------------------

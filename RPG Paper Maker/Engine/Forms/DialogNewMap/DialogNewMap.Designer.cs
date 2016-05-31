@@ -282,6 +282,7 @@
             this.CancelButton = this.Cancel;
             this.ClientSize = new System.Drawing.Size(582, 228);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "DialogNewMap";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

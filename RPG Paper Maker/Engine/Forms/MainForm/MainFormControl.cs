@@ -119,34 +119,21 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // MapNameExists
+        // DeleteMapDirectory
         // -------------------------------------------------------------------
 
-        public bool MapNameExists(string mapName)
+        public void DeleteMapsDirectory(string mapName)
         {
-            string dirPath = Path.Combine(WANOK.MapsDirectoryPath);
-            string[] dirPaths = Directory.GetDirectories(dirPath);
-            for (int i = 0; i < dirPaths.Length; i++)
-            {
-                if (Path.GetFileName(dirPaths[i]) == mapName) return true;
-            }
-            return false;
+            Directory.Delete(Path.Combine(WANOK.MapsDirectoryPath, mapName), true);
         }
 
         // -------------------------------------------------------------------
-        // GenerateMapName
+        // LoadMapInfos
         // -------------------------------------------------------------------
 
-        public string GenerateMapName()
+        public MapInfos LoadMapInfos(string mapName)
         {
-            string mapName = "";
-            int nbMaps = Directory.GetDirectories(WANOK.MapsDirectoryPath).Length;
-            for (int i = 0; i <= nbMaps; i++)
-            {
-                mapName = string.Format("MAP{0:D4}", (i + 1));
-                if (!MapNameExists(mapName)) break;
-            }
-            return mapName;
+            return WANOK.LoadDatas<MapInfos>(Path.Combine(WANOK.MapsDirectoryPath, mapName, "infos.map"));
         }
     }
 }

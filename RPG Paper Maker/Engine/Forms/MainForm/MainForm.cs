@@ -285,7 +285,7 @@ namespace RPG_Paper_Maker
 
         private void ItemExit_Click(object sender, EventArgs e)
         {
-            var dialog = MessageBox.Show("Are you sure you want to quit RPG Paper Maker?","Quit",MessageBoxButtons.YesNo);
+            DialogResult dialog = MessageBox.Show("Are you sure you want to quit RPG Paper Maker?","Quit",MessageBoxButtons.YesNo);
             if (dialog == DialogResult.Yes)
             {
                 Close();
@@ -478,7 +478,7 @@ namespace RPG_Paper_Maker
             Control.OpenNewDialog();
             if (Directory.GetDirectories(WANOK.MapsDirectoryPath).Length < MainFormControl.MAX_MAP)
             {
-                DialogNewMap dialog = new DialogNewMap(Control.GenerateMapName());
+                DialogNewMap dialog = new DialogNewMap();
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     TreeNode node = TreeMap.SelectedNode.Nodes.Insert(0, dialog.GetMapName());
@@ -509,22 +509,40 @@ namespace RPG_Paper_Maker
 
         private void MenuItemDeleteDir_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            DialogResult dialog = MessageBox.Show("Are you sure you want to delete this directory? All the content inside will be deleted too.", "Delete the directory", MessageBoxButtons.YesNo);
+            if (dialog == DialogResult.Yes)
+            {
+                DeleteMapsDirectory(TreeMap.SelectedNode);
+                TreeMap.SelectedNode.Remove();
+                SaveTreeMap();
+            }
         }
 
         private void MenuItemSetMap_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            Control.OpenNewDialog();
+            DialogNewMap dialog = new DialogNewMap(Control.LoadMapInfos(((TreeTag)TreeMap.SelectedNode.Tag).RealMapName));
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                TreeMap.SelectedNode.Text = dialog.GetMapName();
+                SaveTreeMap();
+            }
         }
 
         private void MenuItemMoveMap_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
-
+        
         private void MenuItemDeleteMap_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            DialogResult dialog = MessageBox.Show("Are you sure you want to delete this map?", "Delete the map", MessageBoxButtons.YesNo);
+            if (dialog == DialogResult.Yes)
+            {
+                Control.DeleteMapsDirectory(((TreeTag)TreeMap.SelectedNode.Tag).RealMapName);
+                TreeMap.SelectedNode.Remove();
+                SaveTreeMap();
+            }
         }
 
         #endregion
@@ -683,15 +701,22 @@ namespace RPG_Paper_Maker
 
         public void OpenProject(string name, string dir)
         {
-            SetTitle(name, dir);
-            TreeMap.Nodes.Clear();
-            WANOK.LoadTree(TreeMap, Path.Combine(new string[]{WANOK.CurrentDir,"Content","Datas","Maps","TreeMapDatas.rpmdatas"}));
-            TreeMap.ExpandAll();
-            AddToRecentList(dir, WANOK.Settings.AddProjectPath(dir));
-            WANOK.SaveDatas(WANOK.Settings, WANOK.PATHSETTINGS);
-            ShowProjectContain(true);
-            EnableGame();
-            ShowMapEditor(false);
+            if (Directory.Exists(dir))
+            {
+                SetTitle(name, dir);
+                TreeMap.Nodes.Clear();
+                WANOK.LoadTree(TreeMap, Path.Combine(new string[] { WANOK.CurrentDir, "Content", "Datas", "Maps", "TreeMapDatas.rpmdatas" }));
+                TreeMap.ExpandAll();
+                AddToRecentList(dir, WANOK.Settings.AddProjectPath(dir));
+                WANOK.SaveDatas(WANOK.Settings, WANOK.PATHSETTINGS);
+                ShowProjectContain(true);
+                EnableGame();
+                ShowMapEditor(false);
+            }
+            else
+            {
+                MessageBox.Show("Error : can't open the project, the directory doesn't exist!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         // -------------------------------------------------------------------
@@ -727,6 +752,25 @@ namespace RPG_Paper_Maker
         public void UpdateKeyBoard(Keys k, bool b)
         {
             WANOK.KeyBoardStates[k] = b;
+        }
+
+        // -------------------------------------------------------------------
+        // DeleteMapsDirectory
+        // -------------------------------------------------------------------
+
+        public void DeleteMapsDirectory(TreeNode dir)
+        {
+            foreach (TreeNode node in dir.Nodes)
+            {
+                if (((TreeTag)node.Tag).IsMap)
+                {
+                    Control.DeleteMapsDirectory(((TreeTag)node.Tag).RealMapName);
+                }
+                else
+                {
+                    DeleteMapsDirectory(node);
+                }
+            }
         }
 
         #endregion
