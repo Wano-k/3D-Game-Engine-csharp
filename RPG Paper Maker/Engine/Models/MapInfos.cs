@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 
 namespace RPG_Paper_Maker
 {
-    class MapInfos
+    public class MapInfos
     {
+        public string RealMapName;
+        public string MapName;
         public int Width;
         public int Height;
 
-        public MapInfos(int width, int height)
+        public MapInfos(string mapName, int width, int height)
         {
+            RealMapName = mapName;
+            MapName = mapName;
             Width = width;
             Height = height;
         }

@@ -26,9 +26,9 @@ namespace RPG_Paper_Maker
             FileStream fs;
             
             // Loading images
-            fs = new FileStream(WANOK.CurrentDir + "\\Content\\Pictures\\Textures2D\\Tilesets\\plains.png", FileMode.Open);
+            fs = new FileStream(Path.Combine(new string[] { WANOK.CurrentDir, "Content", "Pictures", "Textures2D", "Tilesets", "plains.png" }), FileMode.Open);
             TexTileset = Texture2D.FromStream(GraphicsDevice,fs);
-            fs = new FileStream("Config/bmp/tileset_cursor.png", FileMode.Open);
+            fs = new FileStream(Path.Combine(new string[] { "Config", "bmp", "tileset_cursor.png" }), FileMode.Open);
             TexSelector = Texture2D.FromStream(GraphicsDevice, fs);
             SelectionRectangle = new SelectionRectangle(GraphicsDevice, TexSelector, 0, 0, (int)WANOK.BASIC_SQUARE_SIZE, (int)WANOK.BASIC_SQUARE_SIZE);
         }

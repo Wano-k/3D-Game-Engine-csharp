@@ -16,8 +16,6 @@ namespace RPG_Paper_Maker
         VertexPositionColor[] GridVerticesArray;
         VertexBuffer VBGrid;
         MapInfos MapInfos;
-        //VertexBuffer VBMap;
-        //IndexBuffer IBMap;
 
 
         // -------------------------------------------------------------------
@@ -27,7 +25,7 @@ namespace RPG_Paper_Maker
         public Map(GraphicsDevice device, string mapName)
         {
             Device = device;
-            MapInfos = WANOK.LoadDatas<MapInfos>(WANOK.CurrentDir + "\\Content\\Datas\\Maps\\" + mapName + "\\infos.map");
+            MapInfos = WANOK.LoadDatas<MapInfos>(Path.Combine(WANOK.MapsDirectoryPath, mapName, "infos.map"));
 
             CreateGrid(MapInfos.Width, MapInfos.Height);
         }

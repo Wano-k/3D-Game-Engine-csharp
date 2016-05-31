@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RPG_Paper_Maker.Dialog
+namespace RPG_Paper_Maker
 {
     public class Project
     {

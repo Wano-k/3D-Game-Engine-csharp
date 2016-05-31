@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using RPG_Paper_Maker.Dialog;
+using RPG_Paper_Maker.Controls;
 
 namespace RPG_Paper_Maker
 {

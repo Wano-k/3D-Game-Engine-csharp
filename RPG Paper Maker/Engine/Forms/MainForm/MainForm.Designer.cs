@@ -68,10 +68,10 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuItemSetDirName = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemDeleteDir = new System.Windows.Forms.ToolStripMenuItem();
+            this.MainPanel = new System.Windows.Forms.Panel();
             this.scrollPanel1 = new RPG_Paper_Maker.ScrollPanel();
             this.TilesetSelector = new RPG_Paper_Maker.TilesetSelector();
             this.MapEditor = new RPG_Paper_Maker.MapEditor();
-            this.MainPanel = new System.Windows.Forms.Panel();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerMain)).BeginInit();
             this.SplitContainerMain.Panel1.SuspendLayout();
@@ -85,8 +85,8 @@
             this.menuStrip1.SuspendLayout();
             this.ContextMenuMap.SuspendLayout();
             this.ContextMenuDir.SuspendLayout();
-            this.scrollPanel1.SuspendLayout();
             this.MainPanel.SuspendLayout();
+            this.scrollPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ImageListToolBar
@@ -124,6 +124,7 @@
             // 
             // SplitContainerMain.Panel2
             // 
+            this.SplitContainerMain.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.SplitContainerMain.Panel2.Controls.Add(this.MapEditor);
             this.SplitContainerMain.Panel2.Controls.Add(this.menuStrip2);
             this.SplitContainerMain.Size = new System.Drawing.Size(890, 442);
@@ -462,6 +463,15 @@
             this.MenuItemDeleteDir.Text = "Delete directory";
             this.MenuItemDeleteDir.Click += new System.EventHandler(this.MenuItemDeleteDir_Click);
             // 
+            // MainPanel
+            // 
+            this.MainPanel.Controls.Add(this.SplitContainerMain);
+            this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainPanel.Location = new System.Drawing.Point(0, 66);
+            this.MainPanel.Name = "MainPanel";
+            this.MainPanel.Size = new System.Drawing.Size(890, 442);
+            this.MainPanel.TabIndex = 5;
+            // 
             // scrollPanel1
             // 
             this.scrollPanel1.AutoScroll = true;
@@ -496,15 +506,6 @@
             this.MapEditor.Size = new System.Drawing.Size(705, 414);
             this.MapEditor.TabIndex = 0;
             this.MapEditor.VSync = false;
-            // 
-            // MainPanel
-            // 
-            this.MainPanel.Controls.Add(this.SplitContainerMain);
-            this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainPanel.Location = new System.Drawing.Point(0, 66);
-            this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(890, 442);
-            this.MainPanel.TabIndex = 5;
             // 
             // MainForm
             // 
@@ -542,8 +543,8 @@
             this.menuStrip1.PerformLayout();
             this.ContextMenuMap.ResumeLayout(false);
             this.ContextMenuDir.ResumeLayout(false);
-            this.scrollPanel1.ResumeLayout(false);
             this.MainPanel.ResumeLayout(false);
+            this.scrollPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

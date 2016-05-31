@@ -10,6 +10,8 @@ namespace RPG_Paper_Maker
 {
     public class MainFormControl
     {
+        public const int MAX_MAP = 9999;
+
         public void InitializeMain()
         {
             // Creating RPG Paper Maker Games folder
@@ -114,6 +116,37 @@ namespace RPG_Paper_Maker
                 node = node.Parent;
             }
             return false;
+        }
+
+        // -------------------------------------------------------------------
+        // MapNameExists
+        // -------------------------------------------------------------------
+
+        public bool MapNameExists(string mapName)
+        {
+            string dirPath = Path.Combine(WANOK.MapsDirectoryPath);
+            string[] dirPaths = Directory.GetDirectories(dirPath);
+            for (int i = 0; i < dirPaths.Length; i++)
+            {
+                if (Path.GetFileName(dirPaths[i]) == mapName) return true;
+            }
+            return false;
+        }
+
+        // -------------------------------------------------------------------
+        // GenerateMapName
+        // -------------------------------------------------------------------
+
+        public string GenerateMapName()
+        {
+            string mapName = "";
+            int nbMaps = Directory.GetDirectories(WANOK.MapsDirectoryPath).Length;
+            for (int i = 0; i <= nbMaps; i++)
+            {
+                mapName = string.Format("MAP{0:D4}", (i + 1));
+                if (!MapNameExists(mapName)) break;
+            }
+            return mapName;
         }
     }
 }

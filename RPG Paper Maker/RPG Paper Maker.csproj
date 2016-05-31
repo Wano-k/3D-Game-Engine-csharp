@@ -83,8 +83,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\Forms\DialogNewMap\DialogNewMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogNewMap\DialogNewMap.Designer.cs">
+      <DependentUpon>DialogNewMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogNewMap\DialogNewMapControl.cs" />
     <Compile Include="Engine\Forms\DialogNewProject\DialogNewProjectControl.cs" />
-    <Compile Include="Engine\Forms\DialogNewProject\Project.cs" />
+    <Compile Include="Engine\Models\Project.cs" />
     <Compile Include="Engine\Forms\AboutBox\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,7 +152,7 @@
     <Compile Include="MapEditor\CursorEditor.cs" />
     <Compile Include="MapEditor\Game_map_portion.cs" />
     <Compile Include="MapEditor\Map.cs" />
-    <Compile Include="MapEditor\MapInfos.cs" />
+    <Compile Include="Engine\Models\MapInfos.cs" />
     <Compile Include="MapEditor\TilesetSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -169,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogNewDir\DialogNewDir.resx">
       <DependentUpon>DialogNewDir.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogNewMap\DialogNewMap.resx">
+      <DependentUpon>DialogNewMap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogNewProject\DialogNewProject.resx">
       <DependentUpon>DialogNewProject.cs</DependentUpon>

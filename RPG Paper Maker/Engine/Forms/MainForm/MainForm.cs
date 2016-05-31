@@ -60,6 +60,45 @@ namespace RPG_Paper_Maker
 
         #region Renders
 
+        public static void PaintBorderGroupBox(object sender, PaintEventArgs e)
+        {
+            GroupBox box = (GroupBox)sender;
+            DrawGroupBox(box, e.Graphics, Color.Black, Color.Silver);
+        }
+
+        public static void DrawGroupBox(GroupBox box, Graphics g, Color textColor, Color borderColor)
+        {
+            if (box != null)
+            {
+                Brush textBrush = new SolidBrush(textColor);
+                Brush borderBrush = new SolidBrush(borderColor);
+                Pen borderPen = new Pen(borderBrush);
+                SizeF strSize = g.MeasureString(box.Text, box.Font);
+                Rectangle rect = new Rectangle(box.ClientRectangle.X,
+                                               box.ClientRectangle.Y + (int)(strSize.Height / 2),
+                                               box.ClientRectangle.Width - 1,
+                                               box.ClientRectangle.Height - (int)(strSize.Height / 2) - 1);
+
+                // Clear text and border
+                g.Clear(SystemColors.Control);
+
+                // Draw text
+                g.DrawString(box.Text, box.Font, textBrush, box.Padding.Left, 0);
+
+                // Drawing Border
+                //Left
+                g.DrawLine(borderPen, rect.Location, new Point(rect.X, rect.Y + rect.Height));
+                //Right
+                g.DrawLine(borderPen, new Point(rect.X + rect.Width, rect.Y), new Point(rect.X + rect.Width, rect.Y + rect.Height));
+                //Bottom
+                g.DrawLine(borderPen, new Point(rect.X, rect.Y + rect.Height), new Point(rect.X + rect.Width, rect.Y + rect.Height));
+                //Top1
+                g.DrawLine(borderPen, new Point(rect.X, rect.Y), new Point(rect.X + box.Padding.Left, rect.Y));
+                //Top2
+                g.DrawLine(borderPen, new Point(rect.X + box.Padding.Left + (int)(strSize.Width), rect.Y), new Point(rect.X + rect.Width, rect.Y));
+            }
+        }
+
         public class MainColorTable : ProfessionalColorTable
         {
             public override Color ToolStripDropDownBackground
@@ -431,8 +470,29 @@ namespace RPG_Paper_Maker
                 node.Tag = TreeTag.CreateDirectory();
                 TreeMap.SelectedNode = node;
                 SaveTreeMap();
-                //node.ImageIndex = 1;
-                //node.SelectedImageIndex = 1;
+            }
+        }
+
+        private void MenuItemNewMap_Click(object sender, EventArgs e)
+        {
+            Control.OpenNewDialog();
+            if (Directory.GetDirectories(WANOK.MapsDirectoryPath).Length < MainFormControl.MAX_MAP)
+            {
+                DialogNewMap dialog = new DialogNewMap(Control.GenerateMapName());
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    TreeNode node = TreeMap.SelectedNode.Nodes.Insert(0, dialog.GetMapName());
+                    TreeMap.ExpandAll();
+                    node.Tag = TreeTag.CreateMap(dialog.GetRealMapName());
+                    TreeMap.SelectedNode = node;
+                    node.ImageIndex = 1;
+                    node.SelectedImageIndex = 1;
+                    SaveTreeMap();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Action unavailable, the max map number is " + MainFormControl.MAX_MAP, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -448,11 +508,6 @@ namespace RPG_Paper_Maker
         }
 
         private void MenuItemDeleteDir_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
-
-        private void MenuItemNewMap_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
