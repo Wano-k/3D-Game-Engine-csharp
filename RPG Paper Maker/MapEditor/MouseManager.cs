@@ -18,6 +18,8 @@ namespace RPG_Paper_Maker
         private bool OnLeftClick = false;
         private bool OnRightClick = false;
         private bool OnWheelClick = false;
+        private bool WheelUp = false;
+        private bool WheelDown = false;
 
 
         public void SetMouseDownStatus(MouseEventArgs e)
@@ -58,6 +60,12 @@ namespace RPG_Paper_Maker
             }
         }
 
+        public void SetWheelStatus(int delta)
+        {
+            if (delta > 0) WheelUp = true;
+            else WheelDown = true;
+        }
+
         public Point GetPosition()
         {
             return MousePosition;
@@ -73,6 +81,8 @@ namespace RPG_Paper_Maker
             FirstLeftClick = false;
             FirstRightClick = false;
             FirstWheelClick = false;
+            WheelUp = false;
+            WheelDown = false;
         }
 
         public bool IsButtonDown(MouseButtons button)
@@ -118,6 +128,16 @@ namespace RPG_Paper_Maker
             }
 
             throw new Exception(button.ToString() + " is not managed.");
+        }
+
+        public bool IsWheelDown()
+        {
+            return WheelDown;
+        }
+
+        public bool IsWheelUp()
+        {
+            return WheelUp;
         }
     }
 }

@@ -50,11 +50,46 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // ZoomPlus
+        // -------------------------------------------------------------------
+
+        public void ZoomPlus()
+        {
+            double dist = Distance / Height;
+            Distance -= dist * 20;
+            Height -= 20;
+            if (Distance < dist * 20) Distance = dist * 20;
+            if (Height < 20) Height = 20;
+        }
+
+        // -------------------------------------------------------------------
+        // ZoomLess
+        // -------------------------------------------------------------------
+
+        public void ZoomLess()
+        {
+            double dist = Distance / Height;
+            Distance += dist * 20;
+            Height += 20;
+        }
+
+        // -------------------------------------------------------------------
         // Update
         // -------------------------------------------------------------------
 
         public void Update(GameTime gameTime, CursorEditor cursor)
         {
+            // Zoom
+            if (WANOK.MapMouseManager.IsWheelUp())
+            {
+                ZoomPlus();
+            }
+            else if (WANOK.MapMouseManager.IsWheelDown())
+            {
+                ZoomLess();
+            }
+
+
             // Horizontal angle
             if (TargetAngle != HorizontalAngle)
             {
@@ -89,7 +124,7 @@ namespace RPG_Paper_Maker
             }
 
             // Updating camera according to hero position
-            Target.X = cursor.Position.X;
+            Target.X = cursor.Position.X + (WANOK.SQUARE_SIZE/2);
             Target.Y = cursor.Position.Y;
             Target.Z = cursor.Position.Z;
 

@@ -35,8 +35,11 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.SplitContainerMain = new System.Windows.Forms.SplitContainer();
             this.SplitContainerTree = new System.Windows.Forms.SplitContainer();
+            this.scrollPanel1 = new RPG_Paper_Maker.ScrollPanel();
+            this.TilesetSelector = new RPG_Paper_Maker.TilesetSelector();
             this.TreeMap = new System.Windows.Forms.TreeView();
             this.ImageListTreeMap = new System.Windows.Forms.ImageList(this.components);
+            this.MapEditor = new RPG_Paper_Maker.MapEditor();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.ItemFloor = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemFloor1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,9 +76,6 @@
             this.MenuItemSetDirName = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemDeleteDir = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.scrollPanel1 = new RPG_Paper_Maker.ScrollPanel();
-            this.TilesetSelector = new RPG_Paper_Maker.TilesetSelector();
-            this.MapEditor = new RPG_Paper_Maker.MapEditor();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerMain)).BeginInit();
             this.SplitContainerMain.Panel1.SuspendLayout();
@@ -85,12 +85,12 @@
             this.SplitContainerTree.Panel1.SuspendLayout();
             this.SplitContainerTree.Panel2.SuspendLayout();
             this.SplitContainerTree.SuspendLayout();
+            this.scrollPanel1.SuspendLayout();
             this.menuStrip2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.ContextMenuMap.SuspendLayout();
             this.ContextMenuDir.SuspendLayout();
             this.MainPanel.SuspendLayout();
-            this.scrollPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ImageListToolBar
@@ -155,6 +155,31 @@
             this.SplitContainerTree.SplitterDistance = 269;
             this.SplitContainerTree.TabIndex = 0;
             // 
+            // scrollPanel1
+            // 
+            this.scrollPanel1.AutoScroll = true;
+            this.scrollPanel1.Controls.Add(this.TilesetSelector);
+            this.scrollPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scrollPanel1.Location = new System.Drawing.Point(0, 0);
+            this.scrollPanel1.Name = "scrollPanel1";
+            this.scrollPanel1.Size = new System.Drawing.Size(173, 265);
+            this.scrollPanel1.TabIndex = 0;
+            this.scrollPanel1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.scrollPanel1_Scroll);
+            // 
+            // TilesetSelector
+            // 
+            this.TilesetSelector.BackColor = System.Drawing.Color.Black;
+            this.TilesetSelector.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.TilesetSelector.Location = new System.Drawing.Point(0, 0);
+            this.TilesetSelector.Margin = new System.Windows.Forms.Padding(0);
+            this.TilesetSelector.Name = "TilesetSelector";
+            this.TilesetSelector.Size = new System.Drawing.Size(256, 256);
+            this.TilesetSelector.TabIndex = 0;
+            this.TilesetSelector.VSync = true;
+            this.TilesetSelector.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TilesetSelector_MouseDown);
+            this.TilesetSelector.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TilesetSelector_MouseMove);
+            this.TilesetSelector.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TilesetSelector_MouseUp);
+            // 
             // TreeMap
             // 
             this.TreeMap.AllowDrop = true;
@@ -180,6 +205,17 @@
             this.ImageListTreeMap.TransparentColor = System.Drawing.Color.Transparent;
             this.ImageListTreeMap.Images.SetKeyName(0, "dir.png");
             this.ImageListTreeMap.Images.SetKeyName(1, "map.png");
+            // 
+            // MapEditor
+            // 
+            this.MapEditor.BackColor = System.Drawing.Color.Black;
+            this.MapEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MapEditor.Location = new System.Drawing.Point(0, 24);
+            this.MapEditor.Name = "MapEditor";
+            this.MapEditor.Size = new System.Drawing.Size(705, 414);
+            this.MapEditor.TabIndex = 0;
+            this.MapEditor.VSync = false;
+            this.MapEditor.MouseHover += new System.EventHandler(this.MapEditor_MouseHover);
             // 
             // menuStrip2
             // 
@@ -513,41 +549,6 @@
             this.MainPanel.Size = new System.Drawing.Size(890, 442);
             this.MainPanel.TabIndex = 5;
             // 
-            // scrollPanel1
-            // 
-            this.scrollPanel1.AutoScroll = true;
-            this.scrollPanel1.Controls.Add(this.TilesetSelector);
-            this.scrollPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scrollPanel1.Location = new System.Drawing.Point(0, 0);
-            this.scrollPanel1.Name = "scrollPanel1";
-            this.scrollPanel1.Size = new System.Drawing.Size(173, 265);
-            this.scrollPanel1.TabIndex = 0;
-            this.scrollPanel1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.scrollPanel1_Scroll);
-            // 
-            // TilesetSelector
-            // 
-            this.TilesetSelector.BackColor = System.Drawing.Color.Black;
-            this.TilesetSelector.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.TilesetSelector.Location = new System.Drawing.Point(0, 0);
-            this.TilesetSelector.Margin = new System.Windows.Forms.Padding(0);
-            this.TilesetSelector.Name = "TilesetSelector";
-            this.TilesetSelector.Size = new System.Drawing.Size(256, 256);
-            this.TilesetSelector.TabIndex = 0;
-            this.TilesetSelector.VSync = true;
-            this.TilesetSelector.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TilesetSelector_MouseDown);
-            this.TilesetSelector.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TilesetSelector_MouseMove);
-            this.TilesetSelector.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TilesetSelector_MouseUp);
-            // 
-            // MapEditor
-            // 
-            this.MapEditor.BackColor = System.Drawing.Color.Black;
-            this.MapEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MapEditor.Location = new System.Drawing.Point(0, 24);
-            this.MapEditor.Name = "MapEditor";
-            this.MapEditor.Size = new System.Drawing.Size(705, 414);
-            this.MapEditor.TabIndex = 0;
-            this.MapEditor.VSync = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -578,6 +579,7 @@
             this.SplitContainerTree.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerTree)).EndInit();
             this.SplitContainerTree.ResumeLayout(false);
+            this.scrollPanel1.ResumeLayout(false);
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -585,7 +587,6 @@
             this.ContextMenuMap.ResumeLayout(false);
             this.ContextMenuDir.ResumeLayout(false);
             this.MainPanel.ResumeLayout(false);
-            this.scrollPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

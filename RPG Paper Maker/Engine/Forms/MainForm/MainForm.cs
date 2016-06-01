@@ -44,6 +44,7 @@ namespace RPG_Paper_Maker
             // Updating special infos
             Text = TitleName;
             KeyPreview = true;
+            MapEditor.MouseWheel += MapEditor_MouseWheel;
 
             // Contain shown
             EnableNoGame();
@@ -596,6 +597,24 @@ namespace RPG_Paper_Maker
         private void TilesetSelector_MouseMove(object sender, MouseEventArgs e)
         {
             WANOK.TilesetMouseManager.SetPosition(e.Location);
+        }
+
+        #endregion
+
+        // -------------------------------------------------------------------
+        // MapEditor
+        // -------------------------------------------------------------------
+
+        #region MapEditor
+
+        private void MapEditor_MouseWheel(object sender, MouseEventArgs e)
+        {
+            WANOK.MapMouseManager.SetWheelStatus(e.Delta);
+        }
+
+        private void MapEditor_MouseHover(object sender, EventArgs e)
+        {
+            MapEditor.Focus();
         }
 
         #endregion

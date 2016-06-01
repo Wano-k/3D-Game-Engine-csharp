@@ -92,6 +92,7 @@ namespace RPG_Paper_Maker
 
                 // Update keyboard
                 WANOK.KeyboardManager.Update();
+                WANOK.MapMouseManager.Update();
             }
         }
 
