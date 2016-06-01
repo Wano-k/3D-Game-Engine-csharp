@@ -19,7 +19,7 @@ namespace RPG_Paper_Maker
         private IndexBuffer IB;
         private int[] indexes;
         private int Frame = 0, FrameTick = 0, CursorWait = 0;
-        private const int CursorWaitDuration = 5, FrameDuration = 100;
+        private const int CursorWaitDuration = 3, FrameDuration = 100;
 
 
         // -------------------------------------------------------------------
@@ -125,36 +125,33 @@ namespace RPG_Paper_Maker
                 CursorWait = CursorWaitDuration;
             }
 
-            if (camera.TargetAngle == camera.HorizontalAngle)
+            if (WANOK.KeyboardManager.IsButtonDownFirstAndRepeat(WANOK.Settings.KeyboardAssign.EditorMoveUp, CursorWait)) // Up
             {
-                if (WANOK.KeyboardManager.IsButtonDownFirstAndRepeat(WANOK.Settings.KeyboardAssign.EditorMoveUp, CursorWait)) // Up
-                {
-                    x_plus = (int)(WANOK.SQUARE_SIZE * (Math.Cos(angle * Math.PI / 180.0)));
-                    z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Sin(angle * Math.PI / 180.0)));
-                    if ((y > 0 && z_plus < 0) || (y < map.Height-1 && z_plus > 0)) Position.Z += z_plus;
-                    if (z_plus == 0 && ((x > 0 && x_plus < 0) || (x < map.Width-1 && x_plus > 0))) Position.X += x_plus;
-                }  
-                if (WANOK.KeyboardManager.IsButtonDownFirstAndRepeat(WANOK.Settings.KeyboardAssign.EditorMoveDown, CursorWait)) // Down
-                {
-                    x_plus = (int)(WANOK.SQUARE_SIZE * (Math.Cos(angle * Math.PI / 180.0)));
-                    z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Sin(angle * Math.PI / 180.0)));
-                    if ((y < map.Height - 1 && z_plus < 0) || (y > 0 && z_plus > 0)) Position.Z -= z_plus;
-                    if (z_plus == 0 && ((x < map.Width-1 && x_plus < 0) || (x > 0 && x_plus > 0))) Position.X -= x_plus;
-                }
-                if (WANOK.KeyboardManager.IsButtonDownFirstAndRepeat(WANOK.Settings.KeyboardAssign.EditorMoveLeft, CursorWait)) // Left
-                {
-                    x_plus = (int)(WANOK.SQUARE_SIZE * (Math.Cos((angle - 90.0) * Math.PI / 180.0)));
-                    z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Sin((angle - 90.0) * Math.PI / 180.0)));
-                    if ((x > 0 && x_plus < 0) || (x < map.Width-1 && x_plus > 0)) Position.X += x_plus;
-                    if (x_plus == 0 && ((y > 0 && z_plus < 0) || (y < map.Height-1 && z_plus > 0))) Position.Z += z_plus;
-                }
-                if (WANOK.KeyboardManager.IsButtonDownFirstAndRepeat(WANOK.Settings.KeyboardAssign.EditorMoveRight, CursorWait)) // Right
-                {
-                    x_plus = (int)(WANOK.SQUARE_SIZE * (Math.Cos((angle - 90.0) * Math.PI / 180.0)));
-                    z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Sin((angle - 90.0) * Math.PI / 180.0)));
-                    if ((x < map.Width - 1 && x_plus < 0) || (x > 0 && x_plus > 0)) Position.X -= x_plus;
-                    if (x_plus == 0 && ((y < map.Height-1 && z_plus < 0) || (y > 0 && z_plus > 0))) Position.Z -= z_plus;
-                }
+                x_plus = (int)(WANOK.SQUARE_SIZE * (Math.Round(Math.Cos(angle * Math.PI / 180.0))));
+                z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Round(Math.Sin(angle * Math.PI / 180.0))));
+                if ((y > 0 && z_plus < 0) || (y < map.Height-1 && z_plus > 0)) Position.Z += z_plus;
+                if (z_plus == 0 && ((x > 0 && x_plus < 0) || (x < map.Width-1 && x_plus > 0))) Position.X += x_plus;
+            }  
+            if (WANOK.KeyboardManager.IsButtonDownFirstAndRepeat(WANOK.Settings.KeyboardAssign.EditorMoveDown, CursorWait)) // Down
+            {
+                x_plus = (int)(WANOK.SQUARE_SIZE * (Math.Round(Math.Cos(angle * Math.PI / 180.0))));
+                z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Round(Math.Sin(angle * Math.PI / 180.0))));
+                if ((y < map.Height - 1 && z_plus < 0) || (y > 0 && z_plus > 0)) Position.Z -= z_plus;
+                if (z_plus == 0 && ((x < map.Width-1 && x_plus < 0) || (x > 0 && x_plus > 0))) Position.X -= x_plus;
+            }
+            if (WANOK.KeyboardManager.IsButtonDownFirstAndRepeat(WANOK.Settings.KeyboardAssign.EditorMoveLeft, CursorWait)) // Left
+            {
+                x_plus = (int)(WANOK.SQUARE_SIZE * (Math.Round(Math.Cos((angle - 90.0) * Math.PI / 180.0))));
+                z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Round(Math.Sin((angle - 90.0) * Math.PI / 180.0))));
+                if ((x > 0 && x_plus < 0) || (x < map.Width-1 && x_plus > 0)) Position.X += x_plus;
+                if (x_plus == 0 && ((y > 0 && z_plus < 0) || (y < map.Height-1 && z_plus > 0))) Position.Z += z_plus;
+            }
+            if (WANOK.KeyboardManager.IsButtonDownFirstAndRepeat(WANOK.Settings.KeyboardAssign.EditorMoveRight, CursorWait)) // Right
+            {
+                x_plus = (int)(WANOK.SQUARE_SIZE * (Math.Round(Math.Cos((angle - 90.0) * Math.PI / 180.0))));
+                z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Round(Math.Sin((angle - 90.0) * Math.PI / 180.0))));
+                if ((x < map.Width - 1 && x_plus < 0) || (x > 0 && x_plus > 0)) Position.X -= x_plus;
+                if (x_plus == 0 && ((y < map.Height-1 && z_plus < 0) || (y > 0 && z_plus > 0))) Position.Z -= z_plus;
             }
               
             // Frames update  

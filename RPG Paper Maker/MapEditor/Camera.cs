@@ -55,11 +55,22 @@ namespace RPG_Paper_Maker
 
         public void ZoomPlus()
         {
-            double dist = Distance / Height;
-            Distance -= dist * 20;
-            Height -= 20;
-            if (Distance < dist * 20) Distance = dist * 20;
-            if (Height < 20) Height = 20;
+            if (Position.Y >= 0)
+            {
+                double dist = Distance / Height;
+                Distance -= dist * 20;
+                if (Distance < dist * 20) Distance = dist * 20;
+                Height -= 20;
+                if (Height < 20) Height = 20;
+            }
+            else
+            {
+                double dist = Distance / -Height;
+                Distance -= dist * 20;
+                if (Distance < dist * 20) Distance = dist * 20;
+                Height += 20;
+                if (Height >= -20) Height = -20;
+            }
         }
 
         // -------------------------------------------------------------------
@@ -68,9 +79,28 @@ namespace RPG_Paper_Maker
 
         public void ZoomLess()
         {
-            double dist = Distance / Height;
-            Distance += dist * 20;
-            Height += 20;
+            if (Position.Y >= 0)
+            {
+                double dist = Distance / Height;
+                Distance += dist * 20;
+                Height += 20;
+            }
+            else
+            {
+                double dist = Distance / -Height;
+                Distance += dist * 20;
+                Height -= 20;
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // SetAngleH
+        // -------------------------------------------------------------------
+
+        public void SetAngleH(int angle)
+        {
+            HorizontalAngle += angle;
+            TargetAngle += angle;
         }
 
         // -------------------------------------------------------------------
@@ -89,6 +119,12 @@ namespace RPG_Paper_Maker
                 ZoomLess();
             }
 
+            // Wheel Rotation
+            if (WANOK.MapMouseManager.IsButtonDownRepeat(System.Windows.Forms.MouseButtons.Middle))
+            {
+                Height += (WANOK.MapMouseManager.GetPosition().Y - MapEditor.MouseBeforeUpdate.Y) * 2;
+                SetAngleH((WANOK.MapMouseManager.GetPosition().X - MapEditor.MouseBeforeUpdate.X) / 2);
+            }
 
             // Horizontal angle
             if (TargetAngle != HorizontalAngle)

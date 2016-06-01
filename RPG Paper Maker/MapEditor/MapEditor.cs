@@ -19,6 +19,7 @@ namespace RPG_Paper_Maker
         bool isMapReloading = false;
         public string SelectedDrawType = "ItemFloor";
         public static int GridHeight = 0;
+        public static Point MouseBeforeUpdate = WANOK.MapMouseManager.GetPosition();
 
         // Content
         public static Texture2D TexCursor;
@@ -91,6 +92,7 @@ namespace RPG_Paper_Maker
                 Camera.Update(gameTime, CursorEditor);
 
                 // Update keyboard
+                MouseBeforeUpdate = WANOK.MapMouseManager.GetPosition();
                 WANOK.KeyboardManager.Update();
                 WANOK.MapMouseManager.Update();
             }
@@ -106,6 +108,8 @@ namespace RPG_Paper_Maker
 
             if (!isMapReloading && Map != null)
             {
+                LoadSettings();
+
                 // Effect settings
                 effect.View = Camera.View;
                 effect.Projection = Camera.Projection;

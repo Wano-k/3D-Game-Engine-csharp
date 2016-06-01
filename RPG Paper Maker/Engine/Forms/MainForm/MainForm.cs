@@ -216,8 +216,11 @@ namespace RPG_Paper_Maker
             if (keyData == Keys.Left || keyData == Keys.Right || keyData == Keys.Up || keyData == Keys.Down)
             {
                 WANOK.KeyboardManager.SetKeyDownStatus((Microsoft.Xna.Framework.Input.Keys)keyData);
-                if (keyData == Keys.Up) UpdateTreeMapKeyUp();
-                if (keyData == Keys.Down) UpdateTreeMapKeyDown();
+                if (!MapEditor.Focused)
+                {
+                    if (keyData == Keys.Up) UpdateTreeMapKeyUp();
+                    if (keyData == Keys.Down) UpdateTreeMapKeyDown();
+                }
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
@@ -596,7 +599,7 @@ namespace RPG_Paper_Maker
 
         private void TilesetSelector_MouseMove(object sender, MouseEventArgs e)
         {
-            WANOK.TilesetMouseManager.SetPosition(e.Location);
+            WANOK.TilesetMouseManager.SetPosition(e.X, e.Y);
         }
 
         #endregion
@@ -615,6 +618,21 @@ namespace RPG_Paper_Maker
         private void MapEditor_MouseHover(object sender, EventArgs e)
         {
             MapEditor.Focus();
+        }
+
+        private void MapEditor_MouseDown(object sender, MouseEventArgs e)
+        {
+            WANOK.MapMouseManager.SetMouseDownStatus(e);
+        }
+
+        private void MapEditor_MouseUp(object sender, MouseEventArgs e)
+        {
+            WANOK.MapMouseManager.SetMouseUpStatus(e);
+        }
+
+        private void MapEditor_MouseMove(object sender, MouseEventArgs e)
+        {
+            WANOK.MapMouseManager.SetPosition(e.X, e.Y);
         }
 
         #endregion

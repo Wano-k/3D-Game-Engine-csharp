@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +11,7 @@ namespace RPG_Paper_Maker
 {
     class MouseManager
     {
-        private Point MousePosition = Point.Empty;
+        private Point MousePosition = Point.Zero;
         private bool FirstLeftClick = false;
         private bool FirstRightClick = false;
         private bool FirstWheelClick = false;
@@ -71,9 +71,9 @@ namespace RPG_Paper_Maker
             return MousePosition;
         }
 
-        public void SetPosition(Point point)
+        public void SetPosition(int x, int y)
         {
-            MousePosition = point;
+            MousePosition = new Point(x,y);
         }
 
         public void Update()
