@@ -103,6 +103,16 @@ namespace RPG_Paper_Maker.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap inputs {
+            get {
+                object obj = ResourceManager.GetObject("inputs", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap kate {
             get {
                 object obj = ResourceManager.GetObject("kate", resourceCulture);

@@ -83,6 +83,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\Forms\DialogInputsManager\DialogInputsManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogInputsManager\DialogInputsManager.Designer.cs">
+      <DependentUpon>DialogInputsManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogInputsManager\DialogInputsManagerControl.cs" />
+    <Compile Include="Engine\Forms\DialogInputsManager\DialogInputsSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogInputsManager\DialogInputsSelect.Designer.cs">
+      <DependentUpon>DialogInputsSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="Engine\Forms\DialogNewMap\DialogNewMap.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +104,7 @@
     </Compile>
     <Compile Include="Engine\Forms\DialogNewMap\DialogNewMapControl.cs" />
     <Compile Include="Engine\Forms\DialogNewProject\DialogNewProjectControl.cs" />
+    <Compile Include="Engine\Models\KeyboardAssign.cs" />
     <Compile Include="Engine\Models\Project.cs" />
     <Compile Include="Engine\Forms\AboutBox\AboutBox.cs">
       <SubType>Form</SubType>
@@ -175,6 +189,12 @@
     <EmbeddedResource Include="Engine\Forms\DemoTips\DialogDemoTip.resx">
       <DependentUpon>DialogDemoTip.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogInputsManager\DialogInputsManager.resx">
+      <DependentUpon>DialogInputsManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogInputsManager\DialogInputsSelect.resx">
+      <DependentUpon>DialogInputsSelect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogNewDir\DialogNewDir.resx">
       <DependentUpon>DialogNewDir.cs</DependentUpon>
     </EmbeddedResource>
@@ -254,6 +274,7 @@
     <Content Include="DLLs\MonoGame.Framework.dll" />
     <Content Include="DLLs\OpenTK.dll" />
     <Content Include="DLLs\OpenTK.GLControl.dll" />
+    <None Include="Resources\inputs.png" />
     <None Include="Resources\1.png" />
     <None Include="Resources\0.png" />
     <None Include="Resources\tuto2.png" />

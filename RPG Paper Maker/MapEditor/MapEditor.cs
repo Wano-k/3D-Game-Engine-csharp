@@ -87,8 +87,8 @@ namespace RPG_Paper_Maker
             if (Map != null)
             {
                 // Update camera
-                Camera.Update(gameTime, CursorEditor);
                 CursorEditor.Update(gameTime, Camera, Map.MapInfos);
+                Camera.Update(gameTime, CursorEditor);
 
                 // Update keyboard
                 WANOK.KeyboardManager.Update();

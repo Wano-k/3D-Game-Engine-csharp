@@ -18,7 +18,8 @@ namespace RPG_Paper_Maker
         private VertexBuffer VB;
         private IndexBuffer IB;
         private int[] indexes;
-        private int Frame = 0, FrameTick = 0, FrameDuration = 100;
+        private int Frame = 0, FrameTick = 0, CursorWait = 0;
+        private const int CursorWaitDuration = 5, FrameDuration = 100;
 
 
         // -------------------------------------------------------------------
@@ -116,30 +117,38 @@ namespace RPG_Paper_Maker
             double angle = camera.HorizontalAngle;
             int x = GetX(), y = GetY(), x_plus, z_plus;
 
+            if (WANOK.KeyboardManager.IsButtonDown(WANOK.Settings.KeyboardAssign.EditorMoveUp)
+                || WANOK.KeyboardManager.IsButtonDown(WANOK.Settings.KeyboardAssign.EditorMoveDown)
+                || WANOK.KeyboardManager.IsButtonDown(WANOK.Settings.KeyboardAssign.EditorMoveLeft)
+                || WANOK.KeyboardManager.IsButtonDown(WANOK.Settings.KeyboardAssign.EditorMoveRight))
+            {
+                CursorWait = CursorWaitDuration;
+            }
+
             if (camera.TargetAngle == camera.HorizontalAngle)
             {
-                if (WANOK.KeyboardManager.IsButtonDownRepeat(Keys.W)) // Up
+                if (WANOK.KeyboardManager.IsButtonDownFirstAndRepeat(WANOK.Settings.KeyboardAssign.EditorMoveUp, CursorWait)) // Up
                 {
                     x_plus = (int)(WANOK.SQUARE_SIZE * (Math.Cos(angle * Math.PI / 180.0)));
                     z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Sin(angle * Math.PI / 180.0)));
                     if ((y > 0 && z_plus < 0) || (y < map.Height-1 && z_plus > 0)) Position.Z += z_plus;
                     if (z_plus == 0 && ((x > 0 && x_plus < 0) || (x < map.Width-1 && x_plus > 0))) Position.X += x_plus;
-                }
-                if (WANOK.KeyboardManager.IsButtonDownRepeat(Keys.S)) // Down
+                }  
+                if (WANOK.KeyboardManager.IsButtonDownFirstAndRepeat(WANOK.Settings.KeyboardAssign.EditorMoveDown, CursorWait)) // Down
                 {
                     x_plus = (int)(WANOK.SQUARE_SIZE * (Math.Cos(angle * Math.PI / 180.0)));
                     z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Sin(angle * Math.PI / 180.0)));
                     if ((y < map.Height - 1 && z_plus < 0) || (y > 0 && z_plus > 0)) Position.Z -= z_plus;
                     if (z_plus == 0 && ((x < map.Width-1 && x_plus < 0) || (x > 0 && x_plus > 0))) Position.X -= x_plus;
                 }
-                if (WANOK.KeyboardManager.IsButtonDownRepeat(Keys.A))
+                if (WANOK.KeyboardManager.IsButtonDownFirstAndRepeat(WANOK.Settings.KeyboardAssign.EditorMoveLeft, CursorWait)) // Left
                 {
                     x_plus = (int)(WANOK.SQUARE_SIZE * (Math.Cos((angle - 90.0) * Math.PI / 180.0)));
                     z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Sin((angle - 90.0) * Math.PI / 180.0)));
                     if ((x > 0 && x_plus < 0) || (x < map.Width-1 && x_plus > 0)) Position.X += x_plus;
                     if (x_plus == 0 && ((y > 0 && z_plus < 0) || (y < map.Height-1 && z_plus > 0))) Position.Z += z_plus;
                 }
-                if (WANOK.KeyboardManager.IsButtonDownRepeat(Keys.D))
+                if (WANOK.KeyboardManager.IsButtonDownFirstAndRepeat(WANOK.Settings.KeyboardAssign.EditorMoveRight, CursorWait)) // Right
                 {
                     x_plus = (int)(WANOK.SQUARE_SIZE * (Math.Cos((angle - 90.0) * Math.PI / 180.0)));
                     z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Sin((angle - 90.0) * Math.PI / 180.0)));
@@ -147,7 +156,8 @@ namespace RPG_Paper_Maker
                     if (x_plus == 0 && ((y < map.Height-1 && z_plus < 0) || (y > 0 && z_plus > 0))) Position.Z -= z_plus;
                 }
             }
-                
+              
+            // Frames update  
             FrameTick += gameTime.ElapsedGameTime.Milliseconds;
             if (FrameTick >= FrameDuration)
             {
@@ -155,6 +165,8 @@ namespace RPG_Paper_Maker
                 if (Frame > 3) Frame = 0;
                 FrameTick = 0;
             }
+
+            if (CursorWait > 0) CursorWait--;
         }
 
         // -------------------------------------------------------------------

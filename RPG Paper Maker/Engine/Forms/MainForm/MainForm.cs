@@ -241,6 +241,8 @@ namespace RPG_Paper_Maker
 
         #region Main menu bar
 
+        // FILE
+
         private void ItemNewProject_Click(object sender, EventArgs e)
         {
             Control.OpenNewDialog();
@@ -293,6 +295,20 @@ namespace RPG_Paper_Maker
             }
         }
 
+        // MANAGEMENT
+
+        private void ItemInputs_Click(object sender, EventArgs e)
+        {
+            Control.OpenNewDialog();
+            DialogInputsManager dialog = new DialogInputsManager();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                
+            }
+        }
+
+        // HELP
+
         private void ItemTutorials_Click(object sender, EventArgs e)
         {
             ProcessStartInfo sInfo = new ProcessStartInfo("http://rpgpapermaker.com/index.php/tutorials");
@@ -328,6 +344,10 @@ namespace RPG_Paper_Maker
             else if (e.Button.Name.Equals("toolBarButtonOpen"))
             {
                 ItemOpenBrowse_Click(sender, e);
+            }
+            else if (e.Button.Name.Equals("toolBarButtonInput"))
+            {
+                ItemInputs_Click(sender, e);
             }
         }
 
@@ -647,6 +667,8 @@ namespace RPG_Paper_Maker
             toolBarButtonNew.Enabled = b;
             ItemOpenBrowse.Enabled = b;
             toolBarButtonOpen.Enabled = b;
+            ItemInputs.Enabled = b;
+            toolBarButtonInput.Enabled = b;
             ItemSave.Enabled = b;
             ItemCloseProject.Enabled = b;
             ItemExit.Enabled = b;
@@ -684,6 +706,8 @@ namespace RPG_Paper_Maker
             EnableNoGame();
             ItemSave.Enabled = true;
             ItemCloseProject.Enabled = true;
+            ItemInputs.Enabled = true;
+            toolBarButtonInput.Enabled = true;
         }
 
         // -------------------------------------------------------------------

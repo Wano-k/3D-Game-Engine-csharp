@@ -11,6 +11,7 @@ namespace RPG_Paper_Maker
     {
         private Dictionary<Keys, bool> OnKeyboard = new Dictionary<Keys, bool>();
         private List<Keys> FirstKeyboard = new List<Keys>();
+        private Dictionary<Keys, int[]> Waiting = new Dictionary<Keys, int[]>();
 
 
         // -------------------------------------------------------------------
@@ -68,9 +69,14 @@ namespace RPG_Paper_Maker
             return OnKeyboard[k] && FirstKeyboard.Contains(k);
         }
 
-        public bool IsButtonDownRepeat(Keys k)
+        public bool IsButtonDownRepeat(Keys k, int t = 0)
         {
-            return OnKeyboard[k];
+            return OnKeyboard[k] && t == 0;
+        }
+
+        public bool IsButtonDownFirstAndRepeat(Keys k, int t = 0)
+        {
+            return IsButtonDownRepeat(k,t) || IsButtonDown(k);
         }
 
         public bool IsButtonUp(Keys k)

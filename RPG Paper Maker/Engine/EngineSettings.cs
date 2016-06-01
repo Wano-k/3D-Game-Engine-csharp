@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace RPG_Paper_Maker
         public bool ShowDemoTip {get; set;}
         public const int MAX_RECENT_SIZE = 10;
         public List<string> ListRecentProjects { get; set; }
+        public KeyboardAssign KeyboardAssign { get; set; }
 
 
         // -------------------------------------------------------------------
@@ -22,6 +24,7 @@ namespace RPG_Paper_Maker
         {
             ShowDemoTip = false;
             ListRecentProjects = new List<string>();
+            KeyboardAssign = new KeyboardAssign();
         }
 
         // -------------------------------------------------------------------
