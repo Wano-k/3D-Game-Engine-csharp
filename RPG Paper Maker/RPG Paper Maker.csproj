@@ -146,6 +146,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MapEditor\Camera.cs" />
+    <Compile Include="MapEditor\KeyboardManager.cs" />
     <Compile Include="MapEditor\MapEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -157,7 +158,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MapEditor\Wanok.cs" />
-    <Compile Include="Engine\MouseManager.cs" />
+    <Compile Include="MapEditor\MouseManager.cs" />
     <Compile Include="Engine\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Engine\ScrollPanel.cs">

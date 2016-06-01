@@ -74,6 +74,7 @@ namespace RPG_Paper_Maker
             Camera.ReLoadMap();
             if (Map != null) Map.DisposeVertexBuffer(); // Dispose the previous vertexBuffer to create a new one for the object
             Map = new Map(GraphicsDevice, mapName);
+            CursorEditor.Reset();
             isMapReloading = false;
         }
 
@@ -83,9 +84,15 @@ namespace RPG_Paper_Maker
 
         protected override void Update(GameTime gameTime)
         {
-            // Update camera
-            Camera.Update(gameTime, CursorEditor);
-            CursorEditor.Update(gameTime);
+            if (Map != null)
+            {
+                // Update camera
+                Camera.Update(gameTime, CursorEditor);
+                CursorEditor.Update(gameTime, Camera, Map.MapInfos);
+
+                // Update keyboard
+                WANOK.KeyboardManager.Update();
+            }
         }
 
         // -------------------------------------------------------------------

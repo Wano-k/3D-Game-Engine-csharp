@@ -17,9 +17,9 @@ namespace RPG_Paper_Maker
         public Matrix Projection;
         public Matrix View { get { return Matrix.CreateLookAt(Position, Target, UpVector); } }
         public Matrix World;
-        public Double HorizontalAngle = -90.0, TargetAngle = -90.0, VerticalAngle = 0.0, Distance = 200.0, Height = 100.0;
+        public double HorizontalAngle = -90.0, TargetAngle = -90.0, VerticalAngle = 0.0, Distance = 200.0, Height = 100.0;
         public int RotateVelocity = 180;
-        private Double RotateSteps = 90.0, RotateTick = 0.0;
+        private double RotateSteps = 90.0, RotateTick = 0.0;
 
 
         // -------------------------------------------------------------------
@@ -78,11 +78,11 @@ namespace RPG_Paper_Maker
             // Keyboard 
             if (TargetAngle == HorizontalAngle)
             {
-                if (WANOK.KeyBoardStates[System.Windows.Forms.Keys.Left])
+                if (WANOK.KeyboardManager.IsButtonDownRepeat(Keys.Left))
                 {
                     TargetAngle -= RotateSteps;
                 }
-                else if (WANOK.KeyBoardStates[System.Windows.Forms.Keys.Right])
+                else if (WANOK.KeyboardManager.IsButtonDownRepeat(Keys.Right))
                 {
                     TargetAngle += RotateSteps;
                 }

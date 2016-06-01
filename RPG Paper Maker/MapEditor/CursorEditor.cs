@@ -11,7 +11,7 @@ namespace RPG_Paper_Maker
 {
     class CursorEditor
     {
-        GraphicsDevice device;
+        GraphicsDevice Device;
         public Vector3 Position;
         public Vector2 Size;
         private VertexPositionTexture[] vertices;
@@ -27,16 +27,25 @@ namespace RPG_Paper_Maker
 
         public CursorEditor(GraphicsDevice device)
         {
-            this.device = device;
+            Device = device;
 
             // Position and size
-            this.Position = new Vector3(0,0,0);
-            this.Size = new Vector2(32, 32);
+            Position = new Vector3(0,0,0);
+            Size = new Vector2(32, 32);
 
             // Init buffers
-            VB = new VertexBuffer(this.device, typeof(VertexPositionTexture), 4, BufferUsage.WriteOnly);
-            IB = new IndexBuffer(this.device, IndexElementSize.ThirtyTwoBits, 6, BufferUsage.WriteOnly);
-            this.device.SetVertexBuffer(VB);
+            VB = new VertexBuffer(Device, typeof(VertexPositionTexture), 4, BufferUsage.WriteOnly);
+            IB = new IndexBuffer(Device, IndexElementSize.ThirtyTwoBits, 6, BufferUsage.WriteOnly);
+            Device.SetVertexBuffer(VB);
+        }
+
+        // -------------------------------------------------------------------
+        // Reset
+        // -------------------------------------------------------------------
+
+        public void Reset()
+        {
+            Position = new Vector3(0, 0, 0);
         }
 
         // -------------------------------------------------------------------
@@ -102,8 +111,43 @@ namespace RPG_Paper_Maker
         // Update
         // -------------------------------------------------------------------
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, Camera camera, MapInfos map)
         {
+            double angle = camera.HorizontalAngle;
+            int x = GetX(), y = GetY(), x_plus, z_plus;
+
+            if (camera.TargetAngle == camera.HorizontalAngle)
+            {
+                if (WANOK.KeyboardManager.IsButtonDownRepeat(Keys.W)) // Up
+                {
+                    x_plus = (int)(WANOK.SQUARE_SIZE * (Math.Cos(angle * Math.PI / 180.0)));
+                    z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Sin(angle * Math.PI / 180.0)));
+                    if ((y > 0 && z_plus < 0) || (y < map.Height-1 && z_plus > 0)) Position.Z += z_plus;
+                    if (z_plus == 0 && ((x > 0 && x_plus < 0) || (x < map.Width-1 && x_plus > 0))) Position.X += x_plus;
+                }
+                if (WANOK.KeyboardManager.IsButtonDownRepeat(Keys.S)) // Down
+                {
+                    x_plus = (int)(WANOK.SQUARE_SIZE * (Math.Cos(angle * Math.PI / 180.0)));
+                    z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Sin(angle * Math.PI / 180.0)));
+                    if ((y < map.Height - 1 && z_plus < 0) || (y > 0 && z_plus > 0)) Position.Z -= z_plus;
+                    if (z_plus == 0 && ((x < map.Width-1 && x_plus < 0) || (x > 0 && x_plus > 0))) Position.X -= x_plus;
+                }
+                if (WANOK.KeyboardManager.IsButtonDownRepeat(Keys.A))
+                {
+                    x_plus = (int)(WANOK.SQUARE_SIZE * (Math.Cos((angle - 90.0) * Math.PI / 180.0)));
+                    z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Sin((angle - 90.0) * Math.PI / 180.0)));
+                    if ((x > 0 && x_plus < 0) || (x < map.Width-1 && x_plus > 0)) Position.X += x_plus;
+                    if (x_plus == 0 && ((y > 0 && z_plus < 0) || (y < map.Height-1 && z_plus > 0))) Position.Z += z_plus;
+                }
+                if (WANOK.KeyboardManager.IsButtonDownRepeat(Keys.D))
+                {
+                    x_plus = (int)(WANOK.SQUARE_SIZE * (Math.Cos((angle - 90.0) * Math.PI / 180.0)));
+                    z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Sin((angle - 90.0) * Math.PI / 180.0)));
+                    if ((x < map.Width - 1 && x_plus < 0) || (x > 0 && x_plus > 0)) Position.X -= x_plus;
+                    if (x_plus == 0 && ((y < map.Height-1 && z_plus < 0) || (y > 0 && z_plus > 0))) Position.Z -= z_plus;
+                }
+            }
+                
             FrameTick += gameTime.ElapsedGameTime.Milliseconds;
             if (FrameTick >= FrameDuration)
             {
@@ -123,16 +167,16 @@ namespace RPG_Paper_Maker
             effect.VertexColorEnabled = false;
             effect.TextureEnabled = true;
             effect.Texture = MapEditor.TexCursor;
-            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
+            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(Position.X, Position.Y, Position.Z); ;
 
             CreateTex(new int[] { WANOK.BASIC_SQUARE_SIZE * Frame, 0, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE }, MapEditor.TexCursor);
 
-            device.SetVertexBuffer(VB);
-            device.Indices = IB;
+            Device.SetVertexBuffer(VB);
+            Device.Indices = IB;
             foreach (EffectPass pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                device.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, indexes, 0, 2);
+                Device.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, indexes, 0, 2);
             }
         }
     }

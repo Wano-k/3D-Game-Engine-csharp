@@ -42,7 +42,7 @@ namespace RPG_Paper_Maker
         public static EngineSettings Settings = null;
         public static DemoSteps DemoStep = DemoSteps.None;
         public static Form CurrentDemoDialog = null;
-        public static Dictionary<Keys, bool> KeyBoardStates = new Dictionary<Keys, bool>();
+        public static KeyboardManager KeyboardManager = new KeyboardManager();
         public static MouseManager TilesetMouseManager = new MouseManager();
         public static MouseManager MapMouseManager = new MouseManager();
 
@@ -54,18 +54,6 @@ namespace RPG_Paper_Maker
         public static string MapsDirectoryPath { get { return Path.Combine(new string[] { WANOK.CurrentDir, "Content", "Datas", "Maps" }); } }
 
 
-
-        // -------------------------------------------------------------------
-        // InitializeKeyBoard
-        // -------------------------------------------------------------------
-
-        public static void InitializeKeyBoard()
-        {
-            foreach (Keys k in Enum.GetValues(typeof(Keys)))
-            {
-                KeyBoardStates[k] = false;
-            }
-        }
 
         // -------------------------------------------------------------------
         // CopyAll

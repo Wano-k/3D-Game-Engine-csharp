@@ -18,9 +18,6 @@ namespace RPG_Paper_Maker
         private bool OnLeftClick = false;
         private bool OnRightClick = false;
         private bool OnWheelClick = false;
-        private bool UpLeftClick = true;
-        private bool UpRightClick = true;
-        private bool UpWheelClick = true;
 
 
         public void SetMouseDownStatus(MouseEventArgs e)
@@ -30,17 +27,14 @@ namespace RPG_Paper_Maker
                 case MouseButtons.Left:
                     FirstLeftClick = true;
                     OnLeftClick = true;
-                    UpLeftClick = false;
                     break;
                 case MouseButtons.Right:
                     FirstRightClick = true;
                     OnRightClick = true;
-                    UpRightClick = false;
                     break;
                 case MouseButtons.Middle:
                     FirstWheelClick = true;
                     OnWheelClick = true;
-                    UpWheelClick = false;
                     break;
             }
         }
@@ -51,17 +45,14 @@ namespace RPG_Paper_Maker
             {
                 case MouseButtons.Left:
                     FirstLeftClick = true;
-                    UpLeftClick = true;
                     OnLeftClick = false;
                     break;
                 case MouseButtons.Right:
                     FirstRightClick = true;
-                    UpRightClick = true;
                     OnRightClick = false;
                     break;
                 case MouseButtons.Middle:
                     FirstWheelClick = true;
-                    UpWheelClick = true;
                     OnWheelClick = false;
                     break;
             }
@@ -84,7 +75,7 @@ namespace RPG_Paper_Maker
             FirstWheelClick = false;
         }
 
-        public Boolean IsButtonDown(MouseButtons button)
+        public bool IsButtonDown(MouseButtons button)
         {
             switch (button)
             {
@@ -99,7 +90,7 @@ namespace RPG_Paper_Maker
             throw new Exception(button.ToString() + " is not managed.");
         }
 
-        public Boolean IsButtonDownRepeat(MouseButtons button)
+        public bool IsButtonDownRepeat(MouseButtons button)
         {
             switch (button)
             {
@@ -114,16 +105,16 @@ namespace RPG_Paper_Maker
             throw new Exception(button.ToString() + " is not managed.");
         }
 
-        public Boolean IsButtonUp(MouseButtons button)
+        public bool IsButtonUp(MouseButtons button)
         {
             switch (button)
             {
                 case MouseButtons.Left:
-                    return UpLeftClick && FirstLeftClick;
+                    return !OnLeftClick && FirstLeftClick;
                 case MouseButtons.Right:
-                    return UpRightClick && FirstRightClick;
+                    return !OnRightClick && FirstRightClick;
                 case MouseButtons.Middle:
-                    return UpWheelClick && FirstWheelClick;
+                    return !OnWheelClick && FirstWheelClick;
             }
 
             throw new Exception(button.ToString() + " is not managed.");

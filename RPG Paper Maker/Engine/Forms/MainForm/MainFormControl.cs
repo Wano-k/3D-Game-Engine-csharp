@@ -48,7 +48,6 @@ namespace RPG_Paper_Maker
             WANOK.Settings = WANOK.LoadDatas<EngineSettings>(WANOK.PATHSETTINGS);
 
             // Updating special infos
-            WANOK.InitializeKeyBoard();
             WANOK.ABSOLUTEENGINEPATH = Path.GetDirectoryName(WANOK.ExcecutablePath);
         }
 
@@ -68,7 +67,7 @@ namespace RPG_Paper_Maker
 
         public void OpenNewDialog()
         {
-            WANOK.InitializeKeyBoard();
+            WANOK.KeyboardManager.InitializeKeyboard();
         }
 
         // -------------------------------------------------------------------

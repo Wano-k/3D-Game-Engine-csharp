@@ -214,7 +214,7 @@ namespace RPG_Paper_Maker
         {
             if (keyData == Keys.Left || keyData == Keys.Right || keyData == Keys.Up || keyData == Keys.Down)
             {
-                UpdateKeyBoard(keyData, true);
+                WANOK.KeyboardManager.SetKeyDownStatus((Microsoft.Xna.Framework.Input.Keys)keyData);
                 if (keyData == Keys.Up) UpdateTreeMapKeyUp();
                 if (keyData == Keys.Down) UpdateTreeMapKeyDown();
                 return true;
@@ -224,12 +224,13 @@ namespace RPG_Paper_Maker
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            UpdateKeyBoard(e.KeyCode, false);
+            WANOK.KeyboardManager.SetKeyUpStatus((Microsoft.Xna.Framework.Input.Keys)e.KeyCode);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            UpdateKeyBoard(e.KeyCode, true);
+            WANOK.KeyboardManager.SetKeyDownStatus((Microsoft.Xna.Framework.Input.Keys)e.KeyCode);
+            e.SuppressKeyPress = true;
         }
 
         #endregion
@@ -743,15 +744,6 @@ namespace RPG_Paper_Maker
             Text = TitleName;
             EnableNoGame();
             ShowProjectContain(false);
-        }
-
-        // -------------------------------------------------------------------
-        // UpdateKeyBoard
-        // -------------------------------------------------------------------
-
-        public void UpdateKeyBoard(Keys k, bool b)
-        {
-            WANOK.KeyBoardStates[k] = b;
         }
 
         // -------------------------------------------------------------------
