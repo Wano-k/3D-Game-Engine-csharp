@@ -99,10 +99,10 @@ namespace RPG_Paper_Maker
         {
             GraphicsDevice.Clear(new Color(224, 224, 224));
             
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
-            spriteBatch.Draw(TexTileset, new Rectangle(0, 0, Width, Height), Color.White);
-            SelectionRectangle.Draw(spriteBatch);
-            spriteBatch.End();
+            SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+            SpriteBatch.Draw(TexTileset, new Rectangle(0, 0, Width, Height), Color.White);
+            SelectionRectangle.Draw(SpriteBatch);
+            SpriteBatch.End();
         }
     }
 }

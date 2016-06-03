@@ -664,6 +664,7 @@ namespace RPG_Paper_Maker
         {
             MapEditor.Visible = b;
             menuStrip2.Visible = b;
+            TilesetSelector.Visible = b;
         }
 
         // -------------------------------------------------------------------

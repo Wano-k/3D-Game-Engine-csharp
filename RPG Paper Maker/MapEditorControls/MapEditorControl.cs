@@ -11,32 +11,32 @@ namespace WinFormsGraphicsDevice
 {
     abstract class MapEditorControl : GraphicsDeviceControl
     {
-        protected ContentManager content;
-        protected SpriteBatch spriteBatch;
-        protected Stopwatch timer;
-        protected TimeSpan elapsed;
-        protected GameTime gameTime;
+        protected ContentManager Content;
+        protected SpriteBatch SpriteBatch;
+        protected Stopwatch Timer;
+        protected TimeSpan Elapsed;
+        protected GameTime GameTime;
 
         protected override void Initialize()
         {
-            timer = Stopwatch.StartNew();
-            content = new ContentManager(Services, "Content");
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            Timer = Stopwatch.StartNew();
+            Content = new ContentManager(Services, "Content");
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
             Application.Idle += delegate { GameLoop(); };
         }
 
         private void GameLoop()
         {
-            gameTime = new GameTime(timer.Elapsed, timer.Elapsed - elapsed);
-            elapsed = timer.Elapsed;
+            GameTime = new GameTime(Timer.Elapsed, Timer.Elapsed - Elapsed);
+            Elapsed = Timer.Elapsed;
 
-            Update(gameTime);
+            Update(GameTime);
             Invalidate();
         }
 
         protected override void Draw()
         {
-            Draw(gameTime);
+            Draw(GameTime);
         }
 
         protected abstract void Update(GameTime gameTime);

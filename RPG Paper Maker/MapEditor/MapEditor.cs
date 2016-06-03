@@ -16,6 +16,7 @@ namespace RPG_Paper_Maker
         Map Map = null;
         CursorEditor CursorEditor;
         BasicEffect effect;
+        SpriteFont font;
         bool isMapReloading = false;
         public string SelectedDrawType = "ItemFloor";
         public static int GridHeight = 0;
@@ -47,6 +48,9 @@ namespace RPG_Paper_Maker
 
             // Effect
             effect = new BasicEffect(GraphicsDevice);
+
+            // Load content
+            font = Content.Load<SpriteFont>("Fonts/corbel");
         }
 
         // -------------------------------------------------------------------
@@ -118,6 +122,12 @@ namespace RPG_Paper_Maker
                 // Drawings components
                 Map.Draw(gameTime, effect);
                 CursorEditor.Draw(gameTime, effect);
+
+                // Draw position
+                string pos = "[" + CursorEditor.GetX() + "," + CursorEditor.GetY() + "]";
+                SpriteBatch.Begin();
+                SpriteBatch.DrawString(font, pos, new Vector2(GraphicsDevice.Viewport.Width-10, GraphicsDevice.Viewport.Height-10), Color.White, 0, font.MeasureString(pos), 1.0f, SpriteEffects.None, 0.5f);
+                SpriteBatch.End();
             }
         }
     }

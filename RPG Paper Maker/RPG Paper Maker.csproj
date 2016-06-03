@@ -229,6 +229,9 @@
     <None Include="Config\EngineSettings.JSON">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\Fonts\corbel.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -286,6 +289,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Basic\Content\Datas\Maps\MAP0001\temp\" />
+    <Folder Include="Basic\Content\Fonts\" />
     <Folder Include="RTP\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
