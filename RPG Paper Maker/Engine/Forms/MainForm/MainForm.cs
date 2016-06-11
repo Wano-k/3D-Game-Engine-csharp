@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -595,6 +596,7 @@ namespace RPG_Paper_Maker
         private void TilesetSelector_MouseUp(object sender, MouseEventArgs e)
         {
             WANOK.TilesetMouseManager.SetMouseUpStatus(e);
+            MapEditor.SetCurrentTexture(TilesetSelector.GetCurrentTexture());
         }
 
         private void TilesetSelector_MouseMove(object sender, MouseEventArgs e)

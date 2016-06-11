@@ -34,6 +34,15 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // GetCurrentTexture
+        // -------------------------------------------------------------------
+
+        public Texture2D GetCurrentTexture()
+        {
+            return WANOK.GetSubImage(GraphicsDevice, TexTileset, SelectionRectangle.GetRectangle());
+        }
+
+        // -------------------------------------------------------------------
         // MakeRectangleSelection
         // -------------------------------------------------------------------
 

@@ -11,7 +11,7 @@ namespace RPG_Paper_Maker
 {
     class Camera
     {
-        private Vector3 Position;
+        public Vector3 Position;
         private Vector3 Target;
         private Vector3 UpVector = Vector3.Up;
         public Matrix Projection;

@@ -15,6 +15,7 @@ namespace RPG_Paper_Maker
         GraphicsDevice Device;
         VertexPositionColor[] GridVerticesArray;
         VertexBuffer VBGrid;
+        VertexBuffer VBFloor;
         public MapInfos MapInfos { get; set; }
 
 

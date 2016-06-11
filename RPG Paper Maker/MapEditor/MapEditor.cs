@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
@@ -21,9 +22,11 @@ namespace RPG_Paper_Maker
         public string SelectedDrawType = "ItemFloor";
         public static int GridHeight = 0;
         public static Point MouseBeforeUpdate = WANOK.MapMouseManager.GetPosition();
+        public int count = 0;
 
         // Content
         public static Texture2D TexCursor;
+        public static Texture2D CurrentTexture = null;
 
 
         // -------------------------------------------------------------------
@@ -51,6 +54,15 @@ namespace RPG_Paper_Maker
 
             // Load content
             font = Content.Load<SpriteFont>("Fonts/corbel");
+        }
+
+        // -------------------------------------------------------------------
+        // SetCurrentTexture
+        // -------------------------------------------------------------------
+
+        public void SetCurrentTexture(Texture2D tex)
+        {
+            CurrentTexture = tex;
         }
 
         // -------------------------------------------------------------------
@@ -91,9 +103,15 @@ namespace RPG_Paper_Maker
         {
             if (Map != null)
             {
+                count = (count + 1) % 80;
                 // Update camera
                 CursorEditor.Update(gameTime, Camera, Map.MapInfos);
                 Camera.Update(gameTime, CursorEditor);
+
+                // Raycasting
+                Ray ray = WANOK.CalculateRay(new Vector2(MouseBeforeUpdate.X, MouseBeforeUpdate.Y), Camera.View, Camera.Projection, GraphicsDevice.Viewport);
+                float distance = (GridHeight - Camera.Position.Y) / ray.Direction.Y;
+                Vector3 pointOnPlane = WANOK.GetCorrectPointOnRay(ray, Camera, distance);
 
                 // Update keyboard
                 MouseBeforeUpdate = WANOK.MapMouseManager.GetPosition();
