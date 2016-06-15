@@ -13,20 +13,15 @@ namespace RPG_Paper_Maker
 {
     class MapEditor : WinFormsGraphicsDevice.MapEditorControl
     {
-        Camera Camera;
-        Map Map = null;
-        CursorEditor CursorEditor;
         BasicEffect effect;
         SpriteFont font;
-        bool isMapReloading = false;
-        public string SelectedDrawType = "ItemFloor";
-        public static int GridHeight = 0;
-        public static Point MouseBeforeUpdate = WANOK.MapMouseManager.GetPosition();
-        public int count = 0;
+
+        public MapEditorControl Control = new MapEditorControl();
+        public string SelectedDrawType { get { return Control.SelectedDrawType; } }
+        public Point MouseBeforeUpdate { get { return Control.MouseBeforeUpdate; } set { Control.MouseBeforeUpdate = value; } }
 
         // Content
         public static Texture2D TexCursor;
-        public static Texture2D CurrentTexture = null;
 
 
         // -------------------------------------------------------------------
@@ -43,8 +38,8 @@ namespace RPG_Paper_Maker
             TexCursor = Texture2D.FromStream(GraphicsDevice, fs);
 
             // Create game components
-            Camera = new Camera(this.GraphicsDevice);
-            CursorEditor = new CursorEditor(this.GraphicsDevice);
+            Control.Camera = new Camera(this.GraphicsDevice);
+            Control.CursorEditor = new CursorEditor(this.GraphicsDevice);
 
             // Load Settings
             LoadSettings();
@@ -60,9 +55,9 @@ namespace RPG_Paper_Maker
         // SetCurrentTexture
         // -------------------------------------------------------------------
 
-        public void SetCurrentTexture(Texture2D tex)
+        public void SetCurrentTexture(int[] tex)
         {
-            CurrentTexture = tex;
+            Control.CurrentTexture = tex;
         }
 
         // -------------------------------------------------------------------
@@ -87,12 +82,12 @@ namespace RPG_Paper_Maker
         public void ReLoadMap(string mapName)
         {
             // Recreate game components
-            isMapReloading = true;
-            Camera.ReLoadMap();
-            if (Map != null) Map.DisposeVertexBuffer(); // Dispose the previous vertexBuffer to create a new one for the object
-            Map = new Map(GraphicsDevice, mapName);
-            CursorEditor.Reset();
-            isMapReloading = false;
+            Control.IsMapReloading = true;
+            Control.Camera.ReLoadMap();
+            if (Control.Map != null) Control.Map.DisposeVertexBuffer(); // Dispose the previous vertexBuffer to create a new one for the object
+            Control.Map = new Map(GraphicsDevice, mapName);
+            Control.CursorEditor.Reset();
+            Control.IsMapReloading = false;
         }
 
         // -------------------------------------------------------------------
@@ -101,17 +96,16 @@ namespace RPG_Paper_Maker
 
         protected override void Update(GameTime gameTime)
         {
-            if (Map != null)
+            if (Control.Map != null)
             {
-                count = (count + 1) % 80;
                 // Update camera
-                CursorEditor.Update(gameTime, Camera, Map.MapInfos);
-                Camera.Update(gameTime, CursorEditor);
+                Control.CursorEditor.Update(gameTime, Control.Camera, Control.Map.MapInfos);
+                Control.Camera.Update(gameTime, Control.CursorEditor, MouseBeforeUpdate);
 
-                // Raycasting
-                Ray ray = WANOK.CalculateRay(new Vector2(MouseBeforeUpdate.X, MouseBeforeUpdate.Y), Camera.View, Camera.Projection, GraphicsDevice.Viewport);
-                float distance = (GridHeight - Camera.Position.Y) / ray.Direction.Y;
-                Vector3 pointOnPlane = WANOK.GetCorrectPointOnRay(ray, Camera, distance);
+                // Map editor update
+                Control.Update(GraphicsDevice, Control.Camera);
+                if (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Left)) Control.Add(true);
+                else if (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Right)) Control.Remove(true);
 
                 // Update keyboard
                 MouseBeforeUpdate = WANOK.MapMouseManager.GetPosition();
@@ -128,21 +122,21 @@ namespace RPG_Paper_Maker
         {
             GraphicsDevice.Clear(new Color(32,32,32));
 
-            if (!isMapReloading && Map != null)
+            if (!Control.IsMapReloading && Control.Map != null)
             {
                 LoadSettings();
 
                 // Effect settings
-                effect.View = Camera.View;
-                effect.Projection = Camera.Projection;
+                effect.View = Control.Camera.View;
+                effect.Projection = Control.Camera.Projection;
                 effect.World = Matrix.Identity;
 
                 // Drawings components
-                Map.Draw(gameTime, effect);
-                CursorEditor.Draw(gameTime, effect);
+                Control.Map.Draw(gameTime, effect);
+                Control.CursorEditor.Draw(gameTime, effect);
 
                 // Draw position
-                string pos = "[" + CursorEditor.GetX() + "," + CursorEditor.GetY() + "]";
+                string pos = "[" + Control.CursorEditor.GetX() + "," + Control.CursorEditor.GetZ() + "]";
                 SpriteBatch.Begin();
                 SpriteBatch.DrawString(font, pos, new Vector2(GraphicsDevice.Viewport.Width-10, GraphicsDevice.Viewport.Height-10), Color.White, 0, font.MeasureString(pos), 1.0f, SpriteEffects.None, 0.5f);
                 SpriteBatch.End();

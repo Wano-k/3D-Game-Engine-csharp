@@ -89,6 +89,7 @@ namespace RPG_Paper_Maker.Controls
                                 string executablePath = Path.GetDirectoryName(WANOK.ExcecutablePath);
                                 string basicPath = Path.Combine(executablePath, "Basic");
                                 WANOK.CopyAll(new DirectoryInfo(basicPath), new DirectoryInfo(fullPath));
+                                Directory.CreateDirectory(Path.Combine(fullPath, "Content", "Datas", "Maps", "MAP0001", "temp"));
                                 ProjectName = ProjectName.Trim();
                                 DirPath = Path.Combine(DirPath, ProjectName);
 

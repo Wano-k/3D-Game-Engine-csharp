@@ -36,13 +36,13 @@ namespace RPG_Paper_Maker
 
             // This code created the basic first map settings
             /*
-            WANOK.SaveDatas(new MapInfos(25, 25), "infos.map");
+            WANOK.SaveDatas(new MapInfos("MAP0001", 25, 25), "infos.map");
             */
 
             // This code created the basic engine settings
-            
+            /*
             WANOK.SaveDatas(new EngineSettings(), "EngineSettings.JSON");
-            
+            */
 
             // Getting engine settings
             WANOK.Settings = WANOK.LoadDatas<EngineSettings>(WANOK.PATHSETTINGS);

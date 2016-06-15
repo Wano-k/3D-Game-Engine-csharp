@@ -38,9 +38,18 @@ namespace RPG_Paper_Maker
             BorderTop = WANOK.GetSubImage(GraphicsDevice, image, new Rectangle(BORDER_SIZE, 0, 1, BORDER_SIZE));
         }
 
+        // -------------------------------------------------------------------
+        // GetRectangle
+        // -------------------------------------------------------------------
+
         public Rectangle GetRectangle()
         {
             return new Rectangle(X, Y, Width, Height);
+        }
+
+        public int[] GetRectangleArray()
+        {
+            return new int[] { (int)(X / WANOK.RELATION_SIZE), (int)(Y / WANOK.RELATION_SIZE), (int)(Width / WANOK.RELATION_SIZE), (int)(Height / WANOK.RELATION_SIZE) };
         }
 
         // -------------------------------------------------------------------

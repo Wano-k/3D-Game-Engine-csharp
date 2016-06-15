@@ -59,12 +59,21 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // GetY
+        // GetZ
         // -------------------------------------------------------------------
 
-        public int GetY()
+        public int GetZ()
         {
             return (int)((Position.Z + 1) / WANOK.SQUARE_SIZE);
+        }
+
+        // -------------------------------------------------------------------
+        // GetPosition
+        // -------------------------------------------------------------------
+
+        public int[] GetPosition()
+        {
+            return new int[] { GetX(), GetZ() };
         }
 
         // -------------------------------------------------------------------
@@ -115,7 +124,7 @@ namespace RPG_Paper_Maker
         public void Update(GameTime gameTime, Camera camera, MapInfos map)
         {
             double angle = camera.HorizontalAngle;
-            int x = GetX(), y = GetY(), x_plus, z_plus;
+            int x = GetX(), y = GetZ(), x_plus, z_plus;
 
             if (WANOK.KeyboardManager.IsButtonDown(WANOK.Settings.KeyboardAssign.EditorMoveUp)
                 || WANOK.KeyboardManager.IsButtonDown(WANOK.Settings.KeyboardAssign.EditorMoveDown)

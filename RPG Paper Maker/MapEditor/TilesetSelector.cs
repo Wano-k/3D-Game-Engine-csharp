@@ -12,7 +12,8 @@ namespace RPG_Paper_Maker
 {
     class TilesetSelector : WinFormsGraphicsDevice.MapEditorControl
     {
-        protected Texture2D TexTileset, TexSelector;
+        public static Texture2D TexTileset;
+        protected Texture2D TexSelector;
         protected SelectionRectangle SelectionRectangle;
 
 
@@ -30,16 +31,16 @@ namespace RPG_Paper_Maker
             TexTileset = Texture2D.FromStream(GraphicsDevice,fs);
             fs = new FileStream(Path.Combine(new string[] { "Config", "bmp", "tileset_cursor.png" }), FileMode.Open);
             TexSelector = Texture2D.FromStream(GraphicsDevice, fs);
-            SelectionRectangle = new SelectionRectangle(GraphicsDevice, TexSelector, 0, 0, (int)WANOK.BASIC_SQUARE_SIZE, (int)WANOK.BASIC_SQUARE_SIZE);
+            SelectionRectangle = new SelectionRectangle(GraphicsDevice, TexSelector, 0, 0, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE);
         }
 
         // -------------------------------------------------------------------
         // GetCurrentTexture
         // -------------------------------------------------------------------
 
-        public Texture2D GetCurrentTexture()
+        public int[] GetCurrentTexture()
         {
-            return WANOK.GetSubImage(GraphicsDevice, TexTileset, SelectionRectangle.GetRectangle());
+            return SelectionRectangle.GetRectangleArray();
         }
 
         // -------------------------------------------------------------------

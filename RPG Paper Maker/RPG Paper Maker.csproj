@@ -165,9 +165,10 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MapEditor\CursorEditor.cs" />
-    <Compile Include="MapEditor\Game_map_portion.cs" />
+    <Compile Include="MapEditor\GameMapPortion.cs" />
     <Compile Include="MapEditor\Map.cs" />
     <Compile Include="Engine\Models\MapInfos.cs" />
+    <Compile Include="MapEditor\MapEditorControl.cs" />
     <Compile Include="MapEditor\TilesetSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -288,7 +289,6 @@
     <None Include="Resources\open_file.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Basic\Content\Datas\Maps\MAP0001\temp\" />
     <Folder Include="Basic\Content\Fonts\" />
     <Folder Include="RTP\" />
   </ItemGroup>

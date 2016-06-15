@@ -15,8 +15,8 @@ namespace RPG_Paper_Maker
         GraphicsDevice Device;
         VertexPositionColor[] GridVerticesArray;
         VertexBuffer VBGrid;
-        VertexBuffer VBFloor;
         public MapInfos MapInfos { get; set; }
+        public Dictionary<int[], GameMapPortion> Portions;
 
 
         // -------------------------------------------------------------------
@@ -27,8 +27,32 @@ namespace RPG_Paper_Maker
         {
             Device = device;
             MapInfos = WANOK.LoadDatas<MapInfos>(Path.Combine(WANOK.MapsDirectoryPath, mapName, "infos.map"));
+            string pathTemp = Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp");
+            string[] filePaths = Directory.GetFiles(pathTemp);
+            foreach (string filePath in filePaths) File.Delete(filePath);
+            /*
+            filePaths = Directory.GetFiles(Path.Combine(WANOK.MapsDirectoryPath, mapName));
+            foreach (string filePath in filePaths) File.Copy(filePath, pathTemp);
+            */
 
+            // Grid
             CreateGrid(MapInfos.Width, MapInfos.Height);
+
+            // Map
+            Portions = new Dictionary<int[], GameMapPortion>();
+            for (int i = 0; i < WANOK.PORTION_RADIUS; i++)
+            {
+                for (int j = 0; j < WANOK.PORTION_RADIUS; j++)
+                {
+                    string path = Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp", i + "-" + j + ".JSON");
+                    if (File.Exists(path))
+                    {
+                        GameMapPortion gamePortion = WANOK.LoadDatas<GameMapPortion>(path);
+                        Portions[new int[] { i, j }] = gamePortion;
+                        gamePortion.CreatePortionFloor(Device, TilesetSelector.TexTileset);
+                    }
+                }
+            }
         }
 
         // -------------------------------------------------------------------
@@ -54,9 +78,18 @@ namespace RPG_Paper_Maker
                     gridVerticesList.Add(vertex);
                 }
             } 
-            this.GridVerticesArray = gridVerticesList.ToArray();
+            GridVerticesArray = gridVerticesList.ToArray();
             VBGrid = new VertexBuffer(Device, typeof(VertexPositionColor), GridVerticesArray.Length, BufferUsage.WriteOnly);
             VBGrid.SetData(GridVerticesArray);
+        }
+
+        // -------------------------------------------------------------------
+        // GenFloor
+        // -------------------------------------------------------------------
+
+        public void GenFloor(int[] portion)
+        {
+            Portions[portion].GenFloor(Device, TilesetSelector.TexTileset);
         }
 
         // -------------------------------------------------------------------
@@ -78,8 +111,8 @@ namespace RPG_Paper_Maker
             // Vertex Position and Texture
             return new VertexPositionColor[]
             {
-                new VertexPositionColor(new Vector3(x1, MapEditor.GridHeight, z1), Color.White),
-                new VertexPositionColor(new Vector3(x2, MapEditor.GridHeight, z2), Color.White)
+                new VertexPositionColor(new Vector3(x1, 0, z1), Color.White),
+                new VertexPositionColor(new Vector3(x2, 0, z2), Color.White)
             };
         }
 
@@ -92,14 +125,22 @@ namespace RPG_Paper_Maker
             // Effect settings
             effect.VertexColorEnabled = true;
             effect.TextureEnabled = false;
-            effect.World = Matrix.Identity * Matrix.CreateScale(16.0f,1.0f,16.0f);
+            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE,1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(0,0.2f,0);
 
             // Drawing grid
             Device.SetVertexBuffer(VBGrid);
             foreach (EffectPass pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                Device.DrawPrimitives(PrimitiveType.LineList, 0, this.GridVerticesArray.Length / 2);
+                Device.DrawPrimitives(PrimitiveType.LineList, 0, GridVerticesArray.Length / 2);
+            }
+
+            // Drawing Floors
+            effect.VertexColorEnabled = false;
+            effect.TextureEnabled = true;
+            foreach (GameMapPortion gameMap in Portions.Values)
+            {
+                gameMap.Draw(Device, effect, TilesetSelector.TexTileset);
             }
         }
     }

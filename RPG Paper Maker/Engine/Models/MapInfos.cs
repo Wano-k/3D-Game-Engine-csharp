@@ -8,6 +8,7 @@ namespace RPG_Paper_Maker
 {
     public class MapInfos
     {
+        protected Dictionary<int[], int> OccurrenceFloors = new Dictionary<int[], int>();
         public string RealMapName;
         public string MapName;
         public int Width;

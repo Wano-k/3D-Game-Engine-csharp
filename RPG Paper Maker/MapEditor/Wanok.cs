@@ -36,7 +36,7 @@ namespace RPG_Paper_Maker
         public static int BASIC_SQUARE_SIZE = 32;
         public static int SQUARE_SIZE = 16;
         public static float RELATION_SIZE { get { return (float)(BASIC_SQUARE_SIZE) / SQUARE_SIZE; } }
-        public static int PORTIONSIZE = 16;
+        public static int PORTION_SIZE = 16;
         public static int PORTION_RADIUS = 10;
         public static string ProjectName = null;
         public static EngineSettings Settings = null;

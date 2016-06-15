@@ -107,7 +107,7 @@ namespace RPG_Paper_Maker
         // Update
         // -------------------------------------------------------------------
 
-        public void Update(GameTime gameTime, CursorEditor cursor)
+        public void Update(GameTime gameTime, CursorEditor cursor, Point mouseBeforeUpdate)
         {
             // Zoom
             if (WANOK.MapMouseManager.IsWheelUp())
@@ -122,8 +122,8 @@ namespace RPG_Paper_Maker
             // Wheel Rotation
             if (WANOK.MapMouseManager.IsButtonDownRepeat(System.Windows.Forms.MouseButtons.Middle))
             {
-                Height += (WANOK.MapMouseManager.GetPosition().Y - MapEditor.MouseBeforeUpdate.Y) * 2;
-                SetAngleH((WANOK.MapMouseManager.GetPosition().X - MapEditor.MouseBeforeUpdate.X) / 2);
+                Height += (WANOK.MapMouseManager.GetPosition().Y - mouseBeforeUpdate.Y) * 2;
+                SetAngleH((WANOK.MapMouseManager.GetPosition().X - mouseBeforeUpdate.X) / 2);
             }
 
             // Horizontal angle
