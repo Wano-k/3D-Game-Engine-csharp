@@ -160,6 +160,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MapEditor\Camera.cs" />
+    <Compile Include="MapEditor\IntArrayComparer.cs" />
     <Compile Include="MapEditor\KeyboardManager.cs" />
     <Compile Include="MapEditor\MapEditor.cs">
       <SubType>UserControl</SubType>

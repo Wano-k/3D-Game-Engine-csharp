@@ -37,7 +37,7 @@ namespace RPG_Paper_Maker
         public static int SQUARE_SIZE = 16;
         public static float RELATION_SIZE { get { return (float)(BASIC_SQUARE_SIZE) / SQUARE_SIZE; } }
         public static int PORTION_SIZE = 16;
-        public static int PORTION_RADIUS = 10;
+        public static int PORTION_RADIUS = 4;
         public static string ProjectName = null;
         public static EngineSettings Settings = null;
         public static DemoSteps DemoStep = DemoSteps.None;
@@ -95,13 +95,32 @@ namespace RPG_Paper_Maker
         {
             try
             {
-                string json = JsonConvert.SerializeObject(obj);
+                string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
                 FileStream fs = new FileStream(path, FileMode.Create);
                 StreamWriter sw = new StreamWriter(fs);
                 sw.WriteLine(json);
                 sw.Close();
                 fs.Close();
             } catch(Exception e)
+            {
+                PathErrorMessage(e);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // SaveBinaryDatas
+        // -------------------------------------------------------------------
+
+        public static void SaveBinaryDatas(object obj, string path)
+        {
+            try
+            {
+                FileStream fs = new FileStream(path, FileMode.Create);
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(fs, obj);
+                fs.Close();
+            }
+            catch (Exception e)
             {
                 PathErrorMessage(e);
             }
@@ -121,6 +140,29 @@ namespace RPG_Paper_Maker
                 string json = sr.ReadToEnd();
                 obj = JsonConvert.DeserializeObject<T>(json);
                 sr.Close();
+                fs.Close();
+            }
+            catch (Exception e)
+            {
+                obj = default(T);
+                PathErrorMessage(e);
+            }
+
+            return obj;
+        }
+
+        // -------------------------------------------------------------------
+        // LoadBinaryDatas
+        // -------------------------------------------------------------------
+
+        public static T LoadBinaryDatas<T>(string path)
+        {
+            T obj;
+            try
+            {
+                FileStream fs = new FileStream(path, FileMode.Open);
+                BinaryFormatter formatter = new BinaryFormatter();
+                obj = (T)formatter.Deserialize(fs);
                 fs.Close();
             }
             catch (Exception e)
@@ -216,6 +258,15 @@ namespace RPG_Paper_Maker
         public static void PathErrorMessage(Exception e)
         {
             MessageBox.Show("You get a path error. You can send a report to Wanok.rpm@gmail.com.\n" + e.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        // -------------------------------------------------------------------
+        // Print
+        // -------------------------------------------------------------------
+
+        public static void Print(string m)
+        {
+            MessageBox.Show(m, "Print", MessageBoxButtons.OK);
         }
 
         // -------------------------------------------------------------------

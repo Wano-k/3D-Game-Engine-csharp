@@ -20,6 +20,7 @@ namespace RPG_Paper_Maker
         public Vector3 PointOnPlane;
         public int GridHeight = 0;
         public int[] CurrentTexture = new int[] { 0, 0, WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE };
+        public int[] CurrentPortion = new int[] { 0, 0 };
         protected List<int[]> PortionsToUpdate = new List<int[]>();
         protected List<int[]> PortionsToSave = new List<int[]>();
 
@@ -56,9 +57,106 @@ namespace RPG_Paper_Maker
             float distance = (GridHeight - camera.Position.Y) / ray.Direction.Y;
             PointOnPlane = WANOK.GetCorrectPointOnRay(ray, camera, distance);
 
+            // Portion moving
+            int[] newPortion = CursorEditor.GetPortion();
+            if (newPortion[0] != CurrentPortion[0] || newPortion[1] != CurrentPortion[1])
+            {
+                UpdateMovingPortion(newPortion, CurrentPortion);
+            }
+            CurrentPortion = newPortion;
+
             // Update portions
             UpdatePortions();
         }
+
+        // -------------------------------------------------------------------
+        // UpdateMovingPortion
+        // -------------------------------------------------------------------
+
+        public void UpdateMovingPortion(int[] currentPortion, int[] previousPortion)
+        {
+            // If cursor going to right side
+            if (currentPortion[0] > previousPortion[0])
+            {
+                for (int j = -WANOK.PORTION_RADIUS; j <= WANOK.PORTION_RADIUS; j++)
+                {
+                    for (int i = -WANOK.PORTION_RADIUS; i < WANOK.PORTION_RADIUS; i++)
+                    {
+                        SetPortion(i, j, i + 1, j);
+                    }
+                    LoadPortion(currentPortion, WANOK.PORTION_RADIUS, j);
+                }
+            }
+            // If cursor going to left side
+            else if (currentPortion[0] < previousPortion[0])
+            {
+                for (int j = -WANOK.PORTION_RADIUS; j <= WANOK.PORTION_RADIUS; j++)
+                {
+                    for (int i = WANOK.PORTION_RADIUS; i > -WANOK.PORTION_RADIUS; i--)
+                    {
+                        SetPortion(i, j, i - 1, j);
+                    }
+                    LoadPortion(currentPortion, -WANOK.PORTION_RADIUS, j);
+                }
+            }
+            // If cursor going to up side
+            if (currentPortion[1] > previousPortion[1])
+            {
+                for (int i = -WANOK.PORTION_RADIUS; i <= WANOK.PORTION_RADIUS; i++)
+                {
+                    for (int j = -WANOK.PORTION_RADIUS; j < WANOK.PORTION_RADIUS; j++)
+                    {
+                        SetPortion(i, j, i, j + 1);
+                    }
+                    LoadPortion(currentPortion, i, WANOK.PORTION_RADIUS);
+                }
+            }
+            // If cursor going to down side
+            else if (currentPortion[1] < previousPortion[1])
+            {
+                for (int i = -WANOK.PORTION_RADIUS; i <= WANOK.PORTION_RADIUS; i++)
+                {
+                    for (int j = WANOK.PORTION_RADIUS; j > -WANOK.PORTION_RADIUS; j--)
+                    {
+                        SetPortion(i, j, i, j - 1);
+                    }
+                    LoadPortion(currentPortion, i, -WANOK.PORTION_RADIUS);
+                }
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // SetPortion
+        // -------------------------------------------------------------------
+
+        public void SetPortion(int i, int j, int k, int l)
+        {
+            DisposeBuffers(i, j);
+            Map.Portions[new int[] { i, j }] = Map.Portions[new int[] { k, l }];
+        }
+
+        // -------------------------------------------------------------------
+        // LoadPortion
+        // -------------------------------------------------------------------
+
+        public void LoadPortion(int[] currentPortion, int i, int j)
+        {
+            DisposeBuffers(i, j);
+            Map.LoadPortion(currentPortion[0] + i, currentPortion[1] + j, i, j);
+        }
+
+        // -------------------------------------------------------------------
+        // DisposeBuffers
+        // -------------------------------------------------------------------
+
+        public void DisposeBuffers(int i, int j)
+        {
+            if (Map.Portions[new int[] { i, j }] != null)
+            {
+                Map.DisposeBuffers(new int[] { i, j });
+            }
+        }
+
 
         // -------------------------------------------------------------------
         // UpdatePortions
@@ -72,15 +170,14 @@ namespace RPG_Paper_Maker
                 int y = PortionsToSave[i][1] + (CursorEditor.GetZ() / WANOK.PORTION_SIZE);
                 string path = Path.Combine(WANOK.MapsDirectoryPath, Map.MapInfos.RealMapName, "temp", x + "-" + y + ".pmap");
 
-                if ((Map.Portions.ContainsKey(PortionsToSave[i]) && Map.Portions[PortionsToSave[i]].IsEmpty()) || !Map.Portions.ContainsKey(PortionsToSave[i]))
+                if (((Map.Portions[PortionsToSave[i]] != null) && Map.Portions[PortionsToSave[i]].IsEmpty()) || Map.Portions[PortionsToSave[i]] == null)
                 {
                     Map.Portions.Remove(PortionsToSave[i]);
                     if (File.Exists(path)) File.Delete(path);
                 }
                 else
                 {
-                    var lol = Map.Portions[PortionsToSave[i]];
-                    Map.Portions[PortionsToSave[i]].SaveDatas(path);
+                    WANOK.SaveBinaryDatas(Map.Portions[PortionsToSave[i]], path);
                 }
             }
 
@@ -150,7 +247,7 @@ namespace RPG_Paper_Maker
         {
             if (IsInArea(coords) && IsInPortions(portion))
             {
-                if (!Map.Portions.ContainsKey(portion)) Map.Portions[portion] = new GameMapPortion();
+                if (Map.Portions[portion] == null) Map.Portions[portion] = new GameMapPortion();
                 Map.Portions[portion].AddFloor(coords, CurrentTexture);
                 AddPortionToSave(portion);
                 AddPortionToUpdate(portion);
@@ -237,6 +334,5 @@ namespace RPG_Paper_Maker
         {
             return (coords[0] <= WANOK.PORTION_RADIUS && coords[0] >= -WANOK.PORTION_RADIUS && coords[1] <= WANOK.PORTION_RADIUS && coords[1] >= -WANOK.PORTION_RADIUS);
         }
-
     }
 }

@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,10 +15,14 @@ namespace RPG_Paper_Maker
     [Serializable]
     class GameMapPortion
     {
-        public Dictionary<int[], int[]> Floors { get; set; }
+        public Dictionary<int[], int[]> Floors = new Dictionary<int[], int[]>(new IntArrayComparer());
+        [NonSerialized()]
         VertexBuffer VBFloor;
+        [NonSerialized()]
         VertexPositionTexture[] VerticesFloorArray;
+        [NonSerialized()]
         IndexBuffer IBFloor;
+        [NonSerialized()]
         int[] IndexesFloorArray;
 
 
@@ -26,7 +32,7 @@ namespace RPG_Paper_Maker
 
         public GameMapPortion()
         {
-            Floors = new Dictionary<int[], int[]>();
+            Floors = new Dictionary<int[], int[]>(new IntArrayComparer());
         }
 
         // -------------------------------------------------------------------
@@ -56,11 +62,9 @@ namespace RPG_Paper_Maker
         {
             try
             {
-                string json = JsonConvert.SerializeObject(Floors);
                 FileStream fs = new FileStream(path, FileMode.Create);
-                StreamWriter sw = new StreamWriter(fs);
-                sw.WriteLine(json);
-                sw.Close();
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(fs, this);
                 fs.Close();
             }
             catch (Exception e)
@@ -79,10 +83,8 @@ namespace RPG_Paper_Maker
             try
             {
                 FileStream fs = new FileStream(path, FileMode.Open);
-                StreamReader sr = new StreamReader(fs);
-                string json = sr.ReadLine();
-                obj.Floors = JsonConvert.DeserializeObject<Dictionary<int[], int[]>>(json);
-                sr.Close();
+                BinaryFormatter formatter = new BinaryFormatter();
+                obj = (GameMapPortion)formatter.Deserialize(fs);
                 fs.Close();
             }
             catch (Exception e)
@@ -120,6 +122,7 @@ namespace RPG_Paper_Maker
 
             // Adding the new floor
             Floors[coords] = newTexture;
+            System.Diagnostics.Debug.Write(Floors);
         }
 
         // -------------------------------------------------------------------
@@ -224,6 +227,21 @@ namespace RPG_Paper_Maker
                     pass.Apply();
                     device.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, VerticesFloorArray, 0, VerticesFloorArray.Length, IndexesFloorArray, 0, VerticesFloorArray.Length / 2);
                 }
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // DisposeBuffers
+        // -------------------------------------------------------------------
+
+        public void DisposeBuffers(GraphicsDevice device)
+        {
+            if (VBFloor != null)
+            {
+                device.SetVertexBuffer(null);
+                device.Indices = null;
+                VBFloor.Dispose();
+                IBFloor.Dispose();
             }
         }
     }

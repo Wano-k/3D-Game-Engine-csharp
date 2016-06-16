@@ -68,12 +68,12 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // GetPosition
+        // GetPortion
         // -------------------------------------------------------------------
 
-        public int[] GetPosition()
+        public int[] GetPortion()
         {
-            return new int[] { GetX(), GetZ() };
+            return new int[] { GetX() / WANOK.PORTION_SIZE, GetZ() / WANOK.PORTION_SIZE };
         }
 
         // -------------------------------------------------------------------

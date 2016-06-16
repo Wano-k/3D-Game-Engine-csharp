@@ -39,19 +39,32 @@ namespace RPG_Paper_Maker
             CreateGrid(MapInfos.Width, MapInfos.Height);
 
             // Map
-            Portions = new Dictionary<int[], GameMapPortion>();
-            for (int i = 0; i < WANOK.PORTION_RADIUS; i++)
+            Portions = new Dictionary<int[], GameMapPortion>(new IntArrayComparer());
+            for (int i = -WANOK.PORTION_RADIUS; i <= WANOK.PORTION_RADIUS; i++)
             {
-                for (int j = 0; j < WANOK.PORTION_RADIUS; j++)
+                for (int j = -WANOK.PORTION_RADIUS; j <= WANOK.PORTION_RADIUS; j++)
                 {
-                    string path = Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp", i + "-" + j + ".JSON");
-                    if (File.Exists(path))
-                    {
-                        GameMapPortion gamePortion = WANOK.LoadDatas<GameMapPortion>(path);
-                        Portions[new int[] { i, j }] = gamePortion;
-                        gamePortion.CreatePortionFloor(Device, TilesetSelector.TexTileset);
-                    }
+                    LoadPortion(i, j, i, j);
                 }
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // LoadPortion
+        // -------------------------------------------------------------------
+
+        public void LoadPortion(int real_i, int real_j, int i, int j)
+        {
+            string path = Path.Combine(WANOK.MapsDirectoryPath, MapInfos.RealMapName, "temp", real_i + "-" + real_j + ".pmap");
+            if (File.Exists(path))
+            {
+                GameMapPortion gamePortion = WANOK.LoadBinaryDatas<GameMapPortion>(path);
+                Portions[new int[] { i, j }] = gamePortion;
+                gamePortion.CreatePortionFloor(Device, TilesetSelector.TexTileset);
+            }
+            else
+            {
+                Portions[new int[] { i, j }] = null;
             }
         }
 
@@ -140,8 +153,17 @@ namespace RPG_Paper_Maker
             effect.TextureEnabled = true;
             foreach (GameMapPortion gameMap in Portions.Values)
             {
-                gameMap.Draw(Device, effect, TilesetSelector.TexTileset);
+                if (gameMap != null) gameMap.Draw(Device, effect, TilesetSelector.TexTileset);
             }
+        }
+
+        // -------------------------------------------------------------------
+        // DisposeBuffers
+        // -------------------------------------------------------------------
+
+        public void DisposeBuffers(int[] portion)
+        {
+            Portions[portion].DisposeBuffers(Device);
         }
     }
 }
