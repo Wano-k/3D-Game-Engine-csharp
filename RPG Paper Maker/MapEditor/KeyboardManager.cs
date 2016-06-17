@@ -45,7 +45,7 @@ namespace RPG_Paper_Maker
 
         public void SetKeyDownStatus(Keys k)
         {
-            FirstKeyboard.Add(k);
+            if (!OnKeyboard[k]) FirstKeyboard.Add(k);
             OnKeyboard[k] = true;
         }
 
@@ -57,7 +57,7 @@ namespace RPG_Paper_Maker
 
         public void Update()
         {
-            FirstKeyboard = new List<Keys>();
+            FirstKeyboard.Clear();
         }
 
         // -------------------------------------------------------------------

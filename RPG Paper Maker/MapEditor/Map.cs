@@ -17,6 +17,7 @@ namespace RPG_Paper_Maker
         VertexBuffer VBGrid;
         public MapInfos MapInfos { get; set; }
         public Dictionary<int[], GameMapPortion> Portions;
+        public bool DisplayGrid = true;
 
 
         // -------------------------------------------------------------------
@@ -102,7 +103,10 @@ namespace RPG_Paper_Maker
 
         public void GenFloor(int[] portion)
         {
-            Portions[portion].GenFloor(Device, TilesetSelector.TexTileset);
+            if (Portions[portion] != null)
+            {
+                Portions[portion].GenFloor(Device, TilesetSelector.TexTileset);
+            }
         }
 
         // -------------------------------------------------------------------
@@ -141,11 +145,14 @@ namespace RPG_Paper_Maker
             effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE,1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(0,0.2f,0);
 
             // Drawing grid
-            Device.SetVertexBuffer(VBGrid);
-            foreach (EffectPass pass in effect.CurrentTechnique.Passes)
+            if (DisplayGrid)
             {
-                pass.Apply();
-                Device.DrawPrimitives(PrimitiveType.LineList, 0, GridVerticesArray.Length / 2);
+                Device.SetVertexBuffer(VBGrid);
+                foreach (EffectPass pass in effect.CurrentTechnique.Passes)
+                {
+                    pass.Apply();
+                    Device.DrawPrimitives(PrimitiveType.LineList, 0, GridVerticesArray.Length / 2);
+                }
             }
 
             // Drawing Floors

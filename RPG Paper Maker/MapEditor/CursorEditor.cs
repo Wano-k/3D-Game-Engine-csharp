@@ -113,8 +113,8 @@ namespace RPG_Paper_Maker
             };
 
             // Update buffers
-            VB.SetData(this.vertices);
-            IB.SetData(this.indexes);
+            VB.SetData(vertices);
+            IB.SetData(indexes);
         }
 
         // -------------------------------------------------------------------
@@ -185,7 +185,7 @@ namespace RPG_Paper_Maker
             effect.VertexColorEnabled = false;
             effect.TextureEnabled = true;
             effect.Texture = MapEditor.TexCursor;
-            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(Position.X, Position.Y, Position.Z); ;
+            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(Position.X, Position.Y + 0.2f, Position.Z); ;
 
             CreateTex(new int[] { WANOK.BASIC_SQUARE_SIZE * Frame, 0, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE }, MapEditor.TexCursor);
 

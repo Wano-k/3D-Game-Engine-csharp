@@ -106,6 +106,10 @@ namespace RPG_Paper_Maker
                 Control.Update(GraphicsDevice, Control.Camera);
                 if (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Left)) Control.Add(true);
                 else if (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Right)) Control.Remove(true);
+                Control.ButtonUp();
+
+                // Options
+                Control.Options();
 
                 // Update keyboard
                 MouseBeforeUpdate = WANOK.MapMouseManager.GetPosition();
@@ -120,7 +124,7 @@ namespace RPG_Paper_Maker
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(new Color(32,32,32));
+            GraphicsDevice.Clear(new Color(32, 32, 32));
 
             if (!Control.IsMapReloading && Control.Map != null)
             {

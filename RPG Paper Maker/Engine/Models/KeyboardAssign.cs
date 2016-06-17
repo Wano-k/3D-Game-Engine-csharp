@@ -13,10 +13,11 @@ namespace RPG_Paper_Maker
         public Dictionary<string, Keys> KeyboardEditorAssign { get; set; }
         public Dictionary<string, Keys> KeyboardGameAssign { get; set; }
 
-        public Keys EditorMoveUp { get { return KeyboardEditorAssign["Move Up"]; } set { KeyboardEditorAssign["Move Up"] = value; } }
-        public Keys EditorMoveDown { get { return KeyboardEditorAssign["Move Down"]; } set { KeyboardEditorAssign["Move Down"] = value; } }
-        public Keys EditorMoveLeft { get { return KeyboardEditorAssign["Move Left"]; } set { KeyboardEditorAssign["Move Left"] = value; } }
-        public Keys EditorMoveRight { get { return KeyboardEditorAssign["Move Right"]; } set { KeyboardEditorAssign["Move Right"] = value; } }
+        public Keys EditorMoveUp { get { return KeyboardEditorAssign["Move Up"]; } }
+        public Keys EditorMoveDown { get { return KeyboardEditorAssign["Move Down"]; }  }
+        public Keys EditorMoveLeft { get { return KeyboardEditorAssign["Move Left"]; }  }
+        public Keys EditorMoveRight { get { return KeyboardEditorAssign["Move Right"]; }  }
+        public Keys EditorShowGrid { get { return KeyboardEditorAssign["Show grid"]; } }
 
 
         // -------------------------------------------------------------------
@@ -49,10 +50,11 @@ namespace RPG_Paper_Maker
         {
             // Editor assign
             KeyboardEditorAssign = new Dictionary<string, Keys>();
-            EditorMoveUp = Keys.W;
-            EditorMoveDown = Keys.S;
-            EditorMoveLeft = Keys.A;
-            EditorMoveRight = Keys.D;
+            KeyboardEditorAssign["Move Up"] = Keys.W;
+            KeyboardEditorAssign["Move Down"] = Keys.S;
+            KeyboardEditorAssign["Move Left"] = Keys.A;
+            KeyboardEditorAssign["Move Right"] = Keys.D;
+            KeyboardEditorAssign["Show grid"] = Keys.G;
 
             // Game assign
             KeyboardGameAssign = new Dictionary<string, Keys>();

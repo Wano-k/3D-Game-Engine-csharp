@@ -1,11 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
@@ -23,28 +25,46 @@ namespace RPG_Paper_Maker
         public int[] CurrentPortion = new int[] { 0, 0 };
         protected List<int[]> PortionsToUpdate = new List<int[]>();
         protected List<int[]> PortionsToSave = new List<int[]>();
+        public int[] PreviousMouseCoords = null;
+        public int[] PreviousCursorCoords = null;
 
 
+        public delegate void MethodStock(int[] coords, params object[] args);
 
         // -------------------------------------------------------------------
-        // Portions
+        // OPTIONS
         // -------------------------------------------------------------------
 
-        public void AddPortionToUpdate(int[] portion)
+        #region Options
+
+        // -------------------------------------------------------------------
+        // Options
+        // -------------------------------------------------------------------
+
+        public void Options()
         {
-            if (!PortionsToUpdate.Contains(portion)) PortionsToUpdate.Add(portion);
+            if (WANOK.KeyboardManager.IsButtonDown(WANOK.Settings.KeyboardAssign.EditorShowGrid))
+            {
+                DisplayGrid();
+            }
         }
 
-        public void AddPortionToSave(int[] portion)
+        // -------------------------------------------------------------------
+        // DisplayGrid
+        // -------------------------------------------------------------------
+
+        public void DisplayGrid()
         {
-            if (!PortionsToSave.Contains(portion)) PortionsToSave.Add(portion);
+            Map.DisplayGrid = !Map.DisplayGrid;
         }
 
-        public void ClearPortions()
-        {
-            PortionsToUpdate = new List<int[]>();
-            PortionsToSave = new List<int[]>();
-        }
+        #endregion
+
+        // -------------------------------------------------------------------
+        // UPDATE (main, portions)
+        // -------------------------------------------------------------------
+
+        #region Update
 
         // -------------------------------------------------------------------
         // Update
@@ -67,6 +87,26 @@ namespace RPG_Paper_Maker
 
             // Update portions
             UpdatePortions();
+        }
+
+        // -------------------------------------------------------------------
+        // Portions
+        // -------------------------------------------------------------------
+
+        public void AddPortionToUpdate(int[] portion)
+        {
+            if (!PortionsToUpdate.Contains(portion)) PortionsToUpdate.Add(portion);
+        }
+
+        public void AddPortionToSave(int[] portion)
+        {
+            if (!PortionsToSave.Contains(portion)) PortionsToSave.Add(portion);
+        }
+
+        public void ClearPortions()
+        {
+            PortionsToUpdate.Clear();
+            PortionsToSave.Clear();
         }
 
         // -------------------------------------------------------------------
@@ -146,19 +186,6 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // DisposeBuffers
-        // -------------------------------------------------------------------
-
-        public void DisposeBuffers(int i, int j)
-        {
-            if (Map.Portions[new int[] { i, j }] != null)
-            {
-                Map.DisposeBuffers(new int[] { i, j });
-            }
-        }
-
-
-        // -------------------------------------------------------------------
         // UpdatePortions
         // -------------------------------------------------------------------
 
@@ -172,7 +199,7 @@ namespace RPG_Paper_Maker
 
                 if (((Map.Portions[PortionsToSave[i]] != null) && Map.Portions[PortionsToSave[i]].IsEmpty()) || Map.Portions[PortionsToSave[i]] == null)
                 {
-                    Map.Portions.Remove(PortionsToSave[i]);
+                    Map.Portions[PortionsToSave[i]] = null;
                     if (File.Exists(path)) File.Delete(path);
                 }
                 else
@@ -187,6 +214,26 @@ namespace RPG_Paper_Maker
             }
 
             ClearPortions();
+        }
+
+        #endregion
+
+        // -------------------------------------------------------------------
+        // ADD / REMOVE
+        // -------------------------------------------------------------------
+
+        #region AddRemove
+
+        // -------------------------------------------------------------------
+        // ButtonUp
+        // -------------------------------------------------------------------
+
+        public void ButtonUp()
+        {
+            if (WANOK.MapMouseManager.IsButtonUp(MouseButtons.Left))
+            {
+                PreviousMouseCoords = null;
+            }
         }
 
         // -------------------------------------------------------------------
@@ -223,32 +270,42 @@ namespace RPG_Paper_Maker
 
         public void AddFloor(bool isMouse)
         {
-            int[] coords, portion;
-
+            // Getting coords
+            int[] coords;
             if (isMouse)
             {
                 coords = GetCoordsMouse();
-                portion = GetPortionMouse();
             }
             else
             {
                 coords = GetCoordsCursor();
-                portion = GetPortionCursor();
             }
 
-            StockFloor(coords, portion);
+            // Drawing squares
+            if (isMouse) {
+                if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, StockFloor, CurrentTexture);
+            }
+            StockFloor(coords, CurrentTexture);
+
+            // Updating previous selected
+            if (isMouse) PreviousMouseCoords = coords;
+            else PreviousCursorCoords = coords;
         }
 
         // -------------------------------------------------------------------
         // StockFloor
         // -------------------------------------------------------------------
 
-        public void StockFloor(int[] coords, int[] portion)
+        public void StockFloor(int[] coords, params object[] args)
         {
+            int[] portion = GetPortion(coords[0], coords[2]);
+
             if (IsInArea(coords) && IsInPortions(portion))
             {
+                int[] texture = (int[])args[0];
+
                 if (Map.Portions[portion] == null) Map.Portions[portion] = new GameMapPortion();
-                Map.Portions[portion].AddFloor(coords, CurrentTexture);
+                Map.Portions[portion].AddFloor(coords, texture);
                 AddPortionToSave(portion);
                 AddPortionToUpdate(portion);
             }
@@ -263,6 +320,14 @@ namespace RPG_Paper_Maker
 
         }
 
+        #endregion
+
+        // -------------------------------------------------------------------
+        // UTILS
+        // -------------------------------------------------------------------
+
+        #region Utils
+
         // -------------------------------------------------------------------
         // GetCoordsMouse
         // -------------------------------------------------------------------
@@ -274,19 +339,6 @@ namespace RPG_Paper_Maker
                 (int)PointOnPlane.X,
                 (int)PointOnPlane.Y,
                 (int)PointOnPlane.Z
-            };
-        }
-
-        // -------------------------------------------------------------------
-        // GetPortionMouse
-        // -------------------------------------------------------------------
-
-        public int[] GetPortionMouse()
-        {
-            return new int[]
-            {
-                ((int)PointOnPlane.X / WANOK.PORTION_SIZE) - (CursorEditor.GetX() / WANOK.PORTION_SIZE),
-                ((int)PointOnPlane.Z / WANOK.PORTION_SIZE) - (CursorEditor.GetZ() / WANOK.PORTION_SIZE)
             };
         }
 
@@ -305,15 +357,15 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // GetPortionCursor
+        // GetPortion
         // -------------------------------------------------------------------
 
-        public int[] GetPortionCursor()
+        public int[] GetPortion(int x, int z)
         {
             return new int[]
             {
-                CursorEditor.GetX() / WANOK.PORTION_SIZE,
-                CursorEditor.GetZ() / WANOK.PORTION_SIZE
+                (x / WANOK.PORTION_SIZE) - (CursorEditor.GetX() / WANOK.PORTION_SIZE),
+                (z / WANOK.PORTION_SIZE) - (CursorEditor.GetZ() / WANOK.PORTION_SIZE)
             };
         }
 
@@ -334,5 +386,252 @@ namespace RPG_Paper_Maker
         {
             return (coords[0] <= WANOK.PORTION_RADIUS && coords[0] >= -WANOK.PORTION_RADIUS && coords[1] <= WANOK.PORTION_RADIUS && coords[1] >= -WANOK.PORTION_RADIUS);
         }
+
+        // -------------------------------------------------------------------
+        // DisposeBuffers
+        // -------------------------------------------------------------------
+
+        public void DisposeBuffers(int i, int j)
+        {
+            if (Map.Portions[new int[] { i, j }] != null)
+            {
+                Map.DisposeBuffers(new int[] { i, j });
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // TraceLine
+        // -------------------------------------------------------------------
+
+        public void TraceLine(int[] previousCoords, int[] coords, MethodStock stock, params object[] args)
+        {
+            int x1 = previousCoords[0], x2 = coords[0];
+            int y = coords[1];
+            int z1 = previousCoords[2], z2 = coords[2];
+            int dx = x2 - x1, dz = z2 - z1;
+            bool test = true;
+
+            if (dx != 0)
+            {
+                if (dx > 0)
+                {
+                    if (dz != 0)
+                    {
+                        if (dz > 0)
+                        {
+                            if (dx >= dz)
+                            {
+                                int e = dx;
+                                dx = 2 * e;
+                                dz = dz * 2;
+
+                                while (test)
+                                {
+                                    stock(new int[] { x1, y, z1 }, args);
+                                    x1++;
+                                    if (x1 == x2) break;
+                                    e -= dz;
+                                    if (e < 0)
+                                    {
+                                        z1++;
+                                        e += dx;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                int e = dz;
+                                dz = 2 * e;
+                                dx = dx * 2;
+
+                                while (test)
+                                {
+                                    stock(new int[] { x1, y, z1 }, args);
+                                    z1++;
+                                    if (z1 == z2) break;
+                                    e -= dx;
+                                    if (e < 0)
+                                    {
+                                        x1++;
+                                        e += dz;
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (dx >= -dz)
+                            {
+                                int e = dx;
+                                dx = 2 * e;
+                                dz = dz * 2;
+
+                                while (test)
+                                {
+                                    stock(new int[] { x1, y, z1 }, args);
+                                    x1++;
+                                    if (x1 == x2) break;
+                                    e += dz;
+                                    if (e < 0)
+                                    {
+                                        z1--;
+                                        e += dx;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                int e = dz;
+                                dz = 2 * e;
+                                dx = dx * 2;
+
+                                while (test)
+                                {
+                                    stock(new int[] { x1, y, z1 }, args);
+                                    z1--;
+                                    if (z1 == z2) break;
+                                    e += dx;
+                                    if (e > 0)
+                                    {
+                                        x1++;
+                                        e += dz;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        while (x1 != x2)
+                        {
+                            stock(new int[] { x1, y, z1 }, args);
+                            x1++;
+                        }
+                    }
+                }
+                else
+                {
+                    dz = z2 - z1;
+                    if (dz != 0)
+                    {
+                        if (dz > 0)
+                        {
+                            if (-dx >= dz)
+                            {
+                                int e = dx;
+                                dx = 2 * e;
+                                dz = dz * 2;
+
+                                while (test)
+                                {
+                                    stock(new int[] { x1, y, z1 }, args);
+                                    x1--;
+                                    if (x1 == x2) break;
+                                    e += dz;
+                                    if (e >= 0)
+                                    {
+                                        z1++;
+                                        e += dx;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                int e = dz;
+                                dz = 2 * e;
+                                dx = dx * 2;
+
+                                while (test)
+                                {
+                                    stock(new int[] { x1, y, z1 }, args);
+                                    z1++;
+                                    if (z1 == z2) break;
+                                    e += dx;
+                                    if (e <= 0)
+                                    {
+                                        x1--;
+                                        e += dz;
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (dx <= dz)
+                            {
+                                int e = dx;
+                                dx = 2 * e;
+                                dz = dz * 2;
+
+                                while (test)
+                                {
+                                    stock(new int[] { x1, y, z1 }, args);
+                                    x1--;
+                                    if (x1 == x2) break;
+                                    e -= dz;
+                                    if (e >= 0)
+                                    {
+                                        z1--;
+                                        e += dx;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                int e = dz;
+                                dz = 2 * e;
+                                dx = dx * 2;
+
+                                while (test)
+                                {
+                                    stock(new int[] { x1, y, z1 }, args);
+                                    z1--;
+                                    if (z1 == z2) break;
+                                    e -= dx;
+                                    if (e >= 0)
+                                    {
+                                        x1--;
+                                        e += dz;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        while (x1 != x2)
+                        {
+                            stock(new int[] { x1, y, z1 }, args);
+                            x1--;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                dz = z2 - z1;
+                if (dz != 0)
+                {
+                    if (dz > 0)
+                    {
+                        while(z1 != z2)
+                        {
+                            stock(new int[] { x1, y, z1 }, args);
+                            z1++;
+                        }
+                    }
+                    else
+                    {
+                        while (z1 != z2)
+                        {
+                            stock(new int[] { x1, y, z1 }, args);
+                            z1--;
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion
     }
 }
