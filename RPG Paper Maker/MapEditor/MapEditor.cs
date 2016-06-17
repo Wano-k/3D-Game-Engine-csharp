@@ -17,7 +17,8 @@ namespace RPG_Paper_Maker
         SpriteFont font;
 
         public MapEditorControl Control = new MapEditorControl();
-        public string SelectedDrawType { get { return Control.SelectedDrawType; } }
+        public string SelectedDrawType { get { return Control.SelectedDrawType; } set { Control.SelectedDrawType = value; } }
+        public DrawMode DrawMode { get { return Control.DrawMode; } set { Control.DrawMode = value; } }
         public Point MouseBeforeUpdate { get { return Control.MouseBeforeUpdate; } set { Control.MouseBeforeUpdate = value; } }
 
         // Content
@@ -105,7 +106,9 @@ namespace RPG_Paper_Maker
                 // Map editor update
                 Control.Update(GraphicsDevice, Control.Camera);
                 if (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Left)) Control.Add(true);
-                else if (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Right)) Control.Remove(true);
+                if (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Right)) Control.Remove(true);
+                if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorDrawCursor)) Control.Add(false);
+                if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorRemoveCursor)) Control.Remove(false);
                 Control.ButtonUp();
 
                 // Options

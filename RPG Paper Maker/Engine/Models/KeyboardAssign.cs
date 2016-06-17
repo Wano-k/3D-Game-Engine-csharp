@@ -18,6 +18,8 @@ namespace RPG_Paper_Maker
         public Keys EditorMoveLeft { get { return KeyboardEditorAssign["Move Left"]; }  }
         public Keys EditorMoveRight { get { return KeyboardEditorAssign["Move Right"]; }  }
         public Keys EditorShowGrid { get { return KeyboardEditorAssign["Show grid"]; } }
+        public Keys EditorDrawCursor { get { return KeyboardEditorAssign["Draw with cursor"]; } }
+        public Keys EditorRemoveCursor { get { return KeyboardEditorAssign["Remove with cursor"]; } }
 
 
         // -------------------------------------------------------------------
@@ -55,6 +57,8 @@ namespace RPG_Paper_Maker
             KeyboardEditorAssign["Move Left"] = Keys.A;
             KeyboardEditorAssign["Move Right"] = Keys.D;
             KeyboardEditorAssign["Show grid"] = Keys.G;
+            KeyboardEditorAssign["Draw with cursor"] = Keys.Space;
+            KeyboardEditorAssign["Remove with cursor"] = Keys.Delete;
 
             // Game assign
             KeyboardGameAssign = new Dictionary<string, Keys>();

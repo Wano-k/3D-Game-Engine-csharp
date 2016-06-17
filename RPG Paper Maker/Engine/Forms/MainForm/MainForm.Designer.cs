@@ -41,6 +41,10 @@
             this.ItemFloor = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemFloor1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemFloor2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemDrawMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemDrawMode1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemDrawMode2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemDrawMode3 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemNewProject = new System.Windows.Forms.ToolStripMenuItem();
@@ -185,7 +189,8 @@
             // 
             this.menuStrip2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ItemFloor});
+            this.ItemFloor,
+            this.ItemDrawMode});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
             this.menuStrip2.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
@@ -212,7 +217,7 @@
             this.ItemFloor1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemFloor1.Image = global::RPG_Paper_Maker.Properties.Resources.floor1;
             this.ItemFloor1.Name = "ItemFloor1";
-            this.ItemFloor1.Size = new System.Drawing.Size(121, 22);
+            this.ItemFloor1.Size = new System.Drawing.Size(152, 22);
             this.ItemFloor1.Text = "Floor";
             // 
             // ItemFloor2
@@ -221,8 +226,46 @@
             this.ItemFloor2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemFloor2.Image = global::RPG_Paper_Maker.Properties.Resources.floor2;
             this.ItemFloor2.Name = "ItemFloor2";
-            this.ItemFloor2.Size = new System.Drawing.Size(121, 22);
+            this.ItemFloor2.Size = new System.Drawing.Size(152, 22);
             this.ItemFloor2.Text = "Autotiles";
+            // 
+            // ItemDrawMode
+            // 
+            this.ItemDrawMode.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ItemDrawMode1,
+            this.ItemDrawMode2,
+            this.ItemDrawMode3});
+            this.ItemDrawMode.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemDrawMode.Image = global::RPG_Paper_Maker.Properties.Resources.pencil;
+            this.ItemDrawMode.Name = "ItemDrawMode";
+            this.ItemDrawMode.Size = new System.Drawing.Size(28, 24);
+            // 
+            // ItemDrawMode1
+            // 
+            this.ItemDrawMode1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemDrawMode1.Image = global::RPG_Paper_Maker.Properties.Resources.pencil;
+            this.ItemDrawMode1.Name = "ItemDrawMode1";
+            this.ItemDrawMode1.Size = new System.Drawing.Size(135, 22);
+            this.ItemDrawMode1.Text = "Pencil";
+            this.ItemDrawMode1.Click += new System.EventHandler(this.ItemDrawMode1_Click);
+            // 
+            // ItemDrawMode2
+            // 
+            this.ItemDrawMode2.ForeColor = System.Drawing.Color.DarkRed;
+            this.ItemDrawMode2.Image = global::RPG_Paper_Maker.Properties.Resources.rectangle;
+            this.ItemDrawMode2.Name = "ItemDrawMode2";
+            this.ItemDrawMode2.Size = new System.Drawing.Size(135, 22);
+            this.ItemDrawMode2.Text = "Rectangle";
+            this.ItemDrawMode2.Click += new System.EventHandler(this.ItemDrawMode2_Click);
+            // 
+            // ItemDrawMode3
+            // 
+            this.ItemDrawMode3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemDrawMode3.Image = global::RPG_Paper_Maker.Properties.Resources.tin;
+            this.ItemDrawMode3.Name = "ItemDrawMode3";
+            this.ItemDrawMode3.Size = new System.Drawing.Size(135, 22);
+            this.ItemDrawMode3.Text = "Tin of paint";
+            this.ItemDrawMode3.Click += new System.EventHandler(this.ItemDrawMode3_Click);
             // 
             // menuStrip1
             // 
@@ -542,8 +585,10 @@
             // 
             this.MapEditor.BackColor = System.Drawing.Color.Black;
             this.MapEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MapEditor.DrawMode = RPG_Paper_Maker.DrawMode.Pencil;
             this.MapEditor.Location = new System.Drawing.Point(0, 24);
             this.MapEditor.Name = "MapEditor";
+            this.MapEditor.SelectedDrawType = "ItemFloor";
             this.MapEditor.Size = new System.Drawing.Size(705, 414);
             this.MapEditor.TabIndex = 0;
             this.MapEditor.VSync = false;
@@ -642,6 +687,10 @@
         private System.Windows.Forms.ToolStripMenuItem managementToolStripMenuItem;
         private System.Windows.Forms.ToolBarButton toolBarButtonInput;
         private System.Windows.Forms.ToolStripMenuItem ItemInputs;
+        private System.Windows.Forms.ToolStripMenuItem ItemDrawMode;
+        private System.Windows.Forms.ToolStripMenuItem ItemDrawMode1;
+        private System.Windows.Forms.ToolStripMenuItem ItemDrawMode2;
+        private System.Windows.Forms.ToolStripMenuItem ItemDrawMode3;
     }
 }
 

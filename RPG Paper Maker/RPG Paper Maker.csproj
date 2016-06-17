@@ -160,6 +160,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MapEditor\Camera.cs" />
+    <Compile Include="MapEditor\DrawMode.cs" />
     <Compile Include="MapEditor\IntArrayComparer.cs" />
     <Compile Include="MapEditor\KeyboardManager.cs" />
     <Compile Include="MapEditor\MapEditor.cs">
@@ -279,9 +280,12 @@
     <Content Include="DLLs\MonoGame.Framework.dll" />
     <Content Include="DLLs\OpenTK.dll" />
     <Content Include="DLLs\OpenTK.GLControl.dll" />
+    <None Include="Resources\pin.png" />
+    <None Include="Resources\rectangle.png" />
+    <None Include="Resources\pencil.png" />
+    <None Include="Resources\0.png" />
     <None Include="Resources\inputs.png" />
     <None Include="Resources\1.png" />
-    <None Include="Resources\0.png" />
     <None Include="Resources\tuto2.png" />
     <None Include="Resources\tuto1.png" />
     <None Include="Resources\small_kate.png" />

@@ -122,7 +122,6 @@ namespace RPG_Paper_Maker
 
             // Adding the new floor
             Floors[coords] = newTexture;
-            System.Diagnostics.Debug.Write(Floors);
         }
 
         // -------------------------------------------------------------------

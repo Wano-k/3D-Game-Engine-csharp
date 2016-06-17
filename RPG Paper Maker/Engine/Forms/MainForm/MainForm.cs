@@ -51,7 +51,7 @@ namespace RPG_Paper_Maker
             EnableNoGame();
             ShowProjectContain(false);
             menuStrip1.Renderer = new MainRender(this);
-            menuStrip2.Renderer = new MainRender(this);
+            menuStrip2.Renderer = new MainRender2(this);
 
             #endregion
         }
@@ -140,13 +140,13 @@ namespace RPG_Paper_Maker
 
             public MainRender(MainForm mainForm) : base(new MainColorTable())
             {
-                this.MainForm = mainForm;
-            }
+                MainForm = mainForm;
+            }    
 
             protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
             {
                 Rectangle r = new Rectangle(Point.Empty, e.Item.Size);
-                if (e.Item.Name == this.MainForm.MapEditor.SelectedDrawType)
+                if (e.Item.Name == MainForm.MapEditor.SelectedDrawType)
                 {
                     if (e.Item.Selected) e.Graphics.FillRectangle(Brushes.DarkCyan, r);
                     else e.Graphics.FillRectangle(Brushes.CadetBlue, r);
@@ -179,6 +179,59 @@ namespace RPG_Paper_Maker
                 e.Graphics.FillRectangle(myBrush, rc);
                 int height = rc.Y + (rc.Height / 2);
                 e.Graphics.DrawLine(new Pen(Color.Silver),rc.X, height, rc.Width, height);
+            }
+
+            protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
+            {
+                e.ArrowColor = Color.White;
+                base.OnRenderArrow(e);
+            }
+        }
+
+        private class MainRender2 : ToolStripProfessionalRenderer
+        {
+            public MainForm MainForm;
+
+            public MainRender2(MainForm mainForm) : base(new MainColorTable())
+            {
+                MainForm = mainForm;
+            }
+
+            protected override void OnRenderDropDownButtonBackground(ToolStripItemRenderEventArgs e)
+            {
+                OnRenderMenuItemBackground(e);
+            }
+
+            protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
+            {
+                Rectangle r = new Rectangle(Point.Empty, e.Item.Size);
+                if (e.Item.Name == MainForm.MapEditor.SelectedDrawType)
+                {
+                    if (e.Item.Selected) e.Graphics.FillRectangle(Brushes.DarkCyan, r);
+                    else e.Graphics.FillRectangle(Brushes.CadetBlue, r);
+                }
+                else
+                {
+                    SolidBrush brush;
+                    if (e.Item.Selected || e.Item.Pressed) brush = new SolidBrush(Color.FromArgb(100, 100, 100));
+                    else brush = new SolidBrush(Color.FromArgb(64, 64, 64));
+                    e.Graphics.FillRectangle(brush, r);
+                }
+            }
+
+            protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
+            {
+
+            }
+
+            protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
+            {
+                Rectangle rc = new Rectangle(Point.Empty, e.Item.Size);
+                Color myColor = Color.FromArgb(64, 64, 64);
+                SolidBrush myBrush = new SolidBrush(myColor);
+                e.Graphics.FillRectangle(myBrush, rc);
+                int height = rc.Y + (rc.Height / 2);
+                e.Graphics.DrawLine(new Pen(Color.Silver), rc.X, height, rc.Width, height);
             }
 
             protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
@@ -367,6 +420,23 @@ namespace RPG_Paper_Maker
         private void ItemFloor_DoubleClick(object sender, EventArgs e)
         {
             MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void ItemDrawMode1_Click(object sender, EventArgs e)
+        {
+            MapEditor.DrawMode = DrawMode.Pencil;
+            ItemDrawMode.Image = Properties.Resources.pencil;
+        }
+
+        private void ItemDrawMode2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void ItemDrawMode3_Click(object sender, EventArgs e)
+        {
+            MapEditor.DrawMode = DrawMode.Tin;
+            ItemDrawMode.Image = Properties.Resources.tin;
         }
 
         #endregion

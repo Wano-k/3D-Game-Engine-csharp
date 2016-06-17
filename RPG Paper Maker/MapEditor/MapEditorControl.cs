@@ -19,6 +19,7 @@ namespace RPG_Paper_Maker
         public bool IsMapReloading = false;
         public Point MouseBeforeUpdate = WANOK.MapMouseManager.GetPosition();
         public string SelectedDrawType = "ItemFloor";
+        public DrawMode DrawMode = DrawMode.Pencil;
         public Vector3 PointOnPlane;
         public int GridHeight = 0;
         public int[] CurrentTexture = new int[] { 0, 0, WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE };
@@ -230,9 +231,13 @@ namespace RPG_Paper_Maker
 
         public void ButtonUp()
         {
-            if (WANOK.MapMouseManager.IsButtonUp(MouseButtons.Left))
+            if (WANOK.MapMouseManager.IsButtonUp(MouseButtons.Left) || WANOK.MapMouseManager.IsButtonUp(MouseButtons.Right))
             {
                 PreviousMouseCoords = null;
+            }
+            if (WANOK.KeyboardManager.IsButtonUp(WANOK.Settings.KeyboardAssign.EditorDrawCursor))
+            {
+                PreviousCursorCoords = null;
             }
         }
 
@@ -275,17 +280,48 @@ namespace RPG_Paper_Maker
             if (isMouse)
             {
                 coords = GetCoordsMouse();
+                if (PreviousMouseCoords != null && coords[0] == PreviousMouseCoords[0] && coords[1] == PreviousMouseCoords[1] && coords[2] == PreviousMouseCoords[2]) return;
             }
             else
             {
                 coords = GetCoordsCursor();
+                if (PreviousCursorCoords != null && coords[0] == PreviousCursorCoords[0] && coords[1] == PreviousCursorCoords[1] && coords[2] == PreviousCursorCoords[2]) return;
             }
 
             // Drawing squares
-            if (isMouse) {
-                if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, StockFloor, CurrentTexture);
+            if (DrawMode == DrawMode.Pencil)
+            {
+                if (CurrentTexture[2] == WANOK.SQUARE_SIZE && CurrentTexture[3] == WANOK.SQUARE_SIZE)
+                {
+                    if (isMouse)
+                    {
+                        if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, StockFloor, CurrentTexture);
+                    }
+                    else
+                    {
+                        if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, StockFloor, CurrentTexture);
+                    }
+                }
+
+                for (int i = 0; i < CurrentTexture[2] / WANOK.SQUARE_SIZE; i++)
+                {
+                    for (int j = 0; j < CurrentTexture[3] / WANOK.SQUARE_SIZE; j++)
+                    {
+                        if ((coords[0] + i) > Map.MapInfos.Width || (coords[2] + j) > Map.MapInfos.Height) break;
+                        int[] shortTexture = new int[]
+                        {
+                            (i * WANOK.SQUARE_SIZE) + CurrentTexture[0],
+                            (j * WANOK.SQUARE_SIZE) + CurrentTexture[1],
+                            WANOK.SQUARE_SIZE,
+                            WANOK.SQUARE_SIZE,
+                        };
+                        int[] shortCoords = new int[] { coords[0] + i, coords[1], coords[2] + j };
+                        
+                        StockFloor(shortCoords, shortTexture);
+                    }
+                }
             }
-            StockFloor(coords, CurrentTexture);
+            
 
             // Updating previous selected
             if (isMouse) PreviousMouseCoords = coords;
@@ -299,7 +335,6 @@ namespace RPG_Paper_Maker
         public void StockFloor(int[] coords, params object[] args)
         {
             int[] portion = GetPortion(coords[0], coords[2]);
-
             if (IsInArea(coords) && IsInPortions(portion))
             {
                 int[] texture = (int[])args[0];
