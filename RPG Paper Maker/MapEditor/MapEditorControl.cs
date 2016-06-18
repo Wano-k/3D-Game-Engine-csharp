@@ -29,7 +29,6 @@ namespace RPG_Paper_Maker
         public int[] PreviousMouseCoords = null;
         public int[] PreviousCursorCoords = null;
 
-
         public delegate void MethodStock(int[] coords, params object[] args);
 
         // -------------------------------------------------------------------
@@ -96,12 +95,20 @@ namespace RPG_Paper_Maker
 
         public void AddPortionToUpdate(int[] portion)
         {
-            if (!PortionsToUpdate.Contains(portion)) PortionsToUpdate.Add(portion);
+            for (int i = PortionsToUpdate.Count-1; i >= 0; i--)
+            {
+                if (PortionsToUpdate[i].SequenceEqual(portion)) return;
+            }
+            PortionsToUpdate.Add(portion);
         }
 
         public void AddPortionToSave(int[] portion)
         {
-            if (!PortionsToSave.Contains(portion)) PortionsToSave.Add(portion);
+            for (int i = PortionsToSave.Count - 1; i >= 0; i--)
+            {
+                if (PortionsToSave[i].SequenceEqual(portion)) return;
+            }
+            PortionsToSave.Add(portion);
         }
 
         public void ClearPortions()
@@ -289,38 +296,37 @@ namespace RPG_Paper_Maker
             }
 
             // Drawing squares
-            if (DrawMode == DrawMode.Pencil)
-            {
-                if (CurrentTexture[2] == WANOK.SQUARE_SIZE && CurrentTexture[3] == WANOK.SQUARE_SIZE)
-                {
-                    if (isMouse)
+            switch (DrawMode){
+                case DrawMode.Pencil:
+                    if (CurrentTexture[2] == WANOK.SQUARE_SIZE && CurrentTexture[3] == WANOK.SQUARE_SIZE)
                     {
-                        if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, StockFloor, CurrentTexture);
+                        if (isMouse) if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, StockFloor, CurrentTexture);
+                        else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, StockFloor, CurrentTexture);
                     }
-                    else
-                    {
-                        if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, StockFloor, CurrentTexture);
-                    }
-                }
 
-                for (int i = 0; i < CurrentTexture[2] / WANOK.SQUARE_SIZE; i++)
-                {
-                    for (int j = 0; j < CurrentTexture[3] / WANOK.SQUARE_SIZE; j++)
+                    for (int i = 0; i < CurrentTexture[2] / WANOK.SQUARE_SIZE; i++)
                     {
-                        if ((coords[0] + i) > Map.MapInfos.Width || (coords[2] + j) > Map.MapInfos.Height) break;
-                        int[] shortTexture = new int[]
+                        for (int j = 0; j < CurrentTexture[3] / WANOK.SQUARE_SIZE; j++)
                         {
+                            if ((coords[0] + i) > Map.MapInfos.Width || (coords[2] + j) > Map.MapInfos.Height) break;
+                            int[] shortTexture = new int[]
+                            {
                             (i * WANOK.SQUARE_SIZE) + CurrentTexture[0],
                             (j * WANOK.SQUARE_SIZE) + CurrentTexture[1],
                             WANOK.SQUARE_SIZE,
                             WANOK.SQUARE_SIZE,
-                        };
-                        int[] shortCoords = new int[] { coords[0] + i, coords[1], coords[2] + j };
-                        
-                        StockFloor(shortCoords, shortTexture);
+                            };
+                            int[] shortCoords = new int[] { coords[0] + i, coords[1], coords[2] + j };
+
+                            StockFloor(shortCoords, shortTexture);
+                        }
                     }
-                }
+                    break;
+                case DrawMode.Tin:
+                    AddTin(StockFloor, coords, CurrentTexture);
+                    break;
             }
+            
             
 
             // Updating previous selected
@@ -353,6 +359,82 @@ namespace RPG_Paper_Maker
         public void RemoveFloor(bool isMouse)
         {
 
+        }
+
+        // -------------------------------------------------------------------
+        // EraseFloor
+        // -------------------------------------------------------------------
+
+        public void EraseFloor(int[] coords)
+        {
+            
+        }
+
+        // -------------------------------------------------------------------
+        // PaintTin
+        // -------------------------------------------------------------------
+
+        public void PaintTin(MethodStock stock, MethodStock erase, int[] coords, int[] textureAfter)
+        {
+            int[] portion = GetPortion(coords[0], coords[2]);
+            if (IsInArea(coords) && IsInPortions(portion))
+            {
+                int[] textureBefore = (Map.Portions[portion] == null) ? null : Map.Portions[portion].GetFloorTexture(coords);
+                int[] textureAfterReduced = (textureAfter == null) ? null : new int[] { textureAfter[0], textureAfter[1], WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE };
+
+                if (textureBefore == null && textureAfter == null) return;
+
+                if ((textureBefore == null && textureAfter != null) || (textureBefore != null && textureAfter == null) || !textureBefore.SequenceEqual(textureAfter))
+                {
+                    List<int[]> tab = new List<int[]>();
+                    tab.Add(coords);
+                    if (textureAfterReduced == null) erase(coords);
+                    else stock(coords, textureAfterReduced);
+
+                    int[][] adjacent;
+                    int count = 0;
+                    while (tab.Count != 0)
+                    {
+
+                        adjacent = new int[][]
+                        {
+                        new int[] { tab[0][0] - 1, tab[0][1], tab[0][2] },
+                        new int[] { tab[0][0] + 1, tab[0][1], tab[0][2] },
+                        new int[] { tab[0][0], tab[0][1], tab[0][2] + 1 },
+                        new int[] { tab[0][0], tab[0][1], tab[0][2] - 1 }
+                        };
+                        tab.RemoveAt(0);
+                        for (int i = 0; i < adjacent.Length; i++)
+                        {
+                            int localX = adjacent[i][0] - coords[0], localZ = adjacent[i][2] - coords[2];
+                            textureAfterReduced = (textureAfter == null) ? null : new int[] { textureAfter[0] + (localX * WANOK.SQUARE_SIZE) % textureAfter[2], textureAfter[1] + (localZ * WANOK.SQUARE_SIZE) % textureAfter[3], WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE };
+                            portion = GetPortion(adjacent[i][0], adjacent[i][2]);
+                            if (IsInPortions(portion))
+                            {
+                                int[] textureHere = (Map.Portions[portion] == null) ? null : Map.Portions[portion].GetFloorTexture(adjacent[i]);
+
+                                if ((textureBefore == null || textureHere != null) && (textureBefore != null || textureHere == null) & IsInArea(adjacent[i]) && ((textureBefore == null && textureHere == null) || textureHere.SequenceEqual(textureBefore)))
+                                {
+                                    if (textureAfterReduced == null) erase(adjacent[i]);
+                                    else stock(adjacent[i], textureAfterReduced);
+                                    tab.Add(adjacent[i]);
+                                }
+                            }
+                        }
+                        count++;
+                    }
+                }
+            }
+        }
+
+        public void AddTin(MethodStock stock, int[] coords, int[] textureAfter)
+        {
+            PaintTin(stock, null, coords, textureAfter);
+        }
+
+        public void DeleteTin(MethodStock erase, int[] coords, int[] textureAfter)
+        {
+            PaintTin(null, erase, coords, textureAfter);
         }
 
         #endregion

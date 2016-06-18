@@ -112,14 +112,6 @@ namespace RPG_Paper_Maker
 
         public void AddFloor(int[] coords, int[] newTexture)
         {
-            int[] texture = GetFloorTexture(coords);
-
-            // Deleting previous textures
-            if (texture != null)
-            {
-
-            }
-
             // Adding the new floor
             Floors[coords] = newTexture;
         }
