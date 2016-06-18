@@ -56,6 +56,8 @@
             this.ItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemInputs = new System.Windows.Forms.ToolStripMenuItem();
+            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemPlay = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemTutorials = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemDemo = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,8 +65,11 @@
             this.toolBar1 = new System.Windows.Forms.ToolBar();
             this.toolBarButtonNew = new System.Windows.Forms.ToolBarButton();
             this.toolBarButtonOpen = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButtonSave = new System.Windows.Forms.ToolBarButton();
             this.separator1 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButtonInput = new System.Windows.Forms.ToolBarButton();
+            this.separator2 = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButtonPlay = new System.Windows.Forms.ToolBarButton();
             this.ContextMenuMap = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.MenuItemSetMap = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemMoveMap = new System.Windows.Forms.ToolStripMenuItem();
@@ -103,7 +108,9 @@
             this.ImageListToolBar.TransparentColor = System.Drawing.Color.Transparent;
             this.ImageListToolBar.Images.SetKeyName(0, "new_file.png");
             this.ImageListToolBar.Images.SetKeyName(1, "open_file.png");
-            this.ImageListToolBar.Images.SetKeyName(2, "inputs.png");
+            this.ImageListToolBar.Images.SetKeyName(2, "save.png");
+            this.ImageListToolBar.Images.SetKeyName(3, "inputs.png");
+            this.ImageListToolBar.Images.SetKeyName(4, "play.png");
             // 
             // statusStrip1
             // 
@@ -136,7 +143,7 @@
             this.SplitContainerMain.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.SplitContainerMain.Panel2.Controls.Add(this.MapEditor);
             this.SplitContainerMain.Panel2.Controls.Add(this.menuStrip2);
-            this.SplitContainerMain.Size = new System.Drawing.Size(890, 442);
+            this.SplitContainerMain.Size = new System.Drawing.Size(890, 443);
             this.SplitContainerMain.SplitterDistance = 177;
             this.SplitContainerMain.TabIndex = 2;
             // 
@@ -155,7 +162,7 @@
             // SplitContainerTree.Panel2
             // 
             this.SplitContainerTree.Panel2.Controls.Add(this.TreeMap);
-            this.SplitContainerTree.Size = new System.Drawing.Size(177, 442);
+            this.SplitContainerTree.Size = new System.Drawing.Size(177, 443);
             this.SplitContainerTree.SplitterDistance = 269;
             this.SplitContainerTree.TabIndex = 0;
             // 
@@ -170,7 +177,7 @@
             this.TreeMap.Name = "TreeMap";
             this.TreeMap.SelectedImageIndex = 0;
             this.TreeMap.ShowRootLines = false;
-            this.TreeMap.Size = new System.Drawing.Size(173, 165);
+            this.TreeMap.Size = new System.Drawing.Size(173, 166);
             this.TreeMap.TabIndex = 0;
             this.TreeMap.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TreeMap_ItemDrag);
             this.TreeMap.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeMap_AfterSelect);
@@ -191,10 +198,11 @@
             this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ItemFloor,
             this.ItemDrawMode});
+            this.menuStrip2.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
             this.menuStrip2.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.menuStrip2.Size = new System.Drawing.Size(705, 24);
+            this.menuStrip2.Size = new System.Drawing.Size(705, 20);
             this.menuStrip2.TabIndex = 1;
             this.menuStrip2.Text = "menuStrip2";
             // 
@@ -207,7 +215,7 @@
             this.ItemFloor.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemFloor.Image = global::RPG_Paper_Maker.Properties.Resources.floor1;
             this.ItemFloor.Name = "ItemFloor";
-            this.ItemFloor.Size = new System.Drawing.Size(62, 24);
+            this.ItemFloor.Size = new System.Drawing.Size(62, 20);
             this.ItemFloor.Text = "Floor";
             this.ItemFloor.DoubleClick += new System.EventHandler(this.ItemFloor_DoubleClick);
             // 
@@ -217,7 +225,7 @@
             this.ItemFloor1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemFloor1.Image = global::RPG_Paper_Maker.Properties.Resources.floor1;
             this.ItemFloor1.Name = "ItemFloor1";
-            this.ItemFloor1.Size = new System.Drawing.Size(152, 22);
+            this.ItemFloor1.Size = new System.Drawing.Size(121, 22);
             this.ItemFloor1.Text = "Floor";
             // 
             // ItemFloor2
@@ -226,7 +234,7 @@
             this.ItemFloor2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemFloor2.Image = global::RPG_Paper_Maker.Properties.Resources.floor2;
             this.ItemFloor2.Name = "ItemFloor2";
-            this.ItemFloor2.Size = new System.Drawing.Size(152, 22);
+            this.ItemFloor2.Size = new System.Drawing.Size(121, 22);
             this.ItemFloor2.Text = "Autotiles";
             // 
             // ItemDrawMode
@@ -238,7 +246,7 @@
             this.ItemDrawMode.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemDrawMode.Image = global::RPG_Paper_Maker.Properties.Resources.pencil;
             this.ItemDrawMode.Name = "ItemDrawMode";
-            this.ItemDrawMode.Size = new System.Drawing.Size(28, 24);
+            this.ItemDrawMode.Size = new System.Drawing.Size(28, 20);
             // 
             // ItemDrawMode1
             // 
@@ -273,11 +281,13 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.managementToolStripMenuItem,
+            this.testToolStripMenuItem,
             this.helpToolStripMenuItem});
+            this.menuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menuStrip1.Size = new System.Drawing.Size(890, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(890, 23);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -292,7 +302,7 @@
             this.ItemExit});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 19);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // ItemNewProject
@@ -331,10 +341,12 @@
             // 
             this.ItemSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ItemSave.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemSave.Image = global::RPG_Paper_Maker.Properties.Resources.save;
             this.ItemSave.Name = "ItemSave";
             this.ItemSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.ItemSave.Size = new System.Drawing.Size(190, 22);
             this.ItemSave.Text = "Save";
+            this.ItemSave.Click += new System.EventHandler(this.ItemSave_Click);
             // 
             // ItemCloseProject
             // 
@@ -369,7 +381,7 @@
             this.ItemInputs});
             this.managementToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.managementToolStripMenuItem.Name = "managementToolStripMenuItem";
-            this.managementToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
+            this.managementToolStripMenuItem.Size = new System.Drawing.Size(90, 19);
             this.managementToolStripMenuItem.Text = "Management";
             // 
             // ItemInputs
@@ -382,6 +394,25 @@
             this.ItemInputs.Text = "Inputs manager";
             this.ItemInputs.Click += new System.EventHandler(this.ItemInputs_Click);
             // 
+            // testToolStripMenuItem
+            // 
+            this.testToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ItemPlay});
+            this.testToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(41, 19);
+            this.testToolStripMenuItem.Text = "Test";
+            // 
+            // ItemPlay
+            // 
+            this.ItemPlay.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemPlay.Image = global::RPG_Paper_Maker.Properties.Resources.play;
+            this.ItemPlay.Name = "ItemPlay";
+            this.ItemPlay.Size = new System.Drawing.Size(96, 22);
+            this.ItemPlay.Text = "Play";
+            this.ItemPlay.Click += new System.EventHandler(this.ItemPlay_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -390,7 +421,7 @@
             this.ItemAbout});
             this.helpToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 19);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // ItemTutorials
@@ -426,11 +457,14 @@
             this.toolBar1.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.toolBarButtonNew,
             this.toolBarButtonOpen,
+            this.toolBarButtonSave,
             this.separator1,
-            this.toolBarButtonInput});
+            this.toolBarButtonInput,
+            this.separator2,
+            this.toolBarButtonPlay});
             this.toolBar1.DropDownArrows = true;
             this.toolBar1.ImageList = this.ImageListToolBar;
-            this.toolBar1.Location = new System.Drawing.Point(0, 24);
+            this.toolBar1.Location = new System.Drawing.Point(0, 23);
             this.toolBar1.Name = "toolBar1";
             this.toolBar1.ShowToolTips = true;
             this.toolBar1.Size = new System.Drawing.Size(890, 42);
@@ -451,6 +485,13 @@
             this.toolBarButtonOpen.Text = "Open";
             this.toolBarButtonOpen.ToolTipText = "Open a project";
             // 
+            // toolBarButtonSave
+            // 
+            this.toolBarButtonSave.ImageKey = "save.png";
+            this.toolBarButtonSave.Name = "toolBarButtonSave";
+            this.toolBarButtonSave.Text = "Save";
+            this.toolBarButtonSave.ToolTipText = "Save your progress";
+            // 
             // separator1
             // 
             this.separator1.Name = "separator1";
@@ -458,11 +499,22 @@
             // 
             // toolBarButtonInput
             // 
-            this.toolBarButtonInput.Enabled = false;
             this.toolBarButtonInput.ImageKey = "inputs.png";
             this.toolBarButtonInput.Name = "toolBarButtonInput";
             this.toolBarButtonInput.Text = "Inputs";
             this.toolBarButtonInput.ToolTipText = "Inputs management";
+            // 
+            // separator2
+            // 
+            this.separator2.Name = "separator2";
+            this.separator2.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+            // 
+            // toolBarButtonPlay
+            // 
+            this.toolBarButtonPlay.ImageKey = "play.png";
+            this.toolBarButtonPlay.Name = "toolBarButtonPlay";
+            this.toolBarButtonPlay.Text = "Play";
+            this.toolBarButtonPlay.ToolTipText = "Try your game!";
             // 
             // ContextMenuMap
             // 
@@ -551,9 +603,9 @@
             // 
             this.MainPanel.Controls.Add(this.SplitContainerMain);
             this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainPanel.Location = new System.Drawing.Point(0, 66);
+            this.MainPanel.Location = new System.Drawing.Point(0, 65);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(890, 442);
+            this.MainPanel.Size = new System.Drawing.Size(890, 443);
             this.MainPanel.TabIndex = 5;
             // 
             // scrollPanel1
@@ -586,10 +638,10 @@
             this.MapEditor.BackColor = System.Drawing.Color.Black;
             this.MapEditor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MapEditor.DrawMode = RPG_Paper_Maker.DrawMode.Pencil;
-            this.MapEditor.Location = new System.Drawing.Point(0, 24);
+            this.MapEditor.Location = new System.Drawing.Point(0, 20);
             this.MapEditor.Name = "MapEditor";
             this.MapEditor.SelectedDrawType = "ItemFloor";
-            this.MapEditor.Size = new System.Drawing.Size(705, 414);
+            this.MapEditor.Size = new System.Drawing.Size(705, 419);
             this.MapEditor.TabIndex = 0;
             this.MapEditor.VSync = false;
             this.MapEditor.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseDown);
@@ -691,6 +743,11 @@
         private System.Windows.Forms.ToolStripMenuItem ItemDrawMode1;
         private System.Windows.Forms.ToolStripMenuItem ItemDrawMode2;
         private System.Windows.Forms.ToolStripMenuItem ItemDrawMode3;
+        private System.Windows.Forms.ToolBarButton toolBarButtonSave;
+        private System.Windows.Forms.ToolBarButton separator2;
+        private System.Windows.Forms.ToolBarButton toolBarButtonPlay;
+        private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ItemPlay;
     }
 }
 

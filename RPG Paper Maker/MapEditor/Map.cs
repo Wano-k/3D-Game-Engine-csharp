@@ -156,6 +156,7 @@ namespace RPG_Paper_Maker
             }
 
             // Drawing Floors
+            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
             effect.VertexColorEnabled = false;
             effect.TextureEnabled = true;
             foreach (GameMapPortion gameMap in Portions.Values)

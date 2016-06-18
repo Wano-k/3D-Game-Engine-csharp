@@ -339,6 +339,11 @@ namespace RPG_Paper_Maker
             }
         }
 
+        private void ItemSave_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
         private void ItemCloseProject_Click(object sender, EventArgs e)
         {
             CloseProject();
@@ -365,12 +370,18 @@ namespace RPG_Paper_Maker
             }
         }
 
+        // TEST
+
+        private void ItemPlay_Click(object sender, EventArgs e)
+        {
+            Process.Start(Path.Combine(WANOK.CurrentDir, "Test.exe"));
+        }
+
         // HELP
 
         private void ItemTutorials_Click(object sender, EventArgs e)
         {
-            ProcessStartInfo sInfo = new ProcessStartInfo("http://rpgpapermaker.com/index.php/tutorials");
-            Process.Start(sInfo);
+            Process.Start("http://rpgpapermaker.com/index.php/tutorials");
         }
 
         private void ItemDemo_Click(object sender, EventArgs e)
@@ -403,9 +414,17 @@ namespace RPG_Paper_Maker
             {
                 ItemOpenBrowse_Click(sender, e);
             }
+            else if (e.Button.Name.Equals("toolBarButtonSave"))
+            {
+                ItemSave_Click(sender, e);
+            }
             else if (e.Button.Name.Equals("toolBarButtonInput"))
             {
                 ItemInputs_Click(sender, e);
+            }
+            else if (e.Button.Name.Equals("toolBarButtonPlay"))
+            {
+                ItemPlay_Click(sender, e);
             }
         }
 
@@ -777,11 +796,16 @@ namespace RPG_Paper_Maker
             toolBarButtonNew.Enabled = b;
             ItemOpenBrowse.Enabled = b;
             toolBarButtonOpen.Enabled = b;
+            managementToolStripMenuItem.Enabled = b;
             ItemInputs.Enabled = b;
             toolBarButtonInput.Enabled = b;
             ItemSave.Enabled = b;
+            toolBarButtonSave.Enabled = b;
             ItemCloseProject.Enabled = b;
             ItemExit.Enabled = b;
+            testToolStripMenuItem.Enabled = b;
+            ItemPlay.Enabled = b;
+            toolBarButtonPlay.Enabled = b;
             helpToolStripMenuItem.Enabled = b;
             ItemTutorials.Enabled = b;
             ItemDemo.Enabled = b;
@@ -815,9 +839,14 @@ namespace RPG_Paper_Maker
         {
             EnableNoGame();
             ItemSave.Enabled = true;
+            toolBarButtonSave.Enabled = true;
             ItemCloseProject.Enabled = true;
+            managementToolStripMenuItem.Enabled = true;
             ItemInputs.Enabled = true;
             toolBarButtonInput.Enabled = true;
+            testToolStripMenuItem.Enabled = true;
+            ItemPlay.Enabled = true;
+            toolBarButtonPlay.Enabled = true;
         }
 
         // -------------------------------------------------------------------

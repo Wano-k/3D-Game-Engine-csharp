@@ -55,47 +55,6 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // SaveDatas
-        // -------------------------------------------------------------------
-
-        public void SaveDatas(string path)
-        {
-            try
-            {
-                FileStream fs = new FileStream(path, FileMode.Create);
-                BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(fs, this);
-                fs.Close();
-            }
-            catch (Exception e)
-            {
-                WANOK.PathErrorMessage(e);
-            }
-        }
-
-        // -------------------------------------------------------------------
-        // LoadDatas
-        // -------------------------------------------------------------------
-
-        public GameMapPortion LoadDatas(string path)
-        {
-            GameMapPortion obj = new GameMapPortion();
-            try
-            {
-                FileStream fs = new FileStream(path, FileMode.Open);
-                BinaryFormatter formatter = new BinaryFormatter();
-                obj = (GameMapPortion)formatter.Deserialize(fs);
-                fs.Close();
-            }
-            catch (Exception e)
-            {
-                WANOK.PathErrorMessage(e);
-            }
-
-            return obj;
-        }
-
-        // -------------------------------------------------------------------
         // GetFloorTexture
         // -------------------------------------------------------------------
 
@@ -208,7 +167,6 @@ namespace RPG_Paper_Maker
             {
                 // Effect settings
                 effect.Texture = texture;
-                effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
 
                 // Drawing
                 device.SetVertexBuffer(VBFloor);
