@@ -1,1 +1,25 @@
-{"showDemoTip":true}
+{
+  "ShowDemoTip": false,
+  "ListRecentProjects": [
+    "C:\\Users\\Marie_MSI\\Documents\\RPG Paper Maker Games\\Project without name 1"
+  ],
+  "KeyboardAssign": {
+    "KeyboardEditorAssign": {
+      "Move Up": 87,
+      "Move Down": 83,
+      "Move Left": 65,
+      "Move Right": 68,
+      "Show grid": 71,
+      "Draw with cursor": 32,
+      "Remove with cursor": 46
+    },
+    "KeyboardGameAssign": {},
+    "EditorMoveUp": 87,
+    "EditorMoveDown": 83,
+    "EditorMoveLeft": 65,
+    "EditorMoveRight": 68,
+    "EditorShowGrid": 71,
+    "EditorDrawCursor": 32,
+    "EditorRemoveCursor": 46
+  }
+}
