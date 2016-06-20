@@ -62,6 +62,17 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // SetGridHeight
+        // -------------------------------------------------------------------
+
+        public void SetGridHeight(int height)
+        {
+            Control.GridHeight = height;
+            Control.CursorEditor.Position.Y = height;
+            Update(GameTime);
+        }
+
+        // -------------------------------------------------------------------
         // LoadSettings
         // -------------------------------------------------------------------
 

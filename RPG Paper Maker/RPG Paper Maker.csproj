@@ -299,6 +299,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DLLs\OpenTK.GLControl.dll" />
+    <None Include="Resources\height.png" />
     <None Include="Resources\play.png" />
     <None Include="Resources\save.png" />
     <None Include="Resources\pin.png" />

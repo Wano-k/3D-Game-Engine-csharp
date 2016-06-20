@@ -11,6 +11,8 @@ namespace RPG_Paper_Maker
     public class MainFormControl
     {
         public const int MAX_MAP = 9999;
+        public int HeightSquare;
+        public int HeightPixel;
 
         public void InitializeMain()
         {
@@ -133,6 +135,30 @@ namespace RPG_Paper_Maker
         public MapInfos LoadMapInfos(string mapName)
         {
             return WANOK.LoadDatas<MapInfos>(Path.Combine(WANOK.MapsDirectoryPath, mapName, "infos.map"));
+        }
+
+        // -------------------------------------------------------------------
+        // SetHeight
+        // -------------------------------------------------------------------
+
+        public void SetHeight(bool square, bool up)
+        {
+            int add = up ? 1 : -1;
+            if (square) HeightSquare += add;
+            else {
+                HeightPixel += add;
+                if (HeightPixel > WANOK.SQUARE_SIZE - 1) HeightPixel = 0;
+                else if (HeightPixel < 0) HeightPixel = WANOK.SQUARE_SIZE - 1;
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // GetTotalHeight
+        // -------------------------------------------------------------------
+
+        public int GetTotalHeight()
+        {
+            return (HeightSquare * WANOK.SQUARE_SIZE) + HeightPixel;
         }
     }
 }

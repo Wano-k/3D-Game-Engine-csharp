@@ -45,6 +45,9 @@
             this.ItemDrawMode1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemDrawMode2 = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemDrawMode3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemHeight = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemHeight1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemHeight2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemNewProject = new System.Windows.Forms.ToolStripMenuItem();
@@ -197,7 +200,8 @@
             this.menuStrip2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ItemFloor,
-            this.ItemDrawMode});
+            this.ItemDrawMode,
+            this.ItemHeight});
             this.menuStrip2.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
@@ -205,6 +209,7 @@
             this.menuStrip2.Size = new System.Drawing.Size(705, 20);
             this.menuStrip2.TabIndex = 1;
             this.menuStrip2.Text = "menuStrip2";
+            this.menuStrip2.MouseHover += new System.EventHandler(this.menuStrip2_MouseHover);
             // 
             // ItemFloor
             // 
@@ -217,7 +222,9 @@
             this.ItemFloor.Name = "ItemFloor";
             this.ItemFloor.Size = new System.Drawing.Size(62, 20);
             this.ItemFloor.Text = "Floor";
-            this.ItemFloor.DoubleClick += new System.EventHandler(this.ItemFloor_DoubleClick);
+            this.ItemFloor.ToolTipText = "Draw square on the floor";
+            this.ItemFloor.MouseEnter += new System.EventHandler(this.ItemFloor_MouseEnter);
+            this.ItemFloor.MouseLeave += new System.EventHandler(this.ItemFloor_MouseLeave);
             // 
             // ItemFloor1
             // 
@@ -247,6 +254,9 @@
             this.ItemDrawMode.Image = global::RPG_Paper_Maker.Properties.Resources.pencil;
             this.ItemDrawMode.Name = "ItemDrawMode";
             this.ItemDrawMode.Size = new System.Drawing.Size(28, 20);
+            this.ItemDrawMode.ToolTipText = "Drawing tools";
+            this.ItemDrawMode.MouseEnter += new System.EventHandler(this.ItemDrawMode_MouseEnter);
+            this.ItemDrawMode.MouseLeave += new System.EventHandler(this.ItemDrawMode_MouseLeave);
             // 
             // ItemDrawMode1
             // 
@@ -274,6 +284,38 @@
             this.ItemDrawMode3.Size = new System.Drawing.Size(135, 22);
             this.ItemDrawMode3.Text = "Tin of paint";
             this.ItemDrawMode3.Click += new System.EventHandler(this.ItemDrawMode3_Click);
+            // 
+            // ItemHeight
+            // 
+            this.ItemHeight.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ItemHeight1,
+            this.ItemHeight2});
+            this.ItemHeight.Image = global::RPG_Paper_Maker.Properties.Resources.height;
+            this.ItemHeight.Name = "ItemHeight";
+            this.ItemHeight.Size = new System.Drawing.Size(28, 20);
+            this.ItemHeight.ToolTipText = "Choose the height of the grid";
+            this.ItemHeight.MouseEnter += new System.EventHandler(this.ItemHeight_MouseEnter);
+            this.ItemHeight.MouseLeave += new System.EventHandler(this.ItemHeight_MouseLeave);
+            // 
+            // ItemHeight1
+            // 
+            this.ItemHeight1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.ItemHeight1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemHeight1.Name = "ItemHeight1";
+            this.ItemHeight1.Size = new System.Drawing.Size(167, 22);
+            this.ItemHeight1.Text = "Square number: 0";
+            this.ItemHeight1.MouseEnter += new System.EventHandler(this.ItemHeight1_MouseEnter);
+            this.ItemHeight1.MouseLeave += new System.EventHandler(this.ItemHeight1_MouseLeave);
+            // 
+            // ItemHeight2
+            // 
+            this.ItemHeight2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.ItemHeight2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemHeight2.Name = "ItemHeight2";
+            this.ItemHeight2.Size = new System.Drawing.Size(167, 22);
+            this.ItemHeight2.Text = "Adding pixels: 0";
+            this.ItemHeight2.MouseEnter += new System.EventHandler(this.ItemHeight2_MouseEnter);
+            this.ItemHeight2.MouseLeave += new System.EventHandler(this.ItemHeight2_MouseLeave);
             // 
             // menuStrip1
             // 
@@ -645,7 +687,7 @@
             this.MapEditor.TabIndex = 0;
             this.MapEditor.VSync = false;
             this.MapEditor.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseDown);
-            this.MapEditor.MouseHover += new System.EventHandler(this.MapEditor_MouseHover);
+            this.MapEditor.MouseEnter += new System.EventHandler(this.MapEditor_MouseEnter);
             this.MapEditor.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseMove);
             this.MapEditor.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseUp);
             // 
@@ -748,6 +790,9 @@
         private System.Windows.Forms.ToolBarButton toolBarButtonPlay;
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ItemPlay;
+        private System.Windows.Forms.ToolStripMenuItem ItemHeight;
+        private System.Windows.Forms.ToolStripMenuItem ItemHeight1;
+        private System.Windows.Forms.ToolStripMenuItem ItemHeight2;
     }
 }
 

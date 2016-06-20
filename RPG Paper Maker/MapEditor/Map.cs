@@ -18,6 +18,7 @@ namespace RPG_Paper_Maker
         public MapInfos MapInfos { get; set; }
         public Dictionary<int[], GameMapPortion> Portions;
         public bool DisplayGrid = true;
+        public int GridHeight = 0;
 
 
         // -------------------------------------------------------------------
@@ -142,7 +143,7 @@ namespace RPG_Paper_Maker
             // Effect settings
             effect.VertexColorEnabled = true;
             effect.TextureEnabled = false;
-            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE,1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(0,0.2f,0);
+            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(0, GridHeight + 0.2f,0);
 
             // Drawing grid
             if (DisplayGrid)

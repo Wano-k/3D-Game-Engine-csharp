@@ -12,7 +12,7 @@ namespace RPG_Paper_Maker
     class Camera
     {
         public Vector3 Position;
-        private Vector3 Target;
+        public Vector3 Target;
         private Vector3 UpVector = Vector3.Up;
         public Matrix Projection;
         public Matrix View { get { return Matrix.CreateLookAt(Position, Target, UpVector); } }

@@ -21,7 +21,7 @@ namespace RPG_Paper_Maker
         public string SelectedDrawType = "ItemFloor";
         public DrawMode DrawMode = DrawMode.Pencil;
         public Vector3 PointOnPlane;
-        public int GridHeight = 0;
+        public int GridHeight { get { return Map.GridHeight; } set { Map.GridHeight = value; } }
         public int[] CurrentTexture = new int[] { 0, 0, WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE };
         public int[] CurrentPortion = new int[] { 0, 0 };
         protected List<int[]> PortionsToUpdate = new List<int[]>();
@@ -75,7 +75,7 @@ namespace RPG_Paper_Maker
             // Raycasting
             Ray ray = WANOK.CalculateRay(new Vector2(MouseBeforeUpdate.X, MouseBeforeUpdate.Y), camera.View, camera.Projection, graphicsDevice.Viewport);
             float distance = (GridHeight - camera.Position.Y) / ray.Direction.Y;
-            PointOnPlane = WANOK.GetCorrectPointOnRay(ray, camera, distance);
+            PointOnPlane = WANOK.GetCorrectPointOnRay(ray, camera, distance, GridHeight);
 
             // Portion moving
             int[] newPortion = CursorEditor.GetPortion();

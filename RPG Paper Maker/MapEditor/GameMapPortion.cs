@@ -107,7 +107,7 @@ namespace RPG_Paper_Maker
             int offset = 0;
             foreach (KeyValuePair<int[], int[]> entry in Floors)
             {
-                foreach (VertexPositionTexture vertex in CreateFloorWithTex(texture, entry.Key[0], entry.Key[2], entry.Value))
+                foreach (VertexPositionTexture vertex in CreateFloorWithTex(texture, entry.Key[0], entry.Key[1], entry.Key[2], entry.Value))
                 {
                     verticesList.Add(vertex);
                 }
@@ -130,7 +130,7 @@ namespace RPG_Paper_Maker
         // CreateFloorWithTex : coords = [x,y,width,height]
         // -------------------------------------------------------------------
 
-        protected VertexPositionTexture[] CreateFloorWithTex(Texture2D texture, int x, int z, int[] coords)
+        protected VertexPositionTexture[] CreateFloorWithTex(Texture2D texture, int x, int y, int z, int[] coords)
         {
             // Texture coords
             float left = ((float)coords[0]) / texture.Width;
@@ -150,10 +150,10 @@ namespace RPG_Paper_Maker
             // Vertex Position and Texture
             return new VertexPositionTexture[]
             {
-                new VertexPositionTexture(new Vector3(x, 0, z), new Vector2(left, top)),
-                new VertexPositionTexture(new Vector3(x+1, 0, z), new Vector2(right, top)),
-                new VertexPositionTexture(new Vector3(x+1, 0, z+1), new Vector2(right, bot)),
-                new VertexPositionTexture(new Vector3(x, 0, z+1), new Vector2(left, bot))
+                new VertexPositionTexture(new Vector3(x, y, z), new Vector2(left, top)),
+                new VertexPositionTexture(new Vector3(x+1, y, z), new Vector2(right, top)),
+                new VertexPositionTexture(new Vector3(x+1, y, z+1), new Vector2(right, bot)),
+                new VertexPositionTexture(new Vector3(x, y, z+1), new Vector2(left, bot))
             };
         }
 

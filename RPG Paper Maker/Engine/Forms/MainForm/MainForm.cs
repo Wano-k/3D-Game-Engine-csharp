@@ -21,6 +21,8 @@ namespace RPG_Paper_Maker
     {
         public string TitleName = "RPG Paper Maker " + Application.ProductVersion;
         public MainFormControl Control = new MainFormControl();
+        public bool IsInItemHeightSquare = false;
+        public bool IsInItemHeightPixel = false;
 
 
         // -------------------------------------------------------------------
@@ -46,6 +48,10 @@ namespace RPG_Paper_Maker
             Text = TitleName;
             KeyPreview = true;
             MapEditor.MouseWheel += MapEditor_MouseWheel;
+            MouseWheel += MainForm_MouseWheel;
+            ItemFloor.DropDown.MouseLeave += new EventHandler(ItemFloorDrop_MouseLeave);
+            ItemDrawMode.DropDown.MouseLeave += new EventHandler(ItemDrawModeDrop_MouseLeave);
+            ItemHeight.DropDown.MouseLeave += new EventHandler(ItemHeightDrop_MouseLeave);
 
             // Contain shown
             EnableNoGame();
@@ -244,16 +250,27 @@ namespace RPG_Paper_Maker
         #endregion
 
         // -------------------------------------------------------------------
-        // Form1
+        // MainForm events
         // -------------------------------------------------------------------
 
-        #region Form1 events
+        #region MainForm events
 
         private void Form1_Shown(object sender, EventArgs e)
         {
             if (WANOK.Settings.ShowDemoTip)
             {
                 DemoTip();
+            }
+        }
+
+        private void MainForm_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (IsInItemHeightSquare || IsInItemHeightPixel)
+            {
+                Control.SetHeight(IsInItemHeightSquare, e.Delta > 0);
+                MapEditor.SetGridHeight(Control.GetTotalHeight());
+                ItemHeight1.Text = "Square number: " + Control.HeightSquare;
+                ItemHeight2.Text = "Adding pixels: " + Control.HeightPixel;
             }
         }
 
@@ -436,9 +453,54 @@ namespace RPG_Paper_Maker
 
         #region Map editor menu bar
 
-        private void ItemFloor_DoubleClick(object sender, EventArgs e)
+        private void menuStrip2_MouseHover(object sender, EventArgs e)
         {
-            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            menuStrip2.Focus();
+        }
+
+        private void ItemFloorDrop_MouseLeave(object sender, EventArgs e)
+        {
+            ItemFloor.HideDropDown();
+        }
+
+        private void ItemFloor_MouseEnter(object sender, EventArgs e)
+        {
+            ItemFloor.ShowDropDown();
+        }
+
+        private void ItemFloor_MouseLeave(object sender, EventArgs e)
+        {
+            HideDropDownIfNotInControl(ItemFloor);
+        }
+
+        private void ItemDrawModeDrop_MouseLeave(object sender, EventArgs e)
+        {
+            ItemDrawMode.HideDropDown();
+        }
+
+        private void ItemDrawMode_MouseEnter(object sender, EventArgs e)
+        {
+            ItemDrawMode.ShowDropDown();
+        }
+
+        private void ItemDrawMode_MouseLeave(object sender, EventArgs e)
+        {
+            HideDropDownIfNotInControl(ItemDrawMode);
+        }
+
+        private void ItemHeightDrop_MouseLeave(object sender, EventArgs e)
+        {
+            ItemHeight.HideDropDown();
+        }
+
+        private void ItemHeight_MouseEnter(object sender, EventArgs e)
+        {
+            ItemHeight.ShowDropDown();
+        }
+
+        private void ItemHeight_MouseLeave(object sender, EventArgs e)
+        {
+            HideDropDownIfNotInControl(ItemHeight);
         }
 
         private void ItemDrawMode1_Click(object sender, EventArgs e)
@@ -456,6 +518,26 @@ namespace RPG_Paper_Maker
         {
             MapEditor.DrawMode = DrawMode.Tin;
             ItemDrawMode.Image = Properties.Resources.tin;
+        }
+
+        private void ItemHeight1_MouseEnter(object sender, EventArgs e)
+        {
+            IsInItemHeightSquare = true;
+        }
+
+        private void ItemHeight1_MouseLeave(object sender, EventArgs e)
+        {
+            IsInItemHeightSquare = false;
+        }
+
+        private void ItemHeight2_MouseEnter(object sender, EventArgs e)
+        {
+            IsInItemHeightPixel = true;
+        }
+
+        private void ItemHeight2_MouseLeave(object sender, EventArgs e)
+        {
+            IsInItemHeightPixel = false;
         }
 
         #endregion
@@ -701,14 +783,14 @@ namespace RPG_Paper_Maker
 
         #region MapEditor
 
+        private void MapEditor_MouseEnter(object sender, EventArgs e)
+        {
+            MapEditor.Focus();
+        }
+
         private void MapEditor_MouseWheel(object sender, MouseEventArgs e)
         {
             WANOK.MapMouseManager.SetWheelStatus(e.Delta);
-        }
-
-        private void MapEditor_MouseHover(object sender, EventArgs e)
-        {
-            MapEditor.Focus();
         }
 
         private void MapEditor_MouseDown(object sender, MouseEventArgs e)
@@ -925,6 +1007,15 @@ namespace RPG_Paper_Maker
                 {
                     DeleteMapsDirectory(node);
                 }
+            }
+        }
+
+        public void HideDropDownIfNotInControl(ToolStripMenuItem c)
+        {
+            if (!c.DropDown.ClientRectangle.Contains(c.DropDown.PointToClient(Cursor.Position)))
+            {
+                c.HideDropDown();
+                menuStrip2.Focus();
             }
         }
 
