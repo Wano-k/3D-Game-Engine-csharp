@@ -11,13 +11,8 @@ namespace RPG_Paper_Maker
 {
     class CursorEditor
     {
-        GraphicsDevice Device;
         public Vector3 Position;
-        public Vector2 Size;
-        private VertexPositionTexture[] vertices;
-        private VertexBuffer VB;
-        private IndexBuffer IB;
-        private int[] indexes;
+        private Square Square;
         private int Frame = 0, FrameTick = 0, CursorWait = 0;
         private const int CursorWaitDuration = 3, FrameDuration = 100;
 
@@ -28,16 +23,10 @@ namespace RPG_Paper_Maker
 
         public CursorEditor(GraphicsDevice device)
         {
-            Device = device;
+            Square = new Square(device, MapEditor.TexCursor, new int[] { 0, 0, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE });
 
             // Position and size
             Position = new Vector3(0,0,0);
-            Size = new Vector2(32, 32);
-
-            // Init buffers
-            VB = new VertexBuffer(Device, typeof(VertexPositionTexture), 4, BufferUsage.WriteOnly);
-            IB = new IndexBuffer(Device, IndexElementSize.ThirtyTwoBits, 6, BufferUsage.WriteOnly);
-            Device.SetVertexBuffer(VB);
         }
 
         // -------------------------------------------------------------------
@@ -74,47 +63,6 @@ namespace RPG_Paper_Maker
         public int[] GetPortion()
         {
             return new int[] { GetX() / WANOK.PORTION_SIZE, GetZ() / WANOK.PORTION_SIZE };
-        }
-
-        // -------------------------------------------------------------------
-        // CreateTex : coords = [x,y,width,height]
-        // -------------------------------------------------------------------
-
-        protected void CreateTex(int[] coords, Texture2D texture)
-        {
-            // Texture coords
-            float left = ((float)coords[0]) / texture.Width;
-            float top = ((float)coords[1]) / texture.Height;
-            float bot = ((float)(coords[1] + coords[3])) / texture.Height;
-            float right = ((float)(coords[0] + coords[2])) / texture.Width;
-
-            // Adjust in order to limit risk of textures flood
-            float width = left + right;
-            float height = top + bot;
-            int coef = 10000;
-            left += width / coef;
-            right -= width / coef;
-            top += height / coef;
-            bot -= height / coef;
-
-            // Vertex Position and Texture
-            this.vertices = new VertexPositionTexture[]
-           {
-               new VertexPositionTexture(WANOK.VERTICESFLOOR[0], new Vector2(left,top)),
-               new VertexPositionTexture(WANOK.VERTICESFLOOR[1], new Vector2(right,top)),
-               new VertexPositionTexture(WANOK.VERTICESFLOOR[2], new Vector2(right,bot)),
-               new VertexPositionTexture(WANOK.VERTICESFLOOR[3], new Vector2(left,bot))
-           };
-
-            // Vertex Indexes
-            this.indexes = new int[]
-            {
-                0, 1, 2, 0, 2, 3
-            };
-
-            // Update buffers
-            VB.SetData(vertices);
-            IB.SetData(indexes);
         }
 
         // -------------------------------------------------------------------
@@ -179,23 +127,10 @@ namespace RPG_Paper_Maker
         // Draw
         // -------------------------------------------------------------------
 
-        public void Draw(GameTime gameTime, BasicEffect effect)
+        public void Draw(GraphicsDevice device, GameTime gameTime, BasicEffect effect)
         {
-            // Setting effect
-            effect.VertexColorEnabled = false;
-            effect.TextureEnabled = true;
-            effect.Texture = MapEditor.TexCursor;
-            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(Position.X, Position.Y + 0.2f, Position.Z); ;
-
-            CreateTex(new int[] { WANOK.BASIC_SQUARE_SIZE * Frame, 0, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE }, MapEditor.TexCursor);
-
-            Device.SetVertexBuffer(VB);
-            Device.Indices = IB;
-            foreach (EffectPass pass in effect.CurrentTechnique.Passes)
-            {
-                pass.Apply();
-                Device.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, indexes, 0, 2);
-            }
+            Square.CreateTex(new int[] { WANOK.BASIC_SQUARE_SIZE * Frame, 0, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE }, MapEditor.TexCursor);
+            Square.Draw(device, gameTime, effect, MapEditor.TexCursor, Position);
         }
     }
 }

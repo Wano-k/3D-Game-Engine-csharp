@@ -51,7 +51,8 @@ namespace RPG_Paper_Maker
         public static string PATHSETTINGS = "Config/EngineSettings.JSON";
         public static string CurrentDir = ".";
         public static string ExcecutablePath { get { return Application.ExecutablePath; } }
-        public static string MapsDirectoryPath { get { return Path.Combine(new string[] { WANOK.CurrentDir, "Content", "Datas", "Maps" }); } }
+        public static string SystemPath { get { return Path.Combine(CurrentDir, "Content", "Datas", "System.rpmd"); } }
+        public static string MapsDirectoryPath { get { return Path.Combine(CurrentDir, "Content", "Datas", "Maps"); } }
 
 
 

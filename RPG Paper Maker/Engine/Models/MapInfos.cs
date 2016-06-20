@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPG_Paper_Maker
 {
+    [Serializable]
     public class MapInfos
     {
         protected Dictionary<int[], int> OccurrenceFloors = new Dictionary<int[], int>();

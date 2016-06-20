@@ -23,6 +23,7 @@ namespace RPG_Paper_Maker
 
         // Content
         public static Texture2D TexCursor;
+        public static Texture2D TexStartCursor;
 
 
         // -------------------------------------------------------------------
@@ -37,10 +38,13 @@ namespace RPG_Paper_Maker
             FileStream fs;
             fs = new FileStream("Config/bmp/editor_cursor.png", FileMode.Open);
             TexCursor = Texture2D.FromStream(GraphicsDevice, fs);
+            fs = new FileStream("Config/bmp/start_cursor.png", FileMode.Open);
+            TexStartCursor = Texture2D.FromStream(GraphicsDevice, fs);
+            fs.Close();
 
             // Create game components
-            Control.Camera = new Camera(this.GraphicsDevice);
-            Control.CursorEditor = new CursorEditor(this.GraphicsDevice);
+            Control.Camera = new Camera(GraphicsDevice);
+            Control.CursorEditor = new CursorEditor(GraphicsDevice);
 
             // Load Settings
             LoadSettings();
@@ -96,7 +100,7 @@ namespace RPG_Paper_Maker
             // Recreate game components
             Control.IsMapReloading = true;
             Control.Camera.ReLoadMap();
-            if (Control.Map != null) Control.Map.DisposeVertexBuffer(); // Dispose the previous vertexBuffer to create a new one for the object
+            if (Control.Map != null) DisposeVertexBuffer(); // Dispose the previous vertexBuffer to create a new one for the object
             Control.Map = new Map(GraphicsDevice, mapName);
             Control.CursorEditor.Reset();
             Control.IsMapReloading = false;
@@ -151,7 +155,7 @@ namespace RPG_Paper_Maker
 
                 // Drawings components
                 Control.Map.Draw(gameTime, effect);
-                Control.CursorEditor.Draw(gameTime, effect);
+                Control.CursorEditor.Draw(GraphicsDevice, gameTime, effect);
 
                 // Draw position
                 string pos = "[" + Control.CursorEditor.GetX() + "," + Control.CursorEditor.GetZ() + "]";
@@ -159,6 +163,15 @@ namespace RPG_Paper_Maker
                 SpriteBatch.DrawString(font, pos, new Vector2(GraphicsDevice.Viewport.Width-10, GraphicsDevice.Viewport.Height-10), Color.White, 0, font.MeasureString(pos), 1.0f, SpriteEffects.None, 0.5f);
                 SpriteBatch.End();
             }
+        }
+
+        // -------------------------------------------------------------------
+        // DisposeVertexBuffer
+        // -------------------------------------------------------------------
+
+        public void DisposeVertexBuffer()
+        {
+            Control.Map.DisposeVertexBuffer();
         }
     }
 }

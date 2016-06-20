@@ -19,6 +19,8 @@ namespace RPG_Paper_Maker
         public Dictionary<int[], GameMapPortion> Portions;
         public bool DisplayGrid = true;
         public int GridHeight = 0;
+        private Square StartSquare = null;
+        private Vector3 Startposition = Vector3.Zero;
 
 
         // -------------------------------------------------------------------
@@ -28,7 +30,7 @@ namespace RPG_Paper_Maker
         public Map(GraphicsDevice device, string mapName)
         {
             Device = device;
-            MapInfos = WANOK.LoadDatas<MapInfos>(Path.Combine(WANOK.MapsDirectoryPath, mapName, "infos.map"));
+            MapInfos = WANOK.LoadBinaryDatas<MapInfos>(Path.Combine(WANOK.MapsDirectoryPath, mapName, "infos.map"));
             string pathTemp = Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp");
             string[] filePaths = Directory.GetFiles(pathTemp);
             foreach (string filePath in filePaths) File.Delete(filePath);
@@ -36,6 +38,12 @@ namespace RPG_Paper_Maker
             filePaths = Directory.GetFiles(Path.Combine(WANOK.MapsDirectoryPath, mapName));
             foreach (string filePath in filePaths) File.Copy(filePath, pathTemp);
             */
+
+            SystemDatas system = WANOK.LoadBinaryDatas<SystemDatas>(WANOK.SystemPath);
+            if (mapName == system.StartMapName)
+            {
+                SetStartInfos(system, system.StartPosition);
+            }
 
             // Grid
             CreateGrid(MapInfos.Width, MapInfos.Height);
@@ -67,6 +75,35 @@ namespace RPG_Paper_Maker
             else
             {
                 Portions[new int[] { i, j }] = null;
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // SetStartInfos
+        // -------------------------------------------------------------------
+
+        public void SetStartInfos(int[] startPosition)
+        {
+            if (StartSquare != null) StartSquare.DisposeBuffers(Device);
+            StartSquare = new Square(Device, MapEditor.TexStartCursor, new int[] { 0, 0, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE });
+            Startposition = new Vector3(startPosition[0] * WANOK.SQUARE_SIZE, startPosition[1], startPosition[2] * WANOK.SQUARE_SIZE);
+        }
+
+        // -------------------------------------------------------------------
+        // SetStartInfos
+        // -------------------------------------------------------------------
+
+        public void SetStartInfos(SystemDatas system, int[] startPosition)
+        {
+            if (startPosition[0] >= 0 && startPosition[0] < MapInfos.Width && startPosition[2] >= 0 && startPosition[2] < MapInfos.Height)
+            {
+                SetStartInfos(startPosition);
+            }
+            // If not into the, delete it
+            else
+            {
+                system.NoStart();
+                WANOK.SaveBinaryDatas(system, WANOK.SystemPath);
             }
         }
 
@@ -108,16 +145,6 @@ namespace RPG_Paper_Maker
             {
                 Portions[portion].GenFloor(Device, TilesetSelector.TexTileset);
             }
-        }
-
-        // -------------------------------------------------------------------
-        // DisposeVertexBuffer
-        // -------------------------------------------------------------------
-
-        public void DisposeVertexBuffer()
-        {
-            Device.SetVertexBuffer(null);
-            VBGrid.Dispose();
         }
 
         // -------------------------------------------------------------------
@@ -164,6 +191,12 @@ namespace RPG_Paper_Maker
             {
                 if (gameMap != null) gameMap.Draw(Device, effect, TilesetSelector.TexTileset);
             }
+
+            // Drawing Start position
+            if (StartSquare != null)
+            {
+                StartSquare.Draw(Device, gameTime, effect, MapEditor.TexStartCursor, Startposition);
+            }
         }
 
         // -------------------------------------------------------------------
@@ -173,6 +206,23 @@ namespace RPG_Paper_Maker
         public void DisposeBuffers(int[] portion)
         {
             Portions[portion].DisposeBuffers(Device);
+        }
+
+        // -------------------------------------------------------------------
+        // DisposeVertexBuffer
+        // -------------------------------------------------------------------
+
+        public void DisposeVertexBuffer()
+        {
+            Device.SetVertexBuffer(null);
+            VBGrid.Dispose();
+
+            foreach (KeyValuePair<int[], GameMapPortion> entry in Portions)
+            {
+                if (entry.Value != null) DisposeBuffers(entry.Key);
+            }
+
+            if (StartSquare != null) StartSquare.DisposeBuffers(Device);
         }
     }
 }

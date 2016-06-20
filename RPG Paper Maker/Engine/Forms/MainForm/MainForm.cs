@@ -213,8 +213,7 @@ namespace RPG_Paper_Maker
                 Rectangle r = new Rectangle(Point.Empty, e.Item.Size);
                 if (e.Item.Name == MainForm.MapEditor.SelectedDrawType)
                 {
-                    if (e.Item.Selected) e.Graphics.FillRectangle(Brushes.DarkCyan, r);
-                    else e.Graphics.FillRectangle(Brushes.CadetBlue, r);
+                    e.Graphics.FillRectangle(Brushes.CadetBlue, r);
                 }
                 else
                 {
@@ -228,22 +227,6 @@ namespace RPG_Paper_Maker
             protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
             {
 
-            }
-
-            protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
-            {
-                Rectangle rc = new Rectangle(Point.Empty, e.Item.Size);
-                Color myColor = Color.FromArgb(64, 64, 64);
-                SolidBrush myBrush = new SolidBrush(myColor);
-                e.Graphics.FillRectangle(myBrush, rc);
-                int height = rc.Y + (rc.Height / 2);
-                e.Graphics.DrawLine(new Pen(Color.Silver), rc.X, height, rc.Width, height);
-            }
-
-            protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
-            {
-                e.ArrowColor = Color.White;
-                base.OnRenderArrow(e);
             }
         }
 
@@ -391,7 +374,16 @@ namespace RPG_Paper_Maker
 
         private void ItemPlay_Click(object sender, EventArgs e)
         {
-            Process.Start(Path.Combine(WANOK.CurrentDir, "Test.exe"));
+            /*
+            ProcessStartInfo startInfo = new ProcessStartInfo(@"C:\Users\Marie_MSI\Documents\Visual Studio 2015\Projects\Test\MonoGame-3D-Game-Test\Test\bin\DesktopGL\x86\Release\RPG Paper Maker.exe");
+            startInfo.WorkingDirectory = @"C:\Users\Marie_MSI\Documents\Visual Studio 2015\Projects\Test\MonoGame-3D-Game-Test\Test\bin\DesktopGL\x86\Release";
+            Process p = Process.Start(startInfo);
+            p.WaitForExit();
+            */
+            ProcessStartInfo startInfo = new ProcessStartInfo(Path.Combine(WANOK.CurrentDir, "Game.exe"));
+            startInfo.WorkingDirectory = WANOK.CurrentDir;
+            Process p = Process.Start(startInfo);
+            p.WaitForExit();
         }
 
         // HELP
@@ -503,23 +495,6 @@ namespace RPG_Paper_Maker
             HideDropDownIfNotInControl(ItemHeight);
         }
 
-        private void ItemDrawMode1_Click(object sender, EventArgs e)
-        {
-            MapEditor.DrawMode = DrawMode.Pencil;
-            ItemDrawMode.Image = Properties.Resources.pencil;
-        }
-
-        private void ItemDrawMode2_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
-
-        private void ItemDrawMode3_Click(object sender, EventArgs e)
-        {
-            MapEditor.DrawMode = DrawMode.Tin;
-            ItemDrawMode.Image = Properties.Resources.tin;
-        }
-
         private void ItemHeight1_MouseEnter(object sender, EventArgs e)
         {
             IsInItemHeightSquare = true;
@@ -538,6 +513,33 @@ namespace RPG_Paper_Maker
         private void ItemHeight2_MouseLeave(object sender, EventArgs e)
         {
             IsInItemHeightPixel = false;
+        }
+
+        private void ItemFloor_Click(object sender, EventArgs e)
+        {
+            SetSelectedDrawType("ItemFloor");
+        }
+
+        private void ItemStart_Click(object sender, EventArgs e)
+        {
+            SetSelectedDrawType("ItemStart");
+        }
+
+        private void ItemDrawMode1_Click(object sender, EventArgs e)
+        {
+            MapEditor.DrawMode = DrawMode.Pencil;
+            ItemDrawMode.Image = Properties.Resources.pencil;
+        }
+
+        private void ItemDrawMode2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void ItemDrawMode3_Click(object sender, EventArgs e)
+        {
+            MapEditor.DrawMode = DrawMode.Tin;
+            ItemDrawMode.Image = Properties.Resources.tin;
         }
 
         #endregion
@@ -718,9 +720,11 @@ namespace RPG_Paper_Maker
         private void MenuItemSetMap_Click(object sender, EventArgs e)
         {
             Control.OpenNewDialog();
-            DialogNewMap dialog = new DialogNewMap(Control.LoadMapInfos(((TreeTag)TreeMap.SelectedNode.Tag).RealMapName));
+            string mapName = ((TreeTag)TreeMap.SelectedNode.Tag).RealMapName;
+            DialogNewMap dialog = new DialogNewMap(Control.LoadMapInfos(mapName));
             if (dialog.ShowDialog() == DialogResult.OK)
             {
+                MapEditor.ReLoadMap(mapName);
                 TreeMap.SelectedNode.Text = dialog.GetMapName();
                 SaveTreeMap();
             }
@@ -1010,6 +1014,10 @@ namespace RPG_Paper_Maker
             }
         }
 
+        // -------------------------------------------------------------------
+        // HideDropDownIfNotInControl
+        // -------------------------------------------------------------------
+
         public void HideDropDownIfNotInControl(ToolStripMenuItem c)
         {
             if (!c.DropDown.ClientRectangle.Contains(c.DropDown.PointToClient(Cursor.Position)))
@@ -1017,6 +1025,16 @@ namespace RPG_Paper_Maker
                 c.HideDropDown();
                 menuStrip2.Focus();
             }
+        }
+
+        // -------------------------------------------------------------------
+        // SetSelectedDrawType
+        // -------------------------------------------------------------------
+
+        public void SetSelectedDrawType(string item)
+        {
+            MapEditor.SelectedDrawType = item;
+            menuStrip2.Refresh();
         }
 
         #endregion

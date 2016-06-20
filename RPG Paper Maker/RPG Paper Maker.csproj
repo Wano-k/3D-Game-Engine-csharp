@@ -151,6 +151,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Forms\MainForm\MainFormControl.cs" />
+    <Compile Include="Engine\Models\SystemDatas.cs" />
     <Compile Include="MapEditorControls\GraphicsDeviceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -171,6 +172,7 @@
     <Compile Include="MapEditor\Map.cs" />
     <Compile Include="Engine\Models\MapInfos.cs" />
     <Compile Include="MapEditor\MapEditorControl.cs" />
+    <Compile Include="MapEditor\Square.cs" />
     <Compile Include="MapEditor\TilesetSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -226,6 +228,10 @@
     <None Include="Basic\Content\Datas\Maps\TreeMapDatas.rpmdatas">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Basic\Content\Datas\System.rpmd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Basic\Content\System.rpmd" />
     <None Include="Basic\Game.rpm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -277,16 +283,19 @@
     <Content Include="Basic\Content\Pictures\Textures2D\Tilesets\plains.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Basic\Game.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Basic\Newtonsoft.Json.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Basic\NVorbis.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Basic\Test.exe">
+    <Content Include="Config\bmp\editor_cursor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Config\bmp\editor_cursor.png">
+    <Content Include="Config\bmp\start_cursor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Config\bmp\tileset_cursor.png">
@@ -299,6 +308,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DLLs\OpenTK.GLControl.dll" />
+    <None Include="Resources\start.png" />
     <None Include="Resources\height.png" />
     <None Include="Resources\play.png" />
     <None Include="Resources\save.png" />

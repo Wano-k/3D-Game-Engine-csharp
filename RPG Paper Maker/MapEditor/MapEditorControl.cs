@@ -256,6 +256,9 @@ namespace RPG_Paper_Maker
         {
             switch (SelectedDrawType)
             {
+                case "ItemStart":
+                    AddStart(isMouse);
+                    break;
                 case "ItemFloor":
                     AddFloor(isMouse);
                     break;
@@ -277,23 +280,36 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // AddStart
+        // -------------------------------------------------------------------
+
+        public void AddStart(bool isMouse)
+        {
+            // Getting coords
+            int[] coords = GetCoords(isMouse);
+            if (coords == null) return;
+
+            if (IsInArea(coords)){
+                // Saving
+                SystemDatas system = WANOK.LoadBinaryDatas<SystemDatas>(WANOK.SystemPath);
+                system.StartMapName = Map.MapInfos.RealMapName;
+                system.StartPosition = coords;
+                WANOK.SaveBinaryDatas(system, WANOK.SystemPath);
+
+                // Updating in map
+                Map.SetStartInfos(coords);
+            }
+        }
+
+        // -------------------------------------------------------------------
         // AddFloor
         // -------------------------------------------------------------------
 
         public void AddFloor(bool isMouse)
         {
             // Getting coords
-            int[] coords;
-            if (isMouse)
-            {
-                coords = GetCoordsMouse();
-                if (PreviousMouseCoords != null && coords[0] == PreviousMouseCoords[0] && coords[1] == PreviousMouseCoords[1] && coords[2] == PreviousMouseCoords[2]) return;
-            }
-            else
-            {
-                coords = GetCoordsCursor();
-                if (PreviousCursorCoords != null && coords[0] == PreviousCursorCoords[0] && coords[1] == PreviousCursorCoords[1] && coords[2] == PreviousCursorCoords[2]) return;
-            }
+            int[] coords = GetCoords(isMouse);
+            if (coords == null) return;
 
             // Drawing squares
             switch (DrawMode){
@@ -327,8 +343,6 @@ namespace RPG_Paper_Maker
                     break;
             }
             
-            
-
             // Updating previous selected
             if (isMouse) PreviousMouseCoords = coords;
             else PreviousCursorCoords = coords;
@@ -471,6 +485,27 @@ namespace RPG_Paper_Maker
                 GridHeight,
                 CursorEditor.GetZ()
             };
+        }
+
+        // -------------------------------------------------------------------
+        // GetCoords
+        // -------------------------------------------------------------------
+
+        public int[] GetCoords(bool isMouse)
+        {
+            int[] coords;
+            if (isMouse)
+            {
+                coords = GetCoordsMouse();
+                if (PreviousMouseCoords != null && coords[0] == PreviousMouseCoords[0] && coords[1] == PreviousMouseCoords[1] && coords[2] == PreviousMouseCoords[2]) return null;
+            }
+            else
+            {
+                coords = GetCoordsCursor();
+                if (PreviousCursorCoords != null && coords[0] == PreviousCursorCoords[0] && coords[1] == PreviousCursorCoords[1] && coords[2] == PreviousCursorCoords[2]) return null;
+            }
+
+            return coords;
         }
 
         // -------------------------------------------------------------------
