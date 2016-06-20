@@ -16,6 +16,11 @@ namespace RPG_Paper_Maker
         protected DialogNewMapControl Control;
         protected BindingSource ViewModelBindingSource = new BindingSource();
 
+
+        // -------------------------------------------------------------------
+        // Constructor
+        // -------------------------------------------------------------------
+
         public DialogNewMap(MapInfos mapInfos = null)
         {
             InitializeComponent();
@@ -28,9 +33,12 @@ namespace RPG_Paper_Maker
             // Paint groupBox
             groupBox1.Paint += MainForm.PaintBorderGroupBox;
             groupBox2.Paint += MainForm.PaintBorderGroupBox;
+            groupBox3.Paint += MainForm.PaintBorderGroupBox;
 
             // ComboBox
             if (ComboBoxTileset.Items.Count > 0) ComboBoxTileset.SelectedItem = ComboBoxTileset.Items[0];
+            if (ComboBoxColor.Items.Count > 0) ComboBoxColor.SelectedItem = ComboBoxColor.Items[0];
+            if (ComboBoxSkyBox.Items.Count > 0) ComboBoxSkyBox.SelectedItem = ComboBoxSkyBox.Items[0];
 
             // Is setting
             if (mapInfos != null)

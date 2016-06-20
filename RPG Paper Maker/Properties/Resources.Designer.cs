@@ -73,6 +73,16 @@ namespace RPG_Paper_Maker.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap datas {
+            get {
+                object obj = ResourceManager.GetObject("datas", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap floor1 {
             get {
                 object obj = ResourceManager.GetObject("floor1", resourceCulture);
@@ -126,6 +136,16 @@ namespace RPG_Paper_Maker.Properties {
         internal static System.Drawing.Bitmap kate {
             get {
                 object obj = ResourceManager.GetObject("kate", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap lang {
+            get {
+                object obj = ResourceManager.GetObject("lang", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

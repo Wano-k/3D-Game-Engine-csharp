@@ -364,10 +364,14 @@ namespace RPG_Paper_Maker
         {
             Control.OpenNewDialog();
             DialogInputsManager dialog = new DialogInputsManager();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                
-            }
+            dialog.ShowDialog();
+        }
+
+        private void ItemDataBase_Click(object sender, EventArgs e)
+        {
+            Control.OpenNewDialog();
+            DialogDataBase dialog = new DialogDataBase();
+            dialog.ShowDialog();
         }
 
         // TEST
@@ -383,7 +387,7 @@ namespace RPG_Paper_Maker
             ProcessStartInfo startInfo = new ProcessStartInfo(Path.Combine(WANOK.CurrentDir, "Game.exe"));
             startInfo.WorkingDirectory = WANOK.CurrentDir;
             Process p = Process.Start(startInfo);
-            p.WaitForExit();
+            p.WaitForExit(); 
         }
 
         // HELP
@@ -434,6 +438,10 @@ namespace RPG_Paper_Maker
             else if (e.Button.Name.Equals("toolBarButtonPlay"))
             {
                 ItemPlay_Click(sender, e);
+            }
+            else if (e.Button.Name.Equals("toolBarButtonDataBase"))
+            {
+                ItemDataBase_Click(sender, e);
             }
         }
 
@@ -877,22 +885,20 @@ namespace RPG_Paper_Maker
 
         public void EnableAll(bool b)
         {
-            fileToolStripMenuItem.Enabled = b;
             ItemNewProject.Enabled = b;
             toolBarButtonNew.Enabled = b;
             ItemOpenBrowse.Enabled = b;
             toolBarButtonOpen.Enabled = b;
-            managementToolStripMenuItem.Enabled = b;
             ItemInputs.Enabled = b;
             toolBarButtonInput.Enabled = b;
+            ItemDataBase.Enabled = b;
+            toolBarButtonDataBase.Enabled = b;
             ItemSave.Enabled = b;
             toolBarButtonSave.Enabled = b;
             ItemCloseProject.Enabled = b;
             ItemExit.Enabled = b;
-            testToolStripMenuItem.Enabled = b;
             ItemPlay.Enabled = b;
             toolBarButtonPlay.Enabled = b;
-            helpToolStripMenuItem.Enabled = b;
             ItemTutorials.Enabled = b;
             ItemDemo.Enabled = b;
             ItemAbout.Enabled = b;
@@ -905,13 +911,11 @@ namespace RPG_Paper_Maker
         public void EnableNoGame()
         {
             EnableAll(false);
-            fileToolStripMenuItem.Enabled = true;
             ItemNewProject.Enabled = true;
             toolBarButtonNew.Enabled = true;
             ItemOpenBrowse.Enabled = true;
             toolBarButtonOpen.Enabled = true;
             ItemExit.Enabled = true;
-            helpToolStripMenuItem.Enabled = true;
             ItemTutorials.Enabled = true;
             ItemDemo.Enabled = true;
             ItemAbout.Enabled = true;
@@ -927,10 +931,10 @@ namespace RPG_Paper_Maker
             ItemSave.Enabled = true;
             toolBarButtonSave.Enabled = true;
             ItemCloseProject.Enabled = true;
-            managementToolStripMenuItem.Enabled = true;
             ItemInputs.Enabled = true;
             toolBarButtonInput.Enabled = true;
-            testToolStripMenuItem.Enabled = true;
+            ItemDataBase.Enabled = true;
+            toolBarButtonDataBase.Enabled = true;
             ItemPlay.Enabled = true;
             toolBarButtonPlay.Enabled = true;
         }

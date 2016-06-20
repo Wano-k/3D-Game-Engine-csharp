@@ -86,6 +86,8 @@
             this.MenuItemSetDirName = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemDeleteDir = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
+            this.ItemDataBase = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolBarButtonDataBase = new System.Windows.Forms.ToolBarButton();
             this.scrollPanel1 = new RPG_Paper_Maker.ScrollPanel();
             this.TilesetSelector = new RPG_Paper_Maker.TilesetSelector();
             this.MapEditor = new RPG_Paper_Maker.MapEditor();
@@ -114,7 +116,8 @@
             this.ImageListToolBar.Images.SetKeyName(1, "open_file.png");
             this.ImageListToolBar.Images.SetKeyName(2, "save.png");
             this.ImageListToolBar.Images.SetKeyName(3, "inputs.png");
-            this.ImageListToolBar.Images.SetKeyName(4, "play.png");
+            this.ImageListToolBar.Images.SetKeyName(4, "datas.png");
+            this.ImageListToolBar.Images.SetKeyName(5, "play.png");
             // 
             // statusStrip1
             // 
@@ -235,7 +238,7 @@
             this.ItemFloor1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemFloor1.Image = global::RPG_Paper_Maker.Properties.Resources.floor1;
             this.ItemFloor1.Name = "ItemFloor1";
-            this.ItemFloor1.Size = new System.Drawing.Size(152, 22);
+            this.ItemFloor1.Size = new System.Drawing.Size(121, 22);
             this.ItemFloor1.Text = "Floor";
             // 
             // ItemFloor2
@@ -244,7 +247,7 @@
             this.ItemFloor2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemFloor2.Image = global::RPG_Paper_Maker.Properties.Resources.floor2;
             this.ItemFloor2.Name = "ItemFloor2";
-            this.ItemFloor2.Size = new System.Drawing.Size(152, 22);
+            this.ItemFloor2.Size = new System.Drawing.Size(121, 22);
             this.ItemFloor2.Text = "Autotiles";
             // 
             // ItemStart
@@ -430,7 +433,8 @@
             // managementToolStripMenuItem
             // 
             this.managementToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ItemInputs});
+            this.ItemInputs,
+            this.ItemDataBase});
             this.managementToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.managementToolStripMenuItem.Name = "managementToolStripMenuItem";
             this.managementToolStripMenuItem.Size = new System.Drawing.Size(90, 19);
@@ -461,7 +465,7 @@
             this.ItemPlay.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemPlay.Image = global::RPG_Paper_Maker.Properties.Resources.play;
             this.ItemPlay.Name = "ItemPlay";
-            this.ItemPlay.Size = new System.Drawing.Size(96, 22);
+            this.ItemPlay.Size = new System.Drawing.Size(152, 22);
             this.ItemPlay.Text = "Play";
             this.ItemPlay.Click += new System.EventHandler(this.ItemPlay_Click);
             // 
@@ -512,6 +516,7 @@
             this.toolBarButtonSave,
             this.separator1,
             this.toolBarButtonInput,
+            this.toolBarButtonDataBase,
             this.separator2,
             this.toolBarButtonPlay});
             this.toolBar1.DropDownArrows = true;
@@ -660,6 +665,22 @@
             this.MainPanel.Size = new System.Drawing.Size(890, 443);
             this.MainPanel.TabIndex = 5;
             // 
+            // ItemDataBase
+            // 
+            this.ItemDataBase.Enabled = false;
+            this.ItemDataBase.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemDataBase.Image = global::RPG_Paper_Maker.Properties.Resources.datas;
+            this.ItemDataBase.Name = "ItemDataBase";
+            this.ItemDataBase.Size = new System.Drawing.Size(157, 22);
+            this.ItemDataBase.Text = "Database";
+            this.ItemDataBase.Click += new System.EventHandler(this.ItemDataBase_Click);
+            // 
+            // toolBarButtonDataBase
+            // 
+            this.toolBarButtonDataBase.ImageKey = "datas.png";
+            this.toolBarButtonDataBase.Name = "toolBarButtonDataBase";
+            this.toolBarButtonDataBase.Text = "Database";
+            // 
             // scrollPanel1
             // 
             this.scrollPanel1.AutoScroll = true;
@@ -804,6 +825,8 @@
         private System.Windows.Forms.ToolStripMenuItem ItemHeight1;
         private System.Windows.Forms.ToolStripMenuItem ItemHeight2;
         private System.Windows.Forms.ToolStripMenuItem ItemStart;
+        private System.Windows.Forms.ToolStripMenuItem ItemDataBase;
+        private System.Windows.Forms.ToolBarButton toolBarButtonDataBase;
     }
 }
 
