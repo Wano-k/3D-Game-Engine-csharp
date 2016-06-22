@@ -339,5 +339,14 @@ namespace RPG_Paper_Maker
             Ray mouseRay = CalculateRay(mouseLocation, view, projection, viewport);
             return mouseRay.Intersects(plane) != null;
         }
+
+        // -------------------------------------------------------------------
+        // GetPixelHeight
+        // -------------------------------------------------------------------
+
+        public static int GetPixelHeight(int[] height)
+        {
+            return (height[0] * SQUARE_SIZE) + height[1];
+        }
     }
 }

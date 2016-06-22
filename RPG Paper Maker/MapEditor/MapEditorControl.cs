@@ -21,8 +21,8 @@ namespace RPG_Paper_Maker
         public string SelectedDrawType = "ItemFloor";
         public DrawMode DrawMode = DrawMode.Pencil;
         public Vector3 PointOnPlane;
-        public int GridHeight { get { return Map.GridHeight; } set { Map.GridHeight = value; } }
-        public int[] CurrentTexture = new int[] { 0, 0, WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE };
+        public int[] GridHeight { get { return Map.GridHeight; } set { Map.GridHeight = value; } }
+        public int[] CurrentTexture = new int[] { 0, 0, 1, 1 };
         public int[] CurrentPortion = new int[] { 0, 0 };
         protected List<int[]> PortionsToUpdate = new List<int[]>();
         protected List<int[]> PortionsToSave = new List<int[]>();
@@ -74,8 +74,9 @@ namespace RPG_Paper_Maker
         {
             // Raycasting
             Ray ray = WANOK.CalculateRay(new Vector2(MouseBeforeUpdate.X, MouseBeforeUpdate.Y), camera.View, camera.Projection, graphicsDevice.Viewport);
-            float distance = (GridHeight - camera.Position.Y) / ray.Direction.Y;
-            PointOnPlane = WANOK.GetCorrectPointOnRay(ray, camera, distance, GridHeight);
+            int height = WANOK.GetPixelHeight(GridHeight);
+            float distance = (height - camera.Position.Y) / ray.Direction.Y;
+            PointOnPlane = WANOK.GetCorrectPointOnRay(ray, camera, distance, height);
 
             // Portion moving
             int[] newPortion = CursorEditor.GetPortion();
@@ -314,26 +315,19 @@ namespace RPG_Paper_Maker
             // Drawing squares
             switch (DrawMode){
                 case DrawMode.Pencil:
-                    if (CurrentTexture[2] == WANOK.SQUARE_SIZE && CurrentTexture[3] == WANOK.SQUARE_SIZE)
+                    if (CurrentTexture[2] == 1 && CurrentTexture[3] == 1)
                     {
                         if (isMouse) if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, StockFloor, CurrentTexture);
                         else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, StockFloor, CurrentTexture);
                     }
 
-                    for (int i = 0; i < CurrentTexture[2] / WANOK.SQUARE_SIZE; i++)
+                    for (int i = 0; i < CurrentTexture[2]; i++)
                     {
-                        for (int j = 0; j < CurrentTexture[3] / WANOK.SQUARE_SIZE; j++)
+                        for (int j = 0; j < CurrentTexture[3]; j++)
                         {
-                            if ((coords[0] + i) > Map.MapInfos.Width || (coords[2] + j) > Map.MapInfos.Height) break;
-                            int[] shortTexture = new int[]
-                            {
-                            (i * WANOK.SQUARE_SIZE) + CurrentTexture[0],
-                            (j * WANOK.SQUARE_SIZE) + CurrentTexture[1],
-                            WANOK.SQUARE_SIZE,
-                            WANOK.SQUARE_SIZE,
-                            };
-                            int[] shortCoords = new int[] { coords[0] + i, coords[1], coords[2] + j };
-
+                            if ((coords[0] + i) > Map.MapInfos.Width || (coords[3] + j) > Map.MapInfos.Height) break;
+                            int[] shortTexture = new int[] { i + CurrentTexture[0], j + CurrentTexture[1], 1, 1 };
+                            int[] shortCoords = new int[] { coords[0] + i, coords[1], coords[2], coords[3] + j };
                             StockFloor(shortCoords, shortTexture);
                         }
                     }
@@ -354,7 +348,7 @@ namespace RPG_Paper_Maker
 
         public void StockFloor(int[] coords, params object[] args)
         {
-            int[] portion = GetPortion(coords[0], coords[2]);
+            int[] portion = GetPortion(coords[0], coords[3]);
             if (IsInArea(coords) && IsInPortions(portion))
             {
                 int[] texture = (int[])args[0];
@@ -468,7 +462,8 @@ namespace RPG_Paper_Maker
             return new int[]
             {
                 (int)PointOnPlane.X,
-                (int)PointOnPlane.Y,
+                GridHeight[0],
+                GridHeight[1],
                 (int)PointOnPlane.Z
             };
         }
@@ -482,7 +477,8 @@ namespace RPG_Paper_Maker
             return new int[]
             {
                 CursorEditor.GetX(),
-                GridHeight,
+                GridHeight[0],
+                GridHeight[1],
                 CursorEditor.GetZ()
             };
         }
@@ -497,12 +493,12 @@ namespace RPG_Paper_Maker
             if (isMouse)
             {
                 coords = GetCoordsMouse();
-                if (PreviousMouseCoords != null && coords[0] == PreviousMouseCoords[0] && coords[1] == PreviousMouseCoords[1] && coords[2] == PreviousMouseCoords[2]) return null;
+                if (PreviousMouseCoords != null && coords.SequenceEqual(PreviousMouseCoords)) return null;
             }
             else
             {
                 coords = GetCoordsCursor();
-                if (PreviousCursorCoords != null && coords[0] == PreviousCursorCoords[0] && coords[1] == PreviousCursorCoords[1] && coords[2] == PreviousCursorCoords[2]) return null;
+                if (PreviousCursorCoords != null && coords.SequenceEqual(PreviousCursorCoords)) return null;
             }
 
             return coords;
@@ -527,7 +523,7 @@ namespace RPG_Paper_Maker
 
         public bool IsInArea(int[] coords)
         {
-            return (coords[0] >= 0 && coords[0] < Map.MapInfos.Width && coords[2] >= 0 && coords[2] < Map.MapInfos.Height);
+            return (coords[0] >= 0 && coords[0] < Map.MapInfos.Width && coords[3] >= 0 && coords[3] < Map.MapInfos.Height);
         }
 
         // -------------------------------------------------------------------
@@ -558,8 +554,8 @@ namespace RPG_Paper_Maker
         public void TraceLine(int[] previousCoords, int[] coords, MethodStock stock, params object[] args)
         {
             int x1 = previousCoords[0], x2 = coords[0];
-            int y = coords[1];
-            int z1 = previousCoords[2], z2 = coords[2];
+            int y1 = coords[1], y2 = coords[2];
+            int z1 = previousCoords[3], z2 = coords[3];
             int dx = x2 - x1, dz = z2 - z1;
             bool test = true;
 
@@ -579,7 +575,7 @@ namespace RPG_Paper_Maker
 
                                 while (test)
                                 {
-                                    stock(new int[] { x1, y, z1 }, args);
+                                    stock(new int[] { x1, y1, y2, z1 }, args);
                                     x1++;
                                     if (x1 == x2) break;
                                     e -= dz;
@@ -598,7 +594,7 @@ namespace RPG_Paper_Maker
 
                                 while (test)
                                 {
-                                    stock(new int[] { x1, y, z1 }, args);
+                                    stock(new int[] { x1, y1, y2, z1 }, args);
                                     z1++;
                                     if (z1 == z2) break;
                                     e -= dx;
@@ -620,7 +616,7 @@ namespace RPG_Paper_Maker
 
                                 while (test)
                                 {
-                                    stock(new int[] { x1, y, z1 }, args);
+                                    stock(new int[] { x1, y1, y2, z1 }, args);
                                     x1++;
                                     if (x1 == x2) break;
                                     e += dz;
@@ -639,7 +635,7 @@ namespace RPG_Paper_Maker
 
                                 while (test)
                                 {
-                                    stock(new int[] { x1, y, z1 }, args);
+                                    stock(new int[] { x1, y1, y2, z1 }, args);
                                     z1--;
                                     if (z1 == z2) break;
                                     e += dx;
@@ -656,7 +652,7 @@ namespace RPG_Paper_Maker
                     {
                         while (x1 != x2)
                         {
-                            stock(new int[] { x1, y, z1 }, args);
+                            stock(new int[] { x1, y1, y2, z1 }, args);
                             x1++;
                         }
                     }
@@ -676,7 +672,7 @@ namespace RPG_Paper_Maker
 
                                 while (test)
                                 {
-                                    stock(new int[] { x1, y, z1 }, args);
+                                    stock(new int[] { x1, y1, y2, z1 }, args);
                                     x1--;
                                     if (x1 == x2) break;
                                     e += dz;
@@ -695,7 +691,7 @@ namespace RPG_Paper_Maker
 
                                 while (test)
                                 {
-                                    stock(new int[] { x1, y, z1 }, args);
+                                    stock(new int[] { x1, y1, y2, z1 }, args);
                                     z1++;
                                     if (z1 == z2) break;
                                     e += dx;
@@ -717,7 +713,7 @@ namespace RPG_Paper_Maker
 
                                 while (test)
                                 {
-                                    stock(new int[] { x1, y, z1 }, args);
+                                    stock(new int[] { x1, y1, y2, z1 }, args);
                                     x1--;
                                     if (x1 == x2) break;
                                     e -= dz;
@@ -736,7 +732,7 @@ namespace RPG_Paper_Maker
 
                                 while (test)
                                 {
-                                    stock(new int[] { x1, y, z1 }, args);
+                                    stock(new int[] { x1, y1, y2, z1 }, args);
                                     z1--;
                                     if (z1 == z2) break;
                                     e -= dx;
@@ -753,7 +749,7 @@ namespace RPG_Paper_Maker
                     {
                         while (x1 != x2)
                         {
-                            stock(new int[] { x1, y, z1 }, args);
+                            stock(new int[] { x1, y1, y2, z1 }, args);
                             x1--;
                         }
                     }
@@ -768,7 +764,7 @@ namespace RPG_Paper_Maker
                     {
                         while(z1 != z2)
                         {
-                            stock(new int[] { x1, y, z1 }, args);
+                            stock(new int[] { x1, y1, y2, z1 }, args);
                             z1++;
                         }
                     }
@@ -776,7 +772,7 @@ namespace RPG_Paper_Maker
                     {
                         while (z1 != z2)
                         {
-                            stock(new int[] { x1, y, z1 }, args);
+                            stock(new int[] { x1, y1, y2, z1 }, args);
                             z1--;
                         }
                     }

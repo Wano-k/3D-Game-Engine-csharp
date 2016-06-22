@@ -18,9 +18,9 @@ namespace RPG_Paper_Maker
         public MapInfos MapInfos { get; set; }
         public Dictionary<int[], GameMapPortion> Portions;
         public bool DisplayGrid = true;
-        public int GridHeight = 0;
+        public int[] GridHeight = new int[] { 0, 0 };
         private Square StartSquare = null;
-        private Vector3 Startposition = Vector3.Zero;
+        private int[] Startposition;
 
 
         // -------------------------------------------------------------------
@@ -86,7 +86,7 @@ namespace RPG_Paper_Maker
         {
             if (StartSquare != null) StartSquare.DisposeBuffers(Device);
             StartSquare = new Square(Device, MapEditor.TexStartCursor, new int[] { 0, 0, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE });
-            Startposition = new Vector3(startPosition[0] * WANOK.SQUARE_SIZE, startPosition[1], startPosition[2] * WANOK.SQUARE_SIZE);
+            Startposition = startPosition;
         }
 
         // -------------------------------------------------------------------
@@ -95,7 +95,7 @@ namespace RPG_Paper_Maker
 
         public void SetStartInfos(SystemDatas system, int[] startPosition)
         {
-            if (startPosition[0] >= 0 && startPosition[0] < MapInfos.Width && startPosition[2] >= 0 && startPosition[2] < MapInfos.Height)
+            if (startPosition[0] >= 0 && startPosition[0] < MapInfos.Width && startPosition[3] >= 0 && startPosition[3] < MapInfos.Height)
             {
                 SetStartInfos(startPosition);
             }
@@ -170,7 +170,7 @@ namespace RPG_Paper_Maker
             // Effect settings
             effect.VertexColorEnabled = true;
             effect.TextureEnabled = false;
-            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(0, GridHeight + 0.2f,0);
+            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(0, WANOK.GetPixelHeight(GridHeight) + 0.2f,0);
 
             // Drawing grid
             if (DisplayGrid)
@@ -195,7 +195,7 @@ namespace RPG_Paper_Maker
             // Drawing Start position
             if (StartSquare != null)
             {
-                StartSquare.Draw(Device, gameTime, effect, MapEditor.TexStartCursor, Startposition);
+                StartSquare.Draw(Device, gameTime, effect, MapEditor.TexStartCursor, new Vector3(Startposition[0] * WANOK.SQUARE_SIZE, Startposition[1] * WANOK.SQUARE_SIZE + Startposition[2], Startposition[3] * WANOK.SQUARE_SIZE));
             }
         }
 

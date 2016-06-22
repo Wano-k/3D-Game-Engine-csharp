@@ -158,12 +158,22 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // GetTotalHeight
+        // GetHeight
         // -------------------------------------------------------------------
 
-        public int GetTotalHeight()
+        public int[] GetHeight()
         {
-            return (HeightSquare * WANOK.SQUARE_SIZE) + HeightPixel;
+            return new int[] { HeightSquare, HeightPixel };
+        }
+
+        // -------------------------------------------------------------------
+        // ClearHeight
+        // -------------------------------------------------------------------
+
+        public void ClearHeight()
+        {
+            HeightPixel = 0;
+            HeightSquare = 0;
         }
     }
 }

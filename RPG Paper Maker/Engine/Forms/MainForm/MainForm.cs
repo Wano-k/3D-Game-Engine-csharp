@@ -251,7 +251,7 @@ namespace RPG_Paper_Maker
             if (IsInItemHeightSquare || IsInItemHeightPixel)
             {
                 Control.SetHeight(IsInItemHeightSquare, e.Delta > 0);
-                MapEditor.SetGridHeight(Control.GetTotalHeight());
+                MapEditor.SetGridHeight(Control.GetHeight());
                 ItemHeight1.Text = "Square number: " + Control.HeightSquare;
                 ItemHeight2.Text = "Adding pixels: " + Control.HeightPixel;
             }
@@ -657,6 +657,7 @@ namespace RPG_Paper_Maker
             {
                 ShowMapEditor(true);
                 MapEditor.ReLoadMap(tag.RealMapName);
+                ReloadMenuMapEditor();
             }
             else
             {
@@ -1039,6 +1040,17 @@ namespace RPG_Paper_Maker
         {
             MapEditor.SelectedDrawType = item;
             menuStrip2.Refresh();
+        }
+
+        // -------------------------------------------------------------------
+        // ReloadMenuMapEditor
+        // -------------------------------------------------------------------
+
+        public void ReloadMenuMapEditor()
+        {
+            Control.ClearHeight();
+            ItemHeight1.Text = "Square number: 0";
+            ItemHeight2.Text = "Adding pixels: 0";
         }
 
         #endregion

@@ -103,6 +103,18 @@
     <Compile Include="Engine\Forms\DialogInputsManager\DialogInputsSelect.Designer.cs">
       <DependentUpon>DialogInputsSelect.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\Forms\DialogLang\DialogLangSetAll.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogLang\DialogLangSetAll.Designer.cs">
+      <DependentUpon>DialogLangSetAll.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogLang\DialogLangSetEach.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogLang\DialogLangSetEach.Designer.cs">
+      <DependentUpon>DialogLangSetEach.cs</DependentUpon>
+    </Compile>
     <Compile Include="Engine\Forms\DialogNewMap\DialogNewMap.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -216,6 +228,12 @@
     <EmbeddedResource Include="Engine\Forms\DialogInputsManager\DialogInputsSelect.resx">
       <DependentUpon>DialogInputsSelect.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogLang\DialogLangSetAll.resx">
+      <DependentUpon>DialogLangSetAll.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogLang\DialogLangSetEach.resx">
+      <DependentUpon>DialogLangSetEach.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogNewDir\DialogNewDir.resx">
       <DependentUpon>DialogNewDir.cs</DependentUpon>
     </EmbeddedResource>
@@ -247,10 +265,6 @@
     <None Include="Basic\Content\Datas\Maps\TreeMapDatas.rpmdatas">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Basic\Content\Datas\System.rpmd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Basic\Content\System.rpmd" />
     <None Include="Basic\Game.rpm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

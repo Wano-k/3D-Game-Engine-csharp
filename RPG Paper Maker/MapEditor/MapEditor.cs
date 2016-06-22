@@ -69,10 +69,10 @@ namespace RPG_Paper_Maker
         // SetGridHeight
         // -------------------------------------------------------------------
 
-        public void SetGridHeight(int height)
+        public void SetGridHeight(int[] height)
         {
             Control.GridHeight = height;
-            Control.CursorEditor.Position.Y = height;
+            Control.CursorEditor.Position.Y = WANOK.GetPixelHeight(height);
             Update(GameTime);
         }
 

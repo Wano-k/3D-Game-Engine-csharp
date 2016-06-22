@@ -89,13 +89,14 @@ namespace RPG_Paper_Maker.Controls
                                 string executablePath = Path.GetDirectoryName(WANOK.ExcecutablePath);
                                 string basicPath = Path.Combine(executablePath, "Basic");
                                 WANOK.CopyAll(new DirectoryInfo(basicPath), new DirectoryInfo(fullPath));
+                                WANOK.SaveBinaryDatas(new SystemDatas(ProjectName), Path.Combine(fullPath, "Content", "Datas", "System.rpmd"));
                                 Directory.CreateDirectory(Path.Combine(fullPath, "Content", "Datas", "Maps", "MAP0001", "temp"));
                                 ProjectName = ProjectName.Trim();
                                 DirPath = Path.Combine(DirPath, ProjectName);
 
                                 return null;
                             }
-                            catch
+                            catch(Exception e)
                             {
                                 return "Could not generate the project. See if you have \"Basic\" folder in the main folder.";
                             }

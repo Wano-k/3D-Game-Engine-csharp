@@ -49,7 +49,7 @@ namespace RPG_Paper_Maker
 
         public int[] GetRectangleArray()
         {
-            return new int[] { (int)(X / WANOK.RELATION_SIZE), (int)(Y / WANOK.RELATION_SIZE), (int)(Width / WANOK.RELATION_SIZE), (int)(Height / WANOK.RELATION_SIZE) };
+            return new int[] { (X / WANOK.BASIC_SQUARE_SIZE), (Y / WANOK.BASIC_SQUARE_SIZE), (Width / WANOK.BASIC_SQUARE_SIZE), (Height / WANOK.BASIC_SQUARE_SIZE) };
         }
 
         // -------------------------------------------------------------------

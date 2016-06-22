@@ -45,16 +45,6 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // AddList
-        // -------------------------------------------------------------------
-
-        public void AddList<T,V>(Dictionary<T,List<V>> d, T key, V val)
-        {
-            if (!d.ContainsKey(key)) d[key] = new List<V>();
-            d[key].Add(val);
-        }
-
-        // -------------------------------------------------------------------
         // GetFloorTexture
         // -------------------------------------------------------------------
 
@@ -107,7 +97,7 @@ namespace RPG_Paper_Maker
             int offset = 0;
             foreach (KeyValuePair<int[], int[]> entry in Floors)
             {
-                foreach (VertexPositionTexture vertex in CreateFloorWithTex(texture, entry.Key[0], entry.Key[1], entry.Key[2], entry.Value))
+                foreach (VertexPositionTexture vertex in CreateFloorWithTex(texture, entry.Key[0], (entry.Key[1] * WANOK.SQUARE_SIZE) + entry.Key[2], entry.Key[3], entry.Value))
                 {
                     verticesList.Add(vertex);
                 }
@@ -133,10 +123,10 @@ namespace RPG_Paper_Maker
         protected VertexPositionTexture[] CreateFloorWithTex(Texture2D texture, int x, int y, int z, int[] coords)
         {
             // Texture coords
-            float left = ((float)coords[0]) / texture.Width;
-            float top = ((float)coords[1]) / texture.Height;
-            float bot = ((float)(coords[1] + coords[3])) / texture.Height;
-            float right = ((float)(coords[0] + coords[2])) / texture.Width;
+            float left = ((float)coords[0] * WANOK.SQUARE_SIZE) / texture.Width;
+            float top = ((float)coords[1] * WANOK.SQUARE_SIZE) / texture.Height;
+            float bot = ((float)(coords[1] + coords[3]) * WANOK.SQUARE_SIZE) / texture.Height;
+            float right = ((float)(coords[0] + coords[2]) * WANOK.SQUARE_SIZE) / texture.Width;
 
             // Adjust in order to limit risk of textures flood
             float width = left + right;
