@@ -42,6 +42,7 @@ namespace RPG_Paper_Maker
         public static EngineSettings Settings = null;
         public static DemoSteps DemoStep = DemoSteps.None;
         public static Form CurrentDemoDialog = null;
+        public static string CurrentLang = "eng";
         public static KeyboardManager KeyboardManager = new KeyboardManager();
         public static MouseManager TilesetMouseManager = new MouseManager();
         public static MouseManager MapMouseManager = new MouseManager();

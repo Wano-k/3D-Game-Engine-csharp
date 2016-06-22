@@ -62,10 +62,15 @@ namespace RPG_Paper_Maker
         // SetTitle
         // -------------------------------------------------------------------
 
-        public void SetTitle(string name, string dir)
+        public string SetTitle(string dir)
         {
-            WANOK.ProjectName = name;
             WANOK.CurrentDir = dir;
+            return SetTitle();
+        }
+
+        public string SetTitle()
+        {
+            return WANOK.LoadBinaryDatas<SystemDatas>(WANOK.SystemPath).GameName[WANOK.CurrentLang];
         }
 
         // -------------------------------------------------------------------

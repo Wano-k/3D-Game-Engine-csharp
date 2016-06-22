@@ -40,8 +40,8 @@
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.numericWidth = new System.Windows.Forms.NumericUpDown();
+            this.numericHeight = new System.Windows.Forms.NumericUpDown();
             this.ComboBoxResolution = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
@@ -66,8 +66,8 @@
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericHeight)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
@@ -197,8 +197,8 @@
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel6.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.label2, 1, 0);
-            this.tableLayoutPanel6.Controls.Add(this.numericUpDown1, 0, 1);
-            this.tableLayoutPanel6.Controls.Add(this.numericUpDown2, 1, 1);
+            this.tableLayoutPanel6.Controls.Add(this.numericWidth, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.numericHeight, 1, 1);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -226,36 +226,65 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Height";
             // 
-            // numericUpDown1
+            // numericWidth
             // 
-            this.numericUpDown1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.numericUpDown1.Enabled = false;
-            this.numericUpDown1.Location = new System.Drawing.Point(3, 18);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(78, 20);
-            this.numericUpDown1.TabIndex = 2;
+            this.numericWidth.Dock = System.Windows.Forms.DockStyle.Top;
+            this.numericWidth.Location = new System.Drawing.Point(3, 18);
+            this.numericWidth.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericWidth.Name = "numericWidth";
+            this.numericWidth.Size = new System.Drawing.Size(78, 20);
+            this.numericWidth.TabIndex = 2;
+            this.numericWidth.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
-            // numericUpDown2
+            // numericHeight
             // 
-            this.numericUpDown2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.numericUpDown2.Enabled = false;
-            this.numericUpDown2.Location = new System.Drawing.Point(87, 18);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(79, 20);
-            this.numericUpDown2.TabIndex = 3;
+            this.numericHeight.Dock = System.Windows.Forms.DockStyle.Top;
+            this.numericHeight.Location = new System.Drawing.Point(87, 18);
+            this.numericHeight.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericHeight.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericHeight.Name = "numericHeight";
+            this.numericHeight.Size = new System.Drawing.Size(79, 20);
+            this.numericHeight.TabIndex = 3;
+            this.numericHeight.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // ComboBoxResolution
             // 
             this.ComboBoxResolution.Dock = System.Windows.Forms.DockStyle.Top;
             this.ComboBoxResolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ComboBoxResolution.Enabled = false;
             this.ComboBoxResolution.FormattingEnabled = true;
             this.ComboBoxResolution.Items.AddRange(new object[] {
-            "Unavailable"});
+            "Window",
+            "Full screen"});
             this.ComboBoxResolution.Location = new System.Drawing.Point(3, 53);
             this.ComboBoxResolution.Name = "ComboBoxResolution";
             this.ComboBoxResolution.Size = new System.Drawing.Size(169, 21);
             this.ComboBoxResolution.TabIndex = 1;
+            this.ComboBoxResolution.SelectedIndexChanged += new System.EventHandler(this.ComboBoxResolution_SelectedIndexChanged);
             // 
             // groupBox3
             // 
@@ -486,8 +515,8 @@
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericHeight)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.tableLayoutPanel8.ResumeLayout(false);
@@ -518,8 +547,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.NumericUpDown numericWidth;
+        private System.Windows.Forms.NumericUpDown numericHeight;
         private System.Windows.Forms.ComboBox ComboBoxResolution;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;

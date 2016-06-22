@@ -96,7 +96,7 @@ namespace RPG_Paper_Maker.Controls
 
                                 return null;
                             }
-                            catch(Exception e)
+                            catch
                             {
                                 return "Could not generate the project. See if you have \"Basic\" folder in the main folder.";
                             }

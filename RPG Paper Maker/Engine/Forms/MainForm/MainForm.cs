@@ -371,7 +371,9 @@ namespace RPG_Paper_Maker
         {
             Control.OpenNewDialog();
             DialogDataBase dialog = new DialogDataBase();
-            dialog.ShowDialog();
+            if (dialog.ShowDialog() == DialogResult.OK){
+                SetTitle();
+            }
         }
 
         // TEST
@@ -857,10 +859,14 @@ namespace RPG_Paper_Maker
         // SetTitle
         // -------------------------------------------------------------------
 
-        public void SetTitle(string name, string dir)
+        public void SetTitle(string dir)
         {
-            Control.SetTitle(name, dir);
-            Text = TitleName + " - " + name;
+            Text = TitleName + " - " + Control.SetTitle(dir);
+        }
+
+        public void SetTitle()
+        {
+            Text = TitleName + " - " + Control.SetTitle();
         }
 
         // -------------------------------------------------------------------
@@ -958,7 +964,7 @@ namespace RPG_Paper_Maker
         {
             if (Directory.Exists(dir))
             {
-                SetTitle(name, dir);
+                SetTitle(dir);
                 TreeMap.Nodes.Clear();
                 WANOK.LoadTree(TreeMap, Path.Combine(new string[] { WANOK.CurrentDir, "Content", "Datas", "Maps", "TreeMapDatas.rpmdatas" }));
                 TreeMap.ExpandAll();
