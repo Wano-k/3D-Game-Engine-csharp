@@ -32,6 +32,13 @@ namespace RPG_Paper_Maker
             Device = device;
             MapInfos = WANOK.LoadBinaryDatas<MapInfos>(Path.Combine(WANOK.MapsDirectoryPath, mapName, "infos.map"));
             string pathTemp = Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp");
+            /*
+            if (Directory.GetFiles(pathTemp).Length == 0)
+            {
+                string[] filePaths = Directory.GetFiles(Path.Combine(WANOK.MapsDirectoryPath, mapName));
+                foreach (string filePath in filePaths) File.Copy(filePath, pathTemp);
+            }
+            */
             string[] filePaths = Directory.GetFiles(pathTemp);
             foreach (string filePath in filePaths) File.Delete(filePath);
             /*

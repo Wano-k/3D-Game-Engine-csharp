@@ -44,20 +44,20 @@
             this.numericHeight = new System.Windows.Forms.NumericUpDown();
             this.ComboBoxResolution = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.numericSquareSize = new System.Windows.Forms.NumericUpDown();
             this.buttonSquareSize = new System.Windows.Forms.Button();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.listBox2 = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.ok = new System.Windows.Forms.Button();
             this.cancel = new System.Windows.Forms.Button();
             this.toolTipSquareSize = new System.Windows.Forms.ToolTip(this.components);
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.textBoxLangGameName = new RPG_Paper_Maker.Engine.TextBoxLang();
+            this.superListBox1 = new RPG_Paper_Maker.SuperListBox();
+            this.listBoxColors = new RPG_Paper_Maker.SuperListBox();
             this.tabControl1.SuspendLayout();
             this.tabPageSystem.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -71,11 +71,11 @@
             this.groupBox3.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericSquareSize)).BeginInit();
             this.tableLayoutPanel7.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -288,31 +288,16 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.listBox1);
+            this.groupBox3.Controls.Add(this.superListBox1);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(5, 235);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(5);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(5);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(10);
             this.groupBox3.Size = new System.Drawing.Size(185, 169);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Window skins";
-            // 
-            // listBox1
-            // 
-            this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.Enabled = false;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.HorizontalScrollbar = true;
-            this.listBox1.Items.AddRange(new object[] {
-            "<> ID0001: Default",
-            "<> "});
-            this.listBox1.Location = new System.Drawing.Point(5, 18);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(175, 146);
-            this.listBox1.TabIndex = 0;
             // 
             // groupBox5
             // 
@@ -332,7 +317,7 @@
             this.tableLayoutPanel8.ColumnCount = 2;
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.Controls.Add(this.numericUpDown3, 1, 0);
+            this.tableLayoutPanel8.Controls.Add(this.numericSquareSize, 1, 0);
             this.tableLayoutPanel8.Controls.Add(this.buttonSquareSize, 0, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(5, 18);
@@ -342,30 +327,29 @@
             this.tableLayoutPanel8.Size = new System.Drawing.Size(175, 27);
             this.tableLayoutPanel8.TabIndex = 0;
             // 
-            // numericUpDown3
+            // numericSquareSize
             // 
-            this.numericUpDown3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.numericUpDown3.Enabled = false;
-            this.numericUpDown3.Increment = new decimal(new int[] {
+            this.numericSquareSize.Dock = System.Windows.Forms.DockStyle.Top;
+            this.numericSquareSize.Increment = new decimal(new int[] {
             8,
             0,
             0,
             0});
-            this.numericUpDown3.Location = new System.Drawing.Point(33, 3);
-            this.numericUpDown3.Maximum = new decimal(new int[] {
+            this.numericSquareSize.Location = new System.Drawing.Point(33, 3);
+            this.numericSquareSize.Maximum = new decimal(new int[] {
             512,
             0,
             0,
             0});
-            this.numericUpDown3.Minimum = new decimal(new int[] {
+            this.numericSquareSize.Minimum = new decimal(new int[] {
             8,
             0,
             0,
             0});
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(139, 20);
-            this.numericUpDown3.TabIndex = 0;
-            this.numericUpDown3.Value = new decimal(new int[] {
+            this.numericSquareSize.Name = "numericSquareSize";
+            this.numericSquareSize.Size = new System.Drawing.Size(139, 20);
+            this.numericSquareSize.TabIndex = 0;
+            this.numericSquareSize.Value = new decimal(new int[] {
             16,
             0,
             0,
@@ -396,35 +380,6 @@
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel7.Size = new System.Drawing.Size(195, 409);
             this.tableLayoutPanel7.TabIndex = 2;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.listBox2);
-            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox4.Location = new System.Drawing.Point(5, 5);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(5);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(5);
-            this.groupBox4.Size = new System.Drawing.Size(185, 194);
-            this.groupBox4.TabIndex = 1;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Colors";
-            // 
-            // listBox2
-            // 
-            this.listBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox2.Enabled = false;
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.HorizontalScrollbar = true;
-            this.listBox2.Items.AddRange(new object[] {
-            "<> ID0001: BlackGrey",
-            "<> ID0002: Black",
-            "<> "});
-            this.listBox2.Location = new System.Drawing.Point(5, 18);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(175, 171);
-            this.listBox2.TabIndex = 1;
             // 
             // tableLayoutPanel1
             // 
@@ -485,6 +440,19 @@
             this.toolTipSquareSize.InitialDelay = 500;
             this.toolTipSquareSize.ReshowDelay = 100;
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.listBoxColors);
+            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox4.Location = new System.Drawing.Point(5, 5);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(5);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(10);
+            this.groupBox4.Size = new System.Drawing.Size(185, 194);
+            this.groupBox4.TabIndex = 3;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Colors";
+            // 
             // textBoxLangGameName
             // 
             this.textBoxLangGameName.Dock = System.Windows.Forms.DockStyle.Top;
@@ -492,6 +460,23 @@
             this.textBoxLangGameName.Name = "textBoxLangGameName";
             this.textBoxLangGameName.Size = new System.Drawing.Size(179, 24);
             this.textBoxLangGameName.TabIndex = 0;
+            // 
+            // superListBox1
+            // 
+            this.superListBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.superListBox1.Enabled = false;
+            this.superListBox1.Location = new System.Drawing.Point(10, 23);
+            this.superListBox1.Name = "superListBox1";
+            this.superListBox1.Size = new System.Drawing.Size(165, 136);
+            this.superListBox1.TabIndex = 0;
+            // 
+            // listBoxColors
+            // 
+            this.listBoxColors.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxColors.Location = new System.Drawing.Point(10, 23);
+            this.listBoxColors.Name = "listBoxColors";
+            this.listBoxColors.Size = new System.Drawing.Size(165, 161);
+            this.listBoxColors.TabIndex = 0;
             // 
             // DialogDataBase
             // 
@@ -520,11 +505,11 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.tableLayoutPanel8.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericSquareSize)).EndInit();
             this.tableLayoutPanel7.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -552,13 +537,13 @@
         private System.Windows.Forms.ComboBox ComboBoxResolution;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.NumericUpDown numericSquareSize;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
         private System.Windows.Forms.Button buttonSquareSize;
         private System.Windows.Forms.ToolTip toolTipSquareSize;
+        private SuperListBox superListBox1;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private SuperListBox listBoxColors;
     }
 }

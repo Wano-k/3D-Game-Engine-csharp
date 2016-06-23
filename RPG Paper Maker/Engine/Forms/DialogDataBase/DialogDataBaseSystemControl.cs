@@ -27,8 +27,13 @@ namespace RPG_Paper_Maker
             get { return Model.FullScreen; }
             set { Model.FullScreen = value; NotifyPropertyChanged("FullScreen"); }
         }
+        public int SquareSize
+        {
+            get { return Model.SquareSize; }
+            set { Model.SquareSize = value; NotifyPropertyChanged("SquareSize"); }
+        }
 
-        
+
         // -------------------------------------------------------------------
         // Constructors
         // -------------------------------------------------------------------
@@ -88,6 +93,7 @@ namespace RPG_Paper_Maker
 
         public void Save()
         {
+            WANOK.SystemDatas = Model;
             WANOK.SaveBinaryDatas(Model, WANOK.SystemPath);
         }
     }

@@ -17,6 +17,19 @@ namespace RPG_Paper_Maker
         public int ScreenHeight = 480;
         public bool FullScreen = false;
         public int SquareSize = 16;
+        public List<SystemColor> Colors = new List<SystemColor>(new SystemColor[] { SystemColor.BlackColor,
+                                                                                    SystemColor.BlackGrayColor,
+                                                                                    SystemColor.SilverColor,
+                                                                                    SystemColor.WhiteColor,
+                                                                                    SystemColor.RedColor,
+                                                                                    SystemColor.OrangeColor,
+                                                                                    SystemColor.YellowColor,
+                                                                                    SystemColor.GreenColor,
+                                                                                    SystemColor.CyanColor,
+                                                                                    SystemColor.BlueColor,
+                                                                                    SystemColor.PurpleColor,
+                                                                                    SystemColor.MagentaColor,
+                                                                                    SystemColor.PinkColor});
 
 
         // -------------------------------------------------------------------

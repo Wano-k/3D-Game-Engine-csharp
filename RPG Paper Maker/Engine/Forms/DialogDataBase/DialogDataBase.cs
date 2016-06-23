@@ -14,6 +14,7 @@ namespace RPG_Paper_Maker
     {
         protected DialogDataBaseSystemControl ControlSystem;
         protected BindingSource ViewModelBindingSource = new BindingSource();
+        public ListBox[] ListBoxes;
 
 
         // -------------------------------------------------------------------
@@ -23,6 +24,7 @@ namespace RPG_Paper_Maker
         public DialogDataBase()
         {
             InitializeComponent();
+            ListBoxes = new ListBox[] { textBoxLangGameName.GetTextBox(), listBoxColors.GetListBox() };
 
             // System
             ControlSystem = new DialogDataBaseSystemControl(WANOK.LoadBinaryDatas<SystemDatas>(WANOK.SystemPath));
@@ -31,7 +33,11 @@ namespace RPG_Paper_Maker
             toolTipSquareSize.SetToolTip(buttonSquareSize, "This option set the maps displaying, it is recommended to put multiple 8 numbers.\nNote that the pixel height addings are not modified.");
             textBoxLangGameName.GetTextBox().Items.Add(ControlSystem.GameName[ControlSystem.Langs[0]]);
             textBoxLangGameName.AllNames = ControlSystem.GameName;
+            listBoxColors.InitializeListParameters(ListBoxes, ControlSystem.Model.Colors.Cast<SuperListItem>().ToList(), typeof(DialogSystemColors), WANOK.MAX_COLORS);
 
+            // list event handlers
+            textBoxLangGameName.GetTextBox().Click += listBox_Click;
+            listBoxColors.GetListBox().Click += listBox_Click;
 
             InitializeDataBindings();
         }
@@ -44,13 +50,26 @@ namespace RPG_Paper_Maker
         {
             numericWidth.DataBindings.Add("Value", ViewModelBindingSource, "ScreenWidth", true);
             numericHeight.DataBindings.Add("Value", ViewModelBindingSource, "ScreenHeight", true);
+            numericSquareSize.DataBindings.Add("Value", ViewModelBindingSource, "SquareSize", true);
+        }
+
+        // -------------------------------------------------------------------
+        // UnselectAllLists
+        // -------------------------------------------------------------------
+
+        public void UnselectAllLists()
+        {
+            for (int i = 0; i < ListBoxes.Length; i++)
+            {
+                ListBoxes[i].ClearSelected();
+            }
         }
 
         // -------------------------------------------------------------------
         // ComboBoxResolution_SelectedIndexChanged
         // -------------------------------------------------------------------
 
-        private void ComboBoxResolution_SelectedIndexChanged(object sender, EventArgs e)
+        public void ComboBoxResolution_SelectedIndexChanged(object sender, EventArgs e)
         {
             ControlSystem.SetFullScreen(ComboBoxResolution.SelectedIndex);
         }
@@ -62,8 +81,20 @@ namespace RPG_Paper_Maker
         private void ok_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
+            ControlSystem.Model.Colors = listBoxColors.ModelList.Cast<SystemColor>().ToList();
             ControlSystem.Save();
             Close();
+        }
+
+        // -------------------------------------------------------------------
+        // listBox_Click
+        // -------------------------------------------------------------------
+
+        private void listBox_Click(object sender, EventArgs e)
+        {
+            int index = ((ListBox)sender).SelectedIndex;
+            UnselectAllLists();
+            ((ListBox)sender).SelectedIndex = index;
         }
     }
 }

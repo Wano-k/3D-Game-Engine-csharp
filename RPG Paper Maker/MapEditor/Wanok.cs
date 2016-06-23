@@ -34,10 +34,11 @@ namespace RPG_Paper_Maker
             new Vector3(0.0f, 0.0f, 0.0f)
         };
         public static int BASIC_SQUARE_SIZE = 32;
-        public static int SQUARE_SIZE = 16;
+        public static int SQUARE_SIZE { get { return SystemDatas.SquareSize; } }
         public static float RELATION_SIZE { get { return (float)(BASIC_SQUARE_SIZE) / SQUARE_SIZE; } }
         public static int PORTION_SIZE = 16;
         public static int PORTION_RADIUS = 4;
+        public static int MAX_COLORS = 9999;
         public static string ProjectName = null;
         public static EngineSettings Settings = null;
         public static DemoSteps DemoStep = DemoSteps.None;
@@ -46,6 +47,8 @@ namespace RPG_Paper_Maker
         public static KeyboardManager KeyboardManager = new KeyboardManager();
         public static MouseManager TilesetMouseManager = new MouseManager();
         public static MouseManager MapMouseManager = new MouseManager();
+        public static string ListBeginning = "<> ";
+        public static SystemDatas SystemDatas;
 
         // PATHS
         public static string ABSOLUTEENGINEPATH;
@@ -348,6 +351,24 @@ namespace RPG_Paper_Maker
         public static int GetPixelHeight(int[] height)
         {
             return (height[0] * SQUARE_SIZE) + height[1];
+        }
+
+        // -------------------------------------------------------------------
+        // GetStringList
+        // -------------------------------------------------------------------
+
+        public static string GetStringList(int id, string name)
+        {
+            return string.Format("{0}{1}", ListBeginning, GetStringComboBox(id, name));
+        }
+
+        // -------------------------------------------------------------------
+        // GetStringComboBox
+        // -------------------------------------------------------------------
+
+        public static string GetStringComboBox(int id, string name)
+        {
+            return string.Format("ID{0:D4}: {1}", id, name);
         }
     }
 }

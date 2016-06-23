@@ -65,6 +65,7 @@ namespace RPG_Paper_Maker
         public string SetTitle(string dir)
         {
             WANOK.CurrentDir = dir;
+            WANOK.SystemDatas = WANOK.LoadBinaryDatas<SystemDatas>(WANOK.SystemPath);
             return SetTitle();
         }
 
@@ -90,6 +91,7 @@ namespace RPG_Paper_Maker
         {
             WANOK.ProjectName = null;
             WANOK.CurrentDir = ".";
+            WANOK.SystemDatas = null;
         }
 
 

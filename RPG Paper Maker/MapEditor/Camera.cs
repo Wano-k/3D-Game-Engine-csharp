@@ -17,7 +17,7 @@ namespace RPG_Paper_Maker
         public Matrix Projection;
         public Matrix View { get { return Matrix.CreateLookAt(Position, Target, UpVector); } }
         public Matrix World;
-        public double HorizontalAngle = -90.0, TargetAngle = -90.0, VerticalAngle = 0.0, Distance = 200.0, Height = 100.0;
+        public double HorizontalAngle = -90.0, TargetAngle = -90.0, VerticalAngle = 0.0, Distance = 400.0, Height = 200.0;
         public int RotateVelocity = 180;
         private double RotateSteps = 90.0, RotateTick = 0.0;
 
@@ -45,8 +45,8 @@ namespace RPG_Paper_Maker
             HorizontalAngle = -90.0;
             TargetAngle = -90.0;
             VerticalAngle = 0.0;
-            Distance = 200.0;
-            Height = 100.0;
+            Distance = 400.0;
+            Height = 200.0;
         }
 
         // -------------------------------------------------------------------

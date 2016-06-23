@@ -90,6 +90,13 @@
       <DependentUpon>DialogDataBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Forms\DialogDataBase\DialogDataBaseSystemControl.cs" />
+    <Compile Include="Engine\Forms\DialogDataBase\DialogSystemColors\DialogSystemColorControl.cs" />
+    <Compile Include="Engine\Forms\DialogDataBase\DialogSystemColors\DialogSystemColors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogDataBase\DialogSystemColors\DialogSystemColors.Designer.cs">
+      <DependentUpon>DialogSystemColors.cs</DependentUpon>
+    </Compile>
     <Compile Include="Engine\Forms\DialogInputsManager\DialogInputsManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -170,7 +177,17 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Forms\MainForm\MainFormControl.cs" />
+    <Compile Include="Engine\Models\SystemColor.cs" />
     <Compile Include="Engine\Models\SystemDatas.cs" />
+    <Compile Include="Engine\SuperListBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Engine\SuperListBox.Designer.cs">
+      <DependentUpon>SuperListBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Engine\SuperListDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Engine\TextBoxLang.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -222,6 +239,9 @@
     <EmbeddedResource Include="Engine\Forms\DialogDataBase\DialogDataBase.resx">
       <DependentUpon>DialogDataBase.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogDataBase\DialogSystemColors\DialogSystemColors.resx">
+      <DependentUpon>DialogSystemColors.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogInputsManager\DialogInputsManager.resx">
       <DependentUpon>DialogInputsManager.cs</DependentUpon>
     </EmbeddedResource>
@@ -245,6 +265,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\MainForm\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\SuperListBox.resx">
+      <DependentUpon>SuperListBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\TextBoxLang.resx">
       <DependentUpon>TextBoxLang.cs</DependentUpon>

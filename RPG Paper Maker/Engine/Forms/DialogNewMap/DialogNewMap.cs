@@ -36,9 +36,12 @@ namespace RPG_Paper_Maker
             groupBox3.Paint += MainForm.PaintBorderGroupBox;
 
             // ComboBox
-            if (ComboBoxTileset.Items.Count > 0) ComboBoxTileset.SelectedItem = ComboBoxTileset.Items[0];
-            if (ComboBoxColor.Items.Count > 0) ComboBoxColor.SelectedItem = ComboBoxColor.Items[0];
-            if (ComboBoxSkyBox.Items.Count > 0) ComboBoxSkyBox.SelectedItem = ComboBoxSkyBox.Items[0];
+            for (int i = 0; i < WANOK.SystemDatas.Colors.Count; i++)
+            {
+                ComboBoxColor.Items.Add(WANOK.GetStringComboBox((i+1), WANOK.SystemDatas.Colors[i].Name));
+            }
+            if (ComboBoxTileset.Items.Count > 0) ComboBoxTileset.SelectedIndex = 0;
+            if (ComboBoxSkyBox.Items.Count > 0) ComboBoxSkyBox.SelectedIndex = 0;
 
             // Is setting
             if (mapInfos != null)
@@ -56,6 +59,7 @@ namespace RPG_Paper_Maker
             TextBoxName.DataBindings.Add("Text", ViewModelBindingSource, "MapName", true);
             NumericWidth.DataBindings.Add("Value", ViewModelBindingSource, "Width", true);
             NumericHeight.DataBindings.Add("Value", ViewModelBindingSource, "Height", true);
+            ComboBoxColor.DataBindings.Add("SelectedIndex", ViewModelBindingSource, "SkyColor", true);
         }
 
         // -------------------------------------------------------------------

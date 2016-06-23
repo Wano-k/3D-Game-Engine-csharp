@@ -43,6 +43,15 @@ namespace RPG_Paper_Maker.Controls
                 NotifyPropertyChanged("Height");
             }
         }
+        public int SkyColor
+        {
+            get { return Model.SkyColor; }
+            set
+            {
+                Model.SkyColor = value;
+                NotifyPropertyChanged("SkyColor");
+            }
+        }
 
 
         // -------------------------------------------------------------------

@@ -142,10 +142,10 @@ namespace RPG_Paper_Maker
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(new Color(32, 32, 32));
-
             if (!Control.IsMapReloading && Control.Map != null)
             {
+                GraphicsDevice.Clear(WANOK.SystemDatas.Colors[Control.Map.MapInfos.SkyColor].GetMonogameColor());
+
                 LoadSettings();
 
                 // Effect settings
@@ -162,6 +162,10 @@ namespace RPG_Paper_Maker
                 SpriteBatch.Begin();
                 SpriteBatch.DrawString(font, pos, new Vector2(GraphicsDevice.Viewport.Width-10, GraphicsDevice.Viewport.Height-10), Color.White, 0, font.MeasureString(pos), 1.0f, SpriteEffects.None, 0.5f);
                 SpriteBatch.End();
+            }
+            else
+            {
+                GraphicsDevice.Clear(SystemColor.BlackColor.GetMonogameColor());
             }
         }
 

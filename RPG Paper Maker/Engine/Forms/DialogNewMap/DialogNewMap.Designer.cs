@@ -129,7 +129,7 @@
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 292F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 290F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(293, 290);
             this.tableLayoutPanel6.TabIndex = 3;
             // 
@@ -209,7 +209,6 @@
             this.radioButtonColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.radioButtonColor.AutoSize = true;
             this.radioButtonColor.Checked = true;
-            this.radioButtonColor.Enabled = false;
             this.radioButtonColor.Location = new System.Drawing.Point(6, 8);
             this.radioButtonColor.Name = "radioButtonColor";
             this.radioButtonColor.Size = new System.Drawing.Size(49, 17);
@@ -222,11 +221,7 @@
             // 
             this.ComboBoxColor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComboBoxColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ComboBoxColor.Enabled = false;
             this.ComboBoxColor.FormattingEnabled = true;
-            this.ComboBoxColor.Items.AddRange(new object[] {
-            "ID0001:Black",
-            "ID0002:Pure black"});
             this.ComboBoxColor.Location = new System.Drawing.Point(72, 6);
             this.ComboBoxColor.Name = "ComboBoxColor";
             this.ComboBoxColor.Size = new System.Drawing.Size(188, 21);
