@@ -66,6 +66,11 @@ namespace RPG_Paper_Maker
         // Get
         // -------------------------------------------------------------------
 
+        public MapInfos GetMapInfos()
+        {
+            return Control.Model;
+        }
+
         public string GetRealMapName()
         {
             return Control.RealMapName;

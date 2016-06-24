@@ -11,6 +11,7 @@ namespace RPG_Paper_Maker
     {
         public bool IsMap { get; }
         public bool IsRoot { get; }
+        public string MapName { get; set; }
         public string RealMapName { get; }
 
 
@@ -20,14 +21,15 @@ namespace RPG_Paper_Maker
 
         public TreeTag()
         {
-            this.IsRoot = true;
+            IsRoot = true;
         }
 
-        public TreeTag(bool isMap, string realMapName)
+        public TreeTag(bool isMap, string mapName, string realMapName)
         {
-            this.IsMap = isMap;
-            this.RealMapName = realMapName;
-            this.IsRoot = false;
+            IsMap = isMap;
+            MapName = mapName;
+            RealMapName = realMapName;
+            IsRoot = false;
         }
 
         // -------------------------------------------------------------------
@@ -39,14 +41,14 @@ namespace RPG_Paper_Maker
             return new TreeTag();
         }
 
-        public static TreeTag CreateMap(string realMapName)
+        public static TreeTag CreateMap(string mapName, string realMapName)
         {
-            return new TreeTag(true, realMapName);
+            return new TreeTag(true, mapName, realMapName);
         }
 
         public static TreeTag CreateDirectory()
         {
-            return new TreeTag(false, null);
+            return new TreeTag(false, null, null);
         }
     }
 }

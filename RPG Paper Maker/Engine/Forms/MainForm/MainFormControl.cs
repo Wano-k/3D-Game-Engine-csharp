@@ -24,18 +24,6 @@ namespace RPG_Paper_Maker
                 Directory.CreateDirectory(path);
             }
 
-            // This code created the basic tree map nodes settings
-            /*
-            TreeNode rootNode, directoryNode, mapNode;
-            rootNode = this.TreeMap.Nodes.Add("Maps");
-            rootNode.Tag = TreeTag.CreateRoot();
-            directoryNode = rootNode.Nodes.Add("Plains");
-            directoryNode.Tag = TreeTag.CreateDirectory();
-            mapNode = directoryNode.Nodes.Add("MAP0001");
-            mapNode.Tag = TreeTag.CreateMap("MAP0001");
-            WANOK.SaveTree(this.TreeMap, "TreeMapDatas.rpmdatas");
-            */
-
             // This code created the basic first map settings
             /*
             WANOK.SaveBinaryDatas(new MapInfos("MAP0001", 25, 25), "infos.map");
@@ -89,9 +77,8 @@ namespace RPG_Paper_Maker
 
         public void CloseProject()
         {
-            WANOK.ProjectName = null;
             WANOK.CurrentDir = ".";
-            WANOK.SystemDatas = null;
+            WANOK.SelectedNode = null;
         }
 
 
@@ -138,6 +125,7 @@ namespace RPG_Paper_Maker
         public void DeleteMapsDirectory(string mapName)
         {
             Directory.Delete(Path.Combine(WANOK.MapsDirectoryPath, mapName), true);
+            WANOK.ListMapToSave.Remove(mapName);
         }
 
         // -------------------------------------------------------------------
@@ -146,7 +134,7 @@ namespace RPG_Paper_Maker
 
         public MapInfos LoadMapInfos(string mapName)
         {
-            return WANOK.LoadBinaryDatas<MapInfos>(Path.Combine(WANOK.MapsDirectoryPath, mapName, "infos.map"));
+            return WANOK.LoadBinaryDatas<MapInfos>(Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp", "infos.map"));
         }
 
         // -------------------------------------------------------------------
@@ -181,6 +169,66 @@ namespace RPG_Paper_Maker
         {
             HeightPixel = 0;
             HeightSquare = 0;
+        }
+
+        // -------------------------------------------------------------------
+        // DeleteAllTemp
+        // -------------------------------------------------------------------
+
+        public void DeleteAllTemp(string exept = null)
+        {
+            foreach (string mapName in WANOK.ListMapToSave)
+            {
+                if (mapName != exept) DeleteTemp(mapName, false);
+            }
+            WANOK.ListMapToSave.Clear();
+        }
+
+        // -------------------------------------------------------------------
+        // DeleteTemp
+        // -------------------------------------------------------------------
+
+        public void DeleteTemp(string mapName, bool deleteInList = true)
+        {
+            if (Directory.Exists(Path.Combine(WANOK.MapsDirectoryPath, mapName))){
+                string[] filePaths = Directory.GetFiles(Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp"));
+                foreach (string filePath in filePaths) File.Delete(filePath);
+            }
+            if (deleteInList) WANOK.ListMapToSave.Remove(mapName);
+        }
+
+        // -------------------------------------------------------------------
+        // SaveMap
+        // -------------------------------------------------------------------
+
+        public void SaveMap(string mapName = null, bool deleteInList = true)
+        {
+            if (mapName == null) mapName = ((TreeTag)WANOK.SelectedNode.Tag).RealMapName;
+            if (WANOK.ListMapToSave.Contains(mapName))
+            {
+                // Delete all the files
+                string[] filePaths = Directory.GetFiles(Path.Combine(WANOK.MapsDirectoryPath, mapName));
+                foreach (string filePath in filePaths) File.Delete(filePath);
+
+                // Remplace it by temp files
+                filePaths = Directory.GetFiles(Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp"));
+                foreach (string filePath in filePaths) File.Copy(filePath, Path.Combine(WANOK.MapsDirectoryPath, mapName, Path.GetFileName(filePath)));
+                if (deleteInList) WANOK.ListMapToSave.Remove(mapName);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // SaveAllMaps
+        // -------------------------------------------------------------------
+
+        public void SaveAllMaps(bool deleteAllTemps)
+        {
+            foreach (string mapName in WANOK.ListMapToSave)
+            {
+                SaveMap(mapName, false);
+            }
+            if (deleteAllTemps) DeleteAllTemp();
+            else DeleteAllTemp(((TreeTag)WANOK.SelectedNode.Tag).RealMapName);
         }
     }
 }

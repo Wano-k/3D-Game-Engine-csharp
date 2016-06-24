@@ -21,6 +21,7 @@ namespace RPG_Paper_Maker
         public int[] GridHeight = new int[] { 0, 0 };
         private Square StartSquare = null;
         private int[] Startposition;
+        public bool Saved = true;
 
 
         // -------------------------------------------------------------------
@@ -30,26 +31,21 @@ namespace RPG_Paper_Maker
         public Map(GraphicsDevice device, string mapName)
         {
             Device = device;
-            MapInfos = WANOK.LoadBinaryDatas<MapInfos>(Path.Combine(WANOK.MapsDirectoryPath, mapName, "infos.map"));
+
+            // Temp files + mapInfos
             string pathTemp = Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp");
-            /*
             if (Directory.GetFiles(pathTemp).Length == 0)
             {
                 string[] filePaths = Directory.GetFiles(Path.Combine(WANOK.MapsDirectoryPath, mapName));
-                foreach (string filePath in filePaths) File.Copy(filePath, pathTemp);
+                foreach (string filePath in filePaths) File.Copy(filePath, Path.Combine(pathTemp, Path.GetFileName(filePath)));
             }
-            */
-            string[] filePaths = Directory.GetFiles(pathTemp);
-            foreach (string filePath in filePaths) File.Delete(filePath);
-            /*
-            filePaths = Directory.GetFiles(Path.Combine(WANOK.MapsDirectoryPath, mapName));
-            foreach (string filePath in filePaths) File.Copy(filePath, pathTemp);
-            */
+            MapInfos = WANOK.LoadBinaryDatas<MapInfos>(Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp", "infos.map"));
+            Saved = !WANOK.ListMapToSave.Contains(mapName);
 
-            SystemDatas system = WANOK.LoadBinaryDatas<SystemDatas>(WANOK.SystemPath);
-            if (mapName == system.StartMapName)
+            // Start position
+            if (mapName == WANOK.SystemDatas.StartMapName)
             {
-                SetStartInfos(system, system.StartPosition);
+                SetStartInfos(WANOK.SystemDatas, WANOK.SystemDatas.StartPosition);
             }
 
             // Grid
@@ -106,7 +102,7 @@ namespace RPG_Paper_Maker
             {
                 SetStartInfos(startPosition);
             }
-            // If not into the, delete it
+            // If not into the portions, delete it
             else
             {
                 system.NoStart();

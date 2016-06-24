@@ -22,7 +22,7 @@ namespace RPG_Paper_Maker
 
         private void DialogInputsSelect_KeyDown(object sender, KeyEventArgs e)
         {
-            Key = (Microsoft.Xna.Framework.Input.Keys)e.KeyCode;
+            Key = MainForm.SpecialKeys(e.KeyCode);
             DialogResult = DialogResult.OK;
             Close();
         }

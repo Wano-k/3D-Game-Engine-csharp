@@ -19,6 +19,9 @@ namespace RPG_Paper_Maker
 {
     public partial class MainForm : Form
     {
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern short GetAsyncKeyState(Keys vKey);
+
         public string TitleName = "RPG Paper Maker " + Application.ProductVersion;
         public MainFormControl Control = new MainFormControl();
         public bool IsInItemHeightSquare = false;
@@ -36,6 +39,18 @@ namespace RPG_Paper_Maker
             InitializeComponent();
 
             Control.InitializeMain();
+
+            // This code created the basic tree map nodes settings
+            /*
+            TreeNode rootNode, directoryNode, mapNode;
+            rootNode = TreeMap.Nodes.Add("Maps");
+            rootNode.Tag = TreeTag.CreateRoot();
+            directoryNode = rootNode.Nodes.Add("Plains");
+            directoryNode.Tag = TreeTag.CreateDirectory();
+            mapNode = directoryNode.Nodes.Add("MAP0001");
+            mapNode.Tag = TreeTag.CreateMap("MAP0001", "MAP0001");
+            WANOK.SaveTree(TreeMap, "TreeMapDatas.rpmdatas");
+            */
 
             // Recent projects
             List <string> listRecent = WANOK.Settings.ListRecentProjects;
@@ -257,6 +272,11 @@ namespace RPG_Paper_Maker
             }
         }
 
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            WhenClosingAnyProject();
+        }
+
         #endregion
 
         // -------------------------------------------------------------------
@@ -264,6 +284,10 @@ namespace RPG_Paper_Maker
         // -------------------------------------------------------------------
 
         #region Keyboard management
+
+        // -------------------------------------------------------------------
+        // ProcessCmdKey
+        // -------------------------------------------------------------------
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
@@ -280,15 +304,42 @@ namespace RPG_Paper_Maker
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
+        // -------------------------------------------------------------------
+        // Form1_KeyUp
+        // -------------------------------------------------------------------
+
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            WANOK.KeyboardManager.SetKeyUpStatus((Microsoft.Xna.Framework.Input.Keys)e.KeyCode);
+            WANOK.KeyboardManager.SetKeyUpStatus(SpecialKeys(e.KeyCode));
         }
+
+        // -------------------------------------------------------------------
+        // Form1_KeyDown
+        // -------------------------------------------------------------------
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            WANOK.KeyboardManager.SetKeyDownStatus((Microsoft.Xna.Framework.Input.Keys)e.KeyCode);
+            WANOK.KeyboardManager.SetKeyDownStatus(SpecialKeys(e.KeyCode));
             e.SuppressKeyPress = true;
+        }
+
+        // -------------------------------------------------------------------
+        // SpecialKeys
+        // -------------------------------------------------------------------
+
+        public static Microsoft.Xna.Framework.Input.Keys SpecialKeys(Keys k)
+        {
+            switch (k)
+            {
+                case Keys.ControlKey:
+                    return Convert.ToBoolean(GetAsyncKeyState(Keys.LControlKey)) ? Microsoft.Xna.Framework.Input.Keys.LeftControl : Microsoft.Xna.Framework.Input.Keys.RightControl;
+                case Keys.Menu:
+                    return Convert.ToBoolean(GetAsyncKeyState(Keys.LMenu)) ? Microsoft.Xna.Framework.Input.Keys.LeftAlt : Microsoft.Xna.Framework.Input.Keys.RightAlt;
+                case Keys.ShiftKey:
+                    return Convert.ToBoolean(GetAsyncKeyState(Keys.LShiftKey)) ? Microsoft.Xna.Framework.Input.Keys.LeftShift : Microsoft.Xna.Framework.Input.Keys.RightShift;
+            }
+
+            return (Microsoft.Xna.Framework.Input.Keys)k;
         }
 
         #endregion
@@ -341,7 +392,14 @@ namespace RPG_Paper_Maker
 
         private void ItemSave_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            Control.SaveMap();
+            MapEditor.SaveMap();
+            WANOK.SelectedNode.Text = ((TreeTag)WANOK.SelectedNode.Tag).MapName;
+        }
+
+        private void ItemSaveAll_Click(object sender, EventArgs e)
+        {
+            SaveAll();
         }
 
         private void ItemCloseProject_Click(object sender, EventArgs e)
@@ -351,11 +409,8 @@ namespace RPG_Paper_Maker
 
         private void ItemExit_Click(object sender, EventArgs e)
         {
-            DialogResult dialog = MessageBox.Show("Are you sure you want to quit RPG Paper Maker?","Quit",MessageBoxButtons.YesNo);
-            if (dialog == DialogResult.Yes)
-            {
-                Close();
-            }
+            WhenClosingAnyProject();
+            Close();
         }
 
         // MANAGEMENT
@@ -380,6 +435,7 @@ namespace RPG_Paper_Maker
 
         private void ItemPlay_Click(object sender, EventArgs e)
         {
+            WhenLaunchingGame();
             /*
             ProcessStartInfo startInfo = new ProcessStartInfo(@"C:\Users\Marie_MSI\Documents\Visual Studio 2015\Projects\Test\MonoGame-3D-Game-Test\Test\bin\DesktopGL\x86\Release\RPG Paper Maker.exe");
             startInfo.WorkingDirectory = @"C:\Users\Marie_MSI\Documents\Visual Studio 2015\Projects\Test\MonoGame-3D-Game-Test\Test\bin\DesktopGL\x86\Release";
@@ -432,6 +488,10 @@ namespace RPG_Paper_Maker
             else if (e.Button.Name.Equals("toolBarButtonSave"))
             {
                 ItemSave_Click(sender, e);
+            }
+            else if (e.Button.Name.Equals("toolBarButtonSaveAll"))
+            {
+                ItemSaveAll_Click(sender, e);
             }
             else if (e.Button.Name.Equals("toolBarButtonInput"))
             {
@@ -653,8 +713,17 @@ namespace RPG_Paper_Maker
 
         private void TreeMap_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            TreeTag previousTag = (TreeTag)WANOK.SelectedNode.Tag;
             TreeTag tag = (TreeTag)e.Node.Tag;
 
+            // If the previous node selected was a map and have been saved, we can delete temp files
+            if (previousTag.IsMap && !WANOK.ListMapToSave.Contains(previousTag.RealMapName))
+            {
+                Control.DeleteTemp(previousTag.RealMapName);
+            }
+            WANOK.SelectedNode = e.Node;
+
+            // Reload map if selecting a new map
             if (tag.IsMap)
             {
                 ShowMapEditor(true);
@@ -693,7 +762,7 @@ namespace RPG_Paper_Maker
                 {
                     TreeNode node = TreeMap.SelectedNode.Nodes.Insert(0, dialog.GetMapName());
                     TreeMap.ExpandAll();
-                    node.Tag = TreeTag.CreateMap(dialog.GetRealMapName());
+                    node.Tag = TreeTag.CreateMap(dialog.GetMapName(), dialog.GetRealMapName());
                     TreeMap.SelectedNode = node;
                     node.ImageIndex = 1;
                     node.SelectedImageIndex = 1;
@@ -736,7 +805,9 @@ namespace RPG_Paper_Maker
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 MapEditor.ReLoadMap(mapName);
-                TreeMap.SelectedNode.Text = dialog.GetMapName();
+                TreeMap.SelectedNode.Text = dialog.GetMapName() + " *";
+                MapEditor.SaveMap(false);
+                WANOK.ListMapToSave.Add(dialog.GetRealMapName());
                 SaveTreeMap();
             }
         }
@@ -902,6 +973,8 @@ namespace RPG_Paper_Maker
             toolBarButtonDataBase.Enabled = b;
             ItemSave.Enabled = b;
             toolBarButtonSave.Enabled = b;
+            ItemSaveAll.Enabled = b;
+            toolBarButtonSaveAll.Enabled = b;
             ItemCloseProject.Enabled = b;
             ItemExit.Enabled = b;
             ItemPlay.Enabled = b;
@@ -937,6 +1010,8 @@ namespace RPG_Paper_Maker
             EnableNoGame();
             ItemSave.Enabled = true;
             toolBarButtonSave.Enabled = true;
+            ItemSaveAll.Enabled = true;
+            toolBarButtonSaveAll.Enabled = true;
             ItemCloseProject.Enabled = true;
             ItemInputs.Enabled = true;
             toolBarButtonInput.Enabled = true;
@@ -962,12 +1037,15 @@ namespace RPG_Paper_Maker
 
         public void OpenProject(string name, string dir)
         {
+            WhenClosingAnyProject();
             if (Directory.Exists(dir))
             {
+                Control.CloseProject();
                 SetTitle(dir);
                 TreeMap.Nodes.Clear();
                 WANOK.LoadTree(TreeMap, Path.Combine(new string[] { WANOK.CurrentDir, "Content", "Datas", "Maps", "TreeMapDatas.rpmdatas" }));
                 TreeMap.ExpandAll();
+                WANOK.SelectedNode = TreeMap.Nodes[0];
                 AddToRecentList(dir, WANOK.Settings.AddProjectPath(dir));
                 WANOK.SaveDatas(WANOK.Settings, WANOK.PATHSETTINGS);
                 ShowProjectContain(true);
@@ -976,7 +1054,7 @@ namespace RPG_Paper_Maker
             }
             else
             {
-                MessageBox.Show("Error : can't open the project, the directory doesn't exist!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Error : can't open the project!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1000,6 +1078,7 @@ namespace RPG_Paper_Maker
 
         public void CloseProject()
         {
+            WhenClosingAnyProject();
             Control.CloseProject();
             Text = TitleName;
             EnableNoGame();
@@ -1059,6 +1138,58 @@ namespace RPG_Paper_Maker
             ItemHeight2.Text = "Adding pixels: 0";
         }
 
+        // -------------------------------------------------------------------
+        // WhenClosingAnyProject
+        // -------------------------------------------------------------------
+
+        public void WhenClosingAnyProject()
+        {
+            if (WANOK.ListMapToSave.Count > 0)
+            {
+                DialogResult dialog = MessageBox.Show("You have some maps that have not been saved. Do you want to save it before closing the project?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dialog == DialogResult.Yes)
+                {
+                    Control.SaveAllMaps(true);
+                }
+                else if (dialog == DialogResult.No)
+                {
+                    Control.DeleteAllTemp();
+                }
+            }
+            else if (WANOK.SelectedNode != null && ((TreeTag)WANOK.SelectedNode.Tag).IsMap)
+            {
+                Control.DeleteTemp(((TreeTag)WANOK.SelectedNode.Tag).RealMapName);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // WhenLaunchingGame
+        // -------------------------------------------------------------------
+
+        public void WhenLaunchingGame()
+        {
+            if (WANOK.ListMapToSave.Count > 0)
+            {
+                DialogResult dialog = MessageBox.Show("You have some maps that have not been saved. Do you want to save it before playing the project?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dialog == DialogResult.Yes)
+                {
+                    SaveAll();
+                }
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // SaveAll
+        // -------------------------------------------------------------------
+
+        public void SaveAll()
+        {
+            Control.SaveAllMaps(false);
+            MapEditor.SaveMap();
+            TreeNode[] nodeList = new TreeNode[] { TreeMap.Nodes[0] };
+            WANOK.SetIconsTreeNodes(nodeList);
+        }
+
         #endregion
 
         // -------------------------------------------------------------------
@@ -1088,7 +1219,7 @@ namespace RPG_Paper_Maker
 
         public void CancelDemo()
         {
-            if (WANOK.ProjectName == null)
+            if (WANOK.CurrentDir == ".")
             {
                 EnableNoGame();
             }

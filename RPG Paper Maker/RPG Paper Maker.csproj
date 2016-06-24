@@ -364,6 +364,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DLLs\OpenTK.GLControl.dll" />
+    <None Include="Resources\saveAll.png" />
     <None Include="Resources\lang.png" />
     <None Include="Resources\datas.png" />
     <None Include="Resources\start.png" />

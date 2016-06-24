@@ -122,8 +122,12 @@ namespace RPG_Paper_Maker.Controls
             {
                 Directory.CreateDirectory(Path.Combine(WANOK.MapsDirectoryPath, RealMapName));
                 Directory.CreateDirectory(Path.Combine(WANOK.MapsDirectoryPath, RealMapName, "temp"));
+                WANOK.SaveBinaryDatas(Model, Path.Combine(WANOK.MapsDirectoryPath, RealMapName, "infos.map"));
             }
-            WANOK.SaveBinaryDatas(Model, Path.Combine(WANOK.MapsDirectoryPath, RealMapName, "infos.map"));
+            else
+            {
+                WANOK.SaveBinaryDatas(Model, Path.Combine(WANOK.MapsDirectoryPath, RealMapName, "temp", "infos.map"));
+            }
         }
     }
 }

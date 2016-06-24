@@ -250,11 +250,27 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // SetToNoSaved
+        // -------------------------------------------------------------------
+
+        public void SetToNoSaved()
+        {
+            if (Map.Saved)
+            {
+                Map.Saved = false;
+                WANOK.ListMapToSave.Add(Map.MapInfos.RealMapName);
+                WANOK.SelectedNode.Text = ((TreeTag)WANOK.SelectedNode.Tag).MapName + " *";
+            }
+        }
+
+        // -------------------------------------------------------------------
         // Add
         // -------------------------------------------------------------------
 
         public void Add(bool isMouse)
         {
+            SetToNoSaved();
+
             switch (SelectedDrawType)
             {
                 case "ItemStart":
@@ -384,11 +400,11 @@ namespace RPG_Paper_Maker
 
         public void PaintTin(MethodStock stock, MethodStock erase, int[] coords, int[] textureAfter)
         {
-            int[] portion = GetPortion(coords[0], coords[2]);
+            int[] portion = GetPortion(coords[0], coords[3]);
             if (IsInArea(coords) && IsInPortions(portion))
             {
                 int[] textureBefore = (Map.Portions[portion] == null) ? null : Map.Portions[portion].GetFloorTexture(coords);
-                int[] textureAfterReduced = (textureAfter == null) ? null : new int[] { textureAfter[0], textureAfter[1], WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE };
+                int[] textureAfterReduced = (textureAfter == null) ? null : new int[] { textureAfter[0], textureAfter[1], 1, 1 };
 
                 if (textureBefore == null && textureAfter == null) return;
 
@@ -400,23 +416,22 @@ namespace RPG_Paper_Maker
                     else stock(coords, textureAfterReduced);
 
                     int[][] adjacent;
-                    int count = 0;
+
                     while (tab.Count != 0)
                     {
-
                         adjacent = new int[][]
                         {
-                        new int[] { tab[0][0] - 1, tab[0][1], tab[0][2] },
-                        new int[] { tab[0][0] + 1, tab[0][1], tab[0][2] },
-                        new int[] { tab[0][0], tab[0][1], tab[0][2] + 1 },
-                        new int[] { tab[0][0], tab[0][1], tab[0][2] - 1 }
+                        new int[] { tab[0][0] - 1, tab[0][1], tab[0][2], tab[0][3] },
+                        new int[] { tab[0][0] + 1, tab[0][1], tab[0][2], tab[0][3] },
+                        new int[] { tab[0][0], tab[0][1], tab[0][2], tab[0][3] + 1 },
+                        new int[] { tab[0][0], tab[0][1], tab[0][2], tab[0][3] - 1 }
                         };
                         tab.RemoveAt(0);
                         for (int i = 0; i < adjacent.Length; i++)
                         {
-                            int localX = adjacent[i][0] - coords[0], localZ = adjacent[i][2] - coords[2];
-                            textureAfterReduced = (textureAfter == null) ? null : new int[] { textureAfter[0] + (localX * WANOK.SQUARE_SIZE) % textureAfter[2], textureAfter[1] + (localZ * WANOK.SQUARE_SIZE) % textureAfter[3], WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE };
-                            portion = GetPortion(adjacent[i][0], adjacent[i][2]);
+                            int localX = adjacent[i][0] - coords[0], localZ = adjacent[i][3] - coords[3];
+                            textureAfterReduced = (textureAfter == null) ? null : new int[] { textureAfter[0] + WANOK.Mod(localX, textureAfter[2]), textureAfter[1] + WANOK.Mod(localZ, textureAfter[3]), 1, 1 };
+                            portion = GetPortion(adjacent[i][0], adjacent[i][3]);
                             if (IsInPortions(portion))
                             {
                                 int[] textureHere = (Map.Portions[portion] == null) ? null : Map.Portions[portion].GetFloorTexture(adjacent[i]);
@@ -429,7 +444,6 @@ namespace RPG_Paper_Maker
                                 }
                             }
                         }
-                        count++;
                     }
                 }
             }
