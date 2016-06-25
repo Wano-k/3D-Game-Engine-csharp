@@ -33,11 +33,7 @@ namespace RPG_Paper_Maker
             /*
             WANOK.SaveDatas(new EngineSettings(), "EngineSettings.JSON");
             */
-
-            // This code created the basic game system
-            /*
-            WANOK.SaveBinaryDatas(new SystemDatas(), "System.rpmd");
-            */
+            
 
             // Getting engine settings
             WANOK.Settings = WANOK.LoadDatas<EngineSettings>(WANOK.PATHSETTINGS);

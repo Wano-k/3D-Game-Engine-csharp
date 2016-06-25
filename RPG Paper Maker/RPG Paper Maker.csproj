@@ -97,6 +97,12 @@
     <Compile Include="Engine\Forms\DialogDataBase\DialogSystemColors\DialogSystemColors.Designer.cs">
       <DependentUpon>DialogSystemColors.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\Forms\DialogEnterNumber\DialogEnterNumber.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogEnterNumber\DialogEnterNumber.Designer.cs">
+      <DependentUpon>DialogEnterNumber.cs</DependentUpon>
+    </Compile>
     <Compile Include="Engine\Forms\DialogInputsManager\DialogInputsManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -241,6 +247,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogDataBase\DialogSystemColors\DialogSystemColors.resx">
       <DependentUpon>DialogSystemColors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogEnterNumber\DialogEnterNumber.resx">
+      <DependentUpon>DialogEnterNumber.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogInputsManager\DialogInputsManager.resx">
       <DependentUpon>DialogInputsManager.cs</DependentUpon>

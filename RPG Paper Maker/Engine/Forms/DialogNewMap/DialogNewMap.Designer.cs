@@ -226,6 +226,7 @@
             this.ComboBoxColor.Name = "ComboBoxColor";
             this.ComboBoxColor.Size = new System.Drawing.Size(188, 21);
             this.ComboBoxColor.TabIndex = 2;
+            this.ComboBoxColor.SelectedIndexChanged += new System.EventHandler(this.ComboBoxColor_SelectedIndexChanged);
             // 
             // ComboBoxSkyBox
             // 

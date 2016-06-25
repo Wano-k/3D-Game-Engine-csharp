@@ -362,7 +362,7 @@ namespace RPG_Paper_Maker
 
         public static string GetStringList(int id, string name)
         {
-            return string.Format("{0}{1}", ListBeginning, GetStringComboBox(id, name));
+            return string.Format("{0} {1}", GetStringBegining(id), name);
         }
 
         // -------------------------------------------------------------------
@@ -375,6 +375,15 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // GetStringComboBox
+        // -------------------------------------------------------------------
+
+        public static string GetStringBegining(int id)
+        {
+            return string.Format("{0}ID{1:D4}:", ListBeginning, id);
+        }
+
+        // -------------------------------------------------------------------
         // Mod
         // -------------------------------------------------------------------
 
@@ -382,6 +391,15 @@ namespace RPG_Paper_Maker
         {
             int r = x % m;
             return r < 0 ? r + m : r;
+        }
+
+        // -------------------------------------------------------------------
+        // GetColor
+        // -------------------------------------------------------------------
+
+        public static Color GetColor(int id)
+        {
+            return SystemColor.GetMonogameColor(SystemDatas.GetColorById(id));
         }
     }
 }

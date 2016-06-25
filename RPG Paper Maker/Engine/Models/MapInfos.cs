@@ -14,7 +14,7 @@ namespace RPG_Paper_Maker
         public string MapName;
         public int Width;
         public int Height;
-        public int SkyColor = 0;
+        public int SkyColor = 1;
 
 
         // -------------------------------------------------------------------

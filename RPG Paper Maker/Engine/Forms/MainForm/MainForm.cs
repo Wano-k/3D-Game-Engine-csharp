@@ -647,6 +647,7 @@ namespace RPG_Paper_Maker
                 draggedNode.Remove();
                 targetNode.Nodes.Add(draggedNode);
                 targetNode.Expand();
+                SaveTreeMap();
             }
         }
 

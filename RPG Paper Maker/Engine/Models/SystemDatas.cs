@@ -17,19 +17,7 @@ namespace RPG_Paper_Maker
         public int ScreenHeight = 480;
         public bool FullScreen = false;
         public int SquareSize = 16;
-        public List<SystemColor> Colors = new List<SystemColor>(new SystemColor[] { SystemColor.BlackColor,
-                                                                                    SystemColor.BlackGrayColor,
-                                                                                    SystemColor.SilverColor,
-                                                                                    SystemColor.WhiteColor,
-                                                                                    SystemColor.RedColor,
-                                                                                    SystemColor.OrangeColor,
-                                                                                    SystemColor.YellowColor,
-                                                                                    SystemColor.GreenColor,
-                                                                                    SystemColor.CyanColor,
-                                                                                    SystemColor.BlueColor,
-                                                                                    SystemColor.PurpleColor,
-                                                                                    SystemColor.MagentaColor,
-                                                                                    SystemColor.PinkColor});
+        public List<SystemColor> Colors = new List<SystemColor>();
 
 
         // -------------------------------------------------------------------
@@ -38,12 +26,48 @@ namespace RPG_Paper_Maker
 
         public SystemDatas(string gameName)
         {
+            // Game name and langages
             GameName = new Dictionary<string, string>();
             Langs = new List<string>(new string[] { "eng", "fr" });
             for (int i = 0; i < Langs.Count; i++)
             {
                 GameName[Langs[i]] = gameName;
             }
+
+            // Colors
+            Colors.Add(SystemColor.BlackColor);
+            Colors.Add(SystemColor.BlackGrayColor);
+            Colors.Add(SystemColor.SilverColor);
+            Colors.Add(SystemColor.WhiteColor);
+            Colors.Add(SystemColor.RedColor);
+            Colors.Add(SystemColor.OrangeColor);
+            Colors.Add(SystemColor.YellowColor);
+            Colors.Add(SystemColor.GreenColor);
+            Colors.Add(SystemColor.CyanColor);
+            Colors.Add(SystemColor.BlueColor);
+            Colors.Add(SystemColor.PurpleColor);
+            Colors.Add(SystemColor.MagentaColor);
+            Colors.Add(SystemColor.PinkColor);
+            for (int i = 13; i < 50; i++) Colors.Add(SystemColor.GetDefaultColor(i+1));
+        }
+
+        // -------------------------------------------------------------------
+        // GetColorById
+        // -------------------------------------------------------------------
+
+        public SystemColor GetColorById(int id)
+        {
+            if (id > Colors.Count) return SystemColor.GetDefaultColor(-1);
+            return Colors.Find(i => i.Id == id);
+        }
+
+        // -------------------------------------------------------------------
+        // GetColorIndexById
+        // -------------------------------------------------------------------
+
+        public int GetColorIndexById(int id)
+        {
+            return Colors.IndexOf(GetColorById(id));
         }
 
         // -------------------------------------------------------------------

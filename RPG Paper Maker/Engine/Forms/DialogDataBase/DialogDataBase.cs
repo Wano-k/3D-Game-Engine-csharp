@@ -33,7 +33,9 @@ namespace RPG_Paper_Maker
             toolTipSquareSize.SetToolTip(buttonSquareSize, "This option set the maps displaying, it is recommended to put multiple 8 numbers.\nNote that the pixel height addings are not modified.");
             textBoxLangGameName.GetTextBox().Items.Add(ControlSystem.GameName[ControlSystem.Langs[0]]);
             textBoxLangGameName.AllNames = ControlSystem.GameName;
-            listBoxColors.InitializeListParameters(ListBoxes, ControlSystem.Model.Colors.Cast<SuperListItem>().ToList(), typeof(DialogSystemColors), WANOK.MAX_COLORS);
+            listBoxColors.InitializeListParameters(ListBoxes, ControlSystem.Model.Colors.Cast<SuperListItem>().ToList(), typeof(DialogSystemColors), typeof(SystemColor), 1, WANOK.MAX_COLORS);
+
+            // Tilesets
 
             // list event handlers
             textBoxLangGameName.GetTextBox().Click += listBox_Click;

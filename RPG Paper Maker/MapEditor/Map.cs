@@ -170,6 +170,8 @@ namespace RPG_Paper_Maker
 
         public void Draw(GameTime gameTime, BasicEffect effect)
         {
+            Device.Clear(WANOK.GetColor(MapInfos.SkyColor));
+
             // Effect settings
             effect.VertexColorEnabled = true;
             effect.TextureEnabled = false;

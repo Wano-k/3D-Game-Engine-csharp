@@ -20,14 +20,9 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
-        public DialogSystemColors(SystemColor color = null)
+        public DialogSystemColors(SystemColor color)
         {
             InitializeComponent();
-            if (color == null)
-            {
-                color = new SystemColor("New color", new int[] { 0, 0, 0 });
-                Text = "New color";
-            }
             Control = new DialogSystemColorControl(color);
             ViewModelBindingSource.DataSource = Control;
             panelColor.BackColor = color.GetWinformsColor();

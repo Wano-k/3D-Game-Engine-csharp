@@ -38,8 +38,9 @@ namespace RPG_Paper_Maker
             // ComboBox
             for (int i = 0; i < WANOK.SystemDatas.Colors.Count; i++)
             {
-                ComboBoxColor.Items.Add(WANOK.GetStringComboBox((i+1), WANOK.SystemDatas.Colors[i].Name));
+                ComboBoxColor.Items.Add(WANOK.GetStringComboBox(WANOK.SystemDatas.Colors[i].Id, WANOK.SystemDatas.Colors[i].Name));
             }
+            ComboBoxColor.SelectedIndex = WANOK.SystemDatas.GetColorIndexById(Control.Model.SkyColor);
             if (ComboBoxTileset.Items.Count > 0) ComboBoxTileset.SelectedIndex = 0;
             if (ComboBoxSkyBox.Items.Count > 0) ComboBoxSkyBox.SelectedIndex = 0;
 
@@ -59,7 +60,6 @@ namespace RPG_Paper_Maker
             TextBoxName.DataBindings.Add("Text", ViewModelBindingSource, "MapName", true);
             NumericWidth.DataBindings.Add("Value", ViewModelBindingSource, "Width", true);
             NumericHeight.DataBindings.Add("Value", ViewModelBindingSource, "Height", true);
-            ComboBoxColor.DataBindings.Add("SelectedIndex", ViewModelBindingSource, "SkyColor", true);
         }
 
         // -------------------------------------------------------------------
@@ -89,6 +89,15 @@ namespace RPG_Paper_Maker
         public int GetHeight()
         {
             return Control.Height;
+        }
+
+        // -------------------------------------------------------------------
+        // ComboBoxColor_SelectedIndexChanged
+        // -------------------------------------------------------------------
+
+        private void ComboBoxColor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Control.SetSkyColor(ComboBoxColor.SelectedIndex);
         }
 
         // -------------------------------------------------------------------

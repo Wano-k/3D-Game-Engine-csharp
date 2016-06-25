@@ -43,15 +43,6 @@ namespace RPG_Paper_Maker.Controls
                 NotifyPropertyChanged("Height");
             }
         }
-        public int SkyColor
-        {
-            get { return Model.SkyColor; }
-            set
-            {
-                Model.SkyColor = value;
-                NotifyPropertyChanged("SkyColor");
-            }
-        }
 
 
         // -------------------------------------------------------------------
@@ -80,6 +71,15 @@ namespace RPG_Paper_Maker.Controls
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
             }
+        }
+
+        // -------------------------------------------------------------------
+        // SetSkyColor
+        // -------------------------------------------------------------------
+
+        public void SetSkyColor(int index)
+        {
+            Model.SkyColor = WANOK.SystemDatas.Colors[index].Id;
         }
 
         // -------------------------------------------------------------------
