@@ -73,7 +73,7 @@ namespace RPG_Paper_Maker
             {
                 GameMapPortion gamePortion = WANOK.LoadBinaryDatas<GameMapPortion>(path);
                 Portions[new int[] { i, j }] = gamePortion;
-                gamePortion.CreatePortionFloor(Device, TilesetSelector.TexTileset);
+                gamePortion.CreatePortionFloor(Device, MapEditor.TexTileset);
             }
             else
             {
@@ -146,7 +146,7 @@ namespace RPG_Paper_Maker
         {
             if (Portions[portion] != null)
             {
-                Portions[portion].GenFloor(Device, TilesetSelector.TexTileset);
+                Portions[portion].GenFloor(Device, MapEditor.TexTileset);
             }
         }
 
@@ -194,7 +194,7 @@ namespace RPG_Paper_Maker
             effect.TextureEnabled = true;
             foreach (GameMapPortion gameMap in Portions.Values)
             {
-                if (gameMap != null) gameMap.Draw(Device, effect, TilesetSelector.TexTileset);
+                if (gameMap != null) gameMap.Draw(Device, effect, MapEditor.TexTileset);
             }
 
             // Drawing Start position

@@ -72,6 +72,7 @@
             this.toolBarButtonNew = new System.Windows.Forms.ToolBarButton();
             this.toolBarButtonOpen = new System.Windows.Forms.ToolBarButton();
             this.toolBarButtonSave = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButtonSaveAll = new System.Windows.Forms.ToolBarButton();
             this.separator1 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButtonInput = new System.Windows.Forms.ToolBarButton();
             this.toolBarButtonDataBase = new System.Windows.Forms.ToolBarButton();
@@ -89,9 +90,8 @@
             this.MenuItemSetDirName = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemDeleteDir = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.toolBarButtonSaveAll = new System.Windows.Forms.ToolBarButton();
             this.scrollPanel1 = new RPG_Paper_Maker.ScrollPanel();
-            this.TilesetSelector = new RPG_Paper_Maker.TilesetSelector();
+            this.TilesetSelectorPicture = new RPG_Paper_Maker.TilesetSelectorPicture();
             this.MapEditor = new RPG_Paper_Maker.MapEditor();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerMain)).BeginInit();
@@ -108,6 +108,7 @@
             this.ContextMenuDir.SuspendLayout();
             this.MainPanel.SuspendLayout();
             this.scrollPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TilesetSelectorPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // ImageListToolBar
@@ -575,6 +576,12 @@
             this.toolBarButtonSave.Text = "Save";
             this.toolBarButtonSave.ToolTipText = "Save your progress";
             // 
+            // toolBarButtonSaveAll
+            // 
+            this.toolBarButtonSaveAll.ImageKey = "saveAll.png";
+            this.toolBarButtonSaveAll.Name = "toolBarButtonSaveAll";
+            this.toolBarButtonSaveAll.Text = "Save all";
+            // 
             // separator1
             // 
             this.separator1.Name = "separator1";
@@ -697,36 +704,29 @@
             this.MainPanel.Size = new System.Drawing.Size(890, 443);
             this.MainPanel.TabIndex = 5;
             // 
-            // toolBarButtonSaveAll
-            // 
-            this.toolBarButtonSaveAll.ImageKey = "saveAll.png";
-            this.toolBarButtonSaveAll.Name = "toolBarButtonSaveAll";
-            this.toolBarButtonSaveAll.Text = "Save all";
-            // 
             // scrollPanel1
             // 
             this.scrollPanel1.AutoScroll = true;
-            this.scrollPanel1.Controls.Add(this.TilesetSelector);
+            this.scrollPanel1.Controls.Add(this.TilesetSelectorPicture);
             this.scrollPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scrollPanel1.Location = new System.Drawing.Point(0, 0);
+            this.scrollPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.scrollPanel1.Name = "scrollPanel1";
             this.scrollPanel1.Size = new System.Drawing.Size(173, 265);
             this.scrollPanel1.TabIndex = 0;
-            this.scrollPanel1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.scrollPanel1_Scroll);
             // 
-            // TilesetSelector
+            // TilesetSelectorPicture
             // 
-            this.TilesetSelector.BackColor = System.Drawing.Color.Black;
-            this.TilesetSelector.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.TilesetSelector.Location = new System.Drawing.Point(0, 0);
-            this.TilesetSelector.Margin = new System.Windows.Forms.Padding(0);
-            this.TilesetSelector.Name = "TilesetSelector";
-            this.TilesetSelector.Size = new System.Drawing.Size(256, 256);
-            this.TilesetSelector.TabIndex = 0;
-            this.TilesetSelector.VSync = true;
-            this.TilesetSelector.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TilesetSelector_MouseDown);
-            this.TilesetSelector.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TilesetSelector_MouseMove);
-            this.TilesetSelector.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TilesetSelector_MouseUp);
+            this.TilesetSelectorPicture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+            this.TilesetSelectorPicture.Location = new System.Drawing.Point(1, 1);
+            this.TilesetSelectorPicture.Name = "TilesetSelectorPicture";
+            this.TilesetSelectorPicture.Size = new System.Drawing.Size(100, 50);
+            this.TilesetSelectorPicture.TabIndex = 0;
+            this.TilesetSelectorPicture.TabStop = false;
+            this.TilesetSelectorPicture.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TilesetSelectorPicture_MouseDown);
+            this.TilesetSelectorPicture.MouseEnter += new System.EventHandler(this.TilesetSelectorPicture_MouseEnter);
+            this.TilesetSelectorPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TilesetSelectorPicture_MouseMove);
+            this.TilesetSelectorPicture.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TilesetSelectorPicture_MouseUp);
             // 
             // MapEditor
             // 
@@ -783,6 +783,7 @@
             this.ContextMenuDir.ResumeLayout(false);
             this.MainPanel.ResumeLayout(false);
             this.scrollPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.TilesetSelectorPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -816,7 +817,6 @@
         private System.Windows.Forms.ToolStripMenuItem ItemFloor;
         private System.Windows.Forms.ToolStripMenuItem ItemFloor1;
         private System.Windows.Forms.ToolStripMenuItem ItemFloor2;
-        private TilesetSelector TilesetSelector;
         private System.Windows.Forms.ToolStripMenuItem ItemSave;
         private ScrollPanel scrollPanel1;
         private System.Windows.Forms.ContextMenuStrip ContextMenuMap;
@@ -852,6 +852,7 @@
         private System.Windows.Forms.ToolBarButton toolBarButtonDataBase;
         private System.Windows.Forms.ToolStripMenuItem ItemSaveAll;
         private System.Windows.Forms.ToolBarButton toolBarButtonSaveAll;
+        private TilesetSelectorPicture TilesetSelectorPicture;
     }
 }
 

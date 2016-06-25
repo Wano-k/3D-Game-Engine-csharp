@@ -24,6 +24,7 @@ namespace RPG_Paper_Maker
         // Content
         public static Texture2D TexCursor;
         public static Texture2D TexStartCursor;
+        public static Texture2D TexTileset;
 
 
         // -------------------------------------------------------------------
@@ -108,6 +109,11 @@ namespace RPG_Paper_Maker
         {
             // Recreate game components
             Control.IsMapReloading = true;
+            if (TexTileset != null) TexTileset.Dispose();
+            FileStream fs;
+            fs = new FileStream(Path.Combine(WANOK.CurrentDir, "Content", "Pictures", "Textures2D", "Tilesets", "plains.png"), FileMode.Open);
+            TexTileset = Texture2D.FromStream(GraphicsDevice, fs);
+            fs.Close();
             Control.Camera.ReLoadMap();
             if (Control.Map != null) DisposeVertexBuffer(); // Dispose the previous vertexBuffer to create a new one for the object
             Control.Map = new Map(GraphicsDevice, mapName);

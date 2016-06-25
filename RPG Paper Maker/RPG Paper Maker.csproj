@@ -208,6 +208,9 @@
     <Compile Include="MapEditorControls\MapEditorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="MapEditorControls\TilesetSelectorPicture.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MapEditor\Camera.cs" />
     <Compile Include="MapEditor\DrawMode.cs" />
     <Compile Include="MapEditor\IntArrayComparer.cs" />
@@ -221,9 +224,7 @@
     <Compile Include="Engine\Models\MapInfos.cs" />
     <Compile Include="MapEditor\MapEditorControl.cs" />
     <Compile Include="MapEditor\Square.cs" />
-    <Compile Include="MapEditor\TilesetSelector.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="MapEditor\TilesetSelector.cs" />
     <Compile Include="MapEditor\Wanok.cs" />
     <Compile Include="MapEditor\MouseManager.cs" />
     <Compile Include="Engine\Program.cs" />

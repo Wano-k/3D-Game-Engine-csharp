@@ -26,6 +26,7 @@ namespace RPG_Paper_Maker
         public MainFormControl Control = new MainFormControl();
         public bool IsInItemHeightSquare = false;
         public bool IsInItemHeightPixel = false;
+        public bool IsUsingCursorSelector = false;
 
 
         // -------------------------------------------------------------------
@@ -62,6 +63,8 @@ namespace RPG_Paper_Maker
             // Updating special infos
             Text = TitleName;
             KeyPreview = true;
+            TilesetSelectorPicture.SizeMode = PictureBoxSizeMode.StretchImage;
+            TilesetSelectorPicture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             MapEditor.MouseWheel += MapEditor_MouseWheel;
             MouseWheel += MainForm_MouseWheel;
             ItemFloor.DropDown.MouseLeave += new EventHandler(ItemFloorDrop_MouseLeave);
@@ -837,29 +840,36 @@ namespace RPG_Paper_Maker
 
         #region TilesetSelector
 
-        private void scrollPanel1_Scroll(object sender, ScrollEventArgs e)
+        private void TilesetSelectorPicture_MouseDown(object sender, MouseEventArgs e)
         {
-            scrollPanel1.Visible = false;
-            scrollPanel1.Invalidate();
-            scrollPanel1.Update();
-            scrollPanel1.Refresh();
-            scrollPanel1.Visible = true;
+            if (e.Button == MouseButtons.Left)
+            {
+                IsUsingCursorSelector = true;
+                TilesetSelectorPicture.MakeFirstRectangleSelection(e.X, e.Y);
+                TilesetSelectorPicture.Refresh();
+            }
         }
 
-        private void TilesetSelector_MouseDown(object sender, MouseEventArgs e)
+        private void TilesetSelectorPicture_MouseUp(object sender, MouseEventArgs e)
         {
-            WANOK.TilesetMouseManager.SetMouseDownStatus(e);
+            TilesetSelectorPicture.SetCursorRealPosition();
+            IsUsingCursorSelector = false;
+            TilesetSelectorPicture.Refresh();
+            MapEditor.SetCurrentTexture(TilesetSelectorPicture.GetCurrentTexture());
         }
 
-        private void TilesetSelector_MouseUp(object sender, MouseEventArgs e)
+        private void TilesetSelectorPicture_MouseMove(object sender, MouseEventArgs e)
         {
-            WANOK.TilesetMouseManager.SetMouseUpStatus(e);
-            MapEditor.SetCurrentTexture(TilesetSelector.GetCurrentTexture());
+            if (IsUsingCursorSelector)
+            {
+                TilesetSelectorPicture.MakeRectangleSelection(e.X, e.Y);
+                TilesetSelectorPicture.Refresh();
+            }
         }
 
-        private void TilesetSelector_MouseMove(object sender, MouseEventArgs e)
+        private void TilesetSelectorPicture_MouseEnter(object sender, EventArgs e)
         {
-            WANOK.TilesetMouseManager.SetPosition(e.X, e.Y);
+            TilesetSelectorPicture.Focus();
         }
 
         #endregion
@@ -912,7 +922,7 @@ namespace RPG_Paper_Maker
             SplitContainerMain.Visible = b;
             SplitContainerTree.Visible = b;
             MapEditor.Visible = b;
-            TilesetSelector.Visible = b;
+            TilesetSelectorPicture.Visible = b;
             TreeMap.Visible = b;
         }
 
@@ -924,7 +934,7 @@ namespace RPG_Paper_Maker
         {
             MapEditor.Visible = b;
             menuStrip2.Visible = b;
-            TilesetSelector.Visible = b;
+            TilesetSelectorPicture.Visible = b;
         }
 
         // -------------------------------------------------------------------
@@ -1049,6 +1059,7 @@ namespace RPG_Paper_Maker
                 WANOK.SelectedNode = TreeMap.Nodes[0];
                 AddToRecentList(dir, WANOK.Settings.AddProjectPath(dir));
                 WANOK.SaveDatas(WANOK.Settings, WANOK.PATHSETTINGS);
+                SetTilesetImage(Path.Combine(WANOK.CurrentDir, "Content", "Pictures", "Textures2D", "Tilesets", "plains.png"));
                 ShowProjectContain(true);
                 EnableGame();
                 ShowMapEditor(false);
@@ -1191,6 +1202,15 @@ namespace RPG_Paper_Maker
             WANOK.SetIconsTreeNodes(nodeList);
         }
 
+        // -------------------------------------------------------------------
+        // SetTilesetImage
+        // -------------------------------------------------------------------
+
+        public void SetTilesetImage(string path)
+        {
+            TilesetSelectorPicture.LoadTexture(path);
+        }
+
         #endregion
 
         // -------------------------------------------------------------------
@@ -1207,7 +1227,7 @@ namespace RPG_Paper_Maker
         {
             Thread.Sleep(100);
             WANOK.CurrentDemoDialog = new DialogDemoTipNewProject();
-            WANOK.CurrentDemoDialog.Location = new Point(this.Location.X + 50, this.Location.Y + 100);
+            WANOK.CurrentDemoDialog.Location = new Point(Location.X + 50, Location.Y + 100);
             WANOK.CurrentDemoDialog.Size = new Size(364, 209);
             WANOK.CurrentDemoDialog.Show();
             WANOK.DemoStep = DemoSteps.New;
