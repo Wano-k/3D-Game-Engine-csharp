@@ -9,6 +9,7 @@ namespace RPG_Paper_Maker
     [Serializable]
     public class SystemColor : SuperListItem
     {
+        public static int MAX_COLORS = 9999;
         public int[] Color = new int[] { 0, 0, 0 };
         public static SystemColor BlackColor = new SystemColor(1, "Black", new int[] { 0, 0, 0 });
         public static SystemColor BlackGrayColor = new SystemColor(2, "Black-Gray", new int[] { 32, 32, 32 });
@@ -29,9 +30,9 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
-        public SystemColor()
+        public SystemColor(int id) : this(id, "", new int[] { 0, 0, 0 })
         {
-            GetDefaultColor(-1);
+
         }
 
         public SystemColor(int id, string n, int[] color)
@@ -51,15 +52,6 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // GetDefaultColor
-        // -------------------------------------------------------------------
-
-        public static SystemColor GetDefaultColor(int id)
-        {
-            return new SystemColor(id, "", new int[] { 0, 0, 0 });
-        }
-
-        // -------------------------------------------------------------------
         // GetWinformsColor
         // -------------------------------------------------------------------
 
@@ -75,15 +67,6 @@ namespace RPG_Paper_Maker
         public static Microsoft.Xna.Framework.Color GetMonogameColor(SystemColor c)
         {
             return new Microsoft.Xna.Framework.Color(c.Color[0], c.Color[1], c.Color[2]);
-        }
-
-        // -------------------------------------------------------------------
-        // ToString
-        // -------------------------------------------------------------------
-
-        public override string ToString()
-        {
-            return WANOK.GetStringList(Id, Name);
         }
     }
 }

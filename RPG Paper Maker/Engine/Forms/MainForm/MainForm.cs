@@ -431,6 +431,8 @@ namespace RPG_Paper_Maker
             DialogDataBase dialog = new DialogDataBase();
             if (dialog.ShowDialog() == DialogResult.OK){
                 SetTitle();
+                TreeTag tag = (TreeTag)WANOK.SelectedNode.Tag;
+                if (tag.IsMap) ReLoadMap(tag.RealMapName);
             }
         }
 
@@ -449,6 +451,19 @@ namespace RPG_Paper_Maker
             startInfo.WorkingDirectory = WANOK.CurrentDir;
             Process p = Process.Start(startInfo);
             p.WaitForExit(); 
+        }
+
+        // OPTIONS
+
+        private void ItemRTP_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.SelectedPath = WANOK.SystemDatas.PathRTP;
+            dialog.Description = "Select your new RTP directory here.";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                WANOK.SystemDatas.PathRTP = dialog.SelectedPath;
+            }
         }
 
         // HELP
@@ -731,8 +746,7 @@ namespace RPG_Paper_Maker
             if (tag.IsMap)
             {
                 ShowMapEditor(true);
-                MapEditor.ReLoadMap(tag.RealMapName);
-                ReloadMenuMapEditor();
+                ReLoadMap(tag.RealMapName);
             }
             else
             {
@@ -808,7 +822,7 @@ namespace RPG_Paper_Maker
             DialogNewMap dialog = new DialogNewMap(Control.LoadMapInfos(mapName));
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                MapEditor.ReLoadMap(mapName);
+                ReLoadMap(mapName);
                 TreeMap.SelectedNode.Text = dialog.GetMapName() + " *";
                 MapEditor.SaveMap(false);
                 WANOK.ListMapToSave.Add(dialog.GetRealMapName());
@@ -990,6 +1004,7 @@ namespace RPG_Paper_Maker
             ItemExit.Enabled = b;
             ItemPlay.Enabled = b;
             toolBarButtonPlay.Enabled = b;
+            ItemRTP.Enabled = b;
             ItemTutorials.Enabled = b;
             ItemDemo.Enabled = b;
             ItemAbout.Enabled = b;
@@ -1030,6 +1045,7 @@ namespace RPG_Paper_Maker
             toolBarButtonDataBase.Enabled = true;
             ItemPlay.Enabled = true;
             toolBarButtonPlay.Enabled = true;
+            ItemRTP.Enabled = true;
         }
 
         // -------------------------------------------------------------------
@@ -1059,7 +1075,6 @@ namespace RPG_Paper_Maker
                 WANOK.SelectedNode = TreeMap.Nodes[0];
                 AddToRecentList(dir, WANOK.Settings.AddProjectPath(dir));
                 WANOK.SaveDatas(WANOK.Settings, WANOK.PATHSETTINGS);
-                SetTilesetImage(Path.Combine(WANOK.CurrentDir, "Content", "Pictures", "Textures2D", "Tilesets", "plains.png"));
                 ShowProjectContain(true);
                 EnableGame();
                 ShowMapEditor(false);
@@ -1206,9 +1221,13 @@ namespace RPG_Paper_Maker
         // SetTilesetImage
         // -------------------------------------------------------------------
 
-        public void SetTilesetImage(string path)
+        public void ReLoadMap(string mapName)
         {
-            TilesetSelectorPicture.LoadTexture(path);
+            MapEditor.ReLoadMap(mapName);
+            TilesetSelectorPicture.LoadTexture(MapEditor.GetMapTilesetGraphic());
+            MapEditor.SetCurrentTexture(new int[] { 0, 0, 1, 1 });
+            TilesetSelectorPicture.SetCurrentTexture(0, 0, 1, 1);
+            TilesetSelectorPicture.Refresh();
         }
 
         #endregion

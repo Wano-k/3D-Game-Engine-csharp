@@ -309,12 +309,11 @@
             this.ComboBoxTileset.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComboBoxTileset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboBoxTileset.FormattingEnabled = true;
-            this.ComboBoxTileset.Items.AddRange(new object[] {
-            "Unavailable"});
             this.ComboBoxTileset.Location = new System.Drawing.Point(6, 66);
             this.ComboBoxTileset.Name = "ComboBoxTileset";
             this.ComboBoxTileset.Size = new System.Drawing.Size(254, 21);
             this.ComboBoxTileset.TabIndex = 3;
+            this.ComboBoxTileset.SelectedIndexChanged += new System.EventHandler(this.ComboBoxTileset_SelectedIndexChanged);
             // 
             // tableLayoutPanel3
             // 

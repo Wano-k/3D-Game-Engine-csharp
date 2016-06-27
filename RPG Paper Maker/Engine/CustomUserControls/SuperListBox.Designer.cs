@@ -32,13 +32,13 @@
             this.listBox = new System.Windows.Forms.ListBox();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ItemEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ItemCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ItemDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.button = new System.Windows.Forms.Button();
-            this.ItemCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.ItemPaste = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -49,6 +49,7 @@
             this.listBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBox.FormattingEnabled = true;
+            this.listBox.HorizontalScrollbar = true;
             this.listBox.Location = new System.Drawing.Point(3, 3);
             this.listBox.Name = "listBox";
             this.listBox.Size = new System.Drawing.Size(144, 114);
@@ -58,7 +59,6 @@
             this.listBox.DoubleClick += new System.EventHandler(this.listBox_DoubleClick);
             this.listBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox_KeyDown);
             this.listBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDown);
-            this.listBox.MouseEnter += new System.EventHandler(this.listBox_MouseEnter);
             this.listBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseMove);
             this.listBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseUp);
             // 
@@ -72,19 +72,43 @@
             this.toolStripSeparator2,
             this.ItemDelete});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(153, 126);
+            this.contextMenuStrip.Size = new System.Drawing.Size(108, 104);
             // 
             // ItemEdit
             // 
             this.ItemEdit.Name = "ItemEdit";
-            this.ItemEdit.Size = new System.Drawing.Size(152, 22);
+            this.ItemEdit.Size = new System.Drawing.Size(107, 22);
             this.ItemEdit.Text = "Edit";
             this.ItemEdit.Click += new System.EventHandler(this.ItemEdit_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(104, 6);
+            // 
+            // ItemCopy
+            // 
+            this.ItemCopy.Name = "ItemCopy";
+            this.ItemCopy.Size = new System.Drawing.Size(107, 22);
+            this.ItemCopy.Text = "Copy";
+            this.ItemCopy.Click += new System.EventHandler(this.ItemCopy_Click);
+            // 
+            // ItemPaste
+            // 
+            this.ItemPaste.Name = "ItemPaste";
+            this.ItemPaste.Size = new System.Drawing.Size(107, 22);
+            this.ItemPaste.Text = "Paste";
+            this.ItemPaste.Click += new System.EventHandler(this.ItemPaste_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(104, 6);
             // 
             // ItemDelete
             // 
             this.ItemDelete.Name = "ItemDelete";
-            this.ItemDelete.Size = new System.Drawing.Size(152, 22);
+            this.ItemDelete.Size = new System.Drawing.Size(107, 22);
             this.ItemDelete.Text = "Delete";
             this.ItemDelete.Click += new System.EventHandler(this.ItemDelete_Click);
             // 
@@ -113,30 +137,6 @@
             this.button.Text = "Change maximum...";
             this.button.UseVisualStyleBackColor = true;
             this.button.Click += new System.EventHandler(this.button_Click);
-            // 
-            // ItemCopy
-            // 
-            this.ItemCopy.Name = "ItemCopy";
-            this.ItemCopy.Size = new System.Drawing.Size(152, 22);
-            this.ItemCopy.Text = "Copy";
-            this.ItemCopy.Click += new System.EventHandler(this.ItemCopy_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
-            // 
-            // ItemPaste
-            // 
-            this.ItemPaste.Name = "ItemPaste";
-            this.ItemPaste.Size = new System.Drawing.Size(152, 22);
-            this.ItemPaste.Text = "Paste";
-            this.ItemPaste.Click += new System.EventHandler(this.ItemPaste_Click);
             // 
             // SuperListBox
             // 

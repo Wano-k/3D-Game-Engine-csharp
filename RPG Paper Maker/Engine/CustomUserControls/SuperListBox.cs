@@ -23,9 +23,17 @@ namespace RPG_Paper_Maker
         public System.Timers.Timer DragTimer = new System.Timers.Timer(20);
         public bool CanDrag = false;
 
+
+        // -------------------------------------------------------------------
+        // Constructor
+        // -------------------------------------------------------------------
+
         public SuperListBox()
         {
             InitializeComponent();
+
+            listBox.FormattingEnabled = false;
+            DragTimer.Elapsed += new System.Timers.ElapsedEventHandler(DoDrag);
         }
 
         // -------------------------------------------------------------------
@@ -39,9 +47,6 @@ namespace RPG_Paper_Maker
             TypeItem = typeItem;
             Min = min;
             Max = max;
-
-            listBox.FormattingEnabled = false;
-            DragTimer.Elapsed += new System.Timers.ElapsedEventHandler(DoDrag);
 
             for (int i = 0; i < modelList.Count; i++)
             {
@@ -71,6 +76,25 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // SetName
+        // -------------------------------------------------------------------
+
+        public void SetName(string name)
+        {
+            /*
+            int index = listBox.SelectedIndex;
+            SuperListItem t = (SuperListItem)listBox.Items[index];
+            t.Name = name;
+            listBox.Items.RemoveAt(index);
+            listBox.Items.Insert(index, t);
+            listBox.SelectedIndex = index;*/
+
+            ((SuperListItem)listBox.Items[listBox.SelectedIndex]).Name = name;
+            listBox.Items[listBox.SelectedIndex] = listBox.SelectedItem;
+
+        }
+
+        // -------------------------------------------------------------------
         // EditItem
         // -------------------------------------------------------------------
 
@@ -87,11 +111,6 @@ namespace RPG_Paper_Maker
                     listBox.Items.RemoveAt(index);
                     listBox.Items.Insert(index, dialog.GetObject());
                 }
-            }
-            // If the settings are directly on the right panel...
-            else
-            {
-
             }
         }
 
@@ -121,9 +140,7 @@ namespace RPG_Paper_Maker
 
         public void DeleteItem()
         {
-            int id = ((SuperListItem)listBox.Items[listBox.SelectedIndex]).Id;
-            SuperListItem defaultValue = (SuperListItem)Activator.CreateInstance(TypeItem);
-            defaultValue.Id = id;
+            SuperListItem defaultValue = (SuperListItem)Activator.CreateInstance(TypeItem, ((SuperListItem)listBox.Items[listBox.SelectedIndex]).Id);
             listBox.Items[listBox.SelectedIndex] = defaultValue;
         }
 
@@ -146,8 +163,10 @@ namespace RPG_Paper_Maker
                 int index = listBox.IndexFromPoint(e.X, e.Y);
                 UnselectAllLists();
                 listBox.SelectedIndex = index;
+                
                 if (listBox.SelectedIndex != -1)
                 {
+                    ItemEdit.Enabled = DialogKind != null;
                     ItemPaste.Enabled = CopiedItem != null;
                     contextMenuStrip.Show(listBox, e.Location);
                 }
@@ -287,15 +306,6 @@ namespace RPG_Paper_Maker
                 listBox.DoDragDrop(listBox.SelectedItem, DragDropEffects.Move);
                 CanDrag = false;
             }
-        }
-
-        // -------------------------------------------------------------------
-        // listBox_MouseEnter
-        // -------------------------------------------------------------------
-
-        private void listBox_MouseEnter(object sender, EventArgs e)
-        {
-            listBox.Focus();
         }
 
         // -------------------------------------------------------------------

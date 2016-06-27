@@ -34,7 +34,7 @@ namespace RPG_Paper_Maker
                 }
             }
             catch { }
-            SelectionRectangle = new SelectionRectangle(32, 32, WANOK.BASIC_SQUARE_SIZE*3, WANOK.BASIC_SQUARE_SIZE*1, BORDER_SIZE);
+            SelectionRectangle = new SelectionRectangle(0, 0, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE, BORDER_SIZE);
         }
 
         // -------------------------------------------------------------------
@@ -50,19 +50,20 @@ namespace RPG_Paper_Maker
         // LoadTexture
         // -------------------------------------------------------------------
 
-        public void LoadTexture(string path)
+        public void LoadTexture(SystemGraphic graphic)
         {
-            try
-            {
-                using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
-                {
-                    Image = Image.FromStream(stream);
-                }
-            }
-            catch { }
-
+            Image = graphic.LoadImage();
             Size = new Size((int)(Image.Width * WANOK.RELATION_SIZE), (int)(Image.Height * WANOK.RELATION_SIZE));
             Location = new Point(0, 0); 
+        }
+
+        // -------------------------------------------------------------------
+        // SetCurrentTexture
+        // -------------------------------------------------------------------
+
+        public void SetCurrentTexture(int x, int y, int width, int height)
+        {
+            SelectionRectangle.SetRectangle(x, y, width, height);
         }
 
         // -------------------------------------------------------------------

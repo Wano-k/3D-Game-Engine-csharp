@@ -90,7 +90,9 @@ namespace RPG_Paper_Maker.Controls
                                 string basicPath = Path.Combine(executablePath, "Basic");
                                 WANOK.CopyAll(new DirectoryInfo(basicPath), new DirectoryInfo(fullPath));
                                 WANOK.SaveBinaryDatas(new SystemDatas(ProjectName), Path.Combine(fullPath, "Content", "Datas", "System.rpmd"));
+                                Directory.CreateDirectory(Path.Combine(fullPath, "Content", "Datas", "Maps", "MAP0001"));
                                 Directory.CreateDirectory(Path.Combine(fullPath, "Content", "Datas", "Maps", "MAP0001", "temp"));
+                                WANOK.SaveBinaryDatas(new MapInfos(), Path.Combine(fullPath, "Content", "Datas", "Maps", "MAP0001","infos.map"));
                                 ProjectName = ProjectName.Trim();
                                 DirPath = Path.Combine(DirPath, ProjectName);
 

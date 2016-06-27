@@ -36,12 +36,16 @@ namespace RPG_Paper_Maker
             groupBox3.Paint += MainForm.PaintBorderGroupBox;
 
             // ComboBox
+            for (int i = 0; i < WANOK.SystemDatas.Tilesets.Count; i++)
+            {
+                ComboBoxTileset.Items.Add(WANOK.GetStringComboBox(WANOK.SystemDatas.Tilesets[i].Id, WANOK.SystemDatas.Tilesets[i].Name));
+            }
+            ComboBoxTileset.SelectedIndex = WANOK.SystemDatas.GetTilesetIndexById(Control.Model.Tileset);
             for (int i = 0; i < WANOK.SystemDatas.Colors.Count; i++)
             {
                 ComboBoxColor.Items.Add(WANOK.GetStringComboBox(WANOK.SystemDatas.Colors[i].Id, WANOK.SystemDatas.Colors[i].Name));
             }
             ComboBoxColor.SelectedIndex = WANOK.SystemDatas.GetColorIndexById(Control.Model.SkyColor);
-            if (ComboBoxTileset.Items.Count > 0) ComboBoxTileset.SelectedIndex = 0;
             if (ComboBoxSkyBox.Items.Count > 0) ComboBoxSkyBox.SelectedIndex = 0;
 
             // Is setting
@@ -89,6 +93,15 @@ namespace RPG_Paper_Maker
         public int GetHeight()
         {
             return Control.Height;
+        }
+
+        // -------------------------------------------------------------------
+        // ComboBoxTileset_SelectedIndexChanged
+        // -------------------------------------------------------------------
+
+        private void ComboBoxTileset_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Control.SetTileset(ComboBoxTileset.SelectedIndex);
         }
 
         // -------------------------------------------------------------------

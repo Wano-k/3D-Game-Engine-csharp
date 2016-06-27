@@ -9,17 +9,22 @@ namespace RPG_Paper_Maker
     [Serializable]
     public class MapInfos
     {
-        protected Dictionary<int[], int> OccurrenceFloors = new Dictionary<int[], int>();
-        public string RealMapName;
-        public string MapName;
-        public int Width;
-        public int Height;
+        public string RealMapName = "MAP0001";
+        public string MapName = "MAP0001";
+        public int Width = 25;
+        public int Height = 25;
+        public int Tileset = 1;
         public int SkyColor = 1;
 
 
         // -------------------------------------------------------------------
         // Constructor
         // -------------------------------------------------------------------
+
+        public MapInfos()
+        {
+
+        }
 
         public MapInfos(string mapName, int width, int height)
         {

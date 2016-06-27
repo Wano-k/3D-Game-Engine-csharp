@@ -48,6 +48,13 @@ namespace RPG_Paper_Maker
                 SetStartInfos(WANOK.SystemDatas, WANOK.SystemDatas.StartPosition);
             }
 
+            // Set texture
+            if (MapEditor.TexTileset != null) MapEditor.TexTileset.Dispose();
+            FileStream fs;
+            fs = new FileStream(WANOK.SystemDatas.GetTilesetById(MapInfos.Tileset).Graphic.GetGraphicPath(), FileMode.Open);
+            MapEditor.TexTileset = Texture2D.FromStream(device, fs);
+            fs.Close();
+
             // Grid
             CreateGrid(MapInfos.Width, MapInfos.Height);
 

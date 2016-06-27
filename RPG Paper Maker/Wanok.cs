@@ -38,7 +38,6 @@ namespace RPG_Paper_Maker
         public static float RELATION_SIZE { get { return (float)(BASIC_SQUARE_SIZE) / SQUARE_SIZE; } }
         public static int PORTION_SIZE = 16;
         public static int PORTION_RADIUS = 4;
-        public static int MAX_COLORS = 9999;
         public static EngineSettings Settings = null;
         public static DemoSteps DemoStep = DemoSteps.None;
         public static Form CurrentDemoDialog = null;
@@ -50,6 +49,7 @@ namespace RPG_Paper_Maker
         public static SystemDatas SystemDatas;
         public static HashSet<string> ListMapToSave = new HashSet<string>();
         public static TreeNode SelectedNode = null;
+        public static string NONE_IMAGE_STRING = "<None>";
 
         // PATHS
         public static string ABSOLUTEENGINEPATH;

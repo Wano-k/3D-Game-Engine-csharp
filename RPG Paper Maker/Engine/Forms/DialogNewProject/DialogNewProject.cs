@@ -85,6 +85,7 @@ namespace RPG_Paper_Maker
             {
                 folderDialog.SelectedPath = TextCtrlLocation.Text;
             }
+            folderDialog.Description = "Select where your project folder will be generated.";
             if (folderDialog.ShowDialog() == DialogResult.OK)
             {
                 Control.LoadDirectoryLocation(folderDialog.SelectedPath);

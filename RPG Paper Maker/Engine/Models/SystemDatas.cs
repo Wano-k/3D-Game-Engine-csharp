@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,9 @@ namespace RPG_Paper_Maker
         public int ScreenHeight = 480;
         public bool FullScreen = false;
         public int SquareSize = 16;
+        public List<Tileset> Tilesets = new List<Tileset>();
         public List<SystemColor> Colors = new List<SystemColor>();
+        public string PathRTP;
 
 
         // -------------------------------------------------------------------
@@ -34,6 +37,13 @@ namespace RPG_Paper_Maker
                 GameName[Langs[i]] = gameName;
             }
 
+            // Path RTP
+            PathRTP = Path.Combine(WANOK.ExcecutablePathDir, "RTP");
+
+            // Tilesets
+            Tilesets.Add(new Tileset(1, "Plains", new SystemGraphic("plains.png", true, GraphicKind.Tileset), Tileset.GetDefaultPassableCollision(9,9)));
+            for (int i = 1; i < 50; i++) Tilesets.Add(new Tileset(i + 1));
+
             // Colors
             Colors.Add(SystemColor.BlackColor);
             Colors.Add(SystemColor.BlackGrayColor);
@@ -48,7 +58,7 @@ namespace RPG_Paper_Maker
             Colors.Add(SystemColor.PurpleColor);
             Colors.Add(SystemColor.MagentaColor);
             Colors.Add(SystemColor.PinkColor);
-            for (int i = 13; i < 50; i++) Colors.Add(SystemColor.GetDefaultColor(i+1));
+            for (int i = 13; i < 50; i++) Colors.Add(new SystemColor(i+1));
         }
 
         // -------------------------------------------------------------------
@@ -57,7 +67,7 @@ namespace RPG_Paper_Maker
 
         public SystemColor GetColorById(int id)
         {
-            if (id > Colors.Count) return SystemColor.GetDefaultColor(-1);
+            if (id > Colors.Count) return new SystemColor(-1);
             return Colors.Find(i => i.Id == id);
         }
 
@@ -68,6 +78,25 @@ namespace RPG_Paper_Maker
         public int GetColorIndexById(int id)
         {
             return Colors.IndexOf(GetColorById(id));
+        }
+
+        // -------------------------------------------------------------------
+        // GetTilesetById
+        // -------------------------------------------------------------------
+
+        public Tileset GetTilesetById(int id)
+        {
+            if (id > Tilesets.Count) return new Tileset(-1);
+            return Tilesets.Find(i => i.Id == id);
+        }
+
+        // -------------------------------------------------------------------
+        // GetTilesetIndexById
+        // -------------------------------------------------------------------
+
+        public int GetTilesetIndexById(int id)
+        {
+            return Tilesets.IndexOf(GetTilesetById(id));
         }
 
         // -------------------------------------------------------------------

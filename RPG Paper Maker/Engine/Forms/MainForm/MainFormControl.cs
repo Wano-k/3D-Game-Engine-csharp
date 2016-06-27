@@ -24,11 +24,6 @@ namespace RPG_Paper_Maker
                 Directory.CreateDirectory(path);
             }
 
-            // This code created the basic first map settings
-            /*
-            WANOK.SaveBinaryDatas(new MapInfos("MAP0001", 25, 25), "infos.map");
-            */
-
             // This code created the basic engine settings
             /*
             WANOK.SaveDatas(new EngineSettings(), "EngineSettings.JSON");

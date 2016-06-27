@@ -83,13 +83,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\CustomUserControls\CollisionPicture.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Engine\CustomUserControls\CollisionSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Engine\CustomUserControls\CollisionSettings.Designer.cs">
+      <DependentUpon>CollisionSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Engine\CustomUserControls\PassagePicture.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Engine\CustomUserControls\TextBoxGraphic.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Engine\CustomUserControls\TextBoxGraphic.Designer.cs">
+      <DependentUpon>TextBoxGraphic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Engine\Enums\GraphicKind.cs" />
+    <Compile Include="Engine\Enums\PassageKind.cs" />
     <Compile Include="Engine\Forms\DialogDataBase\DialogDataBase.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Engine\Forms\DialogDataBase\DialogDataBase.Designer.cs">
       <DependentUpon>DialogDataBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Engine\Forms\DialogDataBase\DialogDataBaseSystemControl.cs" />
+    <Compile Include="Engine\Forms\DialogDataBase\DialogDataBaseControl.cs" />
     <Compile Include="Engine\Forms\DialogDataBase\DialogSystemColors\DialogSystemColorControl.cs" />
     <Compile Include="Engine\Forms\DialogDataBase\DialogSystemColors\DialogSystemColors.cs">
       <SubType>Form</SubType>
@@ -136,6 +156,13 @@
     </Compile>
     <Compile Include="Engine\Forms\DialogNewMap\DialogNewMapControl.cs" />
     <Compile Include="Engine\Forms\DialogNewProject\DialogNewProjectControl.cs" />
+    <Compile Include="Engine\Forms\DialogPreviewGraphic\DialogPreviewGraphic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogPreviewGraphic\DialogPreviewGraphic.Designer.cs">
+      <DependentUpon>DialogPreviewGraphic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogPreviewGraphic\DialogPreviewGraphicControl.cs" />
     <Compile Include="Engine\Models\KeyboardAssign.cs" />
     <Compile Include="Engine\Models\Project.cs" />
     <Compile Include="Engine\Forms\AboutBox\AboutBox.cs">
@@ -150,7 +177,7 @@
     <Compile Include="Engine\Forms\DialogNewDir\DialogNewDir.Designer.cs">
       <DependentUpon>DialogNewDir.cs</DependentUpon>
     </Compile>
-    <Compile Include="Engine\DemoSteps.cs" />
+    <Compile Include="Engine\Enums\DemoSteps.cs" />
     <Compile Include="Engine\Forms\DemoTips\DialogDemoTipNewProject.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,19 +212,22 @@
     <Compile Include="Engine\Forms\MainForm\MainFormControl.cs" />
     <Compile Include="Engine\Models\SystemColor.cs" />
     <Compile Include="Engine\Models\SystemDatas.cs" />
-    <Compile Include="Engine\SuperListBox.cs">
+    <Compile Include="Engine\CustomUserControls\SuperListBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Engine\SuperListBox.Designer.cs">
+    <Compile Include="Engine\CustomUserControls\SuperListBox.Designer.cs">
       <DependentUpon>SuperListBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\Models\SystemGraphic.cs" />
+    <Compile Include="Engine\Models\Tileset.cs" />
+    <Compile Include="Engine\Models\TilesetPassage.cs" />
     <Compile Include="Engine\SuperListDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Engine\TextBoxLang.cs">
+    <Compile Include="Engine\CustomUserControls\TextBoxLang.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Engine\TextBoxLang.Designer.cs">
+    <Compile Include="Engine\CustomUserControls\TextBoxLang.Designer.cs">
       <DependentUpon>TextBoxLang.cs</DependentUpon>
     </Compile>
     <Compile Include="MapEditorControls\GraphicsDeviceControl.cs">
@@ -208,7 +238,7 @@
     <Compile Include="MapEditorControls\MapEditorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MapEditorControls\TilesetSelectorPicture.cs">
+    <Compile Include="Engine\CustomUserControls\TilesetSelectorPicture.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="MapEditor\Camera.cs" />
@@ -224,16 +254,21 @@
     <Compile Include="Engine\Models\MapInfos.cs" />
     <Compile Include="MapEditor\MapEditorControl.cs" />
     <Compile Include="MapEditor\Square.cs" />
-    <Compile Include="MapEditor\TilesetSelector.cs" />
-    <Compile Include="MapEditor\Wanok.cs" />
+    <Compile Include="Wanok.cs" />
     <Compile Include="MapEditor\MouseManager.cs" />
     <Compile Include="Engine\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Engine\ScrollPanel.cs">
+    <Compile Include="Engine\CustomUserControls\ScrollPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="MapEditor\SelectionRectangle.cs" />
     <Compile Include="Engine\TreeTag.cs" />
+    <EmbeddedResource Include="Engine\CustomUserControls\CollisionSettings.resx">
+      <DependentUpon>CollisionSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\CustomUserControls\TextBoxGraphic.resx">
+      <DependentUpon>TextBoxGraphic.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\AboutBox\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -273,13 +308,16 @@
     <EmbeddedResource Include="Engine\Forms\DialogNewProject\DialogNewProject.resx">
       <DependentUpon>DialogNewProject.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogPreviewGraphic\DialogPreviewGraphic.resx">
+      <DependentUpon>DialogPreviewGraphic.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\MainForm\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Engine\SuperListBox.resx">
+    <EmbeddedResource Include="Engine\CustomUserControls\SuperListBox.resx">
       <DependentUpon>SuperListBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Engine\TextBoxLang.resx">
+    <EmbeddedResource Include="Engine\CustomUserControls\TextBoxLang.resx">
       <DependentUpon>TextBoxLang.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -292,9 +330,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="Basic\Content\Datas\Maps\MAP0001\infos.map">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Basic\Content\Datas\Maps\TreeMapDatas.rpmdatas">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -320,6 +355,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="RTP\Content\Fonts\corbel.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -374,6 +412,20 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DLLs\OpenTK.GLControl.dll" />
+    <None Include="Resources\point_b.png" />
+    <None Include="Resources\point_r.png" />
+    <None Include="Resources\circle.png" />
+    <None Include="Resources\cross_orange.png" />
+    <Content Include="RTP\Content\Pictures\Textures2D\Characters\lucas.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RTP\Content\Pictures\Textures2D\Tilesets\halloween.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RTP\Content\Pictures\Textures2D\Tilesets\plains.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\picture.png" />
     <None Include="Resources\saveAll.png" />
     <None Include="Resources\lang.png" />
     <None Include="Resources\datas.png" />
@@ -394,9 +446,7 @@
     <None Include="Resources\about.png" />
     <None Include="Resources\open_file.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="RTP\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

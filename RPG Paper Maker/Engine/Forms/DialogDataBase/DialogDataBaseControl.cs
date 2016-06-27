@@ -7,30 +7,30 @@ using System.ComponentModel;
 
 namespace RPG_Paper_Maker
 {
-    public class DialogDataBaseSystemControl : INotifyPropertyChanged
+    public class DialogDataBaseControl : INotifyPropertyChanged
     {
-        public SystemDatas Model;
-        public Dictionary<string, string> GameName { get { return Model.GameName; } }
-        public List<string> Langs { get { return Model.Langs; } }
+        public SystemDatas ModelSystem;
+        public Dictionary<string, string> GameName { get { return ModelSystem.GameName; } }
+        public List<string> Langs { get { return ModelSystem.Langs; } }
         public int ScreenWidth
         {
-            get { return Model.ScreenWidth; }
-            set { Model.ScreenWidth = value; NotifyPropertyChanged("ScreenWidth"); }
+            get { return ModelSystem.ScreenWidth; }
+            set { ModelSystem.ScreenWidth = value; NotifyPropertyChanged("ScreenWidth"); }
         }
         public int ScreenHeight
         {
-            get { return Model.ScreenHeight; }
-            set { Model.ScreenHeight = value; NotifyPropertyChanged("ScreenHeight"); }
+            get { return ModelSystem.ScreenHeight; }
+            set { ModelSystem.ScreenHeight = value; NotifyPropertyChanged("ScreenHeight"); }
         }
         public bool FullScreen
         {
-            get { return Model.FullScreen; }
-            set { Model.FullScreen = value; NotifyPropertyChanged("FullScreen"); }
+            get { return ModelSystem.FullScreen; }
+            set { ModelSystem.FullScreen = value; NotifyPropertyChanged("FullScreen"); }
         }
         public int SquareSize
         {
-            get { return Model.SquareSize; }
-            set { Model.SquareSize = value; NotifyPropertyChanged("SquareSize"); }
+            get { return ModelSystem.SquareSize; }
+            set { ModelSystem.SquareSize = value; NotifyPropertyChanged("SquareSize"); }
         }
 
 
@@ -38,9 +38,9 @@ namespace RPG_Paper_Maker
         // Constructors
         // -------------------------------------------------------------------
 
-        public DialogDataBaseSystemControl(SystemDatas system)
+        public DialogDataBaseControl(SystemDatas system)
         {
-            Model = system;
+            ModelSystem = system;
         }
 
         // -------------------------------------------------------------------
@@ -58,12 +58,26 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // TILESETS
+        // -------------------------------------------------------------------
+
+        #region Tilesets
+
+        #endregion
+
+        // -------------------------------------------------------------------
+        // SYSTEM
+        // -------------------------------------------------------------------
+
+        #region System
+
+        // -------------------------------------------------------------------
         // SetFullScreen
         // -------------------------------------------------------------------
 
         public void SetFullScreen(int index)
         {
-            Model.FullScreen = index == 1;
+            ModelSystem.FullScreen = index == 1;
         }
 
         // -------------------------------------------------------------------
@@ -72,7 +86,7 @@ namespace RPG_Paper_Maker
 
         public int GetFullScreenIndex()
         {
-            return Model.FullScreen ? 1 : 0;
+            return ModelSystem.FullScreen ? 1 : 0;
         }
 
         // -------------------------------------------------------------------
@@ -87,14 +101,16 @@ namespace RPG_Paper_Maker
             }
         }
 
+        #endregion
+
         // -------------------------------------------------------------------
         // Save
         // -------------------------------------------------------------------
 
         public void Save()
         {
-            WANOK.SystemDatas = Model;
-            WANOK.SaveBinaryDatas(Model, WANOK.SystemPath);
+            WANOK.SystemDatas = ModelSystem;
+            WANOK.SaveBinaryDatas(ModelSystem, WANOK.SystemPath);
         }
     }
 }

@@ -58,6 +58,15 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // GetMapTilesetGraphic
+        // -------------------------------------------------------------------
+
+        public SystemGraphic GetMapTilesetGraphic()
+        {
+            return WANOK.SystemDatas.GetTilesetById(Control.Map.MapInfos.Tileset).Graphic;
+        }
+
+        // -------------------------------------------------------------------
         // SetCurrentTexture
         // -------------------------------------------------------------------
 
@@ -109,15 +118,9 @@ namespace RPG_Paper_Maker
         {
             // Recreate game components
             Control.IsMapReloading = true;
-            if (TexTileset != null) TexTileset.Dispose();
-            FileStream fs;
-            fs = new FileStream(Path.Combine(WANOK.CurrentDir, "Content", "Pictures", "Textures2D", "Tilesets", "plains.png"), FileMode.Open);
-            TexTileset = Texture2D.FromStream(GraphicsDevice, fs);
-            fs.Close();
             Control.Camera.ReLoadMap();
             if (Control.Map != null) DisposeVertexBuffer(); // Dispose the previous vertexBuffer to create a new one for the object
             Control.Map = new Map(GraphicsDevice, mapName);
-            Control.CursorEditor.Reset();
             Control.IsMapReloading = false;
         }
 

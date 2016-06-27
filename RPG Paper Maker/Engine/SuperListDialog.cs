@@ -19,5 +19,10 @@ namespace RPG_Paper_Maker
         public string Name = "";
 
         public abstract SuperListItem CreateCopy();
+
+        public override string ToString()
+        {
+            return WANOK.GetStringList(Id, Name);
+        }
     }
 }
