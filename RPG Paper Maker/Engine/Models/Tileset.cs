@@ -12,6 +12,7 @@ namespace RPG_Paper_Maker
         public static int MAX_TILESETS = 9999;
         public SystemGraphic Graphic;
         public TilesetPassage[,] PassableCollision;
+        public List<Autotile> Autotiles = new List<Autotile>();
 
 
         // -------------------------------------------------------------------

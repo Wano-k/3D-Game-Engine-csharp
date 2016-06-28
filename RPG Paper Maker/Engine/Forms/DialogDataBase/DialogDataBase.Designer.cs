@@ -42,13 +42,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
-            this.superListBox6 = new RPG_Paper_Maker.SuperListBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.superListBox5 = new RPG_Paper_Maker.SuperListBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.superListBox4 = new RPG_Paper_Maker.SuperListBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.listBoxAutotiles = new RPG_Paper_Maker.SuperListBox();
             this.textBoxGraphic = new RPG_Paper_Maker.Engine.CustomUserControls.TextBoxGraphic();
             this.collisionSettings = new RPG_Paper_Maker.CollisionSettings();
             this.tabPageSystem = new System.Windows.Forms.TabPage();
@@ -79,6 +75,7 @@
             this.ok = new System.Windows.Forms.Button();
             this.cancel = new System.Windows.Forms.Button();
             this.toolTipSquareSize = new System.Windows.Forms.ToolTip(this.components);
+            this.listBoxAutotiles = new RPG_Paper_Maker.AddingListBox();
             this.tabControl1.SuspendLayout();
             this.tabPageTilesets.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
@@ -87,9 +84,6 @@
             this.tableLayoutPanel10.SuspendLayout();
             this.tableLayoutPanel11.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
-            this.groupBox11.SuspendLayout();
-            this.groupBox10.SuspendLayout();
-            this.groupBox9.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.tabPageSystem.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -271,7 +265,6 @@
             // 
             // groupBox11
             // 
-            this.groupBox11.Controls.Add(this.superListBox6);
             this.groupBox11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox11.Location = new System.Drawing.Point(155, 152);
             this.groupBox11.Margin = new System.Windows.Forms.Padding(5);
@@ -282,17 +275,8 @@
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Montains";
             // 
-            // superListBox6
-            // 
-            this.superListBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superListBox6.Location = new System.Drawing.Point(2, 15);
-            this.superListBox6.Name = "superListBox6";
-            this.superListBox6.Size = new System.Drawing.Size(136, 120);
-            this.superListBox6.TabIndex = 0;
-            // 
             // groupBox10
             // 
-            this.groupBox10.Controls.Add(this.superListBox5);
             this.groupBox10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox10.Location = new System.Drawing.Point(5, 152);
             this.groupBox10.Margin = new System.Windows.Forms.Padding(5);
@@ -303,17 +287,8 @@
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Water";
             // 
-            // superListBox5
-            // 
-            this.superListBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superListBox5.Location = new System.Drawing.Point(2, 15);
-            this.superListBox5.Name = "superListBox5";
-            this.superListBox5.Size = new System.Drawing.Size(136, 120);
-            this.superListBox5.TabIndex = 0;
-            // 
             // groupBox9
             // 
-            this.groupBox9.Controls.Add(this.superListBox4);
             this.groupBox9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox9.Location = new System.Drawing.Point(155, 5);
             this.groupBox9.Margin = new System.Windows.Forms.Padding(5);
@@ -324,14 +299,6 @@
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "3D objects";
             // 
-            // superListBox4
-            // 
-            this.superListBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superListBox4.Location = new System.Drawing.Point(2, 15);
-            this.superListBox4.Name = "superListBox4";
-            this.superListBox4.Size = new System.Drawing.Size(136, 120);
-            this.superListBox4.TabIndex = 0;
-            // 
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.listBoxAutotiles);
@@ -339,19 +306,11 @@
             this.groupBox8.Location = new System.Drawing.Point(5, 5);
             this.groupBox8.Margin = new System.Windows.Forms.Padding(5);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox8.Padding = new System.Windows.Forms.Padding(10);
             this.groupBox8.Size = new System.Drawing.Size(140, 137);
             this.groupBox8.TabIndex = 1;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Autotiles";
-            // 
-            // listBoxAutotiles
-            // 
-            this.listBoxAutotiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxAutotiles.Location = new System.Drawing.Point(2, 15);
-            this.listBoxAutotiles.Name = "listBoxAutotiles";
-            this.listBoxAutotiles.Size = new System.Drawing.Size(136, 120);
-            this.listBoxAutotiles.TabIndex = 0;
             // 
             // textBoxGraphic
             // 
@@ -761,6 +720,14 @@
             this.toolTipSquareSize.InitialDelay = 500;
             this.toolTipSquareSize.ReshowDelay = 100;
             // 
+            // listBoxAutotiles
+            // 
+            this.listBoxAutotiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxAutotiles.Location = new System.Drawing.Point(10, 23);
+            this.listBoxAutotiles.Name = "listBoxAutotiles";
+            this.listBoxAutotiles.Size = new System.Drawing.Size(120, 104);
+            this.listBoxAutotiles.TabIndex = 0;
+            // 
             // DialogDataBase
             // 
             this.AcceptButton = this.ok;
@@ -783,9 +750,6 @@
             this.tableLayoutPanel11.ResumeLayout(false);
             this.tableLayoutPanel11.PerformLayout();
             this.tableLayoutPanel12.ResumeLayout(false);
-            this.groupBox11.ResumeLayout(false);
-            this.groupBox10.ResumeLayout(false);
-            this.groupBox9.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
             this.tabPageSystem.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
@@ -851,15 +815,12 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel12;
         private System.Windows.Forms.GroupBox groupBox11;
-        private SuperListBox superListBox6;
         private System.Windows.Forms.GroupBox groupBox10;
-        private SuperListBox superListBox5;
         private System.Windows.Forms.GroupBox groupBox9;
-        private SuperListBox superListBox4;
         private System.Windows.Forms.GroupBox groupBox8;
-        private SuperListBox listBoxAutotiles;
         private Engine.CustomUserControls.TextBoxGraphic textBoxGraphic;
         private System.Windows.Forms.GroupBox groupBox12;
         private CollisionSettings collisionSettings;
+        private AddingListBox listBoxAutotiles;
     }
 }

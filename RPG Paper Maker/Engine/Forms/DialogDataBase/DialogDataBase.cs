@@ -27,7 +27,7 @@ namespace RPG_Paper_Maker
             InitializeComponent();
             Control = new DialogDataBaseControl(WANOK.LoadBinaryDatas<SystemDatas>(WANOK.SystemPath));
             ViewModelBindingSource.DataSource = Control;
-            ListBoxesCanceling = new ListBox[] { textBoxLangGameName.GetTextBox(), listBoxColors.GetListBox(), textBoxGraphic.GetTextBox() };
+            ListBoxesCanceling = new ListBox[] { textBoxLangGameName.GetTextBox(), listBoxColors.GetListBox(), textBoxGraphic.GetTextBox(), listBoxAutotiles.GetListBox() };
             ListBoxes = new ListBox[] { listBoxTilesets.GetListBox() };
 
             // Tilesets
@@ -35,6 +35,7 @@ namespace RPG_Paper_Maker
             listBoxTilesets.GetListBox().SelectedIndexChanged += listBoxTilesets_SelectedIndexChanged;
             textBoxGraphic.GetTextBox().SelectedValueChanged += textBoxGraphic_SelectedValueChanged;
             collisionSettings.LoadTextures();
+            listBoxAutotiles.GetButton().Text = "Choose autotiles";
 
             // System
             ComboBoxResolution.SelectedIndex = Control.GetFullScreenIndex();
@@ -112,6 +113,7 @@ namespace RPG_Paper_Maker
                 textBoxTilesetName.Text = tileset.Name;
                 textBoxGraphic.InitializeParameters(tileset.Graphic);
                 collisionSettings.InitializeParameters(tileset);
+                listBoxAutotiles.InitializeListParameters(ListBoxesCanceling, tileset.Autotiles.Cast<SuperListItem>().ToList(), typeof(Autotile), 1, Autotile.MAX_AUTOTILES);
             }
         }
 

@@ -936,6 +936,7 @@ namespace RPG_Paper_Maker
             SplitContainerMain.Visible = b;
             SplitContainerTree.Visible = b;
             MapEditor.Visible = b;
+            PanelSpecialMenu.Visible = b;
             TilesetSelectorPicture.Visible = b;
             TreeMap.Visible = b;
         }
@@ -948,6 +949,7 @@ namespace RPG_Paper_Maker
         {
             MapEditor.Visible = b;
             menuStrip2.Visible = b;
+            PanelSpecialMenu.Visible = b;
             TilesetSelectorPicture.Visible = b;
         }
 

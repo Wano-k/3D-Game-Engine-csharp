@@ -59,10 +59,30 @@ namespace RPG_Paper_Maker
         // AddFloor
         // -------------------------------------------------------------------
 
-        public void AddFloor(int[] coords, int[] newTexture)
+        public bool AddFloor(int[] coords, int[] newTexture)
         {
+            int[] beforeTexture = new int[] { 0, 0, 0, 0 };
+            if (Floors.ContainsKey(coords)) beforeTexture = Floors[coords];
+
             // Adding the new floor
             Floors[coords] = newTexture;
+
+            return !beforeTexture.SequenceEqual(newTexture);
+        }
+
+        // -------------------------------------------------------------------
+        // RemoveFloor
+        // -------------------------------------------------------------------
+
+        public bool RemoveFloor(int[] coords)
+        {
+            int[] beforeTexture = new int[] { 0, 0, 0, 0 };
+            if (Floors.ContainsKey(coords)) beforeTexture = Floors[coords];
+
+            // Removing the new floor
+            Floors.Remove(coords);
+
+            return !beforeTexture.SequenceEqual(new int[] { 0, 0, 0, 0 }); ;
         }
 
         // -------------------------------------------------------------------
@@ -71,13 +91,7 @@ namespace RPG_Paper_Maker
 
         public void GenFloor(GraphicsDevice device, Texture2D texture)
         {
-            if (VBFloor != null)
-            {
-                device.SetVertexBuffer(null);
-                device.Indices = null;
-                VBFloor.Dispose();
-                IBFloor.Dispose();
-            }
+            DisposeBuffers(device);
             CreatePortionFloor(device, texture);
         }
 

@@ -92,8 +92,17 @@
     <Compile Include="Engine\CustomUserControls\CollisionSettings.Designer.cs">
       <DependentUpon>CollisionSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\CustomUserControls\ImageComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Engine\CustomUserControls\PassagePicture.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Engine\CustomUserControls\AddingListBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Engine\CustomUserControls\AddingListBox.Designer.cs">
+      <DependentUpon>AddingListBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\CustomUserControls\TextBoxGraphic.cs">
       <SubType>UserControl</SubType>
@@ -103,6 +112,12 @@
     </Compile>
     <Compile Include="Engine\Enums\GraphicKind.cs" />
     <Compile Include="Engine\Enums\PassageKind.cs" />
+    <Compile Include="Engine\Forms\DialogAddingSpecialList\DialogAddingSpecialList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogAddingSpecialList\DialogAddingSpecialList.Designer.cs">
+      <DependentUpon>DialogAddingSpecialList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Engine\Forms\DialogDataBase\DialogDataBase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -163,6 +178,7 @@
       <DependentUpon>DialogPreviewGraphic.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Forms\DialogPreviewGraphic\DialogPreviewGraphicControl.cs" />
+    <Compile Include="Engine\Models\Autotile.cs" />
     <Compile Include="Engine\Models\KeyboardAssign.cs" />
     <Compile Include="Engine\Models\Project.cs" />
     <Compile Include="Engine\Forms\AboutBox\AboutBox.cs">
@@ -266,6 +282,9 @@
     <EmbeddedResource Include="Engine\CustomUserControls\CollisionSettings.resx">
       <DependentUpon>CollisionSettings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Engine\CustomUserControls\AddingListBox.resx">
+      <DependentUpon>AddingListBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Engine\CustomUserControls\TextBoxGraphic.resx">
       <DependentUpon>TextBoxGraphic.cs</DependentUpon>
     </EmbeddedResource>
@@ -277,6 +296,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DemoTips\DialogDemoTip.resx">
       <DependentUpon>DialogDemoTip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogAddingSpecialList\DialogAddingSpecialList.resx">
+      <DependentUpon>DialogAddingSpecialList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogDataBase\DialogDataBase.resx">
       <DependentUpon>DialogDataBase.cs</DependentUpon>
@@ -417,6 +439,9 @@
     <None Include="Resources\circle.png" />
     <None Include="Resources\cross_orange.png" />
     <Content Include="RTP\Content\Pictures\Textures2D\Characters\lucas.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RTP\Content\Pictures\Textures2D\Characters\template.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="RTP\Content\Pictures\Textures2D\Tilesets\halloween.png">

@@ -200,6 +200,12 @@ namespace RPG_Paper_Maker
 
         public void UpdatePortions()
         {
+            for (int i = 0; i < PortionsToUpdate.Count; i++)
+            {
+                if (Map.Portions[PortionsToUpdate[i]].IsEmpty()) Map.DisposeBuffers(PortionsToUpdate[i]);
+                else Map.GenFloor(PortionsToUpdate[i]);
+            }
+
             for (int i = 0; i < PortionsToSave.Count; i++)
             {
                 int x = PortionsToSave[i][0] + (CursorEditor.GetX() / WANOK.PORTION_SIZE);
@@ -215,11 +221,6 @@ namespace RPG_Paper_Maker
                 {
                     WANOK.SaveBinaryDatas(Map.Portions[PortionsToSave[i]], path);
                 }
-            }
-
-            for (int i = 0; i < PortionsToUpdate.Count; i++)
-            {
-                Map.GenFloor(PortionsToUpdate[i]);
             }
 
             ClearPortions();
@@ -269,8 +270,6 @@ namespace RPG_Paper_Maker
 
         public void Add(bool isMouse)
         {
-            SetToNoSaved();
-
             switch (SelectedDrawType)
             {
                 case "ItemStart":
@@ -370,7 +369,7 @@ namespace RPG_Paper_Maker
                 int[] texture = (int[])args[0];
 
                 if (Map.Portions[portion] == null) Map.Portions[portion] = new GameMapPortion();
-                Map.Portions[portion].AddFloor(coords, texture);
+                if (Map.Portions[portion].AddFloor(coords, texture) && Map.Saved) SetToNoSaved();
                 AddPortionToSave(portion);
                 AddPortionToUpdate(portion);
             }
@@ -382,16 +381,45 @@ namespace RPG_Paper_Maker
 
         public void RemoveFloor(bool isMouse)
         {
+            // Getting coords
+            int[] coords = GetCoords(isMouse);
+            if (coords == null) return;
 
+            // Removing squares
+            switch (DrawMode)
+            {
+                case DrawMode.Pencil:
+                    if (CurrentTexture[2] == 1 && CurrentTexture[3] == 1)
+                    {
+                        if (isMouse) if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, EraseFloor);
+                        else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, EraseFloor);
+                        EraseFloor(coords);
+                    }
+                    break;
+                case DrawMode.Tin:
+                    DeleteTin(EraseFloor, coords, null);
+                    break;
+            }
+
+            // Updating previous selected
+            if (isMouse) PreviousMouseCoords = coords;
+            else PreviousCursorCoords = coords;
         }
 
         // -------------------------------------------------------------------
         // EraseFloor
         // -------------------------------------------------------------------
 
-        public void EraseFloor(int[] coords)
+        public void EraseFloor(int[] coords, params object[] args)
         {
-            
+            int[] portion = GetPortion(coords[0], coords[3]);
+            if (IsInArea(coords) && IsInPortions(portion))
+            {
+                if (Map.Portions[portion] == null) Map.Portions[portion] = new GameMapPortion();
+                if (Map.Portions[portion].RemoveFloor(coords) && Map.Saved) SetToNoSaved();
+                AddPortionToSave(portion);
+                AddPortionToUpdate(portion);
+            }
         }
 
         // -------------------------------------------------------------------

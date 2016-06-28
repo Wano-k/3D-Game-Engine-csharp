@@ -19,6 +19,7 @@ namespace RPG_Paper_Maker
         public bool FullScreen = false;
         public int SquareSize = 16;
         public List<Tileset> Tilesets = new List<Tileset>();
+        public List<Autotile> Autotiles = new List<Autotile>();
         public List<SystemColor> Colors = new List<SystemColor>();
         public string PathRTP;
 
