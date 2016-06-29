@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
@@ -95,7 +96,7 @@ namespace RPG_Paper_Maker
                 case GraphicKind.Tileset:
                     return Path.Combine("Content", "Pictures", "Textures2D", "Tilesets");
                 case GraphicKind.Autotile:
-                    return "";
+                    return Path.Combine("Content", "Pictures", "Textures2D", "Autotiles");
                 default:
                     return "";
             }
@@ -107,14 +108,18 @@ namespace RPG_Paper_Maker
 
         public Image LoadImage()
         {
+            string path = GetGraphicPath();
             try
             {
-                using (FileStream stream = new FileStream(GetGraphicPath(), FileMode.Open, FileAccess.Read))
+                using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
                 {
                     return Image.FromStream(stream);
                 }
             }
-            catch { return null; }
+            catch {
+                MessageBox.Show("Could not load " + path, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
         }
     }
 }

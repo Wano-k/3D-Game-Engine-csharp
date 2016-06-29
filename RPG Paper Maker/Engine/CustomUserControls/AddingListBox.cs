@@ -14,9 +14,12 @@ namespace RPG_Paper_Maker
 {
     public partial class AddingListBox : UserControl
     {
-        public List<SuperListItem> ModelList { get { return listBox.Items.Cast<SuperListItem>().ToList(); } }
+        public List<int> ModelListTileset;
+        public List<SuperListItem> ModelListComplete;
+        public Type DialogKind;
         public Type TypeItem;
         public ListBox[] ListBoxes;
+        public SystemDatas Model;
         public int Min, Max;
 
 
@@ -35,16 +38,21 @@ namespace RPG_Paper_Maker
         // InitializeListParameters
         // -------------------------------------------------------------------
 
-        public void InitializeListParameters(ListBox[] list, List<SuperListItem> modelList, Type typeItem, int min, int max)
+        public void InitializeListParameters(SystemDatas model, ListBox[] list, List<SuperListItem> modelListComplete, List<int> modelListTileset, Type type, Type typeItem, int min, int max)
         {
             ListBoxes = list;
+            ModelListComplete = modelListComplete;
+            ModelListTileset = modelListTileset;
+            DialogKind = type;
             TypeItem = typeItem;
+            Model = model;
             Min = min;
             Max = max;
 
-            for (int i = 0; i < modelList.Count; i++)
+            listBox.Items.Clear();
+            for (int i = 0; i < modelListTileset.Count; i++)
             {
-                listBox.Items.Add(modelList[i]);
+                listBox.Items.Add(model.GetAutotileById(modelListTileset[i]));
             }
         }
 
@@ -86,19 +94,6 @@ namespace RPG_Paper_Maker
         {
             ((SuperListItem)listBox.Items[listBox.SelectedIndex]).Name = name;
             listBox.Items[listBox.SelectedIndex] = listBox.SelectedItem;
-        }
-        
-        // -------------------------------------------------------------------
-        // button_Click
-        // -------------------------------------------------------------------
-
-        private void button_Click(object sender, EventArgs e)
-        {
-            DialogAddingSpecialList dialog = new DialogAddingSpecialList(button.Text);
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                
-            }
         }
     }
 }

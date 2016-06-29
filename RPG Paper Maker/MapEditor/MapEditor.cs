@@ -18,6 +18,7 @@ namespace RPG_Paper_Maker
 
         public MapEditorControl Control = new MapEditorControl();
         public string SelectedDrawType { get { return Control.SelectedDrawType; } set { Control.SelectedDrawType = value; } }
+        public DrawType SelectedDrawTypeParticular { get { return Control.SelectedDrawTypeParticular; } set { Control.SelectedDrawTypeParticular = value; } }
         public DrawMode DrawMode { get { return Control.DrawMode; } set { Control.DrawMode = value; } }
         public Point MouseBeforeUpdate { get { return Control.MouseBeforeUpdate; } set { Control.MouseBeforeUpdate = value; } }
 

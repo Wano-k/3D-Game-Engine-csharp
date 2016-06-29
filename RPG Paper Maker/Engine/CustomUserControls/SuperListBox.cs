@@ -21,7 +21,7 @@ namespace RPG_Paper_Maker
         public SuperListItem CopiedItem = null;
         public int Min, Max;
         public System.Timers.Timer DragTimer = new System.Timers.Timer(20);
-        public bool CanDrag = false;
+        public bool CanDrag = false, SelectLast = false;
 
 
         // -------------------------------------------------------------------
@@ -64,6 +64,15 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // GetButton
+        // -------------------------------------------------------------------
+
+        public Button GetButton()
+        {
+            return button;
+        }
+
+        // -------------------------------------------------------------------
         // UnselectAllLists
         // -------------------------------------------------------------------
 
@@ -81,17 +90,8 @@ namespace RPG_Paper_Maker
 
         public void SetName(string name)
         {
-            /*
-            int index = listBox.SelectedIndex;
-            SuperListItem t = (SuperListItem)listBox.Items[index];
-            t.Name = name;
-            listBox.Items.RemoveAt(index);
-            listBox.Items.Insert(index, t);
-            listBox.SelectedIndex = index;*/
-
             ((SuperListItem)listBox.Items[listBox.SelectedIndex]).Name = name;
             listBox.Items[listBox.SelectedIndex] = listBox.SelectedItem;
-
         }
 
         // -------------------------------------------------------------------
@@ -129,9 +129,12 @@ namespace RPG_Paper_Maker
 
         public void PasteItem()
         {
-            CopiedItem.Id = ((SuperListItem)listBox.Items[listBox.SelectedIndex]).Id;
-            listBox.Items[listBox.SelectedIndex] = CopiedItem;
-            CopiedItem = CopiedItem.CreateCopy();
+            if (CopiedItem != null)
+            {
+                CopiedItem.Id = ((SuperListItem)listBox.Items[listBox.SelectedIndex]).Id;
+                listBox.Items[listBox.SelectedIndex] = CopiedItem;
+                CopiedItem = CopiedItem.CreateCopy();
+            }
         }
 
         // -------------------------------------------------------------------
@@ -150,20 +153,20 @@ namespace RPG_Paper_Maker
 
         private void listBox_MouseDown(object sender, MouseEventArgs e)
         {
+            int index = listBox.IndexFromPoint(e.X, e.Y);
+            UnselectAllLists();
+            listBox.SelectedIndex = index;
+            if (listBox.SelectedIndex == -1) SelectLast = true;
+
             // If left clic, can drag and drop
             if (e.Button == MouseButtons.Left)
             {
-                if (listBox.SelectedItem == null) return;
                 if (!DragTimer.Enabled) DragTimer.Start();
             }
 
             // If right clic, open ContextMenu
             if (e.Button == MouseButtons.Right)
             {
-                int index = listBox.IndexFromPoint(e.X, e.Y);
-                UnselectAllLists();
-                listBox.SelectedIndex = index;
-                
                 if (listBox.SelectedIndex != -1)
                 {
                     ItemEdit.Enabled = DialogKind != null;
@@ -231,7 +234,7 @@ namespace RPG_Paper_Maker
             {
                 if (e.KeyCode == Keys.Delete) DeleteItem();
                 if (e.Control && e.KeyCode == Keys.C) CopyItem();
-                if (e.Control && e.KeyCode == Keys.V && CopiedItem != null) PasteItem();
+                if (e.Control && e.KeyCode == Keys.V) PasteItem();
             }
         }
 
@@ -258,23 +261,7 @@ namespace RPG_Paper_Maker
 
             listBox.Items.Remove(data);
             listBox.Items.Insert(newIndex, data);
-
-            /*
-            if (newIndex < beforeIndex)
-            {
-                for (int i = 0; i < OrderList.Count; i++) if (OrderList[i] >= newIndex && OrderList[i] < beforeIndex) OrderList[i]++;
-            }
-            else if (newIndex > beforeIndex)
-            {
-                for (int i = 0; i < OrderList.Count; i++) if (OrderList[i] > beforeIndex && OrderList[i] <= newIndex) OrderList[i]--;
-            }
-            OrderList[idItemMoved - 1] = newIndex;
-            
-            
-            for (int i = 0; i < OrderList.Count; i++)
-            {
-                if (((SuperListItem)listBox.Items[OrderList[i]]).Id != i + 1) throw new Exception();
-            }*/
+            listBox.SelectedIndex = newIndex;
         }
 
         // -------------------------------------------------------------------
@@ -309,6 +296,19 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // listBox_SelectedIndexChanged
+        // -------------------------------------------------------------------
+
+        private void listBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (SelectLast)
+            {
+                listBox.SelectedIndex = listBox.Items.Count - 1;
+                SelectLast = false;
+            }
+        }
+
+        // -------------------------------------------------------------------
         // button_Click
         // -------------------------------------------------------------------
 
@@ -328,8 +328,7 @@ namespace RPG_Paper_Maker
                 {
                     int nb = dialog.Value - listBox.Items.Count;
                     for (int i = 0; i < nb; i++) {
-                        SuperListItem defaultValue = (SuperListItem)Activator.CreateInstance(TypeItem);
-                        defaultValue.Id = listBox.Items.Count + 1;
+                        SuperListItem defaultValue = (SuperListItem)Activator.CreateInstance(TypeItem, listBox.Items.Count + 1);
                         listBox.Items.Add(defaultValue);
                     }
                 }

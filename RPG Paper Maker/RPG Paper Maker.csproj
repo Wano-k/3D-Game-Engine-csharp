@@ -112,6 +112,9 @@
     </Compile>
     <Compile Include="Engine\Enums\GraphicKind.cs" />
     <Compile Include="Engine\Enums\PassageKind.cs" />
+    <Compile Include="Engine\Forms\DialogAddingSpecialList\DialogAddingAutotilesList\DialogAddingAutotilesList.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Engine\Forms\DialogAddingSpecialList\DialogAddingSpecialList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -179,6 +182,7 @@
     </Compile>
     <Compile Include="Engine\Forms\DialogPreviewGraphic\DialogPreviewGraphicControl.cs" />
     <Compile Include="Engine\Models\Autotile.cs" />
+    <Compile Include="Engine\Models\Collision.cs" />
     <Compile Include="Engine\Models\KeyboardAssign.cs" />
     <Compile Include="Engine\Models\Project.cs" />
     <Compile Include="Engine\Forms\AboutBox\AboutBox.cs">
@@ -259,6 +263,7 @@
     </Compile>
     <Compile Include="MapEditor\Camera.cs" />
     <Compile Include="MapEditor\DrawMode.cs" />
+    <Compile Include="MapEditor\DrawType.cs" />
     <Compile Include="MapEditor\IntArrayComparer.cs" />
     <Compile Include="MapEditor\KeyboardManager.cs" />
     <Compile Include="MapEditor\MapEditor.cs">
@@ -403,12 +408,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Basic\Content\Pictures\Textures2D\Characters\lucas.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Basic\Content\Pictures\Textures2D\Tilesets\plains.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Basic\Game.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -438,6 +437,11 @@
     <None Include="Resources\point_r.png" />
     <None Include="Resources\circle.png" />
     <None Include="Resources\cross_orange.png" />
+    <None Include="Resources\big_arrow_left.png" />
+    <None Include="Resources\delete.png" />
+    <Content Include="RTP\Content\Pictures\Textures2D\Autotiles\grass.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="RTP\Content\Pictures\Textures2D\Characters\lucas.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

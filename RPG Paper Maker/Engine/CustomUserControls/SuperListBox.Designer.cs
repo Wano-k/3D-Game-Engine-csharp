@@ -54,6 +54,7 @@
             this.listBox.Name = "listBox";
             this.listBox.Size = new System.Drawing.Size(144, 114);
             this.listBox.TabIndex = 0;
+            this.listBox.SelectedIndexChanged += new System.EventHandler(this.listBox_SelectedIndexChanged);
             this.listBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox_DragDrop);
             this.listBox.DragOver += new System.Windows.Forms.DragEventHandler(this.listBox_DragOver);
             this.listBox.DoubleClick += new System.EventHandler(this.listBox_DoubleClick);

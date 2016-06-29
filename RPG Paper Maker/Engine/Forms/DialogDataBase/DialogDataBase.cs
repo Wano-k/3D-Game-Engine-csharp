@@ -14,8 +14,7 @@ namespace RPG_Paper_Maker
     {
         protected DialogDataBaseControl Control;
         protected BindingSource ViewModelBindingSource = new BindingSource();
-        public ListBox[] ListBoxesCanceling;
-        public ListBox[] ListBoxes;
+        public ListBox[] ListBoxesCanceling, ListBoxes;
 
 
         // -------------------------------------------------------------------
@@ -36,6 +35,7 @@ namespace RPG_Paper_Maker
             textBoxGraphic.GetTextBox().SelectedValueChanged += textBoxGraphic_SelectedValueChanged;
             collisionSettings.LoadTextures();
             listBoxAutotiles.GetButton().Text = "Choose autotiles";
+            listBoxAutotiles.GetButton().Click += listBoxAutotiles_Click;
 
             // System
             ComboBoxResolution.SelectedIndex = Control.GetFullScreenIndex();
@@ -55,6 +55,8 @@ namespace RPG_Paper_Maker
             }
 
             MouseWheel += new MouseEventHandler(form_MouseWheel);
+            tabControl1.KeyDown += new KeyEventHandler(form_KeyDown);
+
             UnselectAllLists();
             InitializeDataBindings();
         }
@@ -102,6 +104,15 @@ namespace RPG_Paper_Maker
         #region Tilesets
 
         // -------------------------------------------------------------------
+        // SetCommonTilesetList
+        // -------------------------------------------------------------------
+
+        public void SetCommonTilesetList(Tileset tileset)
+        {
+            listBoxAutotiles.InitializeListParameters(Control.ModelSystem, ListBoxesCanceling, Control.ModelSystem.Autotiles.Cast<SuperListItem>().ToList(), tileset.Autotiles, typeof(DialogAddingAutotilesList), typeof(Autotile), 1, Autotile.MAX_AUTOTILES);
+        }
+
+        // -------------------------------------------------------------------
         // listBoxTilesets_SelectedIndexChanged
         // -------------------------------------------------------------------
 
@@ -112,8 +123,8 @@ namespace RPG_Paper_Maker
             {
                 textBoxTilesetName.Text = tileset.Name;
                 textBoxGraphic.InitializeParameters(tileset.Graphic);
-                collisionSettings.InitializeParameters(tileset);
-                listBoxAutotiles.InitializeListParameters(ListBoxesCanceling, tileset.Autotiles.Cast<SuperListItem>().ToList(), typeof(Autotile), 1, Autotile.MAX_AUTOTILES);
+                collisionSettings.InitializeParameters(tileset.Collision, tileset.Graphic);
+                SetCommonTilesetList(tileset);
             }
         }
 
@@ -123,7 +134,8 @@ namespace RPG_Paper_Maker
 
         public void textBoxGraphic_SelectedValueChanged(object sender, EventArgs e)
         {
-            collisionSettings.InitializeParameters((Tileset)listBoxTilesets.GetListBox().SelectedItem);
+            Tileset tileset = (Tileset)listBoxTilesets.GetListBox().SelectedItem;
+            collisionSettings.InitializeParameters(tileset.Collision, tileset.Graphic);
         }
 
         // -------------------------------------------------------------------
@@ -133,6 +145,35 @@ namespace RPG_Paper_Maker
         private void textBoxTilesetName_TextChanged(object sender, EventArgs e)
         {
             listBoxTilesets.SetName(textBoxTilesetName.Text);
+        }
+
+        // -------------------------------------------------------------------
+        // listBoxAutotiles_Click
+        // -------------------------------------------------------------------
+
+        private void listBoxAutotiles_Click(object sender, EventArgs e)
+        {
+            Tileset tileset = (Tileset)listBoxTilesets.GetListBox().SelectedItem;
+            DialogAddingAutotilesList dialog = new DialogAddingAutotilesList("Choose Autotile", Control.ModelSystem, tileset.Autotiles);
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                Control.ModelSystem.Autotiles = dialog.GetListAutotiles();
+                tileset.Autotiles = dialog.GetListTileset();
+                for (int i = 0; i < listBoxTilesets.GetListBox().Items.Count; i++)
+                {
+                    Tileset cpTileset = (Tileset)listBoxTilesets.GetListBox().Items[i];
+                    List<int> list = new List<int>();
+                    for (int j = 0; j < cpTileset.Autotiles.Count; j++)
+                    {
+                        list.Add(cpTileset.Autotiles[j]);
+                    }
+                    for (int j = 0; j < list.Count; j++)
+                    {
+                        if (list[j] > Control.ModelSystem.Autotiles.Count) cpTileset.Autotiles.Remove(list[j]);
+                    }
+                }
+                SetCommonTilesetList(tileset);
+            }
         }
 
         #endregion
@@ -172,6 +213,10 @@ namespace RPG_Paper_Maker
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             UnselectAllLists();
+            if (tabControl1.SelectedTab == tabPageTilesets)
+            {
+                listBoxTilesets.GetListBox().Focus();
+            }
         }
 
         // -------------------------------------------------------------------
@@ -179,6 +224,24 @@ namespace RPG_Paper_Maker
         // -------------------------------------------------------------------
 
         private void form_MouseWheel(object sender, MouseEventArgs e)
+        {
+            FocusList();
+        }
+
+        // -------------------------------------------------------------------
+        // form_KeyDown
+        // -------------------------------------------------------------------
+
+        private void form_KeyDown(object sender, KeyEventArgs e)
+        {
+            FocusList();
+        }
+
+        // -------------------------------------------------------------------
+        // FocusList
+        // -------------------------------------------------------------------
+
+        public void FocusList()
         {
             if (tabControl1.SelectedTab == tabPageTilesets)
             {
@@ -197,6 +260,6 @@ namespace RPG_Paper_Maker
             Control.ModelSystem.Tilesets = listBoxTilesets.ModelList.Cast<Tileset>().ToList();
             Control.Save();
             Close();
-        }
+        }      
     }
 }

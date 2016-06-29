@@ -30,13 +30,13 @@ namespace RPG_Paper_Maker
         // InitializeParameters
         // -------------------------------------------------------------------
 
-        public void InitializeParameters(Tileset tileset)
+        public void InitializeParameters(Collision collision, SystemGraphic graphic)
         {
-            if (!tileset.Graphic.IsNone())
+            if (!graphic.IsNone())
             {
-                LoadPicture(passagePicture, tileset.Graphic);
-                tileset.PassableCollision = GetPassageColision(tileset.PassableCollision);
-                passagePicture.InitializeParameters(tileset.PassableCollision);
+                LoadPicture(passagePicture, graphic);
+                collision = GetPassageColision(collision);
+                passagePicture.InitializeParameters(collision.PassableCollision);
             }
             else
             {
@@ -57,7 +57,7 @@ namespace RPG_Paper_Maker
         // GetPassageColision
         // -------------------------------------------------------------------
 
-        public TilesetPassage[,] GetPassageColision(TilesetPassage[,] passage)
+        public Collision GetPassageColision(Collision collision)
         {
             TilesetPassage[,] newPassage = new TilesetPassage[passagePicture.Width / WANOK.BASIC_SQUARE_SIZE, passagePicture.Height / WANOK.BASIC_SQUARE_SIZE];
 
@@ -65,12 +65,12 @@ namespace RPG_Paper_Maker
             {
                 for (int j = 0; j < newPassage.GetLength(1); j++)
                 {
-                    if (i < passage.GetLength(0) && j < passage.GetLength(1)) newPassage[i, j] = passage[i, j].CreateCopy();
+                    if (i < collision.PassableCollision.GetLength(0) && j < collision.PassableCollision.GetLength(1)) newPassage[i, j] = collision.PassableCollision[i, j].CreateCopy();
                     else newPassage[i, j] = new TilesetPassage();
                 }
             }
 
-            return newPassage;
+            return new Collision(newPassage);
         }
 
         // -------------------------------------------------------------------

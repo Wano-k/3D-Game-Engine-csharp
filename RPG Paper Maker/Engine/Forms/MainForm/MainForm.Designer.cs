@@ -35,8 +35,13 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.SplitContainerMain = new System.Windows.Forms.SplitContainer();
             this.SplitContainerTree = new System.Windows.Forms.SplitContainer();
+            this.tableLayoutPanelTileset = new System.Windows.Forms.TableLayoutPanel();
+            this.scrollPanel1 = new RPG_Paper_Maker.ScrollPanel();
+            this.TilesetSelectorPicture = new RPG_Paper_Maker.TilesetSelectorPicture();
+            this.PanelSpecialMenu = new System.Windows.Forms.FlowLayoutPanel();
             this.TreeMap = new System.Windows.Forms.TreeView();
             this.ImageListTreeMap = new System.Windows.Forms.ImageList(this.components);
+            this.MapEditor = new RPG_Paper_Maker.MapEditor();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.ItemFloor = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemFloor1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -92,11 +97,6 @@
             this.MenuItemSetDirName = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemDeleteDir = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.PanelSpecialMenu = new System.Windows.Forms.FlowLayoutPanel();
-            this.scrollPanel1 = new RPG_Paper_Maker.ScrollPanel();
-            this.TilesetSelectorPicture = new RPG_Paper_Maker.TilesetSelectorPicture();
-            this.MapEditor = new RPG_Paper_Maker.MapEditor();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerMain)).BeginInit();
             this.SplitContainerMain.Panel1.SuspendLayout();
@@ -106,14 +106,14 @@
             this.SplitContainerTree.Panel1.SuspendLayout();
             this.SplitContainerTree.Panel2.SuspendLayout();
             this.SplitContainerTree.SuspendLayout();
+            this.tableLayoutPanelTileset.SuspendLayout();
+            this.scrollPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TilesetSelectorPicture)).BeginInit();
             this.menuStrip2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.ContextMenuMap.SuspendLayout();
             this.ContextMenuDir.SuspendLayout();
             this.MainPanel.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.scrollPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TilesetSelectorPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // ImageListToolBar
@@ -173,7 +173,7 @@
             // 
             // SplitContainerTree.Panel1
             // 
-            this.SplitContainerTree.Panel1.Controls.Add(this.tableLayoutPanel1);
+            this.SplitContainerTree.Panel1.Controls.Add(this.tableLayoutPanelTileset);
             // 
             // SplitContainerTree.Panel2
             // 
@@ -181,6 +181,55 @@
             this.SplitContainerTree.Size = new System.Drawing.Size(177, 443);
             this.SplitContainerTree.SplitterDistance = 269;
             this.SplitContainerTree.TabIndex = 0;
+            // 
+            // tableLayoutPanelTileset
+            // 
+            this.tableLayoutPanelTileset.ColumnCount = 1;
+            this.tableLayoutPanelTileset.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelTileset.Controls.Add(this.scrollPanel1, 0, 1);
+            this.tableLayoutPanelTileset.Controls.Add(this.PanelSpecialMenu, 0, 0);
+            this.tableLayoutPanelTileset.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelTileset.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanelTileset.Name = "tableLayoutPanelTileset";
+            this.tableLayoutPanelTileset.RowCount = 2;
+            this.tableLayoutPanelTileset.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanelTileset.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelTileset.Size = new System.Drawing.Size(173, 265);
+            this.tableLayoutPanelTileset.TabIndex = 1;
+            // 
+            // scrollPanel1
+            // 
+            this.scrollPanel1.AutoScroll = true;
+            this.scrollPanel1.Controls.Add(this.TilesetSelectorPicture);
+            this.scrollPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scrollPanel1.Location = new System.Drawing.Point(0, 27);
+            this.scrollPanel1.Margin = new System.Windows.Forms.Padding(0);
+            this.scrollPanel1.Name = "scrollPanel1";
+            this.scrollPanel1.Size = new System.Drawing.Size(173, 238);
+            this.scrollPanel1.TabIndex = 0;
+            // 
+            // TilesetSelectorPicture
+            // 
+            this.TilesetSelectorPicture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+            this.TilesetSelectorPicture.Location = new System.Drawing.Point(0, 0);
+            this.TilesetSelectorPicture.Name = "TilesetSelectorPicture";
+            this.TilesetSelectorPicture.Size = new System.Drawing.Size(100, 50);
+            this.TilesetSelectorPicture.TabIndex = 0;
+            this.TilesetSelectorPicture.TabStop = false;
+            this.TilesetSelectorPicture.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TilesetSelectorPicture_MouseDown);
+            this.TilesetSelectorPicture.MouseEnter += new System.EventHandler(this.TilesetSelectorPicture_MouseEnter);
+            this.TilesetSelectorPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TilesetSelectorPicture_MouseMove);
+            this.TilesetSelectorPicture.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TilesetSelectorPicture_MouseUp);
+            // 
+            // PanelSpecialMenu
+            // 
+            this.PanelSpecialMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.PanelSpecialMenu.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PanelSpecialMenu.Location = new System.Drawing.Point(0, 0);
+            this.PanelSpecialMenu.Margin = new System.Windows.Forms.Padding(0);
+            this.PanelSpecialMenu.Name = "PanelSpecialMenu";
+            this.PanelSpecialMenu.Size = new System.Drawing.Size(173, 27);
+            this.PanelSpecialMenu.TabIndex = 1;
             // 
             // TreeMap
             // 
@@ -207,6 +256,22 @@
             this.ImageListTreeMap.TransparentColor = System.Drawing.Color.Transparent;
             this.ImageListTreeMap.Images.SetKeyName(0, "dir.png");
             this.ImageListTreeMap.Images.SetKeyName(1, "map.png");
+            // 
+            // MapEditor
+            // 
+            this.MapEditor.BackColor = System.Drawing.Color.Black;
+            this.MapEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MapEditor.DrawMode = RPG_Paper_Maker.DrawMode.Pencil;
+            this.MapEditor.Location = new System.Drawing.Point(0, 20);
+            this.MapEditor.Name = "MapEditor";
+            this.MapEditor.SelectedDrawType = "ItemFloor";
+            this.MapEditor.Size = new System.Drawing.Size(705, 419);
+            this.MapEditor.TabIndex = 0;
+            this.MapEditor.VSync = false;
+            this.MapEditor.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseDown);
+            this.MapEditor.MouseEnter += new System.EventHandler(this.MapEditor_MouseEnter);
+            this.MapEditor.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseMove);
+            this.MapEditor.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseUp);
             // 
             // menuStrip2
             // 
@@ -247,8 +312,9 @@
             this.ItemFloor1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemFloor1.Image = global::RPG_Paper_Maker.Properties.Resources.floor1;
             this.ItemFloor1.Name = "ItemFloor1";
-            this.ItemFloor1.Size = new System.Drawing.Size(121, 22);
+            this.ItemFloor1.Size = new System.Drawing.Size(152, 22);
             this.ItemFloor1.Text = "Floor";
+            this.ItemFloor1.Click += new System.EventHandler(this.ItemFloor1_Click);
             // 
             // ItemFloor2
             // 
@@ -256,8 +322,9 @@
             this.ItemFloor2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemFloor2.Image = global::RPG_Paper_Maker.Properties.Resources.floor2;
             this.ItemFloor2.Name = "ItemFloor2";
-            this.ItemFloor2.Size = new System.Drawing.Size(121, 22);
+            this.ItemFloor2.Size = new System.Drawing.Size(152, 22);
             this.ItemFloor2.Text = "Autotiles";
+            this.ItemFloor2.Click += new System.EventHandler(this.ItemFloor2_Click);
             // 
             // ItemStart
             // 
@@ -727,71 +794,6 @@
             this.MainPanel.Size = new System.Drawing.Size(890, 443);
             this.MainPanel.TabIndex = 5;
             // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.scrollPanel1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.PanelSpecialMenu, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(173, 265);
-            this.tableLayoutPanel1.TabIndex = 1;
-            // 
-            // PanelSpecialMenu
-            // 
-            this.PanelSpecialMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.PanelSpecialMenu.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PanelSpecialMenu.Location = new System.Drawing.Point(0, 0);
-            this.PanelSpecialMenu.Margin = new System.Windows.Forms.Padding(0);
-            this.PanelSpecialMenu.Name = "PanelSpecialMenu";
-            this.PanelSpecialMenu.Size = new System.Drawing.Size(173, 27);
-            this.PanelSpecialMenu.TabIndex = 1;
-            // 
-            // scrollPanel1
-            // 
-            this.scrollPanel1.AutoScroll = true;
-            this.scrollPanel1.Controls.Add(this.TilesetSelectorPicture);
-            this.scrollPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scrollPanel1.Location = new System.Drawing.Point(0, 27);
-            this.scrollPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.scrollPanel1.Name = "scrollPanel1";
-            this.scrollPanel1.Size = new System.Drawing.Size(173, 238);
-            this.scrollPanel1.TabIndex = 0;
-            // 
-            // TilesetSelectorPicture
-            // 
-            this.TilesetSelectorPicture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
-            this.TilesetSelectorPicture.Location = new System.Drawing.Point(3, 3);
-            this.TilesetSelectorPicture.Name = "TilesetSelectorPicture";
-            this.TilesetSelectorPicture.Size = new System.Drawing.Size(100, 50);
-            this.TilesetSelectorPicture.TabIndex = 0;
-            this.TilesetSelectorPicture.TabStop = false;
-            this.TilesetSelectorPicture.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TilesetSelectorPicture_MouseDown);
-            this.TilesetSelectorPicture.MouseEnter += new System.EventHandler(this.TilesetSelectorPicture_MouseEnter);
-            this.TilesetSelectorPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TilesetSelectorPicture_MouseMove);
-            this.TilesetSelectorPicture.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TilesetSelectorPicture_MouseUp);
-            // 
-            // MapEditor
-            // 
-            this.MapEditor.BackColor = System.Drawing.Color.Black;
-            this.MapEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MapEditor.DrawMode = RPG_Paper_Maker.DrawMode.Pencil;
-            this.MapEditor.Location = new System.Drawing.Point(0, 20);
-            this.MapEditor.Name = "MapEditor";
-            this.MapEditor.SelectedDrawType = "ItemFloor";
-            this.MapEditor.Size = new System.Drawing.Size(705, 419);
-            this.MapEditor.TabIndex = 0;
-            this.MapEditor.VSync = false;
-            this.MapEditor.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseDown);
-            this.MapEditor.MouseEnter += new System.EventHandler(this.MapEditor_MouseEnter);
-            this.MapEditor.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseMove);
-            this.MapEditor.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseUp);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -823,6 +825,9 @@
             this.SplitContainerTree.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerTree)).EndInit();
             this.SplitContainerTree.ResumeLayout(false);
+            this.tableLayoutPanelTileset.ResumeLayout(false);
+            this.scrollPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.TilesetSelectorPicture)).EndInit();
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -830,9 +835,6 @@
             this.ContextMenuMap.ResumeLayout(false);
             this.ContextMenuDir.ResumeLayout(false);
             this.MainPanel.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.scrollPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.TilesetSelectorPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -904,7 +906,7 @@
         private TilesetSelectorPicture TilesetSelectorPicture;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ItemRTP;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTileset;
         private System.Windows.Forms.FlowLayoutPanel PanelSpecialMenu;
     }
 }

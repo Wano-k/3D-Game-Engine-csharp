@@ -70,7 +70,6 @@
             this.button.TabIndex = 1;
             this.button.Text = "Choose ---";
             this.button.UseVisualStyleBackColor = true;
-            this.button.Click += new System.EventHandler(this.button_Click);
             // 
             // AddingListBox
             // 

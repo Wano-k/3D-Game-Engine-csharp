@@ -74,6 +74,7 @@ namespace RPG_Paper_Maker
             // Contain shown
             EnableNoGame();
             ShowProjectContain(false);
+            HideSpecialTileset();
             menuStrip1.Renderer = new MainRender(this);
             menuStrip2.Renderer = new MainRender2(this);
 
@@ -608,6 +609,22 @@ namespace RPG_Paper_Maker
             SetSelectedDrawType("ItemFloor");
         }
 
+        private void ItemFloor1_Click(object sender, EventArgs e)
+        {
+            SetSelectedDrawType("ItemFloor");
+            SetSelectedDrawTypeParticular(DrawType.Floor);
+            ItemFloor.Text = ItemFloor1.Text;
+            ItemFloor.Image = ItemFloor1.Image;
+        }
+
+        private void ItemFloor2_Click(object sender, EventArgs e)
+        {
+            SetSelectedDrawType("ItemFloor");
+            SetSelectedDrawTypeParticular(DrawType.Autotiles);
+            ItemFloor.Text = ItemFloor2.Text;
+            ItemFloor.Image = ItemFloor2.Image;
+        }
+
         private void ItemStart_Click(object sender, EventArgs e)
         {
             SetSelectedDrawType("ItemStart");
@@ -928,6 +945,24 @@ namespace RPG_Paper_Maker
         #region functions
 
         // -------------------------------------------------------------------
+        // ShowSpecialTileset
+        // -------------------------------------------------------------------
+
+        public void ShowSpecialTileset()
+        {
+            tableLayoutPanelTileset.RowStyles[0] = new RowStyle(SizeType.Absolute, 27);
+        }
+
+        // -------------------------------------------------------------------
+        // HideSpecialTileset
+        // -------------------------------------------------------------------
+
+        public void HideSpecialTileset()
+        {
+            tableLayoutPanelTileset.RowStyles[0] = new RowStyle(SizeType.Absolute, 0);
+        }
+
+        // -------------------------------------------------------------------
         // ShowProjectContain
         // -------------------------------------------------------------------
 
@@ -1153,6 +1188,16 @@ namespace RPG_Paper_Maker
         public void SetSelectedDrawType(string item)
         {
             MapEditor.SelectedDrawType = item;
+            menuStrip2.Refresh();
+        }
+
+        // -------------------------------------------------------------------
+        // SetSelectedDrawTypeParticular
+        // -------------------------------------------------------------------
+
+        public void SetSelectedDrawTypeParticular(DrawType item)
+        {
+            MapEditor.SelectedDrawTypeParticular = item;
             menuStrip2.Refresh();
         }
 

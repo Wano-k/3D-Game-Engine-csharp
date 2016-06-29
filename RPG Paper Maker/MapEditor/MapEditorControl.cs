@@ -19,6 +19,7 @@ namespace RPG_Paper_Maker
         public bool IsMapReloading = false;
         public Point MouseBeforeUpdate = WANOK.MapMouseManager.GetPosition();
         public string SelectedDrawType = "ItemFloor";
+        public DrawType SelectedDrawTypeParticular = DrawType.Floor;
         public DrawMode DrawMode = DrawMode.Pencil;
         public Vector3 PointOnPlane;
         public int[] GridHeight { get { return Map.GridHeight; } set { Map.GridHeight = value; } }

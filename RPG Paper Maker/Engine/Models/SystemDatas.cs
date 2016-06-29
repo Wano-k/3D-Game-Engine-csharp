@@ -42,8 +42,9 @@ namespace RPG_Paper_Maker
             PathRTP = Path.Combine(WANOK.ExcecutablePathDir, "RTP");
 
             // Tilesets
-            Tilesets.Add(new Tileset(1, "Plains", new SystemGraphic("plains.png", true, GraphicKind.Tileset), Tileset.GetDefaultPassableCollision(9,9)));
-            for (int i = 1; i < 50; i++) Tilesets.Add(new Tileset(i + 1));
+            Tilesets.Add(new Tileset(1, "Plains", new SystemGraphic("plains.png", true, GraphicKind.Tileset), new Collision(Collision.GetDefaultPassableCollision(8,8)), new List<int>()));
+            for (int i = 1; i < 20; i++) Tilesets.Add(new Tileset(i + 1));
+            Autotiles = Autotile.GetDefaultAutotiles();
 
             // Colors
             Colors.Add(SystemColor.BlackColor);
@@ -59,7 +60,7 @@ namespace RPG_Paper_Maker
             Colors.Add(SystemColor.PurpleColor);
             Colors.Add(SystemColor.MagentaColor);
             Colors.Add(SystemColor.PinkColor);
-            for (int i = 13; i < 50; i++) Colors.Add(new SystemColor(i+1));
+            for (int i = 13; i < 20; i++) Colors.Add(new SystemColor(i+1));
         }
 
         // -------------------------------------------------------------------
@@ -98,6 +99,25 @@ namespace RPG_Paper_Maker
         public int GetTilesetIndexById(int id)
         {
             return Tilesets.IndexOf(GetTilesetById(id));
+        }
+
+        // -------------------------------------------------------------------
+        // GetAutotileById
+        // -------------------------------------------------------------------
+
+        public Autotile GetAutotileById(int id)
+        {
+            if (id > Autotiles.Count) return new Autotile(-1);
+            return Autotiles.Find(i => i.Id == id);
+        }
+
+        // -------------------------------------------------------------------
+        // GetAutotileIndexById
+        // -------------------------------------------------------------------
+
+        public int GetAutotileIndexById(int id)
+        {
+            return Autotiles.IndexOf(GetAutotileById(id));
         }
 
         // -------------------------------------------------------------------
