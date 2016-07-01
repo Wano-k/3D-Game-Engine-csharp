@@ -36,7 +36,7 @@
             this.SplitContainerMain = new System.Windows.Forms.SplitContainer();
             this.SplitContainerTree = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanelTileset = new System.Windows.Forms.TableLayoutPanel();
-            this.scrollPanel1 = new RPG_Paper_Maker.ScrollPanel();
+            this.scrollPanelTileset = new RPG_Paper_Maker.ScrollPanel();
             this.TilesetSelectorPicture = new RPG_Paper_Maker.TilesetSelectorPicture();
             this.PanelSpecialMenu = new System.Windows.Forms.FlowLayoutPanel();
             this.TreeMap = new System.Windows.Forms.TreeView();
@@ -107,7 +107,7 @@
             this.SplitContainerTree.Panel2.SuspendLayout();
             this.SplitContainerTree.SuspendLayout();
             this.tableLayoutPanelTileset.SuspendLayout();
-            this.scrollPanel1.SuspendLayout();
+            this.scrollPanelTileset.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TilesetSelectorPicture)).BeginInit();
             this.menuStrip2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -186,7 +186,7 @@
             // 
             this.tableLayoutPanelTileset.ColumnCount = 1;
             this.tableLayoutPanelTileset.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelTileset.Controls.Add(this.scrollPanel1, 0, 1);
+            this.tableLayoutPanelTileset.Controls.Add(this.scrollPanelTileset, 0, 1);
             this.tableLayoutPanelTileset.Controls.Add(this.PanelSpecialMenu, 0, 0);
             this.tableLayoutPanelTileset.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelTileset.Location = new System.Drawing.Point(0, 0);
@@ -197,16 +197,16 @@
             this.tableLayoutPanelTileset.Size = new System.Drawing.Size(173, 265);
             this.tableLayoutPanelTileset.TabIndex = 1;
             // 
-            // scrollPanel1
+            // scrollPanelTileset
             // 
-            this.scrollPanel1.AutoScroll = true;
-            this.scrollPanel1.Controls.Add(this.TilesetSelectorPicture);
-            this.scrollPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scrollPanel1.Location = new System.Drawing.Point(0, 27);
-            this.scrollPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.scrollPanel1.Name = "scrollPanel1";
-            this.scrollPanel1.Size = new System.Drawing.Size(173, 238);
-            this.scrollPanel1.TabIndex = 0;
+            this.scrollPanelTileset.AutoScroll = true;
+            this.scrollPanelTileset.Controls.Add(this.TilesetSelectorPicture);
+            this.scrollPanelTileset.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scrollPanelTileset.Location = new System.Drawing.Point(0, 27);
+            this.scrollPanelTileset.Margin = new System.Windows.Forms.Padding(0);
+            this.scrollPanelTileset.Name = "scrollPanelTileset";
+            this.scrollPanelTileset.Size = new System.Drawing.Size(173, 238);
+            this.scrollPanelTileset.TabIndex = 0;
             // 
             // TilesetSelectorPicture
             // 
@@ -265,6 +265,7 @@
             this.MapEditor.Location = new System.Drawing.Point(0, 20);
             this.MapEditor.Name = "MapEditor";
             this.MapEditor.SelectedDrawType = "ItemFloor";
+            this.MapEditor.SelectedDrawTypeParticular = RPG_Paper_Maker.DrawType.Floors;
             this.MapEditor.Size = new System.Drawing.Size(705, 419);
             this.MapEditor.TabIndex = 0;
             this.MapEditor.VSync = false;
@@ -299,8 +300,8 @@
             this.ItemFloor.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemFloor.Image = global::RPG_Paper_Maker.Properties.Resources.floor1;
             this.ItemFloor.Name = "ItemFloor";
-            this.ItemFloor.Size = new System.Drawing.Size(62, 20);
-            this.ItemFloor.Text = "Floor";
+            this.ItemFloor.Size = new System.Drawing.Size(67, 20);
+            this.ItemFloor.Text = "Floors";
             this.ItemFloor.ToolTipText = "Draw square on the floor";
             this.ItemFloor.Click += new System.EventHandler(this.ItemFloor_Click);
             this.ItemFloor.MouseEnter += new System.EventHandler(this.ItemFloor_MouseEnter);
@@ -312,8 +313,8 @@
             this.ItemFloor1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemFloor1.Image = global::RPG_Paper_Maker.Properties.Resources.floor1;
             this.ItemFloor1.Name = "ItemFloor1";
-            this.ItemFloor1.Size = new System.Drawing.Size(152, 22);
-            this.ItemFloor1.Text = "Floor";
+            this.ItemFloor1.Size = new System.Drawing.Size(121, 22);
+            this.ItemFloor1.Text = "Floors";
             this.ItemFloor1.Click += new System.EventHandler(this.ItemFloor1_Click);
             // 
             // ItemFloor2
@@ -322,7 +323,7 @@
             this.ItemFloor2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemFloor2.Image = global::RPG_Paper_Maker.Properties.Resources.floor2;
             this.ItemFloor2.Name = "ItemFloor2";
-            this.ItemFloor2.Size = new System.Drawing.Size(152, 22);
+            this.ItemFloor2.Size = new System.Drawing.Size(121, 22);
             this.ItemFloor2.Text = "Autotiles";
             this.ItemFloor2.Click += new System.EventHandler(this.ItemFloor2_Click);
             // 
@@ -826,7 +827,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerTree)).EndInit();
             this.SplitContainerTree.ResumeLayout(false);
             this.tableLayoutPanelTileset.ResumeLayout(false);
-            this.scrollPanel1.ResumeLayout(false);
+            this.scrollPanelTileset.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TilesetSelectorPicture)).EndInit();
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();
@@ -869,7 +870,7 @@
         private System.Windows.Forms.ToolStripMenuItem ItemFloor1;
         private System.Windows.Forms.ToolStripMenuItem ItemFloor2;
         private System.Windows.Forms.ToolStripMenuItem ItemSave;
-        private ScrollPanel scrollPanel1;
+        private ScrollPanel scrollPanelTileset;
         private System.Windows.Forms.ContextMenuStrip ContextMenuMap;
         private System.Windows.Forms.ToolStripMenuItem MenuItemSetMap;
         private System.Windows.Forms.ToolStripMenuItem MenuItemMoveMap;

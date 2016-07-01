@@ -95,6 +95,9 @@
     <Compile Include="Engine\CustomUserControls\ImageComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Engine\CustomUserControls\InterpolationPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Engine\CustomUserControls\PassagePicture.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -182,6 +185,8 @@
     </Compile>
     <Compile Include="Engine\Forms\DialogPreviewGraphic\DialogPreviewGraphicControl.cs" />
     <Compile Include="Engine\Models\Autotile.cs" />
+    <Compile Include="Engine\Models\Autotiles.cs" />
+    <Compile Include="Engine\Models\SystemAutotile.cs" />
     <Compile Include="Engine\Models\Collision.cs" />
     <Compile Include="Engine\Models\KeyboardAssign.cs" />
     <Compile Include="Engine\Models\Project.cs" />
@@ -250,12 +255,12 @@
     <Compile Include="Engine\CustomUserControls\TextBoxLang.Designer.cs">
       <DependentUpon>TextBoxLang.cs</DependentUpon>
     </Compile>
-    <Compile Include="MapEditorControls\GraphicsDeviceControl.cs">
+    <Compile Include="MapEditor\MapEditorControls\GraphicsDeviceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MapEditorControls\GraphicsDeviceService.cs" />
-    <Compile Include="MapEditorControls\ServiceContainer.cs" />
-    <Compile Include="MapEditorControls\MapEditorControl.cs">
+    <Compile Include="MapEditor\MapEditorControls\GraphicsDeviceService.cs" />
+    <Compile Include="MapEditor\MapEditorControls\ServiceContainer.cs" />
+    <Compile Include="MapEditor\MapEditorControls\MapEditorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Engine\CustomUserControls\TilesetSelectorPicture.cs">
@@ -439,6 +444,10 @@
     <None Include="Resources\cross_orange.png" />
     <None Include="Resources\big_arrow_left.png" />
     <None Include="Resources\delete.png" />
+    <None Include="Resources\none.png" />
+    <Content Include="RTP\Content\Pictures\Textures2D\Autotiles\ground.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="RTP\Content\Pictures\Textures2D\Autotiles\grass.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

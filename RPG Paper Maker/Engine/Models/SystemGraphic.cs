@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -52,6 +53,7 @@ namespace RPG_Paper_Maker
 
         public string GetGraphicPath()
         {
+            if (IsNone()) return null;
             return IsRTP ? GetRTPPath(GraphicName) : GetLocalPath(GraphicName);
         }
 
@@ -108,15 +110,40 @@ namespace RPG_Paper_Maker
 
         public Image LoadImage()
         {
-            string path = GetGraphicPath();
+            string path = "";
             try
             {
+                path = GetGraphicPath();
+                if (path == null) return Properties.Resources.none;
                 using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
                 {
                     return Image.FromStream(stream);
                 }
             }
             catch {
+                MessageBox.Show("Could not load " + path, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // LoadTexture
+        // -------------------------------------------------------------------
+
+        public Texture2D LoadTexture(GraphicsDevice device)
+        {
+            string path = "";
+            try
+            {
+                path = GetGraphicPath();
+                if (path == null) return new Texture2D(device, 1, 1);
+                using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                {
+                    return Texture2D.FromStream(device, stream);
+                }
+            }
+            catch
+            {
                 MessageBox.Show("Could not load " + path, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return null;
             }

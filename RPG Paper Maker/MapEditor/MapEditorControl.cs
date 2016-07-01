@@ -19,11 +19,12 @@ namespace RPG_Paper_Maker
         public bool IsMapReloading = false;
         public Point MouseBeforeUpdate = WANOK.MapMouseManager.GetPosition();
         public string SelectedDrawType = "ItemFloor";
-        public DrawType SelectedDrawTypeParticular = DrawType.Floor;
+        public DrawType SelectedDrawTypeParticular = DrawType.Floors;
         public DrawMode DrawMode = DrawMode.Pencil;
         public Vector3 PointOnPlane;
         public int[] GridHeight { get { return Map.GridHeight; } set { Map.GridHeight = value; } }
         public int[] CurrentTexture = new int[] { 0, 0, 1, 1 };
+        public int CurrentAutotileId = 0;
         public int[] CurrentPortion = new int[] { 0, 0 };
         protected List<int[]> PortionsToUpdate = new List<int[]>();
         protected List<int[]> PortionsToSave = new List<int[]>();
@@ -204,7 +205,9 @@ namespace RPG_Paper_Maker
             for (int i = 0; i < PortionsToUpdate.Count; i++)
             {
                 if (Map.Portions[PortionsToUpdate[i]].IsEmpty()) Map.DisposeBuffers(PortionsToUpdate[i]);
-                else Map.GenFloor(PortionsToUpdate[i]);
+                else {
+                    Map.GenTextures(PortionsToUpdate[i]);
+                }
             }
 
             for (int i = 0; i < PortionsToSave.Count; i++)
@@ -277,6 +280,7 @@ namespace RPG_Paper_Maker
                     AddStart(isMouse);
                     break;
                 case "ItemFloor":
+                    if (SelectedDrawTypeParticular == DrawType.Autotiles && MapEditor.TexAutotiles.Count == 0) return;
                     AddFloor(isMouse);
                     break;
             }
@@ -333,8 +337,11 @@ namespace RPG_Paper_Maker
                 case DrawMode.Pencil:
                     if (CurrentTexture[2] == 1 && CurrentTexture[3] == 1)
                     {
-                        if (isMouse) if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, StockFloor, CurrentTexture);
-                        else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, StockFloor, CurrentTexture);
+                        if (isMouse)
+                        {
+                            if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, StockFloor, CurrentTexture, CurrentAutotileId);
+                        }
+                        else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, StockFloor, CurrentTexture, CurrentAutotileId);
                     }
 
                     for (int i = 0; i < CurrentTexture[2]; i++)
@@ -344,7 +351,7 @@ namespace RPG_Paper_Maker
                             if ((coords[0] + i) > Map.MapInfos.Width || (coords[3] + j) > Map.MapInfos.Height) break;
                             int[] shortTexture = new int[] { i + CurrentTexture[0], j + CurrentTexture[1], 1, 1 };
                             int[] shortCoords = new int[] { coords[0] + i, coords[1], coords[2], coords[3] + j };
-                            StockFloor(shortCoords, shortTexture);
+                            StockFloor(shortCoords, shortTexture, CurrentAutotileId);
                         }
                     }
                     break;
@@ -367,10 +374,16 @@ namespace RPG_Paper_Maker
             int[] portion = GetPortion(coords[0], coords[3]);
             if (IsInArea(coords) && IsInPortions(portion))
             {
-                int[] texture = (int[])args[0];
-
                 if (Map.Portions[portion] == null) Map.Portions[portion] = new GameMapPortion();
-                if (Map.Portions[portion].AddFloor(coords, texture) && Map.Saved) SetToNoSaved();
+                switch (SelectedDrawTypeParticular)
+                {
+                    case DrawType.Floors:
+                        if (Map.Portions[portion].AddFloor(coords, (int[])args[0]) && Map.Saved) SetToNoSaved();
+                        break;
+                    case DrawType.Autotiles:
+                        if (Map.Portions[portion].AddAutotile(coords, (int)args[1]) && Map.Saved) SetToNoSaved();
+                        break;
+                }
                 AddPortionToSave(portion);
                 AddPortionToUpdate(portion);
             }

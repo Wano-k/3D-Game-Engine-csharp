@@ -16,7 +16,7 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
-        public DialogAddingAutotilesList(string text, SystemDatas model, List<int> superListTileset) : base(text, model, superListTileset, typeof(Autotile), 1, Autotile.MAX_AUTOTILES)
+        public DialogAddingAutotilesList(string text, SystemDatas model, List<int> superListTileset) : base(text, model, superListTileset, typeof(SystemAutotile), 1, SystemAutotile.MAX_AUTOTILES)
         {
             // Collision settings
             collisionSettings = new CollisionSettings();
@@ -35,9 +35,9 @@ namespace RPG_Paper_Maker
         // GetListAutotiles
         // -------------------------------------------------------------------
 
-        public List<Autotile> GetListAutotiles()
+        public List<SystemAutotile> GetListAutotiles()
         {
-            return listBoxComplete.GetListBox().Items.Cast<Autotile>().ToList();
+            return listBoxComplete.GetListBox().Items.Cast<SystemAutotile>().ToList();
         }
 
         // -------------------------------------------------------------------
@@ -46,7 +46,7 @@ namespace RPG_Paper_Maker
 
         public void listBoxComplete_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Autotile autotile = (Autotile)listBoxComplete.GetListBox().SelectedItem;
+            SystemAutotile autotile = (SystemAutotile)listBoxComplete.GetListBox().SelectedItem;
             if (autotile != null)
             {
                 textBoxName.Text = autotile.Name;
@@ -61,7 +61,7 @@ namespace RPG_Paper_Maker
 
         public void textBoxGraphic_SelectedValueChanged(object sender, EventArgs e)
         {
-            Autotile autotile = (Autotile)listBoxComplete.GetListBox().SelectedItem;
+            SystemAutotile autotile = (SystemAutotile)listBoxComplete.GetListBox().SelectedItem;
             collisionSettings.InitializeParameters(autotile.Collision, autotile.Graphic);
         }
 

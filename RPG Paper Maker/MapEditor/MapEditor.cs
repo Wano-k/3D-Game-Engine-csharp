@@ -16,16 +16,16 @@ namespace RPG_Paper_Maker
         BasicEffect effect;
         SpriteFont font;
 
-        public MapEditorControl Control = new MapEditorControl();
+        public static MapEditorControl Control = new MapEditorControl();
         public string SelectedDrawType { get { return Control.SelectedDrawType; } set { Control.SelectedDrawType = value; } }
         public DrawType SelectedDrawTypeParticular { get { return Control.SelectedDrawTypeParticular; } set { Control.SelectedDrawTypeParticular = value; } }
         public DrawMode DrawMode { get { return Control.DrawMode; } set { Control.DrawMode = value; } }
         public Point MouseBeforeUpdate { get { return Control.MouseBeforeUpdate; } set { Control.MouseBeforeUpdate = value; } }
 
         // Content
-        public static Texture2D TexCursor;
-        public static Texture2D TexStartCursor;
-        public static Texture2D TexTileset;
+        public static Texture2D TexCursor, TexStartCursor, TexTileset, TexNone;
+        public static Dictionary<int,Texture2D> TexAutotiles = new Dictionary<int, Texture2D>();
+
 
 
         // -------------------------------------------------------------------
@@ -42,6 +42,7 @@ namespace RPG_Paper_Maker
             TexCursor = Texture2D.FromStream(GraphicsDevice, fs);
             fs = new FileStream("Config/bmp/start_cursor.png", FileMode.Open);
             TexStartCursor = Texture2D.FromStream(GraphicsDevice, fs);
+            TexNone = new Texture2D(GraphicsDevice, 1, 1);
             fs.Close();
 
             // Create game components
@@ -59,12 +60,12 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // GetMapTilesetGraphic
+        // GetMapTileset
         // -------------------------------------------------------------------
 
-        public SystemGraphic GetMapTilesetGraphic()
+        public Tileset GetMapTileset()
         {
-            return WANOK.SystemDatas.GetTilesetById(Control.Map.MapInfos.Tileset).Graphic;
+            return WANOK.SystemDatas.GetTilesetById(Control.Map.MapInfos.Tileset);
         }
 
         // -------------------------------------------------------------------
@@ -74,6 +75,15 @@ namespace RPG_Paper_Maker
         public void SetCurrentTexture(int[] tex)
         {
             Control.CurrentTexture = tex;
+        }
+
+        // -------------------------------------------------------------------
+        // SetAutotileId
+        // -------------------------------------------------------------------
+
+        public void SetCurrentAutotileId(int id)
+        {
+            Control.CurrentAutotileId = id;
         }
 
         // -------------------------------------------------------------------
@@ -117,8 +127,8 @@ namespace RPG_Paper_Maker
 
         public void ReLoadMap(string mapName)
         {
-            // Recreate game components
             Control.IsMapReloading = true;
+            Control.CursorEditor.Reset();
             Control.Camera.ReLoadMap();
             if (Control.Map != null) DisposeVertexBuffer(); // Dispose the previous vertexBuffer to create a new one for the object
             Control.Map = new Map(GraphicsDevice, mapName);

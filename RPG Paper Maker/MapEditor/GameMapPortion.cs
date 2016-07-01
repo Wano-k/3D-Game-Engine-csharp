@@ -15,7 +15,10 @@ namespace RPG_Paper_Maker
     [Serializable]
     class GameMapPortion
     {
-        public Dictionary<int[], int[]> Floors = new Dictionary<int[], int[]>(new IntArrayComparer());
+        public Dictionary<int[], int[]> Floors;
+        public Dictionary<int, Autotiles> Autotiles;
+
+        // Floors
         [NonSerialized()]
         VertexBuffer VBFloor;
         [NonSerialized()]
@@ -33,6 +36,7 @@ namespace RPG_Paper_Maker
         public GameMapPortion()
         {
             Floors = new Dictionary<int[], int[]>(new IntArrayComparer());
+            Autotiles = new Dictionary<int, Autotiles>();
         }
 
         // -------------------------------------------------------------------
@@ -41,7 +45,7 @@ namespace RPG_Paper_Maker
 
         public bool IsEmpty()
         {
-            return (Floors.Count == 0);
+            return (Floors.Count == 0 && Autotiles.Count == 0);
         }
 
         // -------------------------------------------------------------------
@@ -56,18 +60,73 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // ContainsFloor
+        // -------------------------------------------------------------------
+
+        public int[] ContainsFloor(int[] coords)
+        {
+            if (Floors.ContainsKey(coords)) return Floors[coords];
+
+            return null;
+        }
+
+        // -------------------------------------------------------------------
+        // ContainsAutotiles
+        // -------------------------------------------------------------------
+
+        public int ContainsAutotiles(int[] coords)
+        {
+            foreach (KeyValuePair<int, Autotiles> entry in Autotiles)
+            {
+                if (entry.Value.Tiles.Find(autotile => autotile.Coords.SequenceEqual(coords)) != null) return entry.Key;
+            }
+
+            return -1;
+        }
+
+        // -------------------------------------------------------------------
         // AddFloor
         // -------------------------------------------------------------------
 
         public bool AddFloor(int[] coords, int[] newTexture)
         {
-            int[] beforeTexture = new int[] { 0, 0, 0, 0 };
-            if (Floors.ContainsKey(coords)) beforeTexture = Floors[coords];
+            bool modified = false;
+            int[] beforeTexture = ContainsFloor(coords);
+            if (beforeTexture == null)
+            {
+                modified = true;
+                
+            }
 
             // Adding the new floor
             Floors[coords] = newTexture;
 
-            return !beforeTexture.SequenceEqual(newTexture);
+            return modified || !beforeTexture.SequenceEqual(newTexture);
+        }
+
+        // -------------------------------------------------------------------
+        // AddAutotile
+        // -------------------------------------------------------------------
+
+        public bool AddAutotile(int[] coords, int newId)
+        {
+            bool modified = false;
+            int beforeId = ContainsAutotiles(coords);
+            if (beforeId == -1)
+            {
+                modified = true;
+                
+            }
+            else
+            {
+                Autotiles[beforeId].Remove(coords);
+            }
+
+            // Adding the new autotile
+            if (!Autotiles.ContainsKey(newId)) Autotiles[newId] = new Autotiles(newId);
+            Autotiles[newId].Add(coords);
+
+            return modified || beforeId != newId;
         }
 
         // -------------------------------------------------------------------
@@ -86,18 +145,16 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // GenFloor
+        // Generate Buffers
         // -------------------------------------------------------------------
+
+        #region Floors
 
         public void GenFloor(GraphicsDevice device, Texture2D texture)
         {
-            DisposeBuffers(device);
-            CreatePortionFloor(device, texture);
+            DisposeBuffersFloor(device);
+            if (Floors.Count > 0) CreatePortionFloor(device, texture);
         }
-
-        // -------------------------------------------------------------------
-        // CreatePortionFloor
-        // -------------------------------------------------------------------
 
         public void CreatePortionFloor(GraphicsDevice device, Texture2D texture)
         {
@@ -130,10 +187,6 @@ namespace RPG_Paper_Maker
             VBFloor.SetData(VerticesFloorArray);
         }
 
-        // -------------------------------------------------------------------
-        // CreateFloorWithTex : coords = [x,y,width,height]
-        // -------------------------------------------------------------------
-
         protected VertexPositionTexture[] CreateFloorWithTex(Texture2D texture, int x, int y, int z, int[] coords)
         {
             // Texture coords
@@ -161,18 +214,31 @@ namespace RPG_Paper_Maker
             };
         }
 
+        #endregion
+
+        #region Autotiles
+
+        public void GenAutotiles(GraphicsDevice device)
+        {
+            foreach (Autotiles autotiles in Autotiles.Values)
+            {
+                autotiles.GenAutotiles(device);
+            }
+        }
+
+        #endregion
+
         // -------------------------------------------------------------------
         // Draw
         // -------------------------------------------------------------------
 
         public void Draw(GraphicsDevice device, BasicEffect effect, Texture2D texture)
         {
+            // Drawing Floors
             if (VBFloor != null)
             {
-                // Effect settings
                 effect.Texture = texture;
 
-                // Drawing
                 device.SetVertexBuffer(VBFloor);
                 device.Indices = IBFloor;
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes)
@@ -181,6 +247,12 @@ namespace RPG_Paper_Maker
                     device.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, VerticesFloorArray, 0, VerticesFloorArray.Length, IndexesFloorArray, 0, VerticesFloorArray.Length / 2);
                 }
             }
+
+            // Drawing Autotiles
+            foreach (KeyValuePair<int, Autotiles> entry in Autotiles)
+            {
+                entry.Value.Draw(device, effect);
+            }
         }
 
         // -------------------------------------------------------------------
@@ -188,6 +260,19 @@ namespace RPG_Paper_Maker
         // -------------------------------------------------------------------
 
         public void DisposeBuffers(GraphicsDevice device)
+        {
+            DisposeBuffersFloor(device);
+            foreach (Autotiles autotiles in Autotiles.Values)
+            {
+                autotiles.DisposeBuffers(device);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // DisposeBuffersFloor
+        // -------------------------------------------------------------------
+
+        public void DisposeBuffersFloor(GraphicsDevice device)
         {
             if (VBFloor != null)
             {

@@ -9,9 +9,8 @@ using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
-    class PassagePicture : PictureBox
+    class PassagePicture : InterpolationPictureBox
     {
-        public InterpolationMode InterpolationMode { get; set; }
         public TilesetPassage[,] PassageInfos = null;
         public Bitmap CursorYes, CursorNo;
         public Pen GridPen = new Pen(Color.DimGray);
@@ -52,7 +51,6 @@ namespace RPG_Paper_Maker
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            g.InterpolationMode = InterpolationMode;
             g.PixelOffsetMode = PixelOffsetMode.Half;
 
             base.OnPaint(e);

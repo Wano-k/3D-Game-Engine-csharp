@@ -7,49 +7,64 @@ using System.Threading.Tasks;
 namespace RPG_Paper_Maker
 {
     [Serializable]
-    public class Autotile : SuperListItem
+    public class Autotile
     {
-        public static int MAX_AUTOTILES = 9999;
-        public SystemGraphic Graphic;
-        public Collision Collision;
+        public int[] Coords, Tiles = new int[4];
 
 
         // -------------------------------------------------------------------
-        // Constructors
+        // Constructor
         // -------------------------------------------------------------------
 
-        public Autotile(int id) : this(id, "", new SystemGraphic(WANOK.NONE_IMAGE_STRING, true, GraphicKind.Autotile), new Collision())
+        public Autotile(int[] coords)
         {
-
-        }
-
-        public Autotile(int id, string n, SystemGraphic graphic, Collision collision)
-        {
-            Id = id;
-            Name = n;
-            Graphic = graphic;
-            Collision = collision;
+            Coords = coords;
         }
 
         // -------------------------------------------------------------------
-        // CreateCopy
+        // Update
         // -------------------------------------------------------------------
 
-        public override SuperListItem CreateCopy()
+        public void Update(Autotiles autotiles, int[] portion)
         {
-            return new Autotile(Id, Name, Graphic.CreateCopy(), Collision.CreateCopy());
-        }
+            int num = 0;
 
-        // -------------------------------------------------------------------
-        // GetDefaultAutotiles
-        // -------------------------------------------------------------------
+            // Top left
+            if (!autotiles.TileOnLeft(Coords, portion) && !autotiles.TileOnTop(Coords, portion)) num = 2;
+            else if (!autotiles.TileOnTop(Coords, portion) && autotiles.TileOnLeft(Coords, portion)) num = 4;
+            else if (!autotiles.TileOnLeft(Coords, portion) && autotiles.TileOnTop(Coords, portion)) num = 5;
+            else if (autotiles.TileOnLeft(Coords, portion) && autotiles.TileOnTop(Coords, portion) && autotiles.TileOnTopLeft(Coords, portion)) num = 3;
+            else num = 1;
+            Tiles[0] = Autotiles.AutotileBorder["A" + num.ToString()];
 
-        public static List<Autotile> GetDefaultAutotiles()
-        {
-            List<Autotile> list = new List<Autotile>();
-            for (int i = 0; i < 20; i++) list.Add(new Autotile(i + 1));
+            // Top right
+            if (!autotiles.TileOnRight(Coords, portion) && !autotiles.TileOnTop(Coords, portion)) num = 2;
+            else if (!autotiles.TileOnTop(Coords, portion) && autotiles.TileOnRight(Coords, portion)) num = 4;
+            else if (!autotiles.TileOnRight(Coords, portion) && autotiles.TileOnTop(Coords, portion)) num = 5;
+            else if (autotiles.TileOnRight(Coords, portion) && autotiles.TileOnTop(Coords, portion) && autotiles.TileOnTopRight(Coords, portion)) num = 3;
+            else num = 1;
+            Tiles[1] = Autotiles.AutotileBorder["B" + num.ToString()];
 
-            return list;
+            // Bottom left
+            if (!autotiles.TileOnLeft(Coords, portion) && !autotiles.TileOnBottom(Coords, portion)) num = 2;
+            else if (!autotiles.TileOnBottom(Coords, portion) && autotiles.TileOnLeft(Coords, portion)) num = 4;
+            else if (!autotiles.TileOnLeft(Coords, portion) && autotiles.TileOnBottom(Coords, portion)) num = 5;
+            else if (autotiles.TileOnLeft(Coords, portion) && autotiles.TileOnBottom(Coords, portion) && autotiles.TileOnBottomLeft(Coords, portion)) num = 3;
+            else num = 1;
+            Tiles[2] = Autotiles.AutotileBorder["C" + num.ToString()];
+
+            // Bottom right
+            if (!autotiles.TileOnRight(Coords, portion) && !autotiles.TileOnBottom(Coords, portion)) num = 2;
+            else if (!autotiles.TileOnBottom(Coords, portion) && autotiles.TileOnRight(Coords, portion)) num = 4;
+            else if (!autotiles.TileOnRight(Coords, portion) && autotiles.TileOnBottom(Coords, portion)) num = 5;
+            else if (autotiles.TileOnRight(Coords, portion) && autotiles.TileOnBottom(Coords, portion) && autotiles.TileOnBottomRight(Coords, portion)) num = 3;
+            else num = 1;
+            Tiles[3] = Autotiles.AutotileBorder["D" + num.ToString()];
+
+            // Update & save update
+            int[] portionToUpdate = MapEditor.Control.GetPortion(Coords[0], Coords[3]);
+            MapEditor.Control.AddPortionToUpdate(portionToUpdate);
+            MapEditor.Control.AddPortionToSave(portionToUpdate);
         }
     }
 }

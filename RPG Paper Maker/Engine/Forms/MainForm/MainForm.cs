@@ -22,6 +22,9 @@ namespace RPG_Paper_Maker
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern short GetAsyncKeyState(Keys vKey);
 
+        public InterpolationPictureBox PictureBoxSpecialTileset = new InterpolationPictureBox();
+        public ImageComboBox ComboBoxSpecialTileset1 = new ImageComboBox();
+
         public string TitleName = "RPG Paper Maker " + Application.ProductVersion;
         public MainFormControl Control = new MainFormControl();
         public bool IsInItemHeightSquare = false;
@@ -65,11 +68,15 @@ namespace RPG_Paper_Maker
             KeyPreview = true;
             TilesetSelectorPicture.SizeMode = PictureBoxSizeMode.StretchImage;
             TilesetSelectorPicture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            PictureBoxSpecialTileset.SizeMode = PictureBoxSizeMode.StretchImage;
+            PictureBoxSpecialTileset.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             MapEditor.MouseWheel += MapEditor_MouseWheel;
             MouseWheel += MainForm_MouseWheel;
             ItemFloor.DropDown.MouseLeave += new EventHandler(ItemFloorDrop_MouseLeave);
             ItemDrawMode.DropDown.MouseLeave += new EventHandler(ItemDrawModeDrop_MouseLeave);
             ItemHeight.DropDown.MouseLeave += new EventHandler(ItemHeightDrop_MouseLeave);
+            ComboBoxSpecialTileset1.SelectedIndexChanged += new EventHandler(ComboBoxSpecialTileset1_SelectedIndexChanged);
+
 
             // Contain shown
             EnableNoGame();
@@ -606,23 +613,57 @@ namespace RPG_Paper_Maker
 
         private void ItemFloor_Click(object sender, EventArgs e)
         {
-            SetSelectedDrawType("ItemFloor");
+            SelectFloors();
         }
 
         private void ItemFloor1_Click(object sender, EventArgs e)
         {
-            SetSelectedDrawType("ItemFloor");
-            SetSelectedDrawTypeParticular(DrawType.Floor);
-            ItemFloor.Text = ItemFloor1.Text;
-            ItemFloor.Image = ItemFloor1.Image;
+            SelectFloor();
         }
 
         private void ItemFloor2_Click(object sender, EventArgs e)
+        {
+            SelectAutotiles();
+        }
+
+        public void SelectFloors()
+        {
+            switch (ItemFloor.Text)
+            {
+                case "Floors":
+                    SelectFloor();
+                    break;
+                case "Autotiles":
+                    SelectAutotiles();
+                    break;
+            }
+        }
+
+        public void SelectFloor()
+        {
+            SetSelectedDrawType("ItemFloor");
+            SetSelectedDrawTypeParticular(DrawType.Floors);
+            ItemFloor.Text = ItemFloor1.Text;
+            ItemFloor.Image = ItemFloor1.Image;
+            HideSpecialTileset();
+        }
+
+        public void SelectAutotiles()
         {
             SetSelectedDrawType("ItemFloor");
             SetSelectedDrawTypeParticular(DrawType.Autotiles);
             ItemFloor.Text = ItemFloor2.Text;
             ItemFloor.Image = ItemFloor2.Image;
+            ShowSpecialTileset();
+            MapEditor.SetCurrentAutotileId(0);
+            Tileset tileset = MapEditor.GetMapTileset();
+            for (int i = 0; i < tileset.Autotiles.Count; i++)
+            {
+                SystemAutotile autotile = WANOK.SystemDatas.GetAutotileById(tileset.Autotiles[i]);
+                ComboBoxSpecialTileset1.Items.Add(new DropDownItem(WANOK.GetStringComboBox(autotile.Id,autotile.Name), autotile.Graphic.LoadImage()));
+            }
+            if (ComboBoxSpecialTileset1.Items.Count > 0) ComboBoxSpecialTileset1.SelectedIndex = 0;
+            PanelSpecialMenu.Controls.Add(ComboBoxSpecialTileset1);
         }
 
         private void ItemStart_Click(object sender, EventArgs e)
@@ -903,6 +944,18 @@ namespace RPG_Paper_Maker
             TilesetSelectorPicture.Focus();
         }
 
+        private void ComboBoxSpecialTileset1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ComboBoxSpecialTileset1.SelectedIndex != -1)
+            {
+                Tileset tileset = MapEditor.GetMapTileset();
+                PictureBoxSpecialTileset.Image = WANOK.SystemDatas.GetAutotileById(tileset.Autotiles[ComboBoxSpecialTileset1.SelectedIndex]).Graphic.LoadImage();
+                PictureBoxSpecialTileset.Size = new Size((int)(PictureBoxSpecialTileset.Image.Width * WANOK.RELATION_SIZE), (int)(PictureBoxSpecialTileset.Image.Height * WANOK.RELATION_SIZE));
+                PictureBoxSpecialTileset.Location = new Point(0, 0);
+                MapEditor.SetCurrentAutotileId(tileset.Autotiles[ComboBoxSpecialTileset1.SelectedIndex]);
+            }
+        }
+
         #endregion
 
         // -------------------------------------------------------------------
@@ -950,6 +1003,10 @@ namespace RPG_Paper_Maker
 
         public void ShowSpecialTileset()
         {
+            scrollPanelTileset.Controls.Clear();
+            scrollPanelTileset.Controls.Add(PictureBoxSpecialTileset);
+            PanelSpecialMenu.Controls.Clear();
+            ComboBoxSpecialTileset1.Items.Clear();
             tableLayoutPanelTileset.RowStyles[0] = new RowStyle(SizeType.Absolute, 27);
         }
 
@@ -960,6 +1017,8 @@ namespace RPG_Paper_Maker
         public void HideSpecialTileset()
         {
             tableLayoutPanelTileset.RowStyles[0] = new RowStyle(SizeType.Absolute, 0);
+            scrollPanelTileset.Controls.Clear();
+            scrollPanelTileset.Controls.Add(TilesetSelectorPicture);
         }
 
         // -------------------------------------------------------------------
@@ -973,6 +1032,7 @@ namespace RPG_Paper_Maker
             MapEditor.Visible = b;
             PanelSpecialMenu.Visible = b;
             TilesetSelectorPicture.Visible = b;
+            PictureBoxSpecialTileset.Visible = b;
             TreeMap.Visible = b;
         }
 
@@ -986,6 +1046,7 @@ namespace RPG_Paper_Maker
             menuStrip2.Visible = b;
             PanelSpecialMenu.Visible = b;
             TilesetSelectorPicture.Visible = b;
+            PictureBoxSpecialTileset.Visible = b;
         }
 
         // -------------------------------------------------------------------
@@ -1271,10 +1332,11 @@ namespace RPG_Paper_Maker
         public void ReLoadMap(string mapName)
         {
             MapEditor.ReLoadMap(mapName);
-            TilesetSelectorPicture.LoadTexture(MapEditor.GetMapTilesetGraphic());
+            TilesetSelectorPicture.LoadTexture(MapEditor.GetMapTileset().Graphic);
             MapEditor.SetCurrentTexture(new int[] { 0, 0, 1, 1 });
             TilesetSelectorPicture.SetCurrentTexture(0, 0, 1, 1);
             TilesetSelectorPicture.Refresh();
+            SelectFloors();
         }
 
         #endregion

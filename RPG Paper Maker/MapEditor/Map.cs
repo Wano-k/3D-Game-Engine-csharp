@@ -48,12 +48,22 @@ namespace RPG_Paper_Maker
                 SetStartInfos(WANOK.SystemDatas, WANOK.SystemDatas.StartPosition);
             }
 
-            // Set texture
+            // Set textures
             if (MapEditor.TexTileset != null) MapEditor.TexTileset.Dispose();
+            foreach (int i in MapEditor.TexAutotiles.Keys)
+            {
+                MapEditor.TexAutotiles[i].Dispose();
+            }
+            MapEditor.TexAutotiles.Clear();
+            Tileset tileset = WANOK.SystemDatas.GetTilesetById(MapInfos.Tileset);
             FileStream fs;
-            fs = new FileStream(WANOK.SystemDatas.GetTilesetById(MapInfos.Tileset).Graphic.GetGraphicPath(), FileMode.Open);
+            fs = new FileStream(tileset.Graphic.GetGraphicPath(), FileMode.Open);
             MapEditor.TexTileset = Texture2D.FromStream(device, fs);
             fs.Close();
+            for (int i = 0; i < tileset.Autotiles.Count; i++)
+            {
+                MapEditor.TexAutotiles[tileset.Autotiles[i]] = WANOK.SystemDatas.GetAutotileById(tileset.Autotiles[i]).Graphic.LoadTexture(Device);
+            }
 
             // Grid
             CreateGrid(MapInfos.Width, MapInfos.Height);
@@ -80,7 +90,7 @@ namespace RPG_Paper_Maker
             {
                 GameMapPortion gamePortion = WANOK.LoadBinaryDatas<GameMapPortion>(path);
                 Portions[new int[] { i, j }] = gamePortion;
-                gamePortion.CreatePortionFloor(Device, MapEditor.TexTileset);
+                GenTextures(gamePortion);
             }
             else
             {
@@ -146,15 +156,21 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // GenFloor
+        // GenTextures
         // -------------------------------------------------------------------
 
-        public void GenFloor(int[] portion)
+        public void GenTextures(int[] portion)
         {
             if (Portions[portion] != null)
             {
-                Portions[portion].GenFloor(Device, MapEditor.TexTileset);
+                GenTextures(Portions[portion]);
             }
+        }
+
+        public void GenTextures(GameMapPortion portion)
+        {
+            portion.GenFloor(Device, MapEditor.TexTileset);
+            portion.GenAutotiles(Device);
         }
 
         // -------------------------------------------------------------------

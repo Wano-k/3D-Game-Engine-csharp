@@ -109,7 +109,7 @@ namespace RPG_Paper_Maker
 
         public void SetCommonTilesetList(Tileset tileset)
         {
-            listBoxAutotiles.InitializeListParameters(Control.ModelSystem, ListBoxesCanceling, Control.ModelSystem.Autotiles.Cast<SuperListItem>().ToList(), tileset.Autotiles, typeof(DialogAddingAutotilesList), typeof(Autotile), 1, Autotile.MAX_AUTOTILES);
+            listBoxAutotiles.InitializeListParameters(Control.ModelSystem, ListBoxesCanceling, Control.ModelSystem.Autotiles.Cast<SuperListItem>().ToList(), tileset.Autotiles, typeof(DialogAddingAutotilesList), typeof(SystemAutotile), 1, SystemAutotile.MAX_AUTOTILES);
         }
 
         // -------------------------------------------------------------------

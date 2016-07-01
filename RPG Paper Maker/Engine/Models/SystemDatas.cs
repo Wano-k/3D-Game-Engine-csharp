@@ -19,7 +19,7 @@ namespace RPG_Paper_Maker
         public bool FullScreen = false;
         public int SquareSize = 16;
         public List<Tileset> Tilesets = new List<Tileset>();
-        public List<Autotile> Autotiles = new List<Autotile>();
+        public List<SystemAutotile> Autotiles = new List<SystemAutotile>();
         public List<SystemColor> Colors = new List<SystemColor>();
         public string PathRTP;
 
@@ -42,9 +42,9 @@ namespace RPG_Paper_Maker
             PathRTP = Path.Combine(WANOK.ExcecutablePathDir, "RTP");
 
             // Tilesets
-            Tilesets.Add(new Tileset(1, "Plains", new SystemGraphic("plains.png", true, GraphicKind.Tileset), new Collision(Collision.GetDefaultPassableCollision(8,8)), new List<int>()));
+            Tilesets.Add(new Tileset(1, "Plains", new SystemGraphic("plains.png", true, GraphicKind.Tileset), new Collision(Collision.GetDefaultPassableCollision(8,8)), new List<int>(new int[] { 1, 2 })));
             for (int i = 1; i < 20; i++) Tilesets.Add(new Tileset(i + 1));
-            Autotiles = Autotile.GetDefaultAutotiles();
+            Autotiles = SystemAutotile.GetDefaultAutotiles();
 
             // Colors
             Colors.Add(SystemColor.BlackColor);
@@ -105,9 +105,9 @@ namespace RPG_Paper_Maker
         // GetAutotileById
         // -------------------------------------------------------------------
 
-        public Autotile GetAutotileById(int id)
+        public SystemAutotile GetAutotileById(int id)
         {
-            if (id > Autotiles.Count) return new Autotile(-1);
+            if (id > Autotiles.Count) return new SystemAutotile(-1);
             return Autotiles.Find(i => i.Id == id);
         }
 

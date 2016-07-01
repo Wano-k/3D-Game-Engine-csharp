@@ -8,7 +8,8 @@ namespace RPG_Paper_Maker
 {
     public enum DrawType
     {
-        Floor,
+        None,
+        Floors,
         Autotiles
     }
 }

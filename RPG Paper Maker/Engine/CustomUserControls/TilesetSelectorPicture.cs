@@ -11,10 +11,9 @@ using System.Windows.Forms;
 namespace RPG_Paper_Maker
 {
     
-    class TilesetSelectorPicture : PictureBox
+    class TilesetSelectorPicture : InterpolationPictureBox
     {
         protected SelectionRectangle SelectionRectangle;
-        public InterpolationMode InterpolationMode { get; set; }
         protected Image TexCursor;
 
 
@@ -44,17 +43,6 @@ namespace RPG_Paper_Maker
         public void SetCursorRealPosition()
         {
             SelectionRectangle.SetRealPosition();
-        }
-
-        // -------------------------------------------------------------------
-        // LoadTexture
-        // -------------------------------------------------------------------
-
-        public void LoadTexture(SystemGraphic graphic)
-        {
-            Image = graphic.LoadImage();
-            Size = new Size((int)(Image.Width * WANOK.RELATION_SIZE), (int)(Image.Height * WANOK.RELATION_SIZE));
-            Location = new Point(0, 0); 
         }
 
         // -------------------------------------------------------------------
@@ -113,7 +101,6 @@ namespace RPG_Paper_Maker
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.InterpolationMode = InterpolationMode;
             Graphics g = e.Graphics;
 
             base.OnPaint(e);
