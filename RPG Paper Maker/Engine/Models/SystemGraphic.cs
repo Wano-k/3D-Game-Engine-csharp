@@ -136,7 +136,7 @@ namespace RPG_Paper_Maker
             try
             {
                 path = GetGraphicPath();
-                if (path == null) return new Texture2D(device, 1, 1);
+                if (path == null) return MapEditor.TexNone;
                 using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
                 {
                     return Texture2D.FromStream(device, stream);

@@ -454,6 +454,9 @@
     <Content Include="RTP\Content\Pictures\Textures2D\Characters\lucas.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="RTP\Content\Pictures\Textures2D\Characters\lucas_act.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="RTP\Content\Pictures\Textures2D\Characters\template.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
