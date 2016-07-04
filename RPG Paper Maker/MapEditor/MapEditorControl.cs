@@ -32,6 +32,8 @@ namespace RPG_Paper_Maker
         public int[] PreviousCursorCoords = null;
 
         public delegate void MethodStock(int[] coords, params object[] args);
+        public delegate object MethodReduce(object after, int localX, int localZ);
+
 
         // -------------------------------------------------------------------
         // OPTIONS
@@ -80,6 +82,9 @@ namespace RPG_Paper_Maker
             float distance = (height - camera.Position.Y) / ray.Direction.Y;
             PointOnPlane = WANOK.GetCorrectPointOnRay(ray, camera, distance, height);
 
+            // Update portions
+            UpdatePortions();
+
             // Portion moving
             int[] newPortion = CursorEditor.GetPortion();
             if (newPortion[0] != CurrentPortion[0] || newPortion[1] != CurrentPortion[1])
@@ -87,9 +92,6 @@ namespace RPG_Paper_Maker
                 UpdateMovingPortion(newPortion, CurrentPortion);
             }
             CurrentPortion = newPortion;
-
-            // Update portions
-            UpdatePortions();
         }
 
         // -------------------------------------------------------------------
@@ -182,7 +184,7 @@ namespace RPG_Paper_Maker
 
         public void SetPortion(int i, int j, int k, int l)
         {
-            DisposeBuffers(i, j);
+            DisposeBuffers(i, j, false);
             Map.Portions[new int[] { i, j }] = Map.Portions[new int[] { k, l }];
         }
 
@@ -192,7 +194,7 @@ namespace RPG_Paper_Maker
 
         public void LoadPortion(int[] currentPortion, int i, int j)
         {
-            DisposeBuffers(i, j);
+            DisposeBuffers(i, j, false);
             Map.LoadPortion(currentPortion[0] + i, currentPortion[1] + j, i, j);
         }
 
@@ -204,10 +206,14 @@ namespace RPG_Paper_Maker
         {
             for (int i = 0; i < PortionsToUpdate.Count; i++)
             {
-                if (Map.Portions[PortionsToUpdate[i]].IsEmpty()) Map.DisposeBuffers(PortionsToUpdate[i]);
-                else {
-                    Map.GenTextures(PortionsToUpdate[i]);
+                if (SelectedDrawTypeParticular == DrawType.Autotiles && DrawMode == DrawMode.Tin)
+                {
+                    foreach (int[] coords in Map.Portions[PortionsToUpdate[i]].Autotiles[CurrentAutotileId].Tiles.Keys)
+                    {
+                        Map.Portions[PortionsToUpdate[i]].Autotiles[CurrentAutotileId].Update(coords, PortionsToUpdate[i]);
+                    }
                 }
+                Map.UpdatePortions(PortionsToUpdate[i]);
             }
 
             for (int i = 0; i < PortionsToSave.Count; i++)
@@ -356,7 +362,8 @@ namespace RPG_Paper_Maker
                     }
                     break;
                 case DrawMode.Tin:
-                    AddTin(StockFloor, coords, CurrentTexture);
+                    if (SelectedDrawTypeParticular == DrawType.Floors) PaintTinFloor(coords, CurrentTexture, CurrentAutotileId);
+                    else if (SelectedDrawTypeParticular == DrawType.Autotiles) PaintTinAutotiles(coords, CurrentAutotileId);
                     break;
             }
             
@@ -374,14 +381,17 @@ namespace RPG_Paper_Maker
             int[] portion = GetPortion(coords[0], coords[3]);
             if (IsInArea(coords) && IsInPortions(portion))
             {
-                if (Map.Portions[portion] == null) Map.Portions[portion] = new GameMapPortion();
+                if (Map.Portions[portion] == null)
+                {
+                    Map.Portions[portion] = new GameMapPortion();
+                }
                 switch (SelectedDrawTypeParticular)
                 {
                     case DrawType.Floors:
                         if (Map.Portions[portion].AddFloor(coords, (int[])args[0]) && Map.Saved) SetToNoSaved();
                         break;
                     case DrawType.Autotiles:
-                        if (Map.Portions[portion].AddAutotile(coords, (int)args[1]) && Map.Saved) SetToNoSaved();
+                        if (Map.Portions[portion].AddAutotile(coords, (int)args[1], DrawMode != DrawMode.Tin) && Map.Saved) SetToNoSaved();
                         break;
                 }
                 AddPortionToSave(portion);
@@ -411,7 +421,8 @@ namespace RPG_Paper_Maker
                     }
                     break;
                 case DrawMode.Tin:
-                    DeleteTin(EraseFloor, coords, null);
+                    if (SelectedDrawTypeParticular == DrawType.Floors) PaintTinFloor(coords, null, -1);
+                    else if (SelectedDrawTypeParticular == DrawType.Autotiles) PaintTinAutotiles(coords, -1);
                     break;
             }
 
@@ -437,15 +448,15 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // PaintTin
+        // PaintTinFloor
         // -------------------------------------------------------------------
 
-        public void PaintTin(MethodStock stock, MethodStock erase, int[] coords, int[] textureAfter)
+        public void PaintTinFloor(int[] coords, int[] textureAfter, int autotileAfter)
         {
             int[] portion = GetPortion(coords[0], coords[3]);
             if (IsInArea(coords) && IsInPortions(portion))
             {
-                int[] textureBefore = (Map.Portions[portion] == null) ? null : Map.Portions[portion].GetFloorTexture(coords);
+                int[] textureBefore = (Map.Portions[portion] == null) ? null : Map.Portions[portion].ContainsFloor(coords);
                 int[] textureAfterReduced = (textureAfter == null) ? null : new int[] { textureAfter[0], textureAfter[1], 1, 1 };
 
                 if (textureBefore == null && textureAfter == null) return;
@@ -454,8 +465,8 @@ namespace RPG_Paper_Maker
                 {
                     List<int[]> tab = new List<int[]>();
                     tab.Add(coords);
-                    if (textureAfterReduced == null) erase(coords);
-                    else stock(coords, textureAfterReduced);
+                    if (textureAfter == null) EraseFloor(coords);
+                    else StockFloor(coords, textureAfterReduced, autotileAfter);
 
                     int[][] adjacent;
 
@@ -476,12 +487,12 @@ namespace RPG_Paper_Maker
                             portion = GetPortion(adjacent[i][0], adjacent[i][3]);
                             if (IsInPortions(portion))
                             {
-                                int[] textureHere = (Map.Portions[portion] == null) ? null : Map.Portions[portion].GetFloorTexture(adjacent[i]);
+                                int[] textureHere = (Map.Portions[portion] == null) ? null : Map.Portions[portion].ContainsFloor(adjacent[i]);
 
                                 if ((textureBefore == null || textureHere != null) && (textureBefore != null || textureHere == null) & IsInArea(adjacent[i]) && ((textureBefore == null && textureHere == null) || textureHere.SequenceEqual(textureBefore)))
                                 {
-                                    if (textureAfterReduced == null) erase(adjacent[i]);
-                                    else stock(adjacent[i], textureAfterReduced);
+                                    if (textureAfter == null) EraseFloor(adjacent[i]);
+                                    else StockFloor(adjacent[i], textureAfterReduced, autotileAfter);
                                     tab.Add(adjacent[i]);
                                 }
                             }
@@ -491,14 +502,67 @@ namespace RPG_Paper_Maker
             }
         }
 
-        public void AddTin(MethodStock stock, int[] coords, int[] textureAfter)
-        {
-            PaintTin(stock, null, coords, textureAfter);
-        }
+        // -------------------------------------------------------------------
+        // PaintTinAutotiles
+        // -------------------------------------------------------------------
 
-        public void DeleteTin(MethodStock erase, int[] coords, int[] textureAfter)
+        public void PaintTinAutotiles(int[] coords, int textureAfter)
         {
-            PaintTin(null, erase, coords, textureAfter);
+            int[] portion = GetPortion(coords[0], coords[3]);
+            if (IsInArea(coords) && IsInPortions(portion))
+            {
+                int textureBefore = (Map.Portions[portion] == null) ? -1 : Map.Portions[portion].ContainsAutotiles(coords);
+
+                if (textureBefore != textureAfter)
+                {
+                    List<int[]> tab = new List<int[]>();
+
+                    tab.Add(coords);
+                    if (textureAfter == -1) EraseFloor(coords);
+                    else StockFloor(coords, null, textureAfter);
+
+                    int[][] adjacent;
+
+                    while (tab.Count != 0)
+                    {
+                        adjacent = new int[][]
+                        {
+                        new int[] { tab[0][0] - 1, tab[0][1], tab[0][2], tab[0][3] },
+                        new int[] { tab[0][0] + 1, tab[0][1], tab[0][2], tab[0][3] },
+                        new int[] { tab[0][0], tab[0][1], tab[0][2], tab[0][3] + 1 },
+                        new int[] { tab[0][0], tab[0][1], tab[0][2], tab[0][3] - 1 }
+                        };
+                        tab.RemoveAt(0);
+                        for (int i = 0; i < adjacent.Length; i++)
+                        {
+                            portion = GetPortion(adjacent[i][0], adjacent[i][3]);
+                            if (IsInPortions(portion) && IsInArea(adjacent[i]))
+                            {
+                                int textureHere = (Map.Portions[portion] == null) ? -1 : Map.Portions[portion].ContainsAutotiles(adjacent[i]);
+                                
+                                if (textureHere == textureBefore)
+                                {
+                                    if (textureAfter == -1) EraseFloor(adjacent[i]);
+                                    else StockFloor(adjacent[i], null, textureAfter);
+                                    tab.Add(adjacent[i]);
+                                    /*
+                                    if (!autotilesToUpdate.ContainsKey(portion)) autotilesToUpdate[portion] = new List<int[]>();
+                                    autotilesToUpdate[portion].Add(adjacent[i]);*/
+                                }
+
+                            }
+                        }
+                    }
+                    /*
+                    foreach (KeyValuePair<int[], List<int[]>> entry in autotilesToUpdate)
+                    {
+                        for (int i = 0; i < entry.Value.Count; i++)
+                        {
+                            Map.Portions[entry.Key].Autotiles[textureAfter].Update(entry.Value[i], entry.Key);
+                        }
+                    }*/
+                }
+            }
         }
 
         #endregion
@@ -595,11 +659,11 @@ namespace RPG_Paper_Maker
         // DisposeBuffers
         // -------------------------------------------------------------------
 
-        public void DisposeBuffers(int i, int j)
+        public void DisposeBuffers(int i, int j, bool nullable = true)
         {
             if (Map.Portions[new int[] { i, j }] != null)
             {
-                Map.DisposeBuffers(new int[] { i, j });
+                Map.DisposeBuffers(new int[] { i, j }, nullable);
             }
         }
 

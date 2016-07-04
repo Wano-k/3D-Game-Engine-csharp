@@ -12,7 +12,7 @@ namespace RPG_Paper_Maker
     public class Autotiles
     {
         public int Id;
-        public List<Autotile> Tiles = new List<Autotile>();
+        public Dictionary<int[], Autotile> Tiles = new Dictionary<int[], Autotile>(new IntArrayComparer());
         public static Dictionary<string, int> AutotileBorder = new Dictionary<string, int>{
             { "A1", 2 },
             { "B1", 3 },
@@ -68,12 +68,12 @@ namespace RPG_Paper_Maker
         // Add
         // -------------------------------------------------------------------
 
-        public void Add(int[] coords)
+        public void Add(int[] coords, bool update = true)
         {
-            if (Tiles.Find(autotile => autotile.Coords.SequenceEqual(coords)) == null)
+            if (!Tiles.ContainsKey(coords))
             {
-                Tiles.Add(new Autotile(coords));
-                UpdateAround(coords[0], coords[1], coords[2], coords[3]);
+                Tiles[coords] = new Autotile();
+                if (update) UpdateAround(coords[0], coords[1], coords[2], coords[3], update);
             }
         }
 
@@ -81,13 +81,12 @@ namespace RPG_Paper_Maker
         // Remove
         // -------------------------------------------------------------------
 
-        public void Remove(int[] coords)
+        public void Remove(int[] coords, bool update = true)
         {
-            Autotile autotile = Tiles.Find(auto => auto.Coords.SequenceEqual(coords));
-            if (autotile != null)
+            if (Tiles.ContainsKey(coords))
             {
-                Tiles.Remove(autotile);
-                UpdateAround(coords[0], coords[1], coords[2], coords[3]);
+                Tiles.Remove(coords);
+                if (update) UpdateAround(coords[0], coords[1], coords[2], coords[3], update);
             }
         }
 
@@ -95,17 +94,34 @@ namespace RPG_Paper_Maker
         // UpdateAround
         // -------------------------------------------------------------------
 
-        public void UpdateAround(int x, int y1, int y2, int z)
+        public void UpdateAround(int x, int y1, int y2, int z, bool update)
         {
             int[] portion = MapEditor.Control.GetPortion(x, z); // portion where you are setting autotile
             for (int X = x - 1; X <= x + 1; X++)
             {
                 for (int Z = z - 1; Z <= z + 1; Z++)
                 {
-                    Autotile autotileAround = TileOnWhatever(new int[] { X, y1, y2, Z });
-                    if (autotileAround != null) autotileAround.Update(this, portion);
+                    int[] coords = new int[] { X, y1, y2, Z };
+                    Autotile autotileAround = TileOnWhatever(coords);
+                    if (autotileAround != null)
+                    {
+                        if (update) autotileAround.Update(this, coords, portion);
+                        else
+                        {
+                            MapEditor.Control.AddPortionToUpdate(MapEditor.Control.GetPortion(X, Z));
+                        }
+                    }
                 }
             }
+        }
+
+        // -------------------------------------------------------------------
+        // Update
+        // -------------------------------------------------------------------
+
+        public void Update(int[] coords, int[] portion)
+        {
+            Tiles[coords].Update(this, coords, portion);
         }
 
         // -------------------------------------------------------------------
@@ -159,7 +175,7 @@ namespace RPG_Paper_Maker
             {
                 if (MapEditor.Control.Map.Portions[portion] != null && MapEditor.Control.Map.Portions[portion].Autotiles.ContainsKey(Id))
                 {
-                    return MapEditor.Control.Map.Portions[portion].Autotiles[Id].Tiles.Find(autotile => autotile.Coords.SequenceEqual(coords));
+                    if (MapEditor.Control.Map.Portions[portion].Autotiles[Id].Tiles.ContainsKey(coords)) return MapEditor.Control.Map.Portions[portion].Autotiles[Id].Tiles[coords];
                 }
                 return null;
             }
@@ -196,9 +212,9 @@ namespace RPG_Paper_Maker
             };
             int offset = 0;
 
-            for (int i = 0; i < Tiles.Count; i++)
+            foreach (KeyValuePair<int[], Autotile> entry in Tiles)
             {
-                foreach (VertexPositionTexture vertex in CreateTex(MapEditor.TexAutotiles[Id], Tiles[i]))
+                foreach (VertexPositionTexture vertex in CreateTex(MapEditor.TexAutotiles[Id], entry.Key, entry.Value))
                 {
                     verticesList.Add(vertex);
                 }
@@ -221,11 +237,11 @@ namespace RPG_Paper_Maker
         // CreateTex
         // -------------------------------------------------------------------
 
-        protected VertexPositionTexture[] CreateTex(Texture2D texture, Autotile autotile)
+        protected VertexPositionTexture[] CreateTex(Texture2D texture, int[] coords, Autotile autotile)
         {
             VertexPositionTexture[] res = new VertexPositionTexture[16];
 
-            int x = autotile.Coords[0], y = autotile.Coords[1] * WANOK.SQUARE_SIZE + autotile.Coords[2], z = autotile.Coords[3];
+            int x = coords[0], y = coords[1] * WANOK.SQUARE_SIZE + coords[2], z = coords[3];
             float[] left = new float[4], top = new float[4], bot = new float[4], right = new float[4];
             float[] leftPos = new float[4], topPos = new float[4], botPos = new float[4], rightPos = new float[4];
 
@@ -288,7 +304,7 @@ namespace RPG_Paper_Maker
         // DisposeBuffers
         // -------------------------------------------------------------------
 
-        public void DisposeBuffers(GraphicsDevice device)
+        public void DisposeBuffers(GraphicsDevice device, bool nullable = true)
         {
             if (VB != null)
             {
@@ -296,6 +312,11 @@ namespace RPG_Paper_Maker
                 device.Indices = null;
                 VB.Dispose();
                 IB.Dispose();
+                if (nullable)
+                {
+                    VB = null;
+                    IB = null;
+                }
             }
         }
     }

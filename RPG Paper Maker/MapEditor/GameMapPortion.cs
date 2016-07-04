@@ -49,17 +49,6 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // GetFloorTexture
-        // -------------------------------------------------------------------
-
-        public int[] GetFloorTexture(int[] coords)
-        {
-            if (Floors.ContainsKey(coords)) return Floors[coords];
-
-            return null;
-        }
-
-        // -------------------------------------------------------------------
         // ContainsFloor
         // -------------------------------------------------------------------
 
@@ -78,7 +67,7 @@ namespace RPG_Paper_Maker
         {
             foreach (KeyValuePair<int, Autotiles> entry in Autotiles)
             {
-                if (entry.Value.Tiles.Find(autotile => autotile.Coords.SequenceEqual(coords)) != null) return entry.Key;
+                if (entry.Value.Tiles.ContainsKey(coords)) return entry.Key;
             }
 
             return -1;
@@ -95,7 +84,11 @@ namespace RPG_Paper_Maker
             if (beforeTexture == null)
             {
                 modified = true;
-                
+                int beforeId = ContainsAutotiles(coords);
+                if (beforeId != -1)
+                {
+                    Autotiles[beforeId].Remove(coords);
+                }
             }
 
             // Adding the new floor
@@ -108,23 +101,27 @@ namespace RPG_Paper_Maker
         // AddAutotile
         // -------------------------------------------------------------------
 
-        public bool AddAutotile(int[] coords, int newId)
+        public bool AddAutotile(int[] coords, int newId, bool update)
         {
             bool modified = false;
             int beforeId = ContainsAutotiles(coords);
             if (beforeId == -1)
             {
                 modified = true;
-                
+                int[] beforeTexture = ContainsFloor(coords);
+                if (beforeTexture != null)
+                {
+                    Floors.Remove(coords);
+                }
             }
             else
             {
-                Autotiles[beforeId].Remove(coords);
+                Autotiles[beforeId].Remove(coords, update);
             }
 
             // Adding the new autotile
             if (!Autotiles.ContainsKey(newId)) Autotiles[newId] = new Autotiles(newId);
-            Autotiles[newId].Add(coords);
+            Autotiles[newId].Add(coords, update);
 
             return modified || beforeId != newId;
         }
@@ -135,13 +132,27 @@ namespace RPG_Paper_Maker
 
         public bool RemoveFloor(int[] coords)
         {
-            int[] beforeTexture = new int[] { 0, 0, 0, 0 };
-            if (Floors.ContainsKey(coords)) beforeTexture = Floors[coords];
+            bool modified = false;
 
-            // Removing the new floor
-            Floors.Remove(coords);
+            // Floors
+            if (ContainsFloor(coords) != null)
+            {
+                modified = true;
+                Floors.Remove(coords);
+            }
 
-            return !beforeTexture.SequenceEqual(new int[] { 0, 0, 0, 0 }); ;
+            // Autotiles
+            if (!modified)
+            {
+                int beforeId = ContainsAutotiles(coords);
+                if (beforeId != -1)
+                {
+                    modified = true;
+                    Autotiles[beforeId].Remove(coords);
+                }
+            }
+
+            return modified;
         }
 
         // -------------------------------------------------------------------
@@ -256,15 +267,34 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // UpdateDictionaries
+        // -------------------------------------------------------------------
+
+        public void UpdateDictionaries(GraphicsDevice device)
+        {
+            // Autotiles
+            List<int> autotilesToDelete = new List<int>();
+            foreach (int id in Autotiles.Keys)
+            {
+                if (Autotiles[id].IsEmpty()) autotilesToDelete.Add(id);
+            }
+            for (int i = 0; i < autotilesToDelete.Count; i++)
+            {
+                Autotiles[autotilesToDelete[i]].DisposeBuffers(device);
+                Autotiles.Remove(autotilesToDelete[i]);
+            }
+        }
+
+        // -------------------------------------------------------------------
         // DisposeBuffers
         // -------------------------------------------------------------------
 
-        public void DisposeBuffers(GraphicsDevice device)
+        public void DisposeBuffers(GraphicsDevice device, bool nullable = true)
         {
-            DisposeBuffersFloor(device);
+            DisposeBuffersFloor(device, nullable);
             foreach (Autotiles autotiles in Autotiles.Values)
             {
-                autotiles.DisposeBuffers(device);
+                autotiles.DisposeBuffers(device, nullable);
             }
         }
 
@@ -272,7 +302,7 @@ namespace RPG_Paper_Maker
         // DisposeBuffersFloor
         // -------------------------------------------------------------------
 
-        public void DisposeBuffersFloor(GraphicsDevice device)
+        public void DisposeBuffersFloor(GraphicsDevice device, bool nullable = true)
         {
             if (VBFloor != null)
             {
@@ -280,6 +310,11 @@ namespace RPG_Paper_Maker
                 device.Indices = null;
                 VBFloor.Dispose();
                 IBFloor.Dispose();
+                if (nullable)
+                {
+                    VBFloor = null;
+                    IBFloor = null;
+                }
             }
         }
     }

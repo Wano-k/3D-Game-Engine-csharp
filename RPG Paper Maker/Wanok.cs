@@ -37,7 +37,7 @@ namespace RPG_Paper_Maker
         public static int SQUARE_SIZE { get { return SystemDatas.SquareSize; } }
         public static float RELATION_SIZE { get { return (float)(BASIC_SQUARE_SIZE) / SQUARE_SIZE; } }
         public static int PORTION_SIZE = 16;
-        public static int PORTION_RADIUS = 4;
+        public static int PORTION_RADIUS = 6;
         public static int COEF_BORDER_TEX = 10000;
         public static EngineSettings Settings = null;
         public static DemoSteps DemoStep = DemoSteps.None;

@@ -129,6 +129,7 @@ namespace RPG_Paper_Maker
         {
             Control.IsMapReloading = true;
             Control.CursorEditor.Reset();
+            Control.CurrentPortion = new int[] { 0, 0 };
             Control.Camera.ReLoadMap();
             if (Control.Map != null) DisposeVertexBuffer(); // Dispose the previous vertexBuffer to create a new one for the object
             Control.Map = new Map(GraphicsDevice, mapName);

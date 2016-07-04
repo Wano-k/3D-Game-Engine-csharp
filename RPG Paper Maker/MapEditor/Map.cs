@@ -156,6 +156,17 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // UpdatePortions
+        // -------------------------------------------------------------------
+
+        public void UpdatePortions(int[] portion)
+        {
+            Portions[portion].UpdateDictionaries(Device);
+            if (Portions[portion].IsEmpty()) DisposeBuffers(portion);
+            else GenTextures(portion);
+        }
+
+        // -------------------------------------------------------------------
         // GenTextures
         // -------------------------------------------------------------------
 
@@ -231,9 +242,9 @@ namespace RPG_Paper_Maker
         // DisposeBuffers
         // -------------------------------------------------------------------
 
-        public void DisposeBuffers(int[] portion)
+        public void DisposeBuffers(int[] portion, bool nullable = true)
         {
-            Portions[portion].DisposeBuffers(Device);
+            Portions[portion].DisposeBuffers(Device, nullable);
         }
 
         // -------------------------------------------------------------------
