@@ -56,7 +56,7 @@ namespace RPG_Paper_Maker
         {
             if (Floors.ContainsKey(coords)) return Floors[coords];
 
-            return null;
+            return new int[] { 0, 0, 0, 0 };
         }
 
         // -------------------------------------------------------------------
@@ -81,7 +81,7 @@ namespace RPG_Paper_Maker
         {
             bool modified = false;
             int[] beforeTexture = ContainsFloor(coords);
-            if (beforeTexture == null)
+            if (beforeTexture.SequenceEqual(new int[] { 0, 0, 0, 0 }))
             {
                 modified = true;
                 int beforeId = ContainsAutotiles(coords);
@@ -109,7 +109,7 @@ namespace RPG_Paper_Maker
             {
                 modified = true;
                 int[] beforeTexture = ContainsFloor(coords);
-                if (beforeTexture != null)
+                if (!beforeTexture.SequenceEqual(new int[] { 0, 0, 0, 0 }))
                 {
                     Floors.Remove(coords);
                 }
@@ -135,7 +135,7 @@ namespace RPG_Paper_Maker
             bool modified = false;
 
             // Floors
-            if (ContainsFloor(coords) != null)
+            if (!ContainsFloor(coords).SequenceEqual(new int[] { 0, 0, 0, 0 }))
             {
                 modified = true;
                 Floors.Remove(coords);

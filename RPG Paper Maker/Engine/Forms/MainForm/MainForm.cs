@@ -543,6 +543,7 @@ namespace RPG_Paper_Maker
 
         private void menuStrip2_MouseHover(object sender, EventArgs e)
         {
+            Control.OpenNewDialog();
             menuStrip2.Focus();
         }
 
@@ -871,8 +872,13 @@ namespace RPG_Paper_Maker
             DialogResult dialog = MessageBox.Show("Are you sure you want to delete this directory? All the content inside will be deleted too.", "Delete the directory", MessageBoxButtons.YesNo);
             if (dialog == DialogResult.Yes)
             {
-                DeleteMapsDirectory(TreeMap.SelectedNode);
-                TreeMap.SelectedNode.Remove();
+                try
+                {
+                    DeleteMapsDirectory(TreeMap.SelectedNode);
+                } catch(Exception ex)
+                {
+                    MessageBox.Show("Error while trying to delete your files. Maybe you have your explorer opened in one of the folders.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 SaveTreeMap();
             }
         }
@@ -902,8 +908,15 @@ namespace RPG_Paper_Maker
             DialogResult dialog = MessageBox.Show("Are you sure you want to delete this map?", "Delete the map", MessageBoxButtons.YesNo);
             if (dialog == DialogResult.Yes)
             {
-                Control.DeleteMapsDirectory(((TreeTag)TreeMap.SelectedNode.Tag).RealMapName);
-                TreeMap.SelectedNode.Remove();
+                try
+                {
+                    Control.DeleteMapsDirectory(((TreeTag)TreeMap.SelectedNode.Tag).RealMapName);
+                    TreeMap.SelectedNode.Remove();
+                }
+                catch
+                {
+                    MessageBox.Show("Error while trying to delete your files. Maybe you have your explorer opened in one of the folders.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 SaveTreeMap();
             }
         }
@@ -1220,17 +1233,21 @@ namespace RPG_Paper_Maker
 
         public void DeleteMapsDirectory(TreeNode dir)
         {
-            foreach (TreeNode node in dir.Nodes)
+            List<TreeNode> list = new List<TreeNode>(dir.Nodes.Cast<TreeNode>().ToList());
+            foreach (TreeNode node in list)
             {
                 if (((TreeTag)node.Tag).IsMap)
                 {
                     Control.DeleteMapsDirectory(((TreeTag)node.Tag).RealMapName);
+                    TreeMap.Nodes.Remove(node);
                 }
                 else
                 {
                     DeleteMapsDirectory(node);
                 }
             }
+
+            TreeMap.Nodes.Remove(dir);
         }
 
         // -------------------------------------------------------------------
@@ -1384,5 +1401,10 @@ namespace RPG_Paper_Maker
         }
 
         #endregion
+
+        private void MapEditor_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

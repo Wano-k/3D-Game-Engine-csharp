@@ -334,6 +334,18 @@ namespace RPG_Paper_Maker
 
         public void AddFloor(bool isMouse)
         {
+            // Texture
+            object texture = null;
+            switch (SelectedDrawTypeParticular)
+            {
+                case DrawType.Floors:
+                    texture = CurrentTexture;
+                    break;
+                case DrawType.Autotiles:
+                    texture = CurrentAutotileId;
+                    break;
+            }
+
             // Getting coords
             int[] coords = GetCoords(isMouse);
             if (coords == null) return;
@@ -345,9 +357,9 @@ namespace RPG_Paper_Maker
                     {
                         if (isMouse)
                         {
-                            if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, StockFloor, CurrentTexture, CurrentAutotileId);
+                            if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, StockFloor, texture);
                         }
-                        else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, StockFloor, CurrentTexture, CurrentAutotileId);
+                        else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, StockFloor, texture);
                     }
 
                     for (int i = 0; i < CurrentTexture[2]; i++)
@@ -355,15 +367,23 @@ namespace RPG_Paper_Maker
                         for (int j = 0; j < CurrentTexture[3]; j++)
                         {
                             if ((coords[0] + i) > Map.MapInfos.Width || (coords[3] + j) > Map.MapInfos.Height) break;
-                            int[] shortTexture = new int[] { i + CurrentTexture[0], j + CurrentTexture[1], 1, 1 };
+                            object shortTexture = null;
+                            switch (SelectedDrawTypeParticular)
+                            {
+                                case DrawType.Floors:
+                                    shortTexture = new int[] { i + CurrentTexture[0], j + CurrentTexture[1], 1, 1 };
+                                    break;
+                                case DrawType.Autotiles:
+                                    shortTexture = CurrentAutotileId;
+                                    break;
+                            }
                             int[] shortCoords = new int[] { coords[0] + i, coords[1], coords[2], coords[3] + j };
-                            StockFloor(shortCoords, shortTexture, CurrentAutotileId);
+                            StockFloor(shortCoords, shortTexture);
                         }
                     }
                     break;
                 case DrawMode.Tin:
-                    if (SelectedDrawTypeParticular == DrawType.Floors) PaintTinFloor(coords, CurrentTexture, CurrentAutotileId);
-                    else if (SelectedDrawTypeParticular == DrawType.Autotiles) PaintTinAutotiles(coords, CurrentAutotileId);
+                    PaintTinFloor(coords, texture);
                     break;
             }
             
@@ -391,7 +411,7 @@ namespace RPG_Paper_Maker
                         if (Map.Portions[portion].AddFloor(coords, (int[])args[0]) && Map.Saved) SetToNoSaved();
                         break;
                     case DrawType.Autotiles:
-                        if (Map.Portions[portion].AddAutotile(coords, (int)args[1], DrawMode != DrawMode.Tin) && Map.Saved) SetToNoSaved();
+                        if (Map.Portions[portion].AddAutotile(coords, (int)args[0], DrawMode != DrawMode.Tin) && Map.Saved) SetToNoSaved();
                         break;
                 }
                 AddPortionToSave(portion);
@@ -421,8 +441,7 @@ namespace RPG_Paper_Maker
                     }
                     break;
                 case DrawMode.Tin:
-                    if (SelectedDrawTypeParticular == DrawType.Floors) PaintTinFloor(coords, null, -1);
-                    else if (SelectedDrawTypeParticular == DrawType.Autotiles) PaintTinAutotiles(coords, -1);
+                    PaintTinFloor(coords, null);
                     break;
             }
 
@@ -451,22 +470,20 @@ namespace RPG_Paper_Maker
         // PaintTinFloor
         // -------------------------------------------------------------------
 
-        public void PaintTinFloor(int[] coords, int[] textureAfter, int autotileAfter)
+        public void PaintTinFloor(int[] coords, object textureAfter)
         {
             int[] portion = GetPortion(coords[0], coords[3]);
             if (IsInArea(coords) && IsInPortions(portion))
             {
-                int[] textureBefore = (Map.Portions[portion] == null) ? null : Map.Portions[portion].ContainsFloor(coords);
-                int[] textureAfterReduced = (textureAfter == null) ? null : new int[] { textureAfter[0], textureAfter[1], 1, 1 };
+                object textureBefore = GetCurrentTexture(portion, coords);
+                object textureAfterReduced = GetTextureAfterReduced(textureAfter, 0, 0);
 
-                if (textureBefore == null && textureAfter == null) return;
-
-                if ((textureBefore == null && textureAfter != null) || (textureBefore != null && textureAfter == null) || !textureBefore.SequenceEqual(textureAfter))
+                if (!AreTexturesEquals(textureBefore, textureAfterReduced))
                 {
                     List<int[]> tab = new List<int[]>();
                     tab.Add(coords);
                     if (textureAfter == null) EraseFloor(coords);
-                    else StockFloor(coords, textureAfterReduced, autotileAfter);
+                    else StockFloor(coords, textureAfterReduced);
 
                     int[][] adjacent;
 
@@ -483,16 +500,17 @@ namespace RPG_Paper_Maker
                         for (int i = 0; i < adjacent.Length; i++)
                         {
                             int localX = adjacent[i][0] - coords[0], localZ = adjacent[i][3] - coords[3];
-                            textureAfterReduced = (textureAfter == null) ? null : new int[] { textureAfter[0] + WANOK.Mod(localX, textureAfter[2]), textureAfter[1] + WANOK.Mod(localZ, textureAfter[3]), 1, 1 };
+                            textureAfterReduced = GetTextureAfterReduced(textureAfter, localX, localZ);
                             portion = GetPortion(adjacent[i][0], adjacent[i][3]);
-                            if (IsInPortions(portion))
-                            {
-                                int[] textureHere = (Map.Portions[portion] == null) ? null : Map.Portions[portion].ContainsFloor(adjacent[i]);
 
-                                if ((textureBefore == null || textureHere != null) && (textureBefore != null || textureHere == null) & IsInArea(adjacent[i]) && ((textureBefore == null && textureHere == null) || textureHere.SequenceEqual(textureBefore)))
+                            if (IsInPortions(portion) && IsInArea(adjacent[i]))
+                            {
+                                object textureHere = GetCurrentTexture(portion, adjacent[i]);
+
+                                if (AreTexturesEquals(textureHere, textureBefore))
                                 {
                                     if (textureAfter == null) EraseFloor(adjacent[i]);
-                                    else StockFloor(adjacent[i], textureAfterReduced, autotileAfter);
+                                    else StockFloor(adjacent[i], textureAfterReduced);
                                     tab.Add(adjacent[i]);
                                 }
                             }
@@ -503,66 +521,56 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // PaintTinAutotiles
+        // GetCurrentTexture
         // -------------------------------------------------------------------
 
-        public void PaintTinAutotiles(int[] coords, int textureAfter)
+        public object GetCurrentTexture(int[] portion, int[] coords)
         {
-            int[] portion = GetPortion(coords[0], coords[3]);
-            if (IsInArea(coords) && IsInPortions(portion))
-            {
-                int textureBefore = (Map.Portions[portion] == null) ? -1 : Map.Portions[portion].ContainsAutotiles(coords);
-
-                if (textureBefore != textureAfter)
-                {
-                    List<int[]> tab = new List<int[]>();
-
-                    tab.Add(coords);
-                    if (textureAfter == -1) EraseFloor(coords);
-                    else StockFloor(coords, null, textureAfter);
-
-                    int[][] adjacent;
-
-                    while (tab.Count != 0)
-                    {
-                        adjacent = new int[][]
-                        {
-                        new int[] { tab[0][0] - 1, tab[0][1], tab[0][2], tab[0][3] },
-                        new int[] { tab[0][0] + 1, tab[0][1], tab[0][2], tab[0][3] },
-                        new int[] { tab[0][0], tab[0][1], tab[0][2], tab[0][3] + 1 },
-                        new int[] { tab[0][0], tab[0][1], tab[0][2], tab[0][3] - 1 }
-                        };
-                        tab.RemoveAt(0);
-                        for (int i = 0; i < adjacent.Length; i++)
-                        {
-                            portion = GetPortion(adjacent[i][0], adjacent[i][3]);
-                            if (IsInPortions(portion) && IsInArea(adjacent[i]))
-                            {
-                                int textureHere = (Map.Portions[portion] == null) ? -1 : Map.Portions[portion].ContainsAutotiles(adjacent[i]);
-                                
-                                if (textureHere == textureBefore)
-                                {
-                                    if (textureAfter == -1) EraseFloor(adjacent[i]);
-                                    else StockFloor(adjacent[i], null, textureAfter);
-                                    tab.Add(adjacent[i]);
-                                    /*
-                                    if (!autotilesToUpdate.ContainsKey(portion)) autotilesToUpdate[portion] = new List<int[]>();
-                                    autotilesToUpdate[portion].Add(adjacent[i]);*/
-                                }
-
-                            }
-                        }
-                    }
-                    /*
-                    foreach (KeyValuePair<int[], List<int[]>> entry in autotilesToUpdate)
-                    {
-                        for (int i = 0; i < entry.Value.Count; i++)
-                        {
-                            Map.Portions[entry.Key].Autotiles[textureAfter].Update(entry.Value[i], entry.Key);
-                        }
-                    }*/
-                }
+            if (Map.Portions[portion] != null){
+                int[] floor = Map.Portions[portion].ContainsFloor(coords);
+                if (!floor.SequenceEqual(new int[] { 0, 0, 0, 0 })) return floor;
+                int autotile = Map.Portions[portion].ContainsAutotiles(coords);
+                if (autotile != -1) return autotile;
             }
+
+            return new int[] { 0, 0, 0, 0 };
+        }
+
+        // -------------------------------------------------------------------
+        // GetTextureafterReduced
+        // -------------------------------------------------------------------
+
+        public object GetTextureAfterReduced(object textureAfter, int localX, int localZ)
+        {
+            if (textureAfter != null)
+            {
+                if (textureAfter.GetType() == typeof(int[])) {
+                    int[] tab = (int[])textureAfter;
+                    return new int[] { tab[0] + WANOK.Mod(localX, tab[2]), tab[1] + WANOK.Mod(localZ, tab[3]), 1, 1 };
+                }
+                if (textureAfter.GetType() == typeof(int)) return textureAfter;
+            }
+
+            return new int[] { 0, 0, 0, 0 };
+        }
+
+        // -------------------------------------------------------------------
+        // AreTexturesEquals
+        // -------------------------------------------------------------------
+
+        public bool AreTexturesEquals(object textureA, object textureB)
+        {
+            if (textureA.GetType() != textureB.GetType()) return false;
+            if (textureA.GetType() == typeof(int[]))
+            {
+                return ((int[])textureA).SequenceEqual((int[])textureB);
+            }
+            else if (textureA.GetType() == typeof(int))
+            {
+                return (int)textureA == (int)textureB;
+            }
+
+            return false;
         }
 
         #endregion

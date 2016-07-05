@@ -269,6 +269,7 @@
             this.MapEditor.Size = new System.Drawing.Size(705, 419);
             this.MapEditor.TabIndex = 0;
             this.MapEditor.VSync = false;
+            this.MapEditor.Paint += new System.Windows.Forms.PaintEventHandler(this.MapEditor_Paint);
             this.MapEditor.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseDown);
             this.MapEditor.MouseEnter += new System.EventHandler(this.MapEditor_MouseEnter);
             this.MapEditor.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseMove);
