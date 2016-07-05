@@ -12,6 +12,7 @@ namespace RPG_Paper_Maker.Controls
     {
         public const int DEFAULT_SIZE = 25;
         public MapInfos Model;
+        public int PreviousWidth, PreviousHeight;
         public string RealMapName
         {
             get { return Model.RealMapName; }
@@ -57,6 +58,8 @@ namespace RPG_Paper_Maker.Controls
         public DialogNewMapControl(MapInfos mapInfos)
         {
             Model = mapInfos;
+            PreviousWidth = Model.Width;
+            PreviousHeight = Model.Height;
         }
 
         // -------------------------------------------------------------------
@@ -122,6 +125,94 @@ namespace RPG_Paper_Maker.Controls
         }
 
         // -------------------------------------------------------------------
+        // ResizingMap 120 120 75 20
+        // -------------------------------------------------------------------
+
+        public void ResizingMap()
+        {
+            int difWidth = PreviousWidth - Width, difHeight = PreviousHeight - Height;
+
+            if (difWidth > 0 || difHeight > 0)
+            {
+                int portionMaxX = (PreviousWidth - 1) / 16, portionMaxY = (PreviousHeight - 1) / 16;
+                int newPortionMaxX = (Width - 1) / 16, newPortionMaxY = (Height - 1) / 16;
+
+                for (int i = newPortionMaxX + 1; i <= portionMaxX; i++)
+                {
+                    for (int j = 0; j <= portionMaxY; j++)
+                    {
+                        string path = Path.Combine(WANOK.MapsDirectoryPath, RealMapName, "temp", i + "-" + j + ".pmap");
+                        if (File.Exists(path)) File.Delete(path);
+                    }
+                }
+                for (int j = newPortionMaxY + 1; j <= portionMaxY; j++)
+                {
+                    for (int i = 0; i <= portionMaxX; i++)
+                    {
+                        string path = Path.Combine(WANOK.MapsDirectoryPath, RealMapName, "temp", i + "-" + j + ".pmap");
+                        if (File.Exists(path)) File.Delete(path);
+                    }
+                }
+                for (int i = 0; i <= newPortionMaxX; i++)
+                {
+                    DeleteMapItems(i, newPortionMaxY);
+                }
+                for (int j = 0; j <= newPortionMaxY; j++)
+                {
+                    DeleteMapItems(newPortionMaxX, j);
+                }
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // DeleteMapItems
+        // -------------------------------------------------------------------
+
+        public void DeleteMapItems(int i, int j)
+        {
+            string path = Path.Combine(WANOK.MapsDirectoryPath, RealMapName, "temp", i + "-" + j + ".pmap");
+            if (File.Exists(path))
+            {
+                // Loading
+                GameMapPortion gamePortion = WANOK.LoadBinaryDatas<GameMapPortion>(path);
+
+                // Floors
+                List<int[]> coordsFloors = new List<int[]>();
+                foreach (int[] coords in gamePortion.Floors.Keys)
+                {
+                    coordsFloors.Add(coords);
+                }
+                for (int k = 0; k < coordsFloors.Count; k++)
+                {
+                    if (coordsFloors[k][0] >= Width || coordsFloors[k][3] >= Height) gamePortion.Floors.Remove(coordsFloors[k]);
+                }
+
+                // Autotiles
+                Dictionary<int, List<int[]>> coordsAutotiles = new Dictionary<int, List<int[]>>();
+                foreach (KeyValuePair<int, Autotiles> entry in gamePortion.Autotiles)
+                {
+                    coordsAutotiles[entry.Key] = new List<int[]>();
+                    foreach (int[] coords in entry.Value.Tiles.Keys)
+                    {
+                        coordsAutotiles[entry.Key].Add(coords);
+                    }
+                }
+                foreach (int id in coordsAutotiles.Keys)
+                {
+                    for (int k = 0; k < coordsAutotiles[id].Count; k++)
+                    {
+                        if (coordsAutotiles[id][k][0] >= Width || coordsAutotiles[id][k][3] >= Height) gamePortion.Autotiles[id].Tiles.Remove(coordsAutotiles[id][k]);
+                    }
+                    if (gamePortion.Autotiles[id].IsEmpty()) gamePortion.Autotiles.Remove(id);
+                }
+
+                // Saving
+                if (gamePortion.IsEmpty()) File.Delete(path);
+                else WANOK.SaveBinaryDatas(gamePortion, path);
+            }
+        }
+
+        // -------------------------------------------------------------------
         // CreateMap
         // -------------------------------------------------------------------
 
@@ -135,6 +226,7 @@ namespace RPG_Paper_Maker.Controls
             }
             else
             {
+                ResizingMap();
                 WANOK.SaveBinaryDatas(Model, Path.Combine(WANOK.MapsDirectoryPath, RealMapName, "temp", "infos.map"));
             }
         }

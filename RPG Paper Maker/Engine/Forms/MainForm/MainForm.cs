@@ -798,6 +798,10 @@ namespace RPG_Paper_Maker
             {
                 Control.DeleteTemp(previousTag.RealMapName);
             }
+            if (tag.IsMap && !WANOK.ListMapToSave.Contains(tag.RealMapName))
+            {
+                Control.DeleteTemp(tag.RealMapName);
+            }
             WANOK.SelectedNode = e.Node;
 
             // Reload map if selecting a new map

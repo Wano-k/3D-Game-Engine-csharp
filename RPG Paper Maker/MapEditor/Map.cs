@@ -206,22 +206,6 @@ namespace RPG_Paper_Maker
         {
             Device.Clear(WANOK.GetColor(MapInfos.SkyColor));
 
-            // Effect settings
-            effect.VertexColorEnabled = true;
-            effect.TextureEnabled = false;
-            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(0, WANOK.GetPixelHeight(GridHeight) + 0.2f,0);
-
-            // Drawing grid
-            if (DisplayGrid)
-            {
-                Device.SetVertexBuffer(VBGrid);
-                foreach (EffectPass pass in effect.CurrentTechnique.Passes)
-                {
-                    pass.Apply();
-                    Device.DrawPrimitives(PrimitiveType.LineList, 0, GridVerticesArray.Length / 2);
-                }
-            }
-
             // Drawing Floors
             effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
             effect.VertexColorEnabled = false;
@@ -236,6 +220,22 @@ namespace RPG_Paper_Maker
             {
                 StartSquare.Draw(Device, gameTime, effect, MapEditor.TexStartCursor, new Vector3(Startposition[0] * WANOK.SQUARE_SIZE, Startposition[1] * WANOK.SQUARE_SIZE + Startposition[2], Startposition[3] * WANOK.SQUARE_SIZE));
             }
+
+            // Drawing grid
+            Device.BlendState = BlendState.Additive;
+            effect.VertexColorEnabled = true;
+            effect.TextureEnabled = false;
+            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(0, WANOK.GetPixelHeight(GridHeight) + 0.01f, 0);
+            if (DisplayGrid)
+            {
+                Device.SetVertexBuffer(VBGrid);
+                foreach (EffectPass pass in effect.CurrentTechnique.Passes)
+                {
+                    pass.Apply();
+                    Device.DrawPrimitives(PrimitiveType.LineList, 0, GridVerticesArray.Length / 2);
+                }
+            }
+            Device.BlendState = BlendState.NonPremultiplied;
         }
 
         // -------------------------------------------------------------------
