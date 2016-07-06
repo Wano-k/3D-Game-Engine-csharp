@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace RPG_Paper_Maker
 {
-    public enum DrawType
+    [Serializable]
+    class Sprite
     {
-        None,
-        Floors,
-        Autotiles,
-        FaceSprite,
-        FixSprite
+        int[] Texture;
+        int[] Position;
+        int Orientation;
     }
 }

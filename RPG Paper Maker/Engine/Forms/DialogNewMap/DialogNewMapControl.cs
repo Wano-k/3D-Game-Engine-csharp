@@ -52,7 +52,7 @@ namespace RPG_Paper_Maker.Controls
 
         public DialogNewMapControl()
         {
-            Model = new MapInfos(GenerateMapName(), DEFAULT_SIZE, DEFAULT_SIZE);
+            Model = new MapInfos(WANOK.GenerateMapName(), DEFAULT_SIZE, DEFAULT_SIZE);
         }
 
         public DialogNewMapControl(MapInfos mapInfos)
@@ -92,36 +92,6 @@ namespace RPG_Paper_Maker.Controls
         public void SetSkyColor(int index)
         {
             Model.SkyColor = WANOK.SystemDatas.Colors[index].Id;
-        }
-
-        // -------------------------------------------------------------------
-        // MapNameExists
-        // -------------------------------------------------------------------
-
-        public bool MapNameExists(string mapName)
-        {
-            string[] dirPaths = Directory.GetDirectories(WANOK.MapsDirectoryPath);
-            for (int i = 0; i < dirPaths.Length; i++)
-            {
-                if (Path.GetFileName(dirPaths[i]) == mapName) return true;
-            }
-            return false;
-        }
-
-        // -------------------------------------------------------------------
-        // GenerateMapName
-        // -------------------------------------------------------------------
-
-        public string GenerateMapName()
-        {
-            string mapName = "";
-            int nbMaps = Directory.GetDirectories(WANOK.MapsDirectoryPath).Length;
-            for (int i = 0; i <= nbMaps; i++)
-            {
-                mapName = string.Format("MAP{0:D4}", (i + 1));
-                if (!MapNameExists(mapName)) break;
-            }
-            return mapName;
         }
 
         // -------------------------------------------------------------------

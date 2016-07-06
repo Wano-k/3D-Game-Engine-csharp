@@ -342,13 +342,6 @@ namespace RPG_Paper_Maker
             return false;
         }
 
-        public static bool IntersectsPlane(Vector2 mouseLocation, int height, Matrix world, Matrix view, Matrix projection, Viewport viewport)
-        {
-            Plane plane = new Plane(new Vector3(0, 0, 0), new Vector3(64, 0, 0), new Vector3(0, 0, 64));
-            Ray mouseRay = CalculateRay(mouseLocation, view, projection, viewport);
-            return mouseRay.Intersects(plane) != null;
-        }
-
         // -------------------------------------------------------------------
         // GetPixelHeight
         // -------------------------------------------------------------------
@@ -402,6 +395,36 @@ namespace RPG_Paper_Maker
         public static Color GetColor(int id)
         {
             return SystemColor.GetMonogameColor(SystemDatas.GetColorById(id));
+        }
+
+        // -------------------------------------------------------------------
+        // MapNameExists
+        // -------------------------------------------------------------------
+
+        public static bool MapNameExists(string mapName)
+        {
+            string[] dirPaths = Directory.GetDirectories(MapsDirectoryPath);
+            for (int i = 0; i < dirPaths.Length; i++)
+            {
+                if (Path.GetFileName(dirPaths[i]) == mapName) return true;
+            }
+            return false;
+        }
+
+        // -------------------------------------------------------------------
+        // GenerateMapName
+        // -------------------------------------------------------------------
+
+        public static string GenerateMapName()
+        {
+            string mapName = "";
+            int nbMaps = Directory.GetDirectories(MapsDirectoryPath).Length;
+            for (int i = 0; i <= nbMaps; i++)
+            {
+                mapName = string.Format("MAP{0:D4}", (i + 1));
+                if (!MapNameExists(mapName)) break;
+            }
+            return mapName;
         }
     }
 }

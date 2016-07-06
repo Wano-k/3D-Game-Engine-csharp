@@ -221,5 +221,19 @@ namespace RPG_Paper_Maker
             if (deleteAllTemps) DeleteAllTemp();
             else DeleteAllTemp(((TreeTag)WANOK.SelectedNode.Tag).RealMapName);
         }
+
+        // -------------------------------------------------------------------
+        // PasteMap
+        // -------------------------------------------------------------------
+
+        public void PasteMap(string mapName)
+        {
+            string newMapName = WANOK.GenerateMapName();
+
+            Directory.CreateDirectory(Path.Combine(WANOK.MapsDirectoryPath, newMapName));
+            string[] filePaths = Directory.GetFiles(Path.Combine(WANOK.MapsDirectoryPath, mapName));
+            foreach (string filePath in filePaths) File.Copy(filePath, Path.Combine(WANOK.MapsDirectoryPath, newMapName, Path.GetFileName(filePath)));
+            Directory.CreateDirectory(Path.Combine(WANOK.MapsDirectoryPath, newMapName, "temp"));
+        }
     }
 }

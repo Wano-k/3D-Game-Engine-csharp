@@ -279,6 +279,7 @@
     <Compile Include="MapEditor\Map.cs" />
     <Compile Include="Engine\Models\MapInfos.cs" />
     <Compile Include="MapEditor\MapEditorControl.cs" />
+    <Compile Include="MapEditor\Sprite.cs" />
     <Compile Include="MapEditor\Square.cs" />
     <Compile Include="Wanok.cs" />
     <Compile Include="MapEditor\MouseManager.cs" />
@@ -445,6 +446,12 @@
     <None Include="Resources\big_arrow_left.png" />
     <None Include="Resources\delete.png" />
     <None Include="Resources\none.png" />
+    <None Include="Resources\sprite0.png" />
+    <None Include="Resources\sprite1.png" />
+    <None Include="Resources\sprite2.png" />
+    <None Include="Resources\sprite3.png" />
+    <None Include="Resources\sprite4.png" />
+    <None Include="Resources\sprite5.png" />
     <Content Include="RTP\Content\Pictures\Textures2D\Autotiles\ground.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

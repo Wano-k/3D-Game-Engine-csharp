@@ -22,6 +22,8 @@ namespace RPG_Paper_Maker
         public DrawType SelectedDrawTypeParticular = DrawType.Floors;
         public DrawMode DrawMode = DrawMode.Pencil;
         public Vector3 PointOnPlane;
+        public int[] PointOnFloor;
+        public bool IntersectsGrid = true;
         public int[] GridHeight { get { return Map.GridHeight; } set { Map.GridHeight = value; } }
         public int[] CurrentTexture = new int[] { 0, 0, 1, 1 };
         public int CurrentAutotileId = 0;
@@ -78,9 +80,30 @@ namespace RPG_Paper_Maker
         {
             // Raycasting
             Ray ray = WANOK.CalculateRay(new Vector2(MouseBeforeUpdate.X, MouseBeforeUpdate.Y), camera.View, camera.Projection, graphicsDevice.Viewport);
-            int height = WANOK.GetPixelHeight(GridHeight);
+            int height = PreviousMouseCoords == null ? WANOK.GetPixelHeight(GridHeight) : PreviousMouseCoords[1] * WANOK.SQUARE_SIZE + PreviousMouseCoords[2];
             float distance = (height - camera.Position.Y) / ray.Direction.Y;
             PointOnPlane = WANOK.GetCorrectPointOnRay(ray, camera, distance, height);
+
+            // Raycasting floor
+            float floorDistance = 0;
+            PointOnFloor = null;
+            foreach (GameMapPortion gameMapPortion in Map.Portions.Values)
+            {
+                if (gameMapPortion != null)
+                {
+                    foreach (int[] coords in gameMapPortion.Floors.Keys)
+                    {
+                        floorDistance = RaycastFloor(coords, camera, ray, floorDistance);
+                    }
+                    foreach (Autotiles autotiles in gameMapPortion.Autotiles.Values)
+                    {
+                        foreach (int[] coords in autotiles.Tiles.Keys)
+                        {
+                            floorDistance = RaycastFloor(coords, camera, ray, floorDistance);
+                        }
+                    }
+                }
+            }
 
             // Update portions
             UpdatePortions();
@@ -92,6 +115,30 @@ namespace RPG_Paper_Maker
                 UpdateMovingPortion(newPortion, CurrentPortion);
             }
             CurrentPortion = newPortion;
+        }
+
+        // -------------------------------------------------------------------
+        // RaycastFloor
+        // -------------------------------------------------------------------
+
+        public float RaycastFloor(int[] coords, Camera camera, Ray ray, float floorDistance)
+        {
+            int height = coords[1] * WANOK.SQUARE_SIZE + coords[2];
+            float distance = (height - camera.Position.Y) / ray.Direction.Y;
+            Vector3 v = WANOK.GetCorrectPointOnRay(ray, camera, distance, height);
+            if (coords[0] == v.X && coords[3] == v.Z)
+            {
+                if (PointOnFloor == null || floorDistance > distance)
+                {
+                    if (distance > 0)
+                    {
+                        PointOnFloor = coords;
+                        floorDistance = distance;
+                    }
+                }
+            }
+
+            return floorDistance;
         }
 
         // -------------------------------------------------------------------
@@ -587,13 +634,25 @@ namespace RPG_Paper_Maker
 
         public int[] GetCoordsMouse()
         {
-            return new int[]
+            if (PreviousMouseCoords == null)
             {
-                (int)PointOnPlane.X,
-                GridHeight[0],
-                GridHeight[1],
-                (int)PointOnPlane.Z
-            };
+                return new int[]
+                {
+                    (int)PointOnPlane.X,
+                    GridHeight[0],
+                    GridHeight[1],
+                    (int)PointOnPlane.Z
+                };
+            }
+            else {
+                return new int[]
+                {
+                    (int)PointOnPlane.X,
+                    PreviousMouseCoords[1],
+                    PreviousMouseCoords[2],
+                    (int)PointOnPlane.Z
+                };
+            }
         }
 
         // -------------------------------------------------------------------
@@ -620,7 +679,15 @@ namespace RPG_Paper_Maker
             int[] coords;
             if (isMouse)
             {
-                coords = GetCoordsMouse();
+                if (SelectedDrawType == "ItemFloor" || SelectedDrawType == "ItemStart")
+                {
+                    if (PreviousMouseCoords == null && !IntersectsGrid && PointOnFloor != null) coords = PointOnFloor;
+                    else coords = GetCoordsMouse();
+                }
+                else
+                {
+                    coords = GetCoordsMouse();
+                }
                 if (PreviousMouseCoords != null && coords.SequenceEqual(PreviousMouseCoords)) return null;
             }
             else

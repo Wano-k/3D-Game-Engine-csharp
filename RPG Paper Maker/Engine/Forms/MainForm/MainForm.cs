@@ -30,6 +30,7 @@ namespace RPG_Paper_Maker
         public bool IsInItemHeightSquare = false;
         public bool IsInItemHeightPixel = false;
         public bool IsUsingCursorSelector = false;
+        public string CopiedMap = "";
 
 
         // -------------------------------------------------------------------
@@ -73,6 +74,7 @@ namespace RPG_Paper_Maker
             MapEditor.MouseWheel += MapEditor_MouseWheel;
             MouseWheel += MainForm_MouseWheel;
             ItemFloor.DropDown.MouseLeave += new EventHandler(ItemFloorDrop_MouseLeave);
+            ItemSprite.DropDown.MouseLeave += new EventHandler(ItemSpriteDrop_MouseLeave);
             ItemDrawMode.DropDown.MouseLeave += new EventHandler(ItemDrawModeDrop_MouseLeave);
             ItemHeight.DropDown.MouseLeave += new EventHandler(ItemHeightDrop_MouseLeave);
             ComboBoxSpecialTileset1.SelectedIndexChanged += new EventHandler(ComboBoxSpecialTileset1_SelectedIndexChanged);
@@ -304,7 +306,7 @@ namespace RPG_Paper_Maker
         {
             if (keyData == Keys.Left || keyData == Keys.Right || keyData == Keys.Up || keyData == Keys.Down)
             {
-                WANOK.KeyboardManager.SetKeyDownStatus((Microsoft.Xna.Framework.Input.Keys)keyData);
+                if (MapEditor.Focused) WANOK.KeyboardManager.SetKeyDownStatus((Microsoft.Xna.Framework.Input.Keys)keyData);
                 if (!MapEditor.Focused)
                 {
                     if (keyData == Keys.Up) UpdateTreeMapKeyUp();
@@ -321,7 +323,7 @@ namespace RPG_Paper_Maker
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            WANOK.KeyboardManager.SetKeyUpStatus(SpecialKeys(e.KeyCode));
+            if (MapEditor.Focused) WANOK.KeyboardManager.SetKeyUpStatus(SpecialKeys(e.KeyCode));
         }
 
         // -------------------------------------------------------------------
@@ -330,7 +332,13 @@ namespace RPG_Paper_Maker
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            WANOK.KeyboardManager.SetKeyDownStatus(SpecialKeys(e.KeyCode));
+            if (MapEditor.Focused) WANOK.KeyboardManager.SetKeyDownStatus(SpecialKeys(e.KeyCode));
+            if (!MapEditor.Focused)
+            {
+                if (e.Control && e.KeyCode == Keys.C) CopyMap();
+                if (e.Control && e.KeyCode == Keys.V) PasteMap();
+            }
+
             e.SuppressKeyPress = true;
         }
 
@@ -547,6 +555,8 @@ namespace RPG_Paper_Maker
             menuStrip2.Focus();
         }
 
+        // DropDown auto
+
         private void ItemFloorDrop_MouseLeave(object sender, EventArgs e)
         {
             ItemFloor.HideDropDown();
@@ -560,6 +570,21 @@ namespace RPG_Paper_Maker
         private void ItemFloor_MouseLeave(object sender, EventArgs e)
         {
             HideDropDownIfNotInControl(ItemFloor);
+        }
+
+        private void ItemSpriteDrop_MouseLeave(object sender, EventArgs e)
+        {
+            ItemSprite.HideDropDown();
+        }
+
+        private void ItemSprite_MouseEnter(object sender, EventArgs e)
+        {
+            ItemSprite.ShowDropDown();
+        }
+
+        private void ItemSprite_MouseLeave(object sender, EventArgs e)
+        {
+            HideDropDownIfNotInControl(ItemSprite);
         }
 
         private void ItemDrawModeDrop_MouseLeave(object sender, EventArgs e)
@@ -592,6 +617,8 @@ namespace RPG_Paper_Maker
             HideDropDownIfNotInControl(ItemHeight);
         }
 
+        // Height
+
         private void ItemHeight1_MouseEnter(object sender, EventArgs e)
         {
             IsInItemHeightSquare = true;
@@ -611,6 +638,8 @@ namespace RPG_Paper_Maker
         {
             IsInItemHeightPixel = false;
         }
+
+        // Floors
 
         private void ItemFloor_Click(object sender, EventArgs e)
         {
@@ -667,10 +696,73 @@ namespace RPG_Paper_Maker
             PanelSpecialMenu.Controls.Add(ComboBoxSpecialTileset1);
         }
 
+        // Sprite
+
+        private void ItemSprite_Click(object sender, EventArgs e)
+        {
+            SelectSprites();
+        }
+
+        private void ItemSprite1_Click(object sender, EventArgs e)
+        {
+            SelectFaceSprite();
+        }
+
+        private void ItemSprite2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void ItemSprite3_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void ItemSprite4_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void ItemSprite5_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void ItemSprite6_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        public void SelectSprites()
+        {
+            switch (ItemSprite.Text)
+            {
+                case "Face sprite":
+                    SelectFaceSprite();
+                    break;
+                case "Fix sprite":
+                    
+                    break;
+            }
+        }
+
+        public void SelectFaceSprite()
+        {
+            SetSelectedDrawType("ItemSprite");
+            SetSelectedDrawTypeParticular(DrawType.FaceSprite);
+            ItemSprite.Text = ItemSprite1.Text;
+            ItemSprite.Image = ItemSprite1.Image;
+            HideSpecialTileset();
+        }
+
+        // Start
+
         private void ItemStart_Click(object sender, EventArgs e)
         {
             SetSelectedDrawType("ItemStart");
         }
+
+        // DrawMode
 
         private void ItemDrawMode1_Click(object sender, EventArgs e)
         {
@@ -856,6 +948,11 @@ namespace RPG_Paper_Maker
             }
         }
 
+        private void MenuItemPasteMap_Click(object sender, EventArgs e)
+        {
+            PasteMap();
+        }
+
         private void MenuItemSetDirName_Click(object sender, EventArgs e)
         {
             Control.OpenNewDialog();
@@ -875,7 +972,7 @@ namespace RPG_Paper_Maker
                 try
                 {
                     DeleteMapsDirectory(TreeMap.SelectedNode);
-                } catch(Exception ex)
+                } catch
                 {
                     MessageBox.Show("Error while trying to delete your files. Maybe you have your explorer opened in one of the folders.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -902,7 +999,12 @@ namespace RPG_Paper_Maker
         {
             MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
-        
+
+        private void MenuItemCopyMap_Click(object sender, EventArgs e)
+        {
+            CopyMap();
+        }
+
         private void MenuItemDeleteMap_Click(object sender, EventArgs e)
         {
             DialogResult dialog = MessageBox.Show("Are you sure you want to delete this map?", "Delete the map", MessageBoxButtons.YesNo);
@@ -1360,6 +1462,38 @@ namespace RPG_Paper_Maker
             SelectFloors();
         }
 
+        // -------------------------------------------------------------------
+        // CopyMap
+        // -------------------------------------------------------------------
+
+        public void CopyMap()
+        {
+            TreeTag tag = (TreeTag)TreeMap.SelectedNode.Tag;
+            if (tag.IsMap) CopiedMap = tag.RealMapName;
+        }
+
+        // -------------------------------------------------------------------
+        // PasteMap
+        // -------------------------------------------------------------------
+
+        public void PasteMap()
+        {
+            TreeTag tag = (TreeTag)TreeMap.SelectedNode.Tag;
+
+            if (!tag.IsMap && CopiedMap != "")
+            {
+                Control.PasteMap(CopiedMap);
+                string mapName = WANOK.LoadBinaryDatas<MapInfos>(Path.Combine(WANOK.MapsDirectoryPath, CopiedMap, "infos.map")).MapName;
+                TreeNode node = TreeMap.SelectedNode.Nodes.Insert(0, mapName);
+                TreeMap.ExpandAll();
+                node.Tag = TreeTag.CreateMap(mapName, CopiedMap);
+                TreeMap.SelectedNode = node;
+                node.ImageIndex = 1;
+                node.SelectedImageIndex = 1;
+                SaveTreeMap();
+            }
+        }
+
         #endregion
 
         // -------------------------------------------------------------------
@@ -1401,10 +1535,5 @@ namespace RPG_Paper_Maker
         }
 
         #endregion
-
-        private void MapEditor_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
     }
 }

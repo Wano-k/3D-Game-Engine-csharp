@@ -17,6 +17,7 @@ namespace RPG_Paper_Maker
     {
         public Dictionary<int[], int[]> Floors;
         public Dictionary<int, Autotiles> Autotiles;
+        public Dictionary<int[], List<Sprite>> FaceSprites;
 
         // Floors
         [NonSerialized()]
