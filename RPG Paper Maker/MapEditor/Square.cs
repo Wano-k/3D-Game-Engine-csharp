@@ -75,11 +75,11 @@ namespace RPG_Paper_Maker
         // Draw
         // -------------------------------------------------------------------
 
-        public void Draw(GraphicsDevice device, GameTime gameTime, BasicEffect effect, Texture2D texture, Vector3 position)
+        public void Draw(GraphicsDevice device, GameTime gameTime, AlphaTestEffect effect, Texture2D texture, Vector3 position)
         {
             // Setting effect
             effect.VertexColorEnabled = false;
-            effect.TextureEnabled = true;
+            //effect.TextureEnabled = true;
             effect.Texture = texture;
             effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(position.X, position.Y + 0.1f, position.Z);
 

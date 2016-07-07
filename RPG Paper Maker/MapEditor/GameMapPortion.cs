@@ -15,9 +15,9 @@ namespace RPG_Paper_Maker
     [Serializable]
     class GameMapPortion
     {
-        public Dictionary<int[], int[]> Floors;
-        public Dictionary<int, Autotiles> Autotiles;
-        public Dictionary<int[], List<Sprite>> FaceSprites;
+        public Dictionary<int[], int[]> Floors; // Coords => texture
+        public Dictionary<int, Autotiles> Autotiles; // Id => Autotiles (= list autotile)
+        public Dictionary<int[], Sprites> Sprites; // Texture => Sprites
 
         // Floors
         [NonSerialized()]
@@ -38,6 +38,7 @@ namespace RPG_Paper_Maker
         {
             Floors = new Dictionary<int[], int[]>(new IntArrayComparer());
             Autotiles = new Dictionary<int, Autotiles>();
+            Sprites = new Dictionary<int[], Sprites>(new IntArrayComparer());
         }
 
         // -------------------------------------------------------------------
@@ -46,7 +47,7 @@ namespace RPG_Paper_Maker
 
         public bool IsEmpty()
         {
-            return (Floors.Count == 0 && Autotiles.Count == 0);
+            return (Floors.Count == 0 && Autotiles.Count == 0 && Sprites.Count == 0);
         }
 
         // -------------------------------------------------------------------
@@ -72,6 +73,21 @@ namespace RPG_Paper_Maker
             }
 
             return -1;
+        }
+
+        // -------------------------------------------------------------------
+        // ContainsSprite
+        // -------------------------------------------------------------------
+
+        public object[] ContainsSprite(int[] coords)
+        {
+            foreach (KeyValuePair<int[], Sprites> entry in Sprites)
+            {
+                Sprite sprite = entry.Value.ContainsCoords(coords);
+                if (sprite != null) return new object[] { entry.Key, sprite };
+            }
+
+            return null;
         }
 
         // -------------------------------------------------------------------
@@ -152,6 +168,35 @@ namespace RPG_Paper_Maker
                     Autotiles[beforeId].Remove(coords);
                 }
             }
+
+            return modified;
+        }
+
+        // -------------------------------------------------------------------
+        // AddSprite
+        // -------------------------------------------------------------------
+
+        public bool AddSprite(int[] coords, int[] newTexture, Sprite newSprite)
+        {
+            bool modified = false;
+            object[] before = ContainsSprite(coords); // drawtype, positionOrientation, texture
+
+            // Remplacing
+            if (before == null)
+            {
+                modified = true;
+            }
+            else
+            {
+                int[] beforeTexture = (int[])before[0];
+                Sprite beforeSprite = (Sprite)before[1];
+                if (!beforeTexture.SequenceEqual(newTexture) || !beforeSprite.Equals(newSprite)) modified = true;
+
+                Sprites[beforeTexture].Remove(coords);
+            }
+
+            if (!Sprites.ContainsKey(newTexture)) Sprites[newTexture] = new Sprites();
+            Sprites[newTexture].Add(coords, newSprite);
 
             return modified;
         }
@@ -240,11 +285,23 @@ namespace RPG_Paper_Maker
 
         #endregion
 
+        #region Sprites
+
+        public void GenSprites(GraphicsDevice device)
+        {
+            foreach (KeyValuePair<int[], Sprites> entry in Sprites)
+            {
+                entry.Value.GenSprites(device, entry.Key);
+            }
+        }
+
+        #endregion
+
         // -------------------------------------------------------------------
         // Draw
         // -------------------------------------------------------------------
 
-        public void Draw(GraphicsDevice device, BasicEffect effect, Texture2D texture)
+        public void DrawFloors(GraphicsDevice device, AlphaTestEffect effect, Texture2D texture)
         {
             // Drawing Floors
             if (VBFloor != null)
@@ -259,11 +316,24 @@ namespace RPG_Paper_Maker
                     device.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, VerticesFloorArray, 0, VerticesFloorArray.Length, IndexesFloorArray, 0, VerticesFloorArray.Length / 2);
                 }
             }
-
+            
             // Drawing Autotiles
             foreach (KeyValuePair<int, Autotiles> entry in Autotiles)
             {
                 entry.Value.Draw(device, effect);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // DrawOthers
+        // -------------------------------------------------------------------
+
+        public void DrawOthers(GraphicsDevice device, AlphaTestEffect effect, Texture2D texture, Camera camera)
+        {
+            // Drawing Sprites
+            foreach (Sprites sprites in Sprites.Values)
+            {
+                sprites.Draw(device, effect, camera);
             }
         }
 
@@ -284,6 +354,18 @@ namespace RPG_Paper_Maker
                 Autotiles[autotilesToDelete[i]].DisposeBuffers(device);
                 Autotiles.Remove(autotilesToDelete[i]);
             }
+
+            // Sprites
+            List<int[]> spritesToDelete = new List<int[]>();
+            foreach (int[] texture in Sprites.Keys)
+            {
+                if (Sprites[texture].IsEmpty()) spritesToDelete.Add(texture);
+            }
+            for (int i = 0; i < spritesToDelete.Count; i++)
+            {
+                Sprites[spritesToDelete[i]].DisposeBuffers(device);
+                Sprites.Remove(spritesToDelete[i]);
+            }
         }
 
         // -------------------------------------------------------------------
@@ -296,6 +378,10 @@ namespace RPG_Paper_Maker
             foreach (Autotiles autotiles in Autotiles.Values)
             {
                 autotiles.DisposeBuffers(device, nullable);
+            }
+            foreach (Sprites sprites in Sprites.Values)
+            {
+                sprites.DisposeBuffers(device, nullable);
             }
         }
 

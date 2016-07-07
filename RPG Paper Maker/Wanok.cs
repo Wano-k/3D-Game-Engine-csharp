@@ -308,13 +308,12 @@ namespace RPG_Paper_Maker
             return new Vector3((ray.Direction.X * distance) + camera.Position.X, (ray.Direction.Y * distance) + camera.Position.Y, (ray.Direction.Z * distance) + camera.Position.Z);
         }
 
-        public static Vector3 GetCorrectPointOnRay(Ray ray, Camera camera, float distance, int height)
+        public static int[] GetCorrectPointOnRay(Ray ray, Camera camera, float distance, int height)
         {
             Vector3 point = GetPointOnRay(ray, camera, distance);
-            Vector3 correctedPoint = new Vector3((int)(point.X / SQUARE_SIZE), (int)(point.Y / SQUARE_SIZE), (int)(point.Z / SQUARE_SIZE));
-            if (point.X < 0) correctedPoint.X -= 1;
-            correctedPoint.Y = height;
-            if (point.Z < 0) correctedPoint.Z -= 1;
+            int[] correctedPoint = new int[] { (int)(point.X / SQUARE_SIZE), 0, 0, (int)(point.Z / SQUARE_SIZE) };
+            if (point.X < 0) correctedPoint[0] -= 1;
+            if (point.Z < 0) correctedPoint[3] -= 1;
 
             return correctedPoint;
         }

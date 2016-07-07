@@ -283,7 +283,7 @@ namespace RPG_Paper_Maker
         // Draw
         // -------------------------------------------------------------------
 
-        public void Draw(GraphicsDevice device, BasicEffect effect)
+        public void Draw(GraphicsDevice device, AlphaTestEffect effect)
         {
             if (VB != null)
             {

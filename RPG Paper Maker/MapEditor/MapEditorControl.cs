@@ -21,12 +21,14 @@ namespace RPG_Paper_Maker
         public string SelectedDrawType = "ItemFloor";
         public DrawType SelectedDrawTypeParticular = DrawType.Floors;
         public DrawMode DrawMode = DrawMode.Pencil;
-        public Vector3 PointOnPlane;
+        public int[] PointOnPlane;
         public int[] PointOnFloor;
-        public bool IntersectsGrid = true;
+        public bool IsGridOnTop = false;
         public int[] GridHeight { get { return Map.GridHeight; } set { Map.GridHeight = value; } }
         public int[] CurrentTexture = new int[] { 0, 0, 1, 1 };
         public int CurrentAutotileId = 0;
+        public int[] CurrentPosition = new int[] { 0, 0 };
+        public int CurrentOrientation = 0;
         public int[] CurrentPortion = new int[] { 0, 0 };
         protected List<int[]> PortionsToUpdate = new List<int[]>();
         protected List<int[]> PortionsToSave = new List<int[]>();
@@ -82,7 +84,12 @@ namespace RPG_Paper_Maker
             Ray ray = WANOK.CalculateRay(new Vector2(MouseBeforeUpdate.X, MouseBeforeUpdate.Y), camera.View, camera.Projection, graphicsDevice.Viewport);
             int height = PreviousMouseCoords == null ? WANOK.GetPixelHeight(GridHeight) : PreviousMouseCoords[1] * WANOK.SQUARE_SIZE + PreviousMouseCoords[2];
             float distance = (height - camera.Position.Y) / ray.Direction.Y;
-            PointOnPlane = WANOK.GetCorrectPointOnRay(ray, camera, distance, height);
+            if (distance < 0) PointOnPlane = null;
+            else
+            {
+                PointOnPlane = WANOK.GetCorrectPointOnRay(ray, camera, distance, height);
+                if (!IsInArea(PointOnPlane)) PointOnPlane = null;
+            }
 
             // Raycasting floor
             float floorDistance = 0;
@@ -104,6 +111,7 @@ namespace RPG_Paper_Maker
                     }
                 }
             }
+            IsGridOnTop = (PointOnPlane == null || PointOnFloor == null) ? false : distance < floorDistance;
 
             // Update portions
             UpdatePortions();
@@ -125,8 +133,8 @@ namespace RPG_Paper_Maker
         {
             int height = coords[1] * WANOK.SQUARE_SIZE + coords[2];
             float distance = (height - camera.Position.Y) / ray.Direction.Y;
-            Vector3 v = WANOK.GetCorrectPointOnRay(ray, camera, distance, height);
-            if (coords[0] == v.X && coords[3] == v.Z)
+            int[] c = WANOK.GetCorrectPointOnRay(ray, camera, distance, height);
+            if (coords[0] == c[0] && coords[3] == c[3])
             {
                 if (PointOnFloor == null || floorDistance > distance)
                 {
@@ -336,6 +344,9 @@ namespace RPG_Paper_Maker
                     if (SelectedDrawTypeParticular == DrawType.Autotiles && MapEditor.TexAutotiles.Count == 0) return;
                     AddFloor(isMouse);
                     break;
+                case "ItemSprite":
+                    AddSprite(isMouse);
+                    break;
             }
         }
 
@@ -352,6 +363,12 @@ namespace RPG_Paper_Maker
                     break;
             }
         }
+
+        // -------------------------------------------------------------------
+        // START
+        // -------------------------------------------------------------------
+
+        #region start
 
         // -------------------------------------------------------------------
         // AddStart
@@ -374,6 +391,14 @@ namespace RPG_Paper_Maker
                 Map.SetStartInfos(coords);
             }
         }
+
+        #endregion
+
+        // -------------------------------------------------------------------
+        // FLOORS
+        // -------------------------------------------------------------------
+
+        #region floors
 
         // -------------------------------------------------------------------
         // AddFloor
@@ -573,7 +598,8 @@ namespace RPG_Paper_Maker
 
         public object GetCurrentTexture(int[] portion, int[] coords)
         {
-            if (Map.Portions[portion] != null){
+            if (Map.Portions[portion] != null)
+            {
                 int[] floor = Map.Portions[portion].ContainsFloor(coords);
                 if (!floor.SequenceEqual(new int[] { 0, 0, 0, 0 })) return floor;
                 int autotile = Map.Portions[portion].ContainsAutotiles(coords);
@@ -591,7 +617,8 @@ namespace RPG_Paper_Maker
         {
             if (textureAfter != null)
             {
-                if (textureAfter.GetType() == typeof(int[])) {
+                if (textureAfter.GetType() == typeof(int[]))
+                {
                     int[] tab = (int[])textureAfter;
                     return new int[] { tab[0] + WANOK.Mod(localX, tab[2]), tab[1] + WANOK.Mod(localZ, tab[3]), 1, 1 };
                 }
@@ -623,6 +650,64 @@ namespace RPG_Paper_Maker
         #endregion
 
         // -------------------------------------------------------------------
+        // SPRITES
+        // -------------------------------------------------------------------
+
+        #region sprites
+
+        // -------------------------------------------------------------------
+        // AddSprite
+        // -------------------------------------------------------------------
+
+        public void AddSprite(bool isMouse)
+        {
+            // Getting coords
+            int[] coords = GetCoords(isMouse);
+            if (coords == null) return;
+            Sprite sprite = new Sprite(SelectedDrawTypeParticular, CurrentPosition, CurrentOrientation);
+
+            // Drawing sprites
+            switch (DrawMode)
+            {
+                case DrawMode.Pencil:
+                    if (isMouse)
+                    {
+                        if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, StockSprite, CurrentTexture, sprite);
+                    }
+                    else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, StockSprite, CurrentTexture, sprite);
+                    StockSprite(coords, CurrentTexture, sprite);
+                    break;
+            }
+
+            // Updating previous selected
+            if (isMouse) PreviousMouseCoords = coords;
+            else PreviousCursorCoords = coords;
+        }
+
+        // -------------------------------------------------------------------
+        // StockSprite
+        // -------------------------------------------------------------------
+
+        public void StockSprite(int[] coords, params object[] args)
+        {
+            int[] portion = GetPortion(coords[0], coords[3]);
+            if (IsInArea(coords) && IsInPortions(portion))
+            {
+                if (Map.Portions[portion] == null)
+                {
+                    Map.Portions[portion] = new GameMapPortion();
+                }
+                if (Map.Portions[portion].AddSprite(coords, (int[])args[0], (Sprite)args[1]) && Map.Saved) SetToNoSaved();
+                AddPortionToSave(portion);
+                AddPortionToUpdate(portion);
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        // -------------------------------------------------------------------
         // UTILS
         // -------------------------------------------------------------------
 
@@ -638,19 +723,19 @@ namespace RPG_Paper_Maker
             {
                 return new int[]
                 {
-                    (int)PointOnPlane.X,
+                    PointOnPlane[0],
                     GridHeight[0],
                     GridHeight[1],
-                    (int)PointOnPlane.Z
+                    PointOnPlane[3]
                 };
             }
             else {
                 return new int[]
                 {
-                    (int)PointOnPlane.X,
+                    PointOnPlane[0],
                     PreviousMouseCoords[1],
                     PreviousMouseCoords[2],
-                    (int)PointOnPlane.Z
+                    PointOnPlane[3]
                 };
             }
         }
@@ -681,8 +766,9 @@ namespace RPG_Paper_Maker
             {
                 if (SelectedDrawType == "ItemFloor" || SelectedDrawType == "ItemStart")
                 {
-                    if (PreviousMouseCoords == null && !IntersectsGrid && PointOnFloor != null) coords = PointOnFloor;
-                    else coords = GetCoordsMouse();
+                    if (PreviousMouseCoords == null && PointOnFloor != null && !IsGridOnTop) coords = PointOnFloor;
+                    else if (PointOnPlane != null) coords = GetCoordsMouse();
+                    else return null;
                 }
                 else
                 {

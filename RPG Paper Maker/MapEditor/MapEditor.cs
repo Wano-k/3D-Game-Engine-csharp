@@ -13,7 +13,7 @@ namespace RPG_Paper_Maker
 {
     class MapEditor : WinFormsGraphicsDevice.MapEditorControl
     {
-        BasicEffect effect;
+        AlphaTestEffect effect;
         SpriteFont font;
 
         public static MapEditorControl Control = new MapEditorControl();
@@ -23,7 +23,7 @@ namespace RPG_Paper_Maker
         public Point MouseBeforeUpdate { get { return Control.MouseBeforeUpdate; } set { Control.MouseBeforeUpdate = value; } }
 
         // Content
-        public static Texture2D TexCursor, TexStartCursor, TexTileset, TexNone;
+        public static Texture2D TexCursor, TexStartCursor, TexTileset, TexNone, TexGrid;
         public static Dictionary<int,Texture2D> TexAutotiles = new Dictionary<int, Texture2D>();
 
 
@@ -43,6 +43,8 @@ namespace RPG_Paper_Maker
             fs = new FileStream("Config/bmp/start_cursor.png", FileMode.Open);
             TexStartCursor = Texture2D.FromStream(GraphicsDevice, fs);
             TexNone = new Texture2D(GraphicsDevice, 1, 1);
+            TexGrid = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            TexGrid.SetData(new Color[] { Color.White });
             fs.Close();
 
             // Create game components
@@ -53,7 +55,9 @@ namespace RPG_Paper_Maker
             LoadSettings();
 
             // Effect
-            effect = new BasicEffect(GraphicsDevice);
+            effect = new AlphaTestEffect(GraphicsDevice);
+            effect.AlphaFunction = CompareFunction.Greater;
+            effect.ReferenceAlpha = 1;
 
             // Load content
             font = Content.Load<SpriteFont>("Fonts/corbel");
@@ -182,7 +186,7 @@ namespace RPG_Paper_Maker
                 effect.World = Matrix.Identity;
 
                 // Drawings components
-                Control.Map.Draw(gameTime, effect);
+                Control.Map.Draw(gameTime, effect, Control.Camera);
                 Control.CursorEditor.Draw(GraphicsDevice, gameTime, effect);
 
                 // Draw position

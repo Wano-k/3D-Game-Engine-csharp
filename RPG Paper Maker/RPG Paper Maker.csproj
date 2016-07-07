@@ -184,8 +184,8 @@
       <DependentUpon>DialogPreviewGraphic.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Forms\DialogPreviewGraphic\DialogPreviewGraphicControl.cs" />
-    <Compile Include="Engine\Models\Autotile.cs" />
-    <Compile Include="Engine\Models\Autotiles.cs" />
+    <Compile Include="MapEditor\Autotile.cs" />
+    <Compile Include="MapEditor\Autotiles.cs" />
     <Compile Include="Engine\Models\SystemAutotile.cs" />
     <Compile Include="Engine\Models\Collision.cs" />
     <Compile Include="Engine\Models\KeyboardAssign.cs" />
@@ -280,6 +280,8 @@
     <Compile Include="Engine\Models\MapInfos.cs" />
     <Compile Include="MapEditor\MapEditorControl.cs" />
     <Compile Include="MapEditor\Sprite.cs" />
+    <Compile Include="MapEditor\PositionOrientation.cs" />
+    <Compile Include="MapEditor\Sprites.cs" />
     <Compile Include="MapEditor\Square.cs" />
     <Compile Include="Wanok.cs" />
     <Compile Include="MapEditor\MouseManager.cs" />

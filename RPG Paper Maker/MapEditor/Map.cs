@@ -56,10 +56,7 @@ namespace RPG_Paper_Maker
             }
             MapEditor.TexAutotiles.Clear();
             Tileset tileset = WANOK.SystemDatas.GetTilesetById(MapInfos.Tileset);
-            FileStream fs;
-            fs = new FileStream(tileset.Graphic.GetGraphicPath(), FileMode.Open);
-            MapEditor.TexTileset = Texture2D.FromStream(device, fs);
-            fs.Close();
+            MapEditor.TexTileset = tileset.Graphic.LoadTexture(device);
             for (int i = 0; i < tileset.Autotiles.Count; i++)
             {
                 MapEditor.TexAutotiles[tileset.Autotiles[i]] = WANOK.SystemDatas.GetAutotileById(tileset.Autotiles[i]).Graphic.LoadTexture(Device);
@@ -182,6 +179,7 @@ namespace RPG_Paper_Maker
         {
             portion.GenFloor(Device, MapEditor.TexTileset);
             portion.GenAutotiles(Device);
+            portion.GenSprites(Device);
         }
 
         // -------------------------------------------------------------------
@@ -202,19 +200,18 @@ namespace RPG_Paper_Maker
         // Draw
         // -------------------------------------------------------------------
 
-        public void Draw(GameTime gameTime, BasicEffect effect)
+        public void Draw(GameTime gameTime, AlphaTestEffect effect, Camera camera)
         {
             Device.Clear(WANOK.GetColor(MapInfos.SkyColor));
 
             // Drawing Floors
             effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
             effect.VertexColorEnabled = false;
-            effect.TextureEnabled = true;
             foreach (GameMapPortion gameMap in Portions.Values)
             {
-                if (gameMap != null) gameMap.Draw(Device, effect, MapEditor.TexTileset);
+                if (gameMap != null) gameMap.DrawFloors(Device, effect, MapEditor.TexTileset);
             }
-
+            
             // Drawing Start position
             if (StartSquare != null)
             {
@@ -222,10 +219,10 @@ namespace RPG_Paper_Maker
             }
 
             // Drawing grid
+            effect.Texture = MapEditor.TexGrid;
             Device.BlendState = BlendState.Additive;
             effect.VertexColorEnabled = true;
-            effect.TextureEnabled = false;
-            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(0, WANOK.GetPixelHeight(GridHeight) + 0.01f, 0);
+            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(0, WANOK.GetPixelHeight(GridHeight) + 0.1f, 0);
             if (DisplayGrid)
             {
                 Device.SetVertexBuffer(VBGrid);
@@ -235,7 +232,14 @@ namespace RPG_Paper_Maker
                     Device.DrawPrimitives(PrimitiveType.LineList, 0, GridVerticesArray.Length / 2);
                 }
             }
+
+            // Drawing others
             Device.BlendState = BlendState.NonPremultiplied;
+            effect.VertexColorEnabled = false;
+            foreach (GameMapPortion gameMap in Portions.Values)
+            {
+                if (gameMap != null) gameMap.DrawOthers(Device, effect, MapEditor.TexTileset, camera);
+            }
         }
 
         // -------------------------------------------------------------------

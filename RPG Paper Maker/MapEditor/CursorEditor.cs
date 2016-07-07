@@ -127,7 +127,7 @@ namespace RPG_Paper_Maker
         // Draw
         // -------------------------------------------------------------------
 
-        public void Draw(GraphicsDevice device, GameTime gameTime, BasicEffect effect)
+        public void Draw(GraphicsDevice device, GameTime gameTime, AlphaTestEffect effect)
         {
             Square.CreateTex(new int[] { WANOK.BASIC_SQUARE_SIZE * Frame, 0, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE }, MapEditor.TexCursor);
             Square.Draw(device, gameTime, effect, MapEditor.TexCursor, Position);

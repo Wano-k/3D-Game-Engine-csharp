@@ -710,7 +710,7 @@ namespace RPG_Paper_Maker
 
         private void ItemSprite2_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            SelectFixSprite();
         }
 
         private void ItemSprite3_Click(object sender, EventArgs e)
@@ -741,7 +741,7 @@ namespace RPG_Paper_Maker
                     SelectFaceSprite();
                     break;
                 case "Fix sprite":
-                    
+                    SelectFixSprite();
                     break;
             }
         }
@@ -752,6 +752,15 @@ namespace RPG_Paper_Maker
             SetSelectedDrawTypeParticular(DrawType.FaceSprite);
             ItemSprite.Text = ItemSprite1.Text;
             ItemSprite.Image = ItemSprite1.Image;
+            HideSpecialTileset();
+        }
+
+        public void SelectFixSprite()
+        {
+            SetSelectedDrawType("ItemSprite");
+            SetSelectedDrawTypeParticular(DrawType.FixSprite);
+            ItemSprite.Text = ItemSprite2.Text;
+            ItemSprite.Image = ItemSprite2.Image;
             HideSpecialTileset();
         }
 

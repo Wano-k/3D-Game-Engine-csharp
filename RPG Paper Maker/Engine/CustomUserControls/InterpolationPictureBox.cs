@@ -31,6 +31,7 @@ namespace RPG_Paper_Maker
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.InterpolationMode = InterpolationMode;
+            e.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
 
             base.OnPaint(e);
         }

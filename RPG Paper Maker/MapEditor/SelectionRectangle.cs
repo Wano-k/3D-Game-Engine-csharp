@@ -94,20 +94,20 @@ namespace RPG_Paper_Maker
             // Left-Top
             g.DrawImage(texCursor, new Rectangle(x, y, BORDER_SIZE, BORDER_SIZE), new Rectangle(0, 0, BORDER_SIZE, BORDER_SIZE), GraphicsUnit.Pixel);
             // Right-Top
-            g.DrawImage(texCursor, new Rectangle(x + Width - BORDER_SIZE - 1, y, BORDER_SIZE, BORDER_SIZE), new Rectangle(WANOK.BASIC_SQUARE_SIZE - BORDER_SIZE, 0, BORDER_SIZE, BORDER_SIZE), GraphicsUnit.Pixel);
+            g.DrawImage(texCursor, new Rectangle(x + Width - BORDER_SIZE, y, BORDER_SIZE, BORDER_SIZE), new Rectangle(WANOK.BASIC_SQUARE_SIZE - BORDER_SIZE, 0, BORDER_SIZE, BORDER_SIZE), GraphicsUnit.Pixel);
             // Right-Bot
-            g.DrawImage(texCursor, new Rectangle(x + Width - BORDER_SIZE - 1, y + Height - BORDER_SIZE - 1, BORDER_SIZE, BORDER_SIZE), new Rectangle(WANOK.BASIC_SQUARE_SIZE - BORDER_SIZE, WANOK.BASIC_SQUARE_SIZE - BORDER_SIZE, BORDER_SIZE, BORDER_SIZE), GraphicsUnit.Pixel);
+            g.DrawImage(texCursor, new Rectangle(x + Width - BORDER_SIZE, y + Height - BORDER_SIZE, BORDER_SIZE, BORDER_SIZE), new Rectangle(WANOK.BASIC_SQUARE_SIZE - BORDER_SIZE, WANOK.BASIC_SQUARE_SIZE - BORDER_SIZE, BORDER_SIZE, BORDER_SIZE), GraphicsUnit.Pixel);
             // Left-Bot
-            g.DrawImage(texCursor, new Rectangle(x, y + Height - BORDER_SIZE - 1, BORDER_SIZE, BORDER_SIZE), new Rectangle(0, WANOK.BASIC_SQUARE_SIZE - BORDER_SIZE, BORDER_SIZE, BORDER_SIZE), GraphicsUnit.Pixel);
+            g.DrawImage(texCursor, new Rectangle(x, y + Height - BORDER_SIZE, BORDER_SIZE, BORDER_SIZE), new Rectangle(0, WANOK.BASIC_SQUARE_SIZE - BORDER_SIZE, BORDER_SIZE, BORDER_SIZE), GraphicsUnit.Pixel);
 
             // Top
-            g.DrawImage(texCursor, new Rectangle(x + BORDER_SIZE, y, Width - (BORDER_SIZE * 2) - 1, BORDER_SIZE), new Rectangle(BORDER_SIZE, 0, 1, BORDER_SIZE), GraphicsUnit.Pixel);
+            g.DrawImage(texCursor, new Rectangle(x + BORDER_SIZE, y, Width - (BORDER_SIZE * 2), BORDER_SIZE), new Rectangle(BORDER_SIZE, 0, 1, BORDER_SIZE), GraphicsUnit.Pixel);
             // Right
-            g.DrawImage(texCursor, new Rectangle(x + Width - BORDER_SIZE - 1, y + BORDER_SIZE, BORDER_SIZE, ((Height - (BORDER_SIZE * 2) - 1) * 2)), new Rectangle(0, BORDER_SIZE, BORDER_SIZE, 1), GraphicsUnit.Pixel);
+            g.DrawImage(texCursor, new Rectangle(x + Width - BORDER_SIZE, y + BORDER_SIZE, BORDER_SIZE, Height - (BORDER_SIZE * 2)), new Rectangle(0, BORDER_SIZE, BORDER_SIZE, 1), GraphicsUnit.Pixel);
             // Bot
-            g.DrawImage(texCursor, new Rectangle(x + BORDER_SIZE, y + Height - BORDER_SIZE - 1, Width - (BORDER_SIZE * 2) - 1, BORDER_SIZE), new Rectangle(BORDER_SIZE, 0, 1, BORDER_SIZE), GraphicsUnit.Pixel);
+            g.DrawImage(texCursor, new Rectangle(x + BORDER_SIZE, y + Height - BORDER_SIZE, Width - (BORDER_SIZE * 2), BORDER_SIZE), new Rectangle(BORDER_SIZE, 0, 1, BORDER_SIZE), GraphicsUnit.Pixel);
             // Left
-            g.DrawImage(texCursor, new Rectangle(x, y + BORDER_SIZE, BORDER_SIZE, ((Height - (BORDER_SIZE * 2) - 1) * 2)), new Rectangle(0, BORDER_SIZE, BORDER_SIZE, 1), GraphicsUnit.Pixel);
+            g.DrawImage(texCursor, new Rectangle(x, y + BORDER_SIZE, BORDER_SIZE, Height - (BORDER_SIZE * 2)), new Rectangle(0, BORDER_SIZE, BORDER_SIZE, 1), GraphicsUnit.Pixel);
 
             RealX = X - x_width;
             RealY = Y - y_height;
