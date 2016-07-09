@@ -53,9 +53,9 @@ namespace RPG_Paper_Maker
         // ZoomPlus
         // -------------------------------------------------------------------
 
-        public void ZoomPlus()
+        public void ZoomPlus(int gridHeight)
         {
-            if (Position.Y >= 0)
+            if (Position.Y >= gridHeight)
             {
                 double dist = Distance / Height;
                 Distance -= dist * 20;
@@ -77,9 +77,9 @@ namespace RPG_Paper_Maker
         // ZoomLess
         // -------------------------------------------------------------------
 
-        public void ZoomLess()
+        public void ZoomLess(int gridHeight)
         {
-            if (Position.Y >= 0)
+            if (Position.Y >= gridHeight)
             {
                 double dist = Distance / Height;
                 Distance += dist * 20;
@@ -107,16 +107,16 @@ namespace RPG_Paper_Maker
         // Update
         // -------------------------------------------------------------------
 
-        public void Update(GameTime gameTime, CursorEditor cursor, Point mouseBeforeUpdate)
+        public void Update(GameTime gameTime, CursorEditor cursor, Point mouseBeforeUpdate, int gridHeight)
         {
             // Zoom
             if (WANOK.MapMouseManager.IsWheelUp())
             {
-                ZoomPlus();
+                ZoomPlus(gridHeight);
             }
             else if (WANOK.MapMouseManager.IsWheelDown())
             {
-                ZoomLess();
+                ZoomLess(gridHeight);
             }
 
             // Wheel Rotation

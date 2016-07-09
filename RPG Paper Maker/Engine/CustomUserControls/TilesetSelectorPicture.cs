@@ -54,6 +54,11 @@ namespace RPG_Paper_Maker
             SelectionRectangle.SetRectangle(x, y, width, height);
         }
 
+        public void SetCurrentTextureBasic()
+        {
+            SetCurrentTexture(0, 0, 1, 1);
+        }
+
         // -------------------------------------------------------------------
         // GetCurrentTexture
         // -------------------------------------------------------------------

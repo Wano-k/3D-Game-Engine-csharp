@@ -238,7 +238,7 @@ namespace RPG_Paper_Maker
             effect.VertexColorEnabled = false;
             foreach (GameMapPortion gameMap in Portions.Values)
             {
-                if (gameMap != null) gameMap.DrawOthers(Device, effect, MapEditor.TexTileset, camera);
+                if (gameMap != null) gameMap.DrawOthers(Device, effect, camera);
             }
         }
 

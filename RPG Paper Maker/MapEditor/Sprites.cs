@@ -11,7 +11,7 @@ namespace RPG_Paper_Maker
     [Serializable]
     class Sprites
     {
-        private Dictionary<int[], Sprite> ListSprites; // Coords => sprite
+        public Dictionary<int[], Sprite> ListSprites; // Coords => sprite
 
         [NonSerialized()]
         VertexBuffer VB;
@@ -78,6 +78,7 @@ namespace RPG_Paper_Maker
         {
             DisposeBuffers(device);
             CreatePortion(device, texture);
+
         }
 
         // -------------------------------------------------------------------
@@ -126,11 +127,10 @@ namespace RPG_Paper_Maker
             // Adjust in order to limit risk of textures flood
             float width = left + right;
             float height = top + bot;
-            int coef = 10000;
-            left += width / coef;
-            right -= width / coef;
-            top += height / coef;
-            bot -= height / coef;
+            left += width / WANOK.COEF_BORDER_TEX;
+            right -= width / WANOK.COEF_BORDER_TEX;
+            top += height / WANOK.COEF_BORDER_TEX;
+            bot -= height / WANOK.COEF_BORDER_TEX;
 
             // Vertex Position and Texture
             return new VertexPositionTexture[]
@@ -146,7 +146,7 @@ namespace RPG_Paper_Maker
         // Draw
         // -------------------------------------------------------------------
 
-        public void Draw(GraphicsDevice device, AlphaTestEffect effect, Camera camera)
+        public void Draw(GraphicsDevice device, AlphaTestEffect effect, Camera camera, int width)
         {
             if (VB != null)
             {
@@ -155,7 +155,7 @@ namespace RPG_Paper_Maker
                 device.Indices = IB;
                 foreach (int[] coords in ListSprites.Keys)
                 {
-                    ListSprites[coords].Draw(device, effect, VerticesArray, IndexesArray, camera, coords);
+                    ListSprites[coords].Draw(device, effect, VerticesArray, IndexesArray, camera, coords, width);
                 }
             }
         }

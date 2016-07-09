@@ -202,6 +202,21 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // RemoveSprite
+        // -------------------------------------------------------------------
+
+        public bool RemoveSprite(int[] coords)
+        {
+            bool modified = false;
+
+            object[] before = ContainsSprite(coords);
+            if (before == null) modified = true;
+            else Sprites[(int[])before[0]].Remove(coords);
+
+            return modified;
+        }
+
+        // -------------------------------------------------------------------
         // Generate Buffers
         // -------------------------------------------------------------------
 
@@ -255,11 +270,10 @@ namespace RPG_Paper_Maker
             // Adjust in order to limit risk of textures flood
             float width = left + right;
             float height = top + bot;
-            int coef = 10000;
-            left += width / coef;
-            right -= width / coef;
-            top += height / coef;
-            bot -= height / coef;
+            left += width / WANOK.COEF_BORDER_TEX;
+            right -= width / WANOK.COEF_BORDER_TEX;
+            top += height / WANOK.COEF_BORDER_TEX;
+            bot -= height / WANOK.COEF_BORDER_TEX;
 
             // Vertex Position and Texture
             return new VertexPositionTexture[]
@@ -328,12 +342,12 @@ namespace RPG_Paper_Maker
         // DrawOthers
         // -------------------------------------------------------------------
 
-        public void DrawOthers(GraphicsDevice device, AlphaTestEffect effect, Texture2D texture, Camera camera)
+        public void DrawOthers(GraphicsDevice device, AlphaTestEffect effect, Camera camera)
         {
             // Drawing Sprites
-            foreach (Sprites sprites in Sprites.Values)
+            foreach (KeyValuePair<int[], Sprites> entry in Sprites)
             {
-                sprites.Draw(device, effect, camera);
+                entry.Value.Draw(device, effect, camera, entry.Key[2]);
             }
         }
 

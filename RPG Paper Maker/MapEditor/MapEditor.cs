@@ -81,6 +81,11 @@ namespace RPG_Paper_Maker
             Control.CurrentTexture = tex;
         }
 
+        public void SetCurrentTextureBasic()
+        {
+            SetCurrentTexture(new int[] { 0, 0, 1, 1 });
+        }
+
         // -------------------------------------------------------------------
         // SetAutotileId
         // -------------------------------------------------------------------
@@ -119,7 +124,8 @@ namespace RPG_Paper_Maker
             GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
             GraphicsDevice.RasterizerState = new RasterizerState()
             {
-                CullMode = CullMode.None
+                CullMode = CullMode.None,
+                MultiSampleAntiAlias = true
             };
             GraphicsDevice.BlendState = BlendState.NonPremultiplied;
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
@@ -150,14 +156,16 @@ namespace RPG_Paper_Maker
             {
                 // Update camera
                 Control.CursorEditor.Update(gameTime, Control.Camera, Control.Map.MapInfos);
-                Control.Camera.Update(gameTime, Control.CursorEditor, MouseBeforeUpdate);
+                Control.Camera.Update(gameTime, Control.CursorEditor, MouseBeforeUpdate, WANOK.GetPixelHeight(Control.GridHeight));
 
                 // Map editor update
                 Control.Update(GraphicsDevice, Control.Camera);
-                if (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Left)) Control.Add(true);
-                if (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Right)) Control.Remove(true);
-                if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorDrawCursor)) Control.Add(false);
-                if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorRemoveCursor)) Control.Remove(false);
+                bool moving = MouseBeforeUpdate != WANOK.MapMouseManager.GetPosition();
+
+                if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Left) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Left) && moving)) Control.Add(true);
+                if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Right) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Right) && moving)) Control.Remove(true);
+                if (WANOK.KeyboardManager.IsButtonDown(WANOK.Settings.KeyboardAssign.EditorDrawCursor) || (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorDrawCursor) && moving)) Control.Add(false);
+                if (WANOK.KeyboardManager.IsButtonDown(WANOK.Settings.KeyboardAssign.EditorRemoveCursor) || (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorRemoveCursor) && moving)) Control.Remove(false);
                 Control.ButtonUp();
 
                 // Options

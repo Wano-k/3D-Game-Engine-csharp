@@ -234,7 +234,7 @@ namespace RPG_Paper_Maker
 
         private void form_KeyDown(object sender, KeyEventArgs e)
         {
-            FocusList();
+            if (e.Control) FocusList();
         }
 
         // -------------------------------------------------------------------

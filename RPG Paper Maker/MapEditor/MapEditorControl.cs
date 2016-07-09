@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -21,8 +22,9 @@ namespace RPG_Paper_Maker
         public string SelectedDrawType = "ItemFloor";
         public DrawType SelectedDrawTypeParticular = DrawType.Floors;
         public DrawMode DrawMode = DrawMode.Pencil;
-        public int[] PointOnPlane;
-        public int[] PointOnFloor;
+        public int[] PointOnPlane = null;
+        public int[] PointOnFloor = null;
+        public int[] PointOnSprites = null;
         public bool IsGridOnTop = false;
         public int[] GridHeight { get { return Map.GridHeight; } set { Map.GridHeight = value; } }
         public int[] CurrentTexture = new int[] { 0, 0, 1, 1 };
@@ -81,6 +83,7 @@ namespace RPG_Paper_Maker
         public void Update(GraphicsDevice graphicsDevice, Camera camera)
         {
             // Raycasting
+            float? newDistance;
             Ray ray = WANOK.CalculateRay(new Vector2(MouseBeforeUpdate.X, MouseBeforeUpdate.Y), camera.View, camera.Projection, graphicsDevice.Viewport);
             int height = PreviousMouseCoords == null ? WANOK.GetPixelHeight(GridHeight) : PreviousMouseCoords[1] * WANOK.SQUARE_SIZE + PreviousMouseCoords[2];
             float distance = (height - camera.Position.Y) / ray.Direction.Y;
@@ -88,7 +91,7 @@ namespace RPG_Paper_Maker
             else
             {
                 PointOnPlane = WANOK.GetCorrectPointOnRay(ray, camera, distance, height);
-                if (!IsInArea(PointOnPlane)) PointOnPlane = null;
+                //if (!IsInArea(PointOnPlane)) PointOnPlane = null;
             }
 
             // Raycasting floor
@@ -112,6 +115,44 @@ namespace RPG_Paper_Maker
                 }
             }
             IsGridOnTop = (PointOnPlane == null || PointOnFloor == null) ? false : distance < floorDistance;
+
+            // Raycasting sprites
+            PointOnSprites = null;
+            if (SelectedDrawType == "ItemSprite")
+            {
+                float spriteDistance = 0;
+                foreach (GameMapPortion gameMapPortion in Map.Portions.Values)
+                {
+                    if (gameMapPortion != null)
+                    {
+                        foreach (KeyValuePair<int[], Sprites> entry1 in gameMapPortion.Sprites)
+                        {
+                            foreach (KeyValuePair<int[], Sprite> entry2 in entry1.Value.ListSprites)
+                            {
+                                Ray newRay = new Ray(ray.Position, ray.Direction);
+                                BoundingBox box = new BoundingBox(new Vector3(0, 0, 0), new Vector3(entry1.Key[2], entry1.Key[3], 1));
+                                Matrix inverse = Matrix.Invert(entry2.Value.GetWorldEffect(Camera, entry2.Key, entry1.Key[2]));
+                                newRay.Position = Vector3.Transform(newRay.Position, inverse);
+                                newRay.Direction = Vector3.TransformNormal(newRay.Direction, inverse);
+                                newRay.Direction.Normalize();
+                                newDistance = newRay.Intersects(box);
+
+                                if (newDistance != null)
+                                {
+                                    if (PointOnSprites == null || spriteDistance > newDistance.Value)
+                                    {
+                                        if (newDistance.Value > 0)
+                                        {
+                                            PointOnSprites = entry2.Key;
+                                            spriteDistance = newDistance.Value;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             // Update portions
             UpdatePortions();
@@ -361,6 +402,9 @@ namespace RPG_Paper_Maker
                 case "ItemFloor":
                     RemoveFloor(isMouse);
                     break;
+                case "ItemSprite":
+                    RemoveSprite(isMouse);
+                    break;
             }
         }
 
@@ -420,7 +464,10 @@ namespace RPG_Paper_Maker
 
             // Getting coords
             int[] coords = GetCoords(isMouse);
-            if (coords == null) return;
+            if (coords == null)
+            {
+                return;
+            }
 
             // Drawing squares
             switch (DrawMode){
@@ -505,12 +552,9 @@ namespace RPG_Paper_Maker
             switch (DrawMode)
             {
                 case DrawMode.Pencil:
-                    if (CurrentTexture[2] == 1 && CurrentTexture[3] == 1)
-                    {
-                        if (isMouse) if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, EraseFloor);
-                        else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, EraseFloor);
-                        EraseFloor(coords);
-                    }
+                    if (isMouse) if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, EraseFloor);
+                    else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, EraseFloor);
+                    EraseFloor(coords);
                     break;
                 case DrawMode.Tin:
                     PaintTinFloor(coords, null);
@@ -677,6 +721,9 @@ namespace RPG_Paper_Maker
                     else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, StockSprite, CurrentTexture, sprite);
                     StockSprite(coords, CurrentTexture, sprite);
                     break;
+                case DrawMode.Tin:
+                    SystemSounds.Beep.Play();
+                    break;
             }
 
             // Updating previous selected
@@ -698,6 +745,51 @@ namespace RPG_Paper_Maker
                     Map.Portions[portion] = new GameMapPortion();
                 }
                 if (Map.Portions[portion].AddSprite(coords, (int[])args[0], (Sprite)args[1]) && Map.Saved) SetToNoSaved();
+                AddPortionToSave(portion);
+                AddPortionToUpdate(portion);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // RemoveFloor
+        // -------------------------------------------------------------------
+
+        public void RemoveSprite(bool isMouse)
+        {
+            // Getting coords
+            int[] coords = GetCoords(isMouse, true);
+            if (coords == null) return;
+
+            // Removing squares
+            switch (DrawMode)
+            {
+                case DrawMode.Pencil:
+
+                    if (isMouse) if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, EraseSprite);
+                    else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, EraseSprite);
+                    EraseSprite(coords);
+                    break;
+                case DrawMode.Tin:
+                    SystemSounds.Beep.Play();
+                    break;
+            }
+
+            // Updating previous selected
+            if (isMouse) PreviousMouseCoords = coords;
+            else PreviousCursorCoords = coords;
+        }
+
+        // -------------------------------------------------------------------
+        // EraseFloor
+        // -------------------------------------------------------------------
+
+        public void EraseSprite(int[] coords, params object[] args)
+        {
+            int[] portion = GetPortion(coords[0], coords[3]);
+            if (IsInArea(coords) && IsInPortions(portion))
+            {
+                if (Map.Portions[portion] == null) Map.Portions[portion] = new GameMapPortion();
+                if (Map.Portions[portion].RemoveSprite(coords) && Map.Saved) SetToNoSaved();
                 AddPortionToSave(portion);
                 AddPortionToUpdate(portion);
             }
@@ -759,21 +851,22 @@ namespace RPG_Paper_Maker
         // GetCoords
         // -------------------------------------------------------------------
 
-        public int[] GetCoords(bool isMouse)
+        public int[] GetCoords(bool isMouse, bool remove = false)
         {
             int[] coords;
             if (isMouse)
             {
-                if (SelectedDrawType == "ItemFloor" || SelectedDrawType == "ItemStart")
+                if (SelectedDrawType == "ItemSprite" && remove)
                 {
+                    if (PointOnSprites != null) coords = PointOnSprites;
+                    else return null;
+                }
+                else {
                     if (PreviousMouseCoords == null && PointOnFloor != null && !IsGridOnTop) coords = PointOnFloor;
                     else if (PointOnPlane != null) coords = GetCoordsMouse();
                     else return null;
                 }
-                else
-                {
-                    coords = GetCoordsMouse();
-                }
+
                 if (PreviousMouseCoords != null && coords.SequenceEqual(PreviousMouseCoords)) return null;
             }
             else

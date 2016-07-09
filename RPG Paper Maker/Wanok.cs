@@ -341,6 +341,12 @@ namespace RPG_Paper_Maker
             return false;
         }
 
+        public static Vector3 IntersectPlane(Ray ray, Plane plane, Camera camera)
+        {
+            float? distance = ray.Intersects(plane);
+            return GetPointOnRay(ray, camera, distance.Value);
+        }
+
         // -------------------------------------------------------------------
         // GetPixelHeight
         // -------------------------------------------------------------------

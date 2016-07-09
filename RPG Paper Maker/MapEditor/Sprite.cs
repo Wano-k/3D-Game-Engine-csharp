@@ -42,22 +42,28 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // Draw
+        // GetWorldEffect
         // -------------------------------------------------------------------
 
-        public void Draw(GraphicsDevice device, AlphaTestEffect effect, VertexPositionTexture[] VerticesArray, int[] IndexesArray, Camera camera, int[]coords)
+        public Matrix GetWorldEffect(Camera camera, int[] coords, int width)
         {
             float height = coords[1] * WANOK.SQUARE_SIZE + coords[2];
             switch (Type)
             {
                 case DrawType.FaceSprite:
-                    effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(-WANOK.SQUARE_SIZE / 2, 0, 0) * Matrix.CreateRotationY((float)((-camera.HorizontalAngle - 90) * Math.PI / 180.0)) * Matrix.CreateTranslation(coords[0] * WANOK.SQUARE_SIZE, height, coords[3] * WANOK.SQUARE_SIZE);
-                    break;
+                    return Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(-width * WANOK.SQUARE_SIZE / 2, 0, 0) * Matrix.CreateRotationY((float)((-camera.HorizontalAngle - 90) * Math.PI / 180.0)) * Matrix.CreateTranslation(coords[0] * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2), height, coords[3] * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2));
                 default:
-                    effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(coords[0] * WANOK.SQUARE_SIZE, height, coords[3] * WANOK.SQUARE_SIZE);
-                    break;
+                    return Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(coords[0] * WANOK.SQUARE_SIZE, height, coords[3] * WANOK.SQUARE_SIZE + (-WANOK.SQUARE_SIZE / 2));
             }
+        }
 
+        // -------------------------------------------------------------------
+        // Draw
+        // -------------------------------------------------------------------
+
+        public void Draw(GraphicsDevice device, AlphaTestEffect effect, VertexPositionTexture[] VerticesArray, int[] IndexesArray, Camera camera, int[]coords, int width)
+        {
+            effect.World = GetWorldEffect(camera, coords, width);
             DrawOneSprite(device, effect, VerticesArray, IndexesArray);
         }
 

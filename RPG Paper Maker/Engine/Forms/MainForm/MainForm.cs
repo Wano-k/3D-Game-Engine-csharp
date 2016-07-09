@@ -560,61 +560,73 @@ namespace RPG_Paper_Maker
         private void ItemFloorDrop_MouseLeave(object sender, EventArgs e)
         {
             ItemFloor.HideDropDown();
+            menuStrip2.Focus();
         }
 
         private void ItemFloor_MouseEnter(object sender, EventArgs e)
         {
             ItemFloor.ShowDropDown();
+            menuStrip2.Focus();
         }
 
         private void ItemFloor_MouseLeave(object sender, EventArgs e)
         {
             HideDropDownIfNotInControl(ItemFloor);
+            menuStrip2.Focus();
         }
 
         private void ItemSpriteDrop_MouseLeave(object sender, EventArgs e)
         {
             ItemSprite.HideDropDown();
+            menuStrip2.Focus();
         }
 
         private void ItemSprite_MouseEnter(object sender, EventArgs e)
         {
             ItemSprite.ShowDropDown();
+            menuStrip2.Focus();
         }
 
         private void ItemSprite_MouseLeave(object sender, EventArgs e)
         {
             HideDropDownIfNotInControl(ItemSprite);
+            menuStrip2.Focus();
         }
 
         private void ItemDrawModeDrop_MouseLeave(object sender, EventArgs e)
         {
             ItemDrawMode.HideDropDown();
+            menuStrip2.Focus();
         }
 
         private void ItemDrawMode_MouseEnter(object sender, EventArgs e)
         {
             ItemDrawMode.ShowDropDown();
+            menuStrip2.Focus();
         }
 
         private void ItemDrawMode_MouseLeave(object sender, EventArgs e)
         {
             HideDropDownIfNotInControl(ItemDrawMode);
+            menuStrip2.Focus();
         }
 
         private void ItemHeightDrop_MouseLeave(object sender, EventArgs e)
         {
             ItemHeight.HideDropDown();
+            menuStrip2.Focus();
         }
 
         private void ItemHeight_MouseEnter(object sender, EventArgs e)
         {
             ItemHeight.ShowDropDown();
+            menuStrip2.Focus();
         }
 
         private void ItemHeight_MouseLeave(object sender, EventArgs e)
         {
             HideDropDownIfNotInControl(ItemHeight);
+            menuStrip2.Focus();
         }
 
         // Height
@@ -675,6 +687,8 @@ namespace RPG_Paper_Maker
             SetSelectedDrawTypeParticular(DrawType.Floors);
             ItemFloor.Text = ItemFloor1.Text;
             ItemFloor.Image = ItemFloor1.Image;
+            MapEditor.SetCurrentAutotileId(0);
+            MapEditor.SetCurrentTextureBasic();
             HideSpecialTileset();
         }
 
@@ -684,8 +698,9 @@ namespace RPG_Paper_Maker
             SetSelectedDrawTypeParticular(DrawType.Autotiles);
             ItemFloor.Text = ItemFloor2.Text;
             ItemFloor.Image = ItemFloor2.Image;
-            ShowSpecialTileset();
             MapEditor.SetCurrentAutotileId(0);
+            MapEditor.SetCurrentTextureBasic();
+            ShowSpecialTileset();
             Tileset tileset = MapEditor.GetMapTileset();
             for (int i = 0; i < tileset.Autotiles.Count; i++)
             {
@@ -1147,6 +1162,8 @@ namespace RPG_Paper_Maker
             tableLayoutPanelTileset.RowStyles[0] = new RowStyle(SizeType.Absolute, 0);
             scrollPanelTileset.Controls.Clear();
             scrollPanelTileset.Controls.Add(TilesetSelectorPicture);
+            TilesetSelectorPicture.SetCurrentTextureBasic();
+            TilesetSelectorPicture.Refresh();
         }
 
         // -------------------------------------------------------------------
@@ -1465,8 +1482,8 @@ namespace RPG_Paper_Maker
         {
             MapEditor.ReLoadMap(mapName);
             TilesetSelectorPicture.LoadTexture(MapEditor.GetMapTileset().Graphic);
-            MapEditor.SetCurrentTexture(new int[] { 0, 0, 1, 1 });
-            TilesetSelectorPicture.SetCurrentTexture(0, 0, 1, 1);
+            MapEditor.SetCurrentTextureBasic();
+            TilesetSelectorPicture.SetCurrentTextureBasic();
             TilesetSelectorPicture.Refresh();
             SelectFloors();
         }
