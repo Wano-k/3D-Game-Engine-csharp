@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -28,7 +29,7 @@ namespace RPG_Paper_Maker
         public bool IsGridOnTop = false;
         public int[] GridHeight { get { return Map.GridHeight; } set { Map.GridHeight = value; } }
         public int[] CurrentTexture = new int[] { 0, 0, 1, 1 };
-        public int CurrentAutotileId = 0;
+        public int CurrentAutotileId = -1;
         public int[] CurrentPosition = new int[] { 0, 0 };
         public int CurrentOrientation = 0;
         public int[] CurrentPortion = new int[] { 0, 0 };
@@ -91,7 +92,6 @@ namespace RPG_Paper_Maker
             else
             {
                 PointOnPlane = WANOK.GetCorrectPointOnRay(ray, camera, distance, height);
-                //if (!IsInArea(PointOnPlane)) PointOnPlane = null;
             }
 
             // Raycasting floor
@@ -114,7 +114,7 @@ namespace RPG_Paper_Maker
                     }
                 }
             }
-            IsGridOnTop = (PointOnPlane == null || PointOnFloor == null) ? false : distance < floorDistance;
+            IsGridOnTop = (PointOnPlane == null || PointOnFloor == null || !IsInArea(PointOnPlane)) ? false : distance < floorDistance;
 
             // Raycasting sprites
             PointOnSprites = null;
@@ -300,18 +300,23 @@ namespace RPG_Paper_Maker
 
         public void UpdatePortions()
         {
+            if (PortionsToUpdate.Count > 0 && WANOK.DialogProgressBar != null && DrawMode == DrawMode.Tin) WANOK.DialogProgressBar.SetValue("Drawing...", 90);
             for (int i = 0; i < PortionsToUpdate.Count; i++)
             {
-                if (SelectedDrawTypeParticular == DrawType.Autotiles && DrawMode == DrawMode.Tin)
+                if (DrawMode == DrawMode.Tin)
                 {
-                    foreach (int[] coords in Map.Portions[PortionsToUpdate[i]].Autotiles[CurrentAutotileId].Tiles.Keys)
+                    foreach (Autotiles autotiles in Map.Portions[PortionsToUpdate[i]].Autotiles.Values)
                     {
-                        Map.Portions[PortionsToUpdate[i]].Autotiles[CurrentAutotileId].Update(coords, PortionsToUpdate[i]);
+                        foreach (int[] coords in autotiles.Tiles.Keys)
+                        {
+                            Map.Portions[PortionsToUpdate[i]].Autotiles[autotiles.Id].Update(coords, PortionsToUpdate[i]);
+                        }
                     }
                 }
                 Map.UpdatePortions(PortionsToUpdate[i]);
             }
 
+            if (PortionsToSave.Count > 0 && WANOK.DialogProgressBar != null && DrawMode == DrawMode.Tin) WANOK.DialogProgressBar.SetValue("Saving...", 100);
             for (int i = 0; i < PortionsToSave.Count; i++)
             {
                 int x = PortionsToSave[i][0] + (CursorEditor.GetX() / WANOK.PORTION_SIZE);
@@ -329,6 +334,10 @@ namespace RPG_Paper_Maker
                 }
             }
 
+            if (PortionsToUpdate.Count > 0 && DrawMode == DrawMode.Tin && WANOK.DialogProgressBar != null)
+            {
+                WANOK.DisposeProgressBar();
+            }
             ClearPortions();
         }
 
@@ -430,6 +439,7 @@ namespace RPG_Paper_Maker
                 system.StartMapName = Map.MapInfos.RealMapName;
                 system.StartPosition = coords;
                 WANOK.SaveBinaryDatas(system, WANOK.SystemPath);
+                WANOK.SystemDatas = system;
 
                 // Updating in map
                 Map.SetStartInfos(coords);
@@ -458,6 +468,11 @@ namespace RPG_Paper_Maker
                     texture = CurrentTexture;
                     break;
                 case DrawType.Autotiles:
+                    if (CurrentAutotileId == -1)
+                    {
+                        SystemSounds.Beep.Play();
+                        return;
+                    }
                     texture = CurrentAutotileId;
                     break;
             }
@@ -472,7 +487,7 @@ namespace RPG_Paper_Maker
             // Drawing squares
             switch (DrawMode){
                 case DrawMode.Pencil:
-                    if (CurrentTexture[2] == 1 && CurrentTexture[3] == 1)
+                    if (CurrentTexture[2] == 1 && CurrentTexture[3] == 1 || SelectedDrawTypeParticular != DrawType.Floors)
                     {
                         if (isMouse)
                         {
@@ -480,10 +495,16 @@ namespace RPG_Paper_Maker
                         }
                         else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, StockFloor, texture);
                     }
-
-                    for (int i = 0; i < CurrentTexture[2]; i++)
+                    int width = 1, height = 1;
+                    if (SelectedDrawTypeParticular == DrawType.Floors)
                     {
-                        for (int j = 0; j < CurrentTexture[3]; j++)
+                        width = CurrentTexture[2];
+                        height = CurrentTexture[3];
+                    }
+
+                    for (int i = 0; i < width; i++)
+                    {
+                        for (int j = 0; j < height; j++)
                         {
                             if ((coords[0] + i) > Map.MapInfos.Width || (coords[3] + j) > Map.MapInfos.Height) break;
                             object shortTexture = null;
@@ -596,15 +617,24 @@ namespace RPG_Paper_Maker
 
                 if (!AreTexturesEquals(textureBefore, textureAfterReduced))
                 {
+                    Stopwatch sw = new Stopwatch();
+                    bool t = true;
+                    sw.Start();
+
                     List<int[]> tab = new List<int[]>();
                     tab.Add(coords);
                     if (textureAfter == null) EraseFloor(coords);
                     else StockFloor(coords, textureAfterReduced);
-
                     int[][] adjacent;
 
                     while (tab.Count != 0)
                     {
+                        if (sw.ElapsedMilliseconds > 50 && t)
+                        {
+                            WANOK.StartProgressBar("Calculating paint propagation...", 50);
+                            t = false;
+                        }
+
                         adjacent = new int[][]
                         {
                         new int[] { tab[0][0] - 1, tab[0][1], tab[0][2], tab[0][3] },
@@ -632,6 +662,7 @@ namespace RPG_Paper_Maker
                             }
                         }
                     }
+                    sw.Stop();
                 }
             }
         }

@@ -202,14 +202,10 @@ namespace RPG_Paper_Maker
 
         public void Draw(GameTime gameTime, AlphaTestEffect effect, Camera camera)
         {
-            Device.Clear(WANOK.GetColor(MapInfos.SkyColor));
-
-            // Drawing Floors
-            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
-            effect.VertexColorEnabled = false;
+            // Drawing Items
             foreach (GameMapPortion gameMap in Portions.Values)
             {
-                if (gameMap != null) gameMap.DrawFloors(Device, effect, MapEditor.TexTileset);
+                if (gameMap != null) gameMap.Draw(Device, effect, MapEditor.TexTileset, camera);
             }
             
             // Drawing Start position
@@ -221,7 +217,6 @@ namespace RPG_Paper_Maker
             // Drawing grid
             effect.Texture = MapEditor.TexGrid;
             Device.BlendState = BlendState.Additive;
-            effect.VertexColorEnabled = true;
             effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(0, WANOK.GetPixelHeight(GridHeight) + 0.1f, 0);
             if (DisplayGrid)
             {
@@ -233,13 +228,7 @@ namespace RPG_Paper_Maker
                 }
             }
 
-            // Drawing others
             Device.BlendState = BlendState.NonPremultiplied;
-            effect.VertexColorEnabled = false;
-            foreach (GameMapPortion gameMap in Portions.Values)
-            {
-                if (gameMap != null) gameMap.DrawOthers(Device, effect, camera);
-            }
         }
 
         // -------------------------------------------------------------------

@@ -107,7 +107,7 @@ namespace RPG_Paper_Maker
 
         public SystemAutotile GetAutotileById(int id)
         {
-            if (id > Autotiles.Count) return new SystemAutotile(-1);
+            if (id == -1 || id > Autotiles.Count) return new SystemAutotile(-1);
             return Autotiles.Find(i => i.Id == id);
         }
 

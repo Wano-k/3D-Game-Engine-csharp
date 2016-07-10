@@ -176,6 +176,25 @@ namespace RPG_Paper_Maker.Controls
                     if (gamePortion.Autotiles[id].IsEmpty()) gamePortion.Autotiles.Remove(id);
                 }
 
+                // Sprites
+                Dictionary<int[], List<int[]>> coordsSprites = new Dictionary<int[], List<int[]>>(new IntArrayComparer());
+                foreach (KeyValuePair<int[], Sprites> entry in gamePortion.Sprites)
+                {
+                    coordsSprites[entry.Key] = new List<int[]>();
+                    foreach (int[] coords in entry.Value.ListSprites.Keys)
+                    {
+                        coordsSprites[entry.Key].Add(coords);
+                    }
+                }
+                foreach (int[] texture in coordsSprites.Keys)
+                {
+                    for (int k = 0; k < coordsSprites[texture].Count; k++)
+                    {
+                        if (coordsSprites[texture][k][0] >= Width || coordsSprites[texture][k][3] >= Height) gamePortion.Sprites[texture].ListSprites.Remove(coordsSprites[texture][k]);
+                    }
+                    if (gamePortion.Sprites[texture].IsEmpty()) gamePortion.Sprites.Remove(texture);
+                }
+
                 // Saving
                 if (gamePortion.IsEmpty()) File.Delete(path);
                 else WANOK.SaveBinaryDatas(gamePortion, path);

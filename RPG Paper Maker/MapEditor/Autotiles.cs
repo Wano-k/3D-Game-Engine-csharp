@@ -212,25 +212,28 @@ namespace RPG_Paper_Maker
             };
             int offset = 0;
 
-            foreach (KeyValuePair<int[], Autotile> entry in Tiles)
+            if (MapEditor.TexAutotiles.ContainsKey(Id) && MapEditor.TexAutotiles[Id].Width == (2 * WANOK.SQUARE_SIZE) && MapEditor.TexAutotiles[Id].Height == (3 * WANOK.SQUARE_SIZE))
             {
-                foreach (VertexPositionTexture vertex in CreateTex(MapEditor.TexAutotiles[Id], entry.Key, entry.Value))
+                foreach (KeyValuePair<int[], Autotile> entry in Tiles)
                 {
-                    verticesList.Add(vertex);
+                    foreach (VertexPositionTexture vertex in CreateTex(MapEditor.TexAutotiles[Id], entry.Key, entry.Value))
+                    {
+                        verticesList.Add(vertex);
+                    }
+                    for (int n = 0; n < 24; n++)
+                    {
+                        indexesList.Add(indexes[n] + offset);
+                    }
+                    offset += 16;
                 }
-                for (int n = 0; n < 24; n++)
-                {
-                    indexesList.Add(indexes[n] + offset);
-                }
-                offset += 16;
-            }
 
-            VerticesArray = verticesList.ToArray();
-            IndexesArray = indexesList.ToArray();
-            IB = new IndexBuffer(device, IndexElementSize.ThirtyTwoBits, IndexesArray.Length, BufferUsage.None);
-            IB.SetData(IndexesArray);
-            VB = new VertexBuffer(device, VertexPositionTexture.VertexDeclaration, VerticesArray.Length, BufferUsage.None);
-            VB.SetData(VerticesArray);
+                VerticesArray = verticesList.ToArray();
+                IndexesArray = indexesList.ToArray();
+                IB = new IndexBuffer(device, IndexElementSize.ThirtyTwoBits, IndexesArray.Length, BufferUsage.None);
+                IB.SetData(IndexesArray);
+                VB = new VertexBuffer(device, VertexPositionTexture.VertexDeclaration, VerticesArray.Length, BufferUsage.None);
+                VB.SetData(VerticesArray);
+            }
         }
 
         // -------------------------------------------------------------------

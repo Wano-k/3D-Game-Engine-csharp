@@ -184,6 +184,12 @@
       <DependentUpon>DialogPreviewGraphic.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Forms\DialogPreviewGraphic\DialogPreviewGraphicControl.cs" />
+    <Compile Include="Engine\Forms\DialogProgressBar\DialogProgressBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogProgressBar\DialogProgressBar.Designer.cs">
+      <DependentUpon>DialogProgressBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="MapEditor\Autotile.cs" />
     <Compile Include="MapEditor\Autotiles.cs" />
     <Compile Include="Engine\Models\SystemAutotile.cs" />
@@ -345,6 +351,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogPreviewGraphic\DialogPreviewGraphic.resx">
       <DependentUpon>DialogPreviewGraphic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogProgressBar\DialogProgressBar.resx">
+      <DependentUpon>DialogProgressBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\MainForm\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

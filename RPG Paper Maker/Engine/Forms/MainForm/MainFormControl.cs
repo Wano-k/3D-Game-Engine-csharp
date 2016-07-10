@@ -115,7 +115,9 @@ namespace RPG_Paper_Maker
 
         public void DeleteMapsDirectory(string mapName)
         {
+            Directory.Delete(Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp"), true);
             Directory.Delete(Path.Combine(WANOK.MapsDirectoryPath, mapName), true);
+
             WANOK.ListMapToSave.Remove(mapName);
         }
 
@@ -226,14 +228,21 @@ namespace RPG_Paper_Maker
         // PasteMap
         // -------------------------------------------------------------------
 
-        public void PasteMap(string mapName)
+        public string PasteMap(string mapName)
         {
             string newMapName = WANOK.GenerateMapName();
 
             Directory.CreateDirectory(Path.Combine(WANOK.MapsDirectoryPath, newMapName));
-            string[] filePaths = Directory.GetFiles(Path.Combine(WANOK.MapsDirectoryPath, mapName));
+            string[] filePaths = Directory.GetFiles(Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp"));
+            if (filePaths.Length == 0) filePaths = Directory.GetFiles(Path.Combine(WANOK.MapsDirectoryPath, mapName));
             foreach (string filePath in filePaths) File.Copy(filePath, Path.Combine(WANOK.MapsDirectoryPath, newMapName, Path.GetFileName(filePath)));
             Directory.CreateDirectory(Path.Combine(WANOK.MapsDirectoryPath, newMapName, "temp"));
+            string infosPath = Path.Combine(WANOK.MapsDirectoryPath, newMapName, "infos.map");
+            MapInfos mapInfos = WANOK.LoadBinaryDatas<MapInfos>(infosPath);
+            mapInfos.RealMapName = newMapName;
+            WANOK.SaveBinaryDatas(mapInfos, infosPath);
+
+            return newMapName;
         }
     }
 }

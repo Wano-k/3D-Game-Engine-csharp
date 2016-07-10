@@ -112,7 +112,7 @@ namespace RPG_Paper_Maker
 
             try
             {
-                SelectionRectangle.Draw(g, TexCursor);
+                if (Image.Width >= 16 && Image.Height >= 16) SelectionRectangle.Draw(g, TexCursor);
             }
             catch { }
         }

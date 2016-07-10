@@ -51,6 +51,7 @@ namespace RPG_Paper_Maker
         public static HashSet<string> ListMapToSave = new HashSet<string>();
         public static TreeNode SelectedNode = null;
         public static string NONE_IMAGE_STRING = "<None>";
+        public static DialogProgressBar DialogProgressBar = null;
 
         // PATHS
         public static string ABSOLUTEENGINEPATH;
@@ -430,6 +431,29 @@ namespace RPG_Paper_Maker
                 if (!MapNameExists(mapName)) break;
             }
             return mapName;
+        }
+
+        // -------------------------------------------------------------------
+        // DisposeProgressBar
+        // -------------------------------------------------------------------
+
+        public static void DisposeProgressBar()
+        {
+            DialogProgressBar.Stop();
+            DialogProgressBar.Hide();
+            DialogProgressBar.Dispose();
+            DialogProgressBar = null;
+        }
+
+        // -------------------------------------------------------------------
+        // DisposeProgressBar
+        // -------------------------------------------------------------------
+
+        public static void StartProgressBar(string text, int value)
+        {
+            DialogProgressBar = new DialogProgressBar(text);
+            DialogProgressBar.Show();
+            DialogProgressBar.SetValue(value);
         }
     }
 }

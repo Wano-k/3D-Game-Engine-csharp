@@ -21,6 +21,7 @@ namespace RPG_Paper_Maker
         public DrawType SelectedDrawTypeParticular { get { return Control.SelectedDrawTypeParticular; } set { Control.SelectedDrawTypeParticular = value; } }
         public DrawMode DrawMode { get { return Control.DrawMode; } set { Control.DrawMode = value; } }
         public Point MouseBeforeUpdate { get { return Control.MouseBeforeUpdate; } set { Control.MouseBeforeUpdate = value; } }
+        public int PreviousWidth, PreviousHeight;
 
         // Content
         public static Texture2D TexCursor, TexStartCursor, TexTileset, TexNone, TexGrid;
@@ -35,6 +36,8 @@ namespace RPG_Paper_Maker
         protected override void Initialize()
         {
             base.Initialize();
+            PreviousWidth = Width;
+            PreviousHeight = Height;
 
             // Load textures
             FileStream fs;
@@ -44,7 +47,7 @@ namespace RPG_Paper_Maker
             TexStartCursor = Texture2D.FromStream(GraphicsDevice, fs);
             TexNone = new Texture2D(GraphicsDevice, 1, 1);
             TexGrid = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-            TexGrid.SetData(new Color[] { Color.White });
+            TexGrid.SetData(new Color[] { new Color(Color.White, 0.25f) });
             fs.Close();
 
             // Create game components
@@ -96,6 +99,15 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // GetAutotileId
+        // -------------------------------------------------------------------
+
+        public int GetCurrentAutotileId()
+        {
+            return Control.CurrentAutotileId;
+        }
+
+        // -------------------------------------------------------------------
         // SetGridHeight
         // -------------------------------------------------------------------
 
@@ -113,6 +125,15 @@ namespace RPG_Paper_Maker
         public void SaveMap(bool b = true)
         {
             Control.Map.Saved = b;
+        }
+
+        // -------------------------------------------------------------------
+        // ReCalculateCameraProjection
+        // -------------------------------------------------------------------
+
+        public void ReCalculateCameraProjection()
+        {
+            if (Control.Camera != null) Control.Camera.CalculateCameraProjection(GraphicsDevice);
         }
 
         // -------------------------------------------------------------------
@@ -140,7 +161,7 @@ namespace RPG_Paper_Maker
             Control.IsMapReloading = true;
             Control.CursorEditor.Reset();
             Control.CurrentPortion = new int[] { 0, 0 };
-            Control.Camera.ReLoadMap();
+            Control.Camera.ReLoadMap(GraphicsDevice);
             if (Control.Map != null) DisposeVertexBuffer(); // Dispose the previous vertexBuffer to create a new one for the object
             Control.Map = new Map(GraphicsDevice, mapName);
             Control.IsMapReloading = false;
@@ -154,6 +175,13 @@ namespace RPG_Paper_Maker
         {
             if (Control.Map != null)
             {
+                if (PreviousWidth != Width || PreviousHeight != Height)
+                {
+                    ReCalculateCameraProjection();
+                    PreviousWidth = Width;
+                    PreviousHeight = Height;
+                }
+
                 // Update camera
                 Control.CursorEditor.Update(gameTime, Control.Camera, Control.Map.MapInfos);
                 Control.Camera.Update(gameTime, Control.CursorEditor, MouseBeforeUpdate, WANOK.GetPixelHeight(Control.GridHeight));
@@ -164,8 +192,8 @@ namespace RPG_Paper_Maker
 
                 if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Left) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Left) && moving)) Control.Add(true);
                 if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Right) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Right) && moving)) Control.Remove(true);
-                if (WANOK.KeyboardManager.IsButtonDown(WANOK.Settings.KeyboardAssign.EditorDrawCursor) || (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorDrawCursor) && moving)) Control.Add(false);
-                if (WANOK.KeyboardManager.IsButtonDown(WANOK.Settings.KeyboardAssign.EditorRemoveCursor) || (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorRemoveCursor) && moving)) Control.Remove(false);
+                if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorDrawCursor)) Control.Add(false);
+                if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorRemoveCursor)) Control.Remove(false);
                 Control.ButtonUp();
 
                 // Options
@@ -188,10 +216,11 @@ namespace RPG_Paper_Maker
             {
                 LoadSettings();
 
+                GraphicsDevice.Clear(WANOK.GetColor(Control.Map.MapInfos.SkyColor));
+
                 // Effect settings
                 effect.View = Control.Camera.View;
                 effect.Projection = Control.Camera.Projection;
-                effect.World = Matrix.Identity;
 
                 // Drawings components
                 Control.Map.Draw(gameTime, effect, Control.Camera);

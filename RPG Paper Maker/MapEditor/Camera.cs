@@ -26,11 +26,11 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
-        public Camera(GraphicsDevice GraphicsDevice)
+        public Camera(GraphicsDevice device)
         {
             Position = Vector3.Zero;
             Target = Vector3.Zero;
-            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 1.0f, 10000.0f);
+            CalculateCameraProjection(device);
             World = Matrix.Identity;
         }
 
@@ -38,8 +38,9 @@ namespace RPG_Paper_Maker
         // ReLoadMap
         // -------------------------------------------------------------------
 
-        public void ReLoadMap()
+        public void ReLoadMap(GraphicsDevice device)
         {
+            CalculateCameraProjection(device);
             Position = Vector3.Zero;
             Target = Vector3.Zero;
             HorizontalAngle = -90.0;
@@ -47,6 +48,15 @@ namespace RPG_Paper_Maker
             VerticalAngle = 0.0;
             Distance = 400.0;
             Height = 200.0;
+        }
+
+        // -------------------------------------------------------------------
+        // ReLoadMap
+        // -------------------------------------------------------------------
+
+        public void CalculateCameraProjection(GraphicsDevice device)
+        {
+            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, device.Viewport.AspectRatio, 1.0f, 10000.0f);
         }
 
         // -------------------------------------------------------------------

@@ -53,7 +53,7 @@ namespace RPG_Paper_Maker
                 case DrawType.FaceSprite:
                     return Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(-width * WANOK.SQUARE_SIZE / 2, 0, 0) * Matrix.CreateRotationY((float)((-camera.HorizontalAngle - 90) * Math.PI / 180.0)) * Matrix.CreateTranslation(coords[0] * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2), height, coords[3] * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2));
                 default:
-                    return Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(coords[0] * WANOK.SQUARE_SIZE, height, coords[3] * WANOK.SQUARE_SIZE + (-WANOK.SQUARE_SIZE / 2));
+                    return Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(coords[0] * WANOK.SQUARE_SIZE, height, coords[3] * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2));
             }
         }
 
