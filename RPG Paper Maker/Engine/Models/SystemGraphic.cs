@@ -122,7 +122,7 @@ namespace RPG_Paper_Maker
             }
             catch {
                 MessageBox.Show("Could not load " + path, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return null;
+                return Properties.Resources.none;
             }
         }
 
@@ -145,7 +145,7 @@ namespace RPG_Paper_Maker
             catch
             {
                 MessageBox.Show("Could not load " + path, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return null;
+                return MapEditor.TexNone;
             }
         }
     }

@@ -261,6 +261,7 @@
     <Compile Include="Engine\CustomUserControls\TextBoxLang.Designer.cs">
       <DependentUpon>TextBoxLang.cs</DependentUpon>
     </Compile>
+    <Compile Include="MapEditor\FrameCounter.cs" />
     <Compile Include="MapEditor\MapEditorControls\GraphicsDeviceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

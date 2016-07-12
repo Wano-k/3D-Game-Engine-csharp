@@ -36,9 +36,12 @@
             this.SplitContainerMain = new System.Windows.Forms.SplitContainer();
             this.SplitContainerTree = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanelTileset = new System.Windows.Forms.TableLayoutPanel();
+            this.scrollPanelTileset = new RPG_Paper_Maker.ScrollPanel();
+            this.TilesetSelectorPicture = new RPG_Paper_Maker.TilesetSelectorPicture();
             this.PanelSpecialMenu = new System.Windows.Forms.FlowLayoutPanel();
             this.TreeMap = new System.Windows.Forms.TreeView();
             this.ImageListTreeMap = new System.Windows.Forms.ImageList(this.components);
+            this.MapEditor = new RPG_Paper_Maker.MapEditor();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.ItemFloor = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemFloor1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,9 +107,6 @@
             this.MenuItemDeleteDir = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
             this.BackgroundWorkerForm = new System.ComponentModel.BackgroundWorker();
-            this.scrollPanelTileset = new RPG_Paper_Maker.ScrollPanel();
-            this.TilesetSelectorPicture = new RPG_Paper_Maker.TilesetSelectorPicture();
-            this.MapEditor = new RPG_Paper_Maker.MapEditor();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerMain)).BeginInit();
             this.SplitContainerMain.Panel1.SuspendLayout();
@@ -117,13 +117,13 @@
             this.SplitContainerTree.Panel2.SuspendLayout();
             this.SplitContainerTree.SuspendLayout();
             this.tableLayoutPanelTileset.SuspendLayout();
+            this.scrollPanelTileset.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TilesetSelectorPicture)).BeginInit();
             this.menuStrip2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.ContextMenuMap.SuspendLayout();
             this.ContextMenuDir.SuspendLayout();
             this.MainPanel.SuspendLayout();
-            this.scrollPanelTileset.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TilesetSelectorPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // ImageListToolBar
@@ -207,6 +207,30 @@
             this.tableLayoutPanelTileset.Size = new System.Drawing.Size(173, 265);
             this.tableLayoutPanelTileset.TabIndex = 1;
             // 
+            // scrollPanelTileset
+            // 
+            this.scrollPanelTileset.AutoScroll = true;
+            this.scrollPanelTileset.Controls.Add(this.TilesetSelectorPicture);
+            this.scrollPanelTileset.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scrollPanelTileset.Location = new System.Drawing.Point(0, 27);
+            this.scrollPanelTileset.Margin = new System.Windows.Forms.Padding(0);
+            this.scrollPanelTileset.Name = "scrollPanelTileset";
+            this.scrollPanelTileset.Size = new System.Drawing.Size(173, 238);
+            this.scrollPanelTileset.TabIndex = 0;
+            // 
+            // TilesetSelectorPicture
+            // 
+            this.TilesetSelectorPicture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+            this.TilesetSelectorPicture.Location = new System.Drawing.Point(0, 0);
+            this.TilesetSelectorPicture.Name = "TilesetSelectorPicture";
+            this.TilesetSelectorPicture.Size = new System.Drawing.Size(100, 50);
+            this.TilesetSelectorPicture.TabIndex = 0;
+            this.TilesetSelectorPicture.TabStop = false;
+            this.TilesetSelectorPicture.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TilesetSelectorPicture_MouseDown);
+            this.TilesetSelectorPicture.MouseEnter += new System.EventHandler(this.TilesetSelectorPicture_MouseEnter);
+            this.TilesetSelectorPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TilesetSelectorPicture_MouseMove);
+            this.TilesetSelectorPicture.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TilesetSelectorPicture_MouseUp);
+            // 
             // PanelSpecialMenu
             // 
             this.PanelSpecialMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -242,6 +266,23 @@
             this.ImageListTreeMap.TransparentColor = System.Drawing.Color.Transparent;
             this.ImageListTreeMap.Images.SetKeyName(0, "dir.png");
             this.ImageListTreeMap.Images.SetKeyName(1, "map.png");
+            // 
+            // MapEditor
+            // 
+            this.MapEditor.BackColor = System.Drawing.Color.Black;
+            this.MapEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MapEditor.DrawMode = RPG_Paper_Maker.DrawMode.Pencil;
+            this.MapEditor.Location = new System.Drawing.Point(0, 36);
+            this.MapEditor.Name = "MapEditor";
+            this.MapEditor.SelectedDrawType = "ItemFloor";
+            this.MapEditor.SelectedDrawTypeParticular = RPG_Paper_Maker.DrawType.Floors;
+            this.MapEditor.Size = new System.Drawing.Size(705, 403);
+            this.MapEditor.TabIndex = 0;
+            this.MapEditor.VSync = false;
+            this.MapEditor.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseDown);
+            this.MapEditor.MouseEnter += new System.EventHandler(this.MapEditor_MouseEnter);
+            this.MapEditor.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseMove);
+            this.MapEditor.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseUp);
             // 
             // menuStrip2
             // 
@@ -313,8 +354,8 @@
             this.ItemSprite.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemSprite.Image = global::RPG_Paper_Maker.Properties.Resources.sprite0;
             this.ItemSprite.Name = "ItemSprite";
-            this.ItemSprite.Size = new System.Drawing.Size(117, 36);
-            this.ItemSprite.Text = "Face sprite";
+            this.ItemSprite.Size = new System.Drawing.Size(118, 36);
+            this.ItemSprite.Text = "Face Sprite";
             this.ItemSprite.Click += new System.EventHandler(this.ItemSprite_Click);
             this.ItemSprite.MouseEnter += new System.EventHandler(this.ItemSprite_MouseEnter);
             this.ItemSprite.MouseLeave += new System.EventHandler(this.ItemSprite_MouseLeave);
@@ -324,8 +365,8 @@
             this.ItemSprite1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemSprite1.Image = global::RPG_Paper_Maker.Properties.Resources.sprite0;
             this.ItemSprite1.Name = "ItemSprite1";
-            this.ItemSprite1.Size = new System.Drawing.Size(180, 38);
-            this.ItemSprite1.Text = "Face sprite";
+            this.ItemSprite1.Size = new System.Drawing.Size(182, 38);
+            this.ItemSprite1.Text = "Face Sprite";
             this.ItemSprite1.Click += new System.EventHandler(this.ItemSprite1_Click);
             // 
             // ItemSprite2
@@ -333,36 +374,36 @@
             this.ItemSprite2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemSprite2.Image = global::RPG_Paper_Maker.Properties.Resources.sprite1;
             this.ItemSprite2.Name = "ItemSprite2";
-            this.ItemSprite2.Size = new System.Drawing.Size(180, 38);
-            this.ItemSprite2.Text = "Fix sprite";
+            this.ItemSprite2.Size = new System.Drawing.Size(182, 38);
+            this.ItemSprite2.Text = "Fix Sprite";
             this.ItemSprite2.Click += new System.EventHandler(this.ItemSprite2_Click);
             // 
             // ItemSprite3
             // 
-            this.ItemSprite3.ForeColor = System.Drawing.Color.DarkRed;
+            this.ItemSprite3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemSprite3.Image = global::RPG_Paper_Maker.Properties.Resources.sprite2;
             this.ItemSprite3.Name = "ItemSprite3";
-            this.ItemSprite3.Size = new System.Drawing.Size(180, 38);
-            this.ItemSprite3.Text = "Double sprite";
+            this.ItemSprite3.Size = new System.Drawing.Size(182, 38);
+            this.ItemSprite3.Text = "Double Sprite";
             this.ItemSprite3.Click += new System.EventHandler(this.ItemSprite3_Click);
             // 
             // ItemSprite4
             // 
-            this.ItemSprite4.ForeColor = System.Drawing.Color.DarkRed;
+            this.ItemSprite4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemSprite4.Image = global::RPG_Paper_Maker.Properties.Resources.sprite3;
             this.ItemSprite4.Name = "ItemSprite4";
-            this.ItemSprite4.Size = new System.Drawing.Size(180, 38);
-            this.ItemSprite4.Text = "Quadra sprite";
+            this.ItemSprite4.Size = new System.Drawing.Size(182, 38);
+            this.ItemSprite4.Text = "Quadra Sprite";
             this.ItemSprite4.Click += new System.EventHandler(this.ItemSprite4_Click);
             // 
             // ItemSprite5
             // 
             this.ItemSprite5.BackColor = System.Drawing.SystemColors.Control;
-            this.ItemSprite5.ForeColor = System.Drawing.Color.DarkRed;
+            this.ItemSprite5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemSprite5.Image = global::RPG_Paper_Maker.Properties.Resources.sprite4;
             this.ItemSprite5.Name = "ItemSprite5";
-            this.ItemSprite5.Size = new System.Drawing.Size(180, 38);
-            this.ItemSprite5.Text = "Sprite on floor";
+            this.ItemSprite5.Size = new System.Drawing.Size(182, 38);
+            this.ItemSprite5.Text = "Sprite on Floor";
             this.ItemSprite5.Click += new System.EventHandler(this.ItemSprite5_Click);
             // 
             // ItemSprite6
@@ -371,7 +412,7 @@
             this.ItemSprite6.Image = global::RPG_Paper_Maker.Properties.Resources.sprite5;
             this.ItemSprite6.Name = "ItemSprite6";
             this.ItemSprite6.Size = new System.Drawing.Size(180, 38);
-            this.ItemSprite6.Text = "Sprite on wall";
+            this.ItemSprite6.Text = "Wall Sprite";
             this.ItemSprite6.Click += new System.EventHandler(this.ItemSprite6_Click);
             // 
             // ItemStart
@@ -858,47 +899,6 @@
             this.MainPanel.Size = new System.Drawing.Size(890, 443);
             this.MainPanel.TabIndex = 5;
             // 
-            // scrollPanelTileset
-            // 
-            this.scrollPanelTileset.AutoScroll = true;
-            this.scrollPanelTileset.Controls.Add(this.TilesetSelectorPicture);
-            this.scrollPanelTileset.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scrollPanelTileset.Location = new System.Drawing.Point(0, 27);
-            this.scrollPanelTileset.Margin = new System.Windows.Forms.Padding(0);
-            this.scrollPanelTileset.Name = "scrollPanelTileset";
-            this.scrollPanelTileset.Size = new System.Drawing.Size(173, 238);
-            this.scrollPanelTileset.TabIndex = 0;
-            // 
-            // TilesetSelectorPicture
-            // 
-            this.TilesetSelectorPicture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
-            this.TilesetSelectorPicture.Location = new System.Drawing.Point(0, 0);
-            this.TilesetSelectorPicture.Name = "TilesetSelectorPicture";
-            this.TilesetSelectorPicture.Size = new System.Drawing.Size(100, 50);
-            this.TilesetSelectorPicture.TabIndex = 0;
-            this.TilesetSelectorPicture.TabStop = false;
-            this.TilesetSelectorPicture.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TilesetSelectorPicture_MouseDown);
-            this.TilesetSelectorPicture.MouseEnter += new System.EventHandler(this.TilesetSelectorPicture_MouseEnter);
-            this.TilesetSelectorPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TilesetSelectorPicture_MouseMove);
-            this.TilesetSelectorPicture.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TilesetSelectorPicture_MouseUp);
-            // 
-            // MapEditor
-            // 
-            this.MapEditor.BackColor = System.Drawing.Color.Black;
-            this.MapEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MapEditor.DrawMode = RPG_Paper_Maker.DrawMode.Pencil;
-            this.MapEditor.Location = new System.Drawing.Point(0, 36);
-            this.MapEditor.Name = "MapEditor";
-            this.MapEditor.SelectedDrawType = "ItemFloor";
-            this.MapEditor.SelectedDrawTypeParticular = RPG_Paper_Maker.DrawType.Floors;
-            this.MapEditor.Size = new System.Drawing.Size(705, 403);
-            this.MapEditor.TabIndex = 0;
-            this.MapEditor.VSync = false;
-            this.MapEditor.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseDown);
-            this.MapEditor.MouseEnter += new System.EventHandler(this.MapEditor_MouseEnter);
-            this.MapEditor.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseMove);
-            this.MapEditor.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MapEditor_MouseUp);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -931,6 +931,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerTree)).EndInit();
             this.SplitContainerTree.ResumeLayout(false);
             this.tableLayoutPanelTileset.ResumeLayout(false);
+            this.scrollPanelTileset.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.TilesetSelectorPicture)).EndInit();
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -938,8 +940,6 @@
             this.ContextMenuMap.ResumeLayout(false);
             this.ContextMenuDir.ResumeLayout(false);
             this.MainPanel.ResumeLayout(false);
-            this.scrollPanelTileset.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.TilesetSelectorPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

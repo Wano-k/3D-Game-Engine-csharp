@@ -73,7 +73,7 @@ namespace RPG_Paper_Maker
             if (!Tiles.ContainsKey(coords))
             {
                 Tiles[coords] = new Autotile();
-                if (update) UpdateAround(coords[0], coords[1], coords[2], coords[3], update);
+                UpdateAround(coords[0], coords[1], coords[2], coords[3], update);
             }
         }
 
@@ -86,7 +86,7 @@ namespace RPG_Paper_Maker
             if (Tiles.ContainsKey(coords))
             {
                 Tiles.Remove(coords);
-                if (update) UpdateAround(coords[0], coords[1], coords[2], coords[3], update);
+                UpdateAround(coords[0], coords[1], coords[2], coords[3], update);
             }
         }
 
@@ -108,7 +108,9 @@ namespace RPG_Paper_Maker
                         if (update) autotileAround.Update(this, coords, portion);
                         else
                         {
-                            MapEditor.Control.AddPortionToUpdate(MapEditor.Control.GetPortion(X, Z));
+                            int[] newPortion = MapEditor.Control.GetPortion(X, Z);
+                            if (WANOK.IsInPortions(newPortion)) MapEditor.Control.AddPortionsAutotileToUpdate(MapEditor.Control.GetPortion(X, Z));
+                            else autotileAround.Update(this, coords, portion);
                         }
                     }
                 }

@@ -22,6 +22,7 @@ namespace RPG_Paper_Maker
         public DrawMode DrawMode { get { return Control.DrawMode; } set { Control.DrawMode = value; } }
         public Point MouseBeforeUpdate { get { return Control.MouseBeforeUpdate; } set { Control.MouseBeforeUpdate = value; } }
         public int PreviousWidth, PreviousHeight;
+        private FrameCounter FrameCounter = new FrameCounter();
 
         // Content
         public static Texture2D TexCursor, TexStartCursor, TexTileset, TexNone, TexGrid;
@@ -47,7 +48,7 @@ namespace RPG_Paper_Maker
             TexStartCursor = Texture2D.FromStream(GraphicsDevice, fs);
             TexNone = new Texture2D(GraphicsDevice, 1, 1);
             TexGrid = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-            TexGrid.SetData(new Color[] { new Color(Color.White, 0.25f) });
+            TexGrid.SetData(new Color[] { new Color(Color.White, 0.5f) });
             fs.Close();
 
             // Create game components
@@ -173,8 +174,11 @@ namespace RPG_Paper_Maker
 
         protected override void Update(GameTime gameTime)
         {
-            if (Control.Map != null)
+            if (!Control.IsMapReloading && Control.Map != null)
             {
+                var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                FrameCounter.Update(deltaTime);
+
                 if (PreviousWidth != Width || PreviousHeight != Height)
                 {
                     ReCalculateCameraProjection();
@@ -228,8 +232,11 @@ namespace RPG_Paper_Maker
 
                 // Draw position
                 string pos = "[" + Control.CursorEditor.GetX() + "," + Control.CursorEditor.GetZ() + "]";
+                string fps = string.Format("FPS: {0}", (int)FrameCounter.AverageFramesPerSecond);
+
                 SpriteBatch.Begin();
-                SpriteBatch.DrawString(font, pos, new Vector2(GraphicsDevice.Viewport.Width-10, GraphicsDevice.Viewport.Height-10), Color.White, 0, font.MeasureString(pos), 1.0f, SpriteEffects.None, 0.5f);
+                SpriteBatch.DrawString(font, pos, new Vector2(GraphicsDevice.Viewport.Width - 10, GraphicsDevice.Viewport.Height - 10), Color.White, 0, font.MeasureString(pos), 1.0f, SpriteEffects.None, 0.5f);
+                SpriteBatch.DrawString(font, fps, new Vector2(GraphicsDevice.Viewport.Width - 10, 40), Color.White, 0, font.MeasureString(fps), 1.0f, SpriteEffects.None, 0.5f);
                 SpriteBatch.End();
             }
         }

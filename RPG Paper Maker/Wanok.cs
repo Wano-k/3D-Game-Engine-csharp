@@ -449,11 +449,20 @@ namespace RPG_Paper_Maker
         // DisposeProgressBar
         // -------------------------------------------------------------------
 
-        public static void StartProgressBar(string text, int value)
+        public static void StartProgressBar(string text, int value, bool top = true)
         {
-            DialogProgressBar = new DialogProgressBar(text);
+            DialogProgressBar = new DialogProgressBar(text, top);
             DialogProgressBar.Show();
             DialogProgressBar.SetValue(value);
+        }
+
+        // -------------------------------------------------------------------
+        // IsInPortions
+        // -------------------------------------------------------------------
+
+        public static bool IsInPortions(int[] portion, int offset = 0)
+        {
+            return (portion[0] <= (PORTION_RADIUS + offset) && portion[0] >= -(PORTION_RADIUS + offset) && portion[1] <= (PORTION_RADIUS + offset) && portion[1] >= -(PORTION_RADIUS + offset));
         }
     }
 }

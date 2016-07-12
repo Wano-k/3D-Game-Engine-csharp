@@ -16,7 +16,7 @@ namespace RPG_Paper_Maker
             InitializeComponent();
             this.Text = String.Format("À propos de {0}", AssemblyTitle);
             this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
+            this.labelVersion.Text = String.Format("Version {0}", ((MainForm)ActiveForm).Version);
             this.labelCopyright.Text = AssemblyCopyright;
             this.labelCompanyName.Text = AssemblyCompany;
             this.textBoxDescription.Text = AssemblyDescription;

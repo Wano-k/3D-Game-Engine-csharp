@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Diagnostics;
 
 namespace RPG_Paper_Maker
 {
@@ -31,6 +32,9 @@ namespace RPG_Paper_Maker
         public Map(GraphicsDevice device, string mapName)
         {
             Device = device;
+            Stopwatch sw = new Stopwatch();
+            bool dialogOpened = false;
+            sw.Start();
 
             // Temp files + mapInfos
             string pathTemp = Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp");
@@ -39,22 +43,20 @@ namespace RPG_Paper_Maker
                 string[] filePaths = Directory.GetFiles(Path.Combine(WANOK.MapsDirectoryPath, mapName));
                 foreach (string filePath in filePaths) File.Copy(filePath, Path.Combine(pathTemp, Path.GetFileName(filePath)));
             }
+            
             MapInfos = WANOK.LoadBinaryDatas<MapInfos>(Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp", "infos.map"));
             Saved = !WANOK.ListMapToSave.Contains(mapName);
 
             // Start position
+            
             if (mapName == WANOK.SystemDatas.StartMapName)
             {
                 SetStartInfos(WANOK.SystemDatas, WANOK.SystemDatas.StartPosition);
             }
-
+            
             // Set textures
-            if (MapEditor.TexTileset != null) MapEditor.TexTileset.Dispose();
-            foreach (int i in MapEditor.TexAutotiles.Keys)
-            {
-                MapEditor.TexAutotiles[i].Dispose();
-            }
-            MapEditor.TexAutotiles.Clear();
+            DisposeTextures();
+            
             Tileset tileset = WANOK.SystemDatas.GetTilesetById(MapInfos.Tileset);
             MapEditor.TexTileset = tileset.Graphic.LoadTexture(device);
             for (int i = 0; i < tileset.Autotiles.Count; i++)
@@ -67,13 +69,31 @@ namespace RPG_Paper_Maker
 
             // Map
             Portions = new Dictionary<int[], GameMapPortion>(new IntArrayComparer());
-            for (int i = -WANOK.PORTION_RADIUS; i <= WANOK.PORTION_RADIUS; i++)
+            int count = 0;
+            double coef = (WANOK.PORTION_RADIUS + 1) * (WANOK.PORTION_RADIUS + 1) * 4;
+            for (int i = -WANOK.PORTION_RADIUS - 1; i <= WANOK.PORTION_RADIUS + 1; i++)
             {
-                for (int j = -WANOK.PORTION_RADIUS; j <= WANOK.PORTION_RADIUS; j++)
+                for (int j = -WANOK.PORTION_RADIUS - 1; j <= WANOK.PORTION_RADIUS + 1; j++)
                 {
+                    if (!dialogOpened)
+                    {
+                        if (sw.ElapsedMilliseconds > 50)
+                        {
+                            WANOK.StartProgressBar("Loading map infos...", 0);
+                            dialogOpened = true;
+                        }
+                    }
+                    else
+                    {
+                        int v = (int)((count / coef) * 100);
+                        if (v <= 100) WANOK.DialogProgressBar.SetValue(v);
+                    }
                     LoadPortion(i, j, i, j);
+                    count++;
                 }
             }
+            sw.Stop();
+            if (dialogOpened) WANOK.DisposeProgressBar();
         }
 
         // -------------------------------------------------------------------
@@ -203,9 +223,13 @@ namespace RPG_Paper_Maker
         public void Draw(GameTime gameTime, AlphaTestEffect effect, Camera camera)
         {
             // Drawing Items
-            foreach (GameMapPortion gameMap in Portions.Values)
+            for(int i = -WANOK.PORTION_RADIUS; i <= WANOK.PORTION_RADIUS; i++)
             {
-                if (gameMap != null) gameMap.Draw(Device, effect, MapEditor.TexTileset, camera);
+                for (int j = -WANOK.PORTION_RADIUS; j <= WANOK.PORTION_RADIUS; j++)
+                {
+                    GameMapPortion gameMap = Portions[new int[] { i, j }];
+                    if (gameMap != null) gameMap.Draw(Device, effect, MapEditor.TexTileset, camera, true);
+                }
             }
             
             // Drawing Start position
@@ -247,7 +271,8 @@ namespace RPG_Paper_Maker
         public void DisposeVertexBuffer()
         {
             Device.SetVertexBuffer(null);
-            VBGrid.Dispose();
+
+            if (VBGrid != null) VBGrid.Dispose();
 
             foreach (KeyValuePair<int[], GameMapPortion> entry in Portions)
             {
@@ -255,6 +280,25 @@ namespace RPG_Paper_Maker
             }
 
             if (StartSquare != null) StartSquare.DisposeBuffers(Device);
+        }
+
+        // -------------------------------------------------------------------
+        // DisposeTextures
+        // -------------------------------------------------------------------
+
+        public void DisposeTextures()
+        {
+            if (MapEditor.TexTileset != null)
+            {
+                MapEditor.TexTileset.Dispose();
+                MapEditor.TexTileset = null;
+            }
+            
+            foreach (int i in MapEditor.TexAutotiles.Keys)
+            {
+                MapEditor.TexAutotiles[i].Dispose();
+            }
+            MapEditor.TexAutotiles.Clear();
         }
     }
 }

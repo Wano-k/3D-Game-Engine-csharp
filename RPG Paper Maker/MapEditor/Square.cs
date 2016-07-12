@@ -24,7 +24,6 @@ namespace RPG_Paper_Maker
             // Init buffers
             VB = new VertexBuffer(device, typeof(VertexPositionTexture), 4, BufferUsage.WriteOnly);
             IB = new IndexBuffer(device, IndexElementSize.ThirtyTwoBits, 6, BufferUsage.WriteOnly);
-            device.SetVertexBuffer(VB);
 
             // Create texture
             CreateTex(coordsTexture, texture);

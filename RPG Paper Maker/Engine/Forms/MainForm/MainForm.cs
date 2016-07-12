@@ -26,7 +26,8 @@ namespace RPG_Paper_Maker
         public InterpolationPictureBox PictureBoxSpecialTileset = new InterpolationPictureBox();
         public ImageComboBox ComboBoxSpecialTileset1 = new ImageComboBox();
 
-        public string TitleName = "RPG Paper Maker " + Application.ProductVersion;
+        public string Version = "0.1.0.0";
+        public string TitleName { get { return "RPG Paper Maker " + Version; } }
         public MainFormControl Control = new MainFormControl();
         public bool IsInItemHeightSquare = false;
         public bool IsInItemHeightPixel = false;
@@ -406,8 +407,7 @@ namespace RPG_Paper_Maker
 
         private void ItemOpenBrowse_Click(object sender, EventArgs e)
         {
-            //OpenFileDialog dialog = new OpenFileDialog();
-            //if (!Directory.Exists(dialog.InitialDirectory)) dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            //if (!Directory.Exists(OpenProjectDialog.InitialDirectory)) OpenProjectDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
            
             if (OpenProjectDialog.ShowDialog() == DialogResult.OK)
             {
@@ -465,16 +465,13 @@ namespace RPG_Paper_Maker
         private void ItemPlay_Click(object sender, EventArgs e)
         {
             WhenLaunchingGame();
-            /*
-            ProcessStartInfo startInfo = new ProcessStartInfo(@"C:\Users\Marie_MSI\Documents\Visual Studio 2015\Projects\Test\MonoGame-3D-Game-Test\Test\bin\DesktopGL\x86\Release\RPG Paper Maker.exe");
-            startInfo.WorkingDirectory = @"C:\Users\Marie_MSI\Documents\Visual Studio 2015\Projects\Test\MonoGame-3D-Game-Test\Test\bin\DesktopGL\x86\Release";
-            Process p = Process.Start(startInfo);
-            p.WaitForExit();
-            */
+            WANOK.StartProgressBar("Loading your game content...", 50, false);
             ProcessStartInfo startInfo = new ProcessStartInfo(Path.Combine(WANOK.CurrentDir, "Game.exe"));
             startInfo.WorkingDirectory = WANOK.CurrentDir;
             Process p = Process.Start(startInfo);
-            p.WaitForExit(); 
+            WANOK.DialogProgressBar.SetValue(100);
+            p.WaitForExit();
+            WANOK.DisposeProgressBar();
         }
 
         // OPTIONS
@@ -487,6 +484,9 @@ namespace RPG_Paper_Maker
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 WANOK.SystemDatas.PathRTP = dialog.SelectedPath;
+                WANOK.SaveBinaryDatas(WANOK.SystemDatas, WANOK.SystemPath);
+                TreeTag tag = (TreeTag)WANOK.SelectedNode.Tag;
+                if (tag.IsMap) ReLoadMap(tag.RealMapName);
             }
         }
 
@@ -738,17 +738,17 @@ namespace RPG_Paper_Maker
 
         private void ItemSprite3_Click(object sender, EventArgs e)
         {
-            
+            SelectDoubleSprite();
         }
 
         private void ItemSprite4_Click(object sender, EventArgs e)
         {
-            
+            SelectQuadraSprite();
         }
 
         private void ItemSprite5_Click(object sender, EventArgs e)
         {
-            
+            SelectSpriteOnFloor();
         }
 
         private void ItemSprite6_Click(object sender, EventArgs e)
@@ -756,23 +756,37 @@ namespace RPG_Paper_Maker
             
         }
 
+        public void SelectSprite()
+        {
+            if (MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles) HideSpecialTileset();
+            SetSelectedDrawType("ItemSprite");
+        }
+
         public void SelectSprites()
         {
             switch (ItemSprite.Text)
             {
-                case "Face sprite":
+                case "Face Sprite":
                     SelectFaceSprite();
                     break;
-                case "Fix sprite":
+                case "Fix Sprite":
                     SelectFixSprite();
+                    break;
+                case "Double Sprite":
+                    SelectDoubleSprite();
+                    break;
+                case "Quadra Sprite":
+                    SelectQuadraSprite();
+                    break;
+                case "Sprite on Floor":
+                    SelectSpriteOnFloor();
                     break;
             }
         }
 
         public void SelectFaceSprite()
         {
-            if (MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles) HideSpecialTileset();
-            SetSelectedDrawType("ItemSprite");
+            SelectSprite();
             SetSelectedDrawTypeParticular(DrawType.FaceSprite);
             ItemSprite.Text = ItemSprite1.Text;
             ItemSprite.Image = ItemSprite1.Image;
@@ -780,11 +794,34 @@ namespace RPG_Paper_Maker
 
         public void SelectFixSprite()
         {
-            if (MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles) HideSpecialTileset();
-            SetSelectedDrawType("ItemSprite");
+            SelectSprite();
             SetSelectedDrawTypeParticular(DrawType.FixSprite);
             ItemSprite.Text = ItemSprite2.Text;
             ItemSprite.Image = ItemSprite2.Image;
+        }
+
+        public void SelectDoubleSprite()
+        {
+            SelectSprite();
+            SetSelectedDrawTypeParticular(DrawType.DoubleSprite);
+            ItemSprite.Text = ItemSprite3.Text;
+            ItemSprite.Image = ItemSprite3.Image;
+        }
+
+        public void SelectQuadraSprite()
+        {
+            SelectSprite();
+            SetSelectedDrawTypeParticular(DrawType.QuadraSprite);
+            ItemSprite.Text = ItemSprite4.Text;
+            ItemSprite.Image = ItemSprite4.Image;
+        }
+
+        public void SelectSpriteOnFloor()
+        {
+            SelectSprite();
+            SetSelectedDrawTypeParticular(DrawType.OnFloorSprite);
+            ItemSprite.Text = ItemSprite5.Text;
+            ItemSprite.Image = ItemSprite5.Image;
         }
 
         // Start

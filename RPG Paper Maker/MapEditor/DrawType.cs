@@ -12,6 +12,9 @@ namespace RPG_Paper_Maker
         Floors,
         Autotiles,
         FaceSprite,
-        FixSprite
+        FixSprite,
+        DoubleSprite,
+        QuadraSprite,
+        OnFloorSprite
     }
 }

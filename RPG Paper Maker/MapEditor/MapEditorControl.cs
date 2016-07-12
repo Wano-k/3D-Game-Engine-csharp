@@ -34,6 +34,7 @@ namespace RPG_Paper_Maker
         public int CurrentOrientation = 0;
         public int[] CurrentPortion = new int[] { 0, 0 };
         protected List<int[]> PortionsToUpdate = new List<int[]>();
+        protected List<int[]> PortionsAutotileToUpdate = new List<int[]>();
         protected List<int[]> PortionsToSave = new List<int[]>();
         public int[] PreviousMouseCoords = null;
         public int[] PreviousCursorCoords = null;
@@ -97,19 +98,23 @@ namespace RPG_Paper_Maker
             // Raycasting floor
             float floorDistance = 0;
             PointOnFloor = null;
-            foreach (GameMapPortion gameMapPortion in Map.Portions.Values)
+            for (int i = -WANOK.PORTION_RADIUS; i <= WANOK.PORTION_RADIUS; i++)
             {
-                if (gameMapPortion != null)
+                for (int j = -WANOK.PORTION_RADIUS; j <= WANOK.PORTION_RADIUS; j++)
                 {
-                    foreach (int[] coords in gameMapPortion.Floors.Keys)
+                    GameMapPortion gameMapPortion = Map.Portions[new int[] { i, j }];
+                    if (gameMapPortion != null)
                     {
-                        floorDistance = RaycastFloor(coords, camera, ray, floorDistance);
-                    }
-                    foreach (Autotiles autotiles in gameMapPortion.Autotiles.Values)
-                    {
-                        foreach (int[] coords in autotiles.Tiles.Keys)
+                        foreach (int[] coords in gameMapPortion.Floors.Keys)
                         {
                             floorDistance = RaycastFloor(coords, camera, ray, floorDistance);
+                        }
+                        foreach (Autotiles autotiles in gameMapPortion.Autotiles.Values)
+                        {
+                            foreach (int[] coords in autotiles.Tiles.Keys)
+                            {
+                                floorDistance = RaycastFloor(coords, camera, ray, floorDistance);
+                            }
                         }
                     }
                 }
@@ -121,30 +126,28 @@ namespace RPG_Paper_Maker
             if (SelectedDrawType == "ItemSprite")
             {
                 float spriteDistance = 0;
-                foreach (GameMapPortion gameMapPortion in Map.Portions.Values)
+                for (int i = -WANOK.PORTION_RADIUS; i <= WANOK.PORTION_RADIUS; i++)
                 {
-                    if (gameMapPortion != null)
+                    for (int j = -WANOK.PORTION_RADIUS; j <= WANOK.PORTION_RADIUS; j++)
                     {
-                        foreach (KeyValuePair<int[], Sprites> entry1 in gameMapPortion.Sprites)
+                        GameMapPortion gameMapPortion = Map.Portions[new int[] { i, j }];
+                        if (gameMapPortion != null)
                         {
-                            foreach (KeyValuePair<int[], Sprite> entry2 in entry1.Value.ListSprites)
+                            foreach (KeyValuePair<int[], Sprites> entry1 in gameMapPortion.Sprites)
                             {
-                                Ray newRay = new Ray(ray.Position, ray.Direction);
-                                BoundingBox box = new BoundingBox(new Vector3(0, 0, 0), new Vector3(entry1.Key[2], entry1.Key[3], 1));
-                                Matrix inverse = Matrix.Invert(entry2.Value.GetWorldEffect(Camera, entry2.Key, entry1.Key[2]));
-                                newRay.Position = Vector3.Transform(newRay.Position, inverse);
-                                newRay.Direction = Vector3.TransformNormal(newRay.Direction, inverse);
-                                newRay.Direction.Normalize();
-                                newDistance = newRay.Intersects(box);
-
-                                if (newDistance != null)
+                                foreach (KeyValuePair<int[], Sprite> entry2 in entry1.Value.ListSprites)
                                 {
-                                    if (PointOnSprites == null || spriteDistance > newDistance.Value)
+                                    newDistance = entry2.Value.GetCompleteDistanceIntersection(ray, camera, entry2.Key, entry1.Key[2], entry1.Key[3]);
+
+                                    if (newDistance != null)
                                     {
-                                        if (newDistance.Value > 0)
+                                        if (PointOnSprites == null || spriteDistance > newDistance.Value)
                                         {
-                                            PointOnSprites = entry2.Key;
-                                            spriteDistance = newDistance.Value;
+                                            if (newDistance.Value > 0)
+                                            {
+                                                PointOnSprites = entry2.Key;
+                                                spriteDistance = newDistance.Value;
+                                            }
                                         }
                                     }
                                 }
@@ -203,6 +206,15 @@ namespace RPG_Paper_Maker
             PortionsToUpdate.Add(portion);
         }
 
+        public void AddPortionsAutotileToUpdate(int[] portion)
+        {
+            for (int i = PortionsAutotileToUpdate.Count - 1; i >= 0; i--)
+            {
+                if (PortionsAutotileToUpdate[i].SequenceEqual(portion)) return;
+            }
+            PortionsAutotileToUpdate.Add(portion);
+        }
+
         public void AddPortionToSave(int[] portion)
         {
             for (int i = PortionsToSave.Count - 1; i >= 0; i--)
@@ -215,6 +227,7 @@ namespace RPG_Paper_Maker
         public void ClearPortions()
         {
             PortionsToUpdate.Clear();
+            PortionsAutotileToUpdate.Clear();
             PortionsToSave.Clear();
         }
 
@@ -227,49 +240,49 @@ namespace RPG_Paper_Maker
             // If cursor going to right side
             if (currentPortion[0] > previousPortion[0])
             {
-                for (int j = -WANOK.PORTION_RADIUS; j <= WANOK.PORTION_RADIUS; j++)
+                for (int j = -WANOK.PORTION_RADIUS - 1; j <= WANOK.PORTION_RADIUS + 1; j++)
                 {
-                    for (int i = -WANOK.PORTION_RADIUS; i < WANOK.PORTION_RADIUS; i++)
+                    for (int i = -WANOK.PORTION_RADIUS - 1; i < WANOK.PORTION_RADIUS + 1; i++)
                     {
                         SetPortion(i, j, i + 1, j);
                     }
-                    LoadPortion(currentPortion, WANOK.PORTION_RADIUS, j);
+                    LoadPortion(currentPortion, WANOK.PORTION_RADIUS + 1, j);
                 }
             }
             // If cursor going to left side
             else if (currentPortion[0] < previousPortion[0])
             {
-                for (int j = -WANOK.PORTION_RADIUS; j <= WANOK.PORTION_RADIUS; j++)
+                for (int j = -WANOK.PORTION_RADIUS - 1; j <= WANOK.PORTION_RADIUS + 1; j++)
                 {
-                    for (int i = WANOK.PORTION_RADIUS; i > -WANOK.PORTION_RADIUS; i--)
+                    for (int i = WANOK.PORTION_RADIUS + 1; i > -WANOK.PORTION_RADIUS - 1; i--)
                     {
                         SetPortion(i, j, i - 1, j);
                     }
-                    LoadPortion(currentPortion, -WANOK.PORTION_RADIUS, j);
+                    LoadPortion(currentPortion, -WANOK.PORTION_RADIUS - 1, j);
                 }
             }
             // If cursor going to up side
             if (currentPortion[1] > previousPortion[1])
             {
-                for (int i = -WANOK.PORTION_RADIUS; i <= WANOK.PORTION_RADIUS; i++)
+                for (int i = -WANOK.PORTION_RADIUS - 1; i <= WANOK.PORTION_RADIUS + 1; i++)
                 {
-                    for (int j = -WANOK.PORTION_RADIUS; j < WANOK.PORTION_RADIUS; j++)
+                    for (int j = -WANOK.PORTION_RADIUS - 1; j < WANOK.PORTION_RADIUS + 1; j++)
                     {
                         SetPortion(i, j, i, j + 1);
                     }
-                    LoadPortion(currentPortion, i, WANOK.PORTION_RADIUS);
+                    LoadPortion(currentPortion, i, WANOK.PORTION_RADIUS + 1);
                 }
             }
             // If cursor going to down side
             else if (currentPortion[1] < previousPortion[1])
             {
-                for (int i = -WANOK.PORTION_RADIUS; i <= WANOK.PORTION_RADIUS; i++)
+                for (int i = -WANOK.PORTION_RADIUS - 1; i <= WANOK.PORTION_RADIUS + 1; i++)
                 {
-                    for (int j = WANOK.PORTION_RADIUS; j > -WANOK.PORTION_RADIUS; j--)
+                    for (int j = WANOK.PORTION_RADIUS + 1; j > -WANOK.PORTION_RADIUS - 1; j--)
                     {
                         SetPortion(i, j, i, j - 1);
                     }
-                    LoadPortion(currentPortion, i, -WANOK.PORTION_RADIUS);
+                    LoadPortion(currentPortion, i, -WANOK.PORTION_RADIUS - 1);
                 }
             }
         }
@@ -301,18 +314,19 @@ namespace RPG_Paper_Maker
         public void UpdatePortions()
         {
             if (PortionsToUpdate.Count > 0 && WANOK.DialogProgressBar != null && DrawMode == DrawMode.Tin) WANOK.DialogProgressBar.SetValue("Drawing...", 90);
-            for (int i = 0; i < PortionsToUpdate.Count; i++)
+            for (int i = 0; i < PortionsAutotileToUpdate.Count; i++)
             {
-                if (DrawMode == DrawMode.Tin)
+                foreach (Autotiles autotiles in Map.Portions[PortionsAutotileToUpdate[i]].Autotiles.Values)
                 {
-                    foreach (Autotiles autotiles in Map.Portions[PortionsToUpdate[i]].Autotiles.Values)
+                    foreach (int[] coords in autotiles.Tiles.Keys)
                     {
-                        foreach (int[] coords in autotiles.Tiles.Keys)
-                        {
-                            Map.Portions[PortionsToUpdate[i]].Autotiles[autotiles.Id].Update(coords, PortionsToUpdate[i]);
-                        }
+                        Map.Portions[PortionsAutotileToUpdate[i]].Autotiles[autotiles.Id].Update(coords, PortionsAutotileToUpdate[i]);
                     }
                 }
+            }
+
+            for (int i = 0; i < PortionsToUpdate.Count; i++)
+            {
                 Map.UpdatePortions(PortionsToUpdate[i]);
             }
 
@@ -539,7 +553,7 @@ namespace RPG_Paper_Maker
         public void StockFloor(int[] coords, params object[] args)
         {
             int[] portion = GetPortion(coords[0], coords[3]);
-            if (IsInArea(coords) && IsInPortions(portion))
+            if (IsInArea(coords) && WANOK.IsInPortions(portion))
             {
                 if (Map.Portions[portion] == null)
                 {
@@ -594,7 +608,7 @@ namespace RPG_Paper_Maker
         public void EraseFloor(int[] coords, params object[] args)
         {
             int[] portion = GetPortion(coords[0], coords[3]);
-            if (IsInArea(coords) && IsInPortions(portion))
+            if (IsInArea(coords) && WANOK.IsInPortions(portion))
             {
                 if (Map.Portions[portion] == null) Map.Portions[portion] = new GameMapPortion();
                 if (Map.Portions[portion].RemoveFloor(coords) && Map.Saved) SetToNoSaved();
@@ -610,7 +624,7 @@ namespace RPG_Paper_Maker
         public void PaintTinFloor(int[] coords, object textureAfter)
         {
             int[] portion = GetPortion(coords[0], coords[3]);
-            if (IsInArea(coords) && IsInPortions(portion))
+            if (IsInArea(coords) && WANOK.IsInPortions(portion))
             {
                 object textureBefore = GetCurrentTexture(portion, coords);
                 object textureAfterReduced = GetTextureAfterReduced(textureAfter, 0, 0);
@@ -649,7 +663,7 @@ namespace RPG_Paper_Maker
                             textureAfterReduced = GetTextureAfterReduced(textureAfter, localX, localZ);
                             portion = GetPortion(adjacent[i][0], adjacent[i][3]);
 
-                            if (IsInPortions(portion) && IsInArea(adjacent[i]))
+                            if (WANOK.IsInPortions(portion) && IsInArea(adjacent[i]))
                             {
                                 object textureHere = GetCurrentTexture(portion, adjacent[i]);
 
@@ -769,7 +783,7 @@ namespace RPG_Paper_Maker
         public void StockSprite(int[] coords, params object[] args)
         {
             int[] portion = GetPortion(coords[0], coords[3]);
-            if (IsInArea(coords) && IsInPortions(portion))
+            if (IsInArea(coords) && WANOK.IsInPortions(portion))
             {
                 if (Map.Portions[portion] == null)
                 {
@@ -817,7 +831,7 @@ namespace RPG_Paper_Maker
         public void EraseSprite(int[] coords, params object[] args)
         {
             int[] portion = GetPortion(coords[0], coords[3]);
-            if (IsInArea(coords) && IsInPortions(portion))
+            if (IsInArea(coords) && WANOK.IsInPortions(portion))
             {
                 if (Map.Portions[portion] == null) Map.Portions[portion] = new GameMapPortion();
                 if (Map.Portions[portion].RemoveSprite(coords) && Map.Saved) SetToNoSaved();
@@ -929,15 +943,6 @@ namespace RPG_Paper_Maker
         public bool IsInArea(int[] coords)
         {
             return (coords[0] >= 0 && coords[0] < Map.MapInfos.Width && coords[3] >= 0 && coords[3] < Map.MapInfos.Height);
-        }
-
-        // -------------------------------------------------------------------
-        // IsInPotion
-        // -------------------------------------------------------------------
-
-        public bool IsInPortions(int[] coords)
-        {
-            return (coords[0] <= WANOK.PORTION_RADIUS && coords[0] >= -WANOK.PORTION_RADIUS && coords[1] <= WANOK.PORTION_RADIUS && coords[1] >= -WANOK.PORTION_RADIUS);
         }
 
         // -------------------------------------------------------------------

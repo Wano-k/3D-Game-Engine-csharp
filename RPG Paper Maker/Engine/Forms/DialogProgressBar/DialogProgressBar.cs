@@ -12,12 +12,13 @@ namespace RPG_Paper_Maker
 {
     public partial class DialogProgressBar : Form
     {
-        public DialogProgressBar(string text)
+        public DialogProgressBar(string text, bool top = true)
         {
             InitializeComponent();
 
             label1.Text = text;
             progressBar.Value = 0;
+            TopMost = top;
         }
 
         public void SetValue(string text, int value)

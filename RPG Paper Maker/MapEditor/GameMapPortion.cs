@@ -321,7 +321,7 @@ namespace RPG_Paper_Maker
         // Draw
         // -------------------------------------------------------------------
 
-        public void Draw(GraphicsDevice device, AlphaTestEffect effect, Texture2D texture, Camera camera)
+        public void Draw(GraphicsDevice device, AlphaTestEffect effect, Texture2D texture, Camera camera, bool drawOthers)
         {
             effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
 
@@ -346,9 +346,12 @@ namespace RPG_Paper_Maker
             }
 
             // Drawing Sprites
-            foreach (KeyValuePair<int[], Sprites> entry in Sprites)
+            if (drawOthers)
             {
-                entry.Value.Draw(device, effect, camera, entry.Key[2]);
+                foreach (KeyValuePair<int[], Sprites> entry in Sprites)
+                {
+                    entry.Value.Draw(device, effect, camera, entry.Key[2], entry.Key[3]);
+                }
             }
         }
 
