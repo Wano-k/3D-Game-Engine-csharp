@@ -37,8 +37,9 @@ namespace RPG_Paper_Maker
         public static int SQUARE_SIZE { get { return SystemDatas.SquareSize; } }
         public static float RELATION_SIZE { get { return (float)(BASIC_SQUARE_SIZE) / SQUARE_SIZE; } }
         public static int PORTION_SIZE = 16;
-        public static int PORTION_RADIUS = 6;
+        public static int PORTION_RADIUS = 1;
         public static int COEF_BORDER_TEX = 10000;
+        public static int MAX_CANCEL = 5;
         public static EngineSettings Settings = null;
         public static DemoSteps DemoStep = DemoSteps.None;
         public static Form CurrentDemoDialog = null;
@@ -52,6 +53,11 @@ namespace RPG_Paper_Maker
         public static TreeNode SelectedNode = null;
         public static string NONE_IMAGE_STRING = "<None>";
         public static DialogProgressBar DialogProgressBar = null;
+
+        // CANCEL
+        public static Dictionary<string, List<Dictionary<int[], GameMapPortion>>> CancelRedo = new Dictionary<string, List<Dictionary<int[], GameMapPortion>>>();
+        public static List<int[]> PortionsToAddCancel = new List<int[]>();
+        public static Dictionary<string, int> CancelRedoIndex = new Dictionary<string, int>();
 
         // PATHS
         public static string ABSOLUTEENGINEPATH;
@@ -204,7 +210,7 @@ namespace RPG_Paper_Maker
         {
             Color[] imageData = new Color[image.Width * image.Height];
             image.GetData<Color>(imageData);
-            Color[] imagePiece = WANOK.GetImageData(imageData, image.Width, rectangle);
+            Color[] imagePiece = GetImageData(imageData, image.Width, rectangle);
             Texture2D subtexture = new Texture2D(GraphicsDevice, rectangle.Width, rectangle.Height);
             subtexture.SetData<Color>(imagePiece);
 
@@ -463,6 +469,91 @@ namespace RPG_Paper_Maker
         public static bool IsInPortions(int[] portion, int offset = 0)
         {
             return (portion[0] <= (PORTION_RADIUS + offset) && portion[0] >= -(PORTION_RADIUS + offset) && portion[1] <= (PORTION_RADIUS + offset) && portion[1] >= -(PORTION_RADIUS + offset));
+        }
+
+        // -------------------------------------------------------------------
+        // LoadPortionMap
+        // -------------------------------------------------------------------
+
+        public static GameMapPortion LoadPortionMap(string mapName, int i, int j)
+        {
+            string path = Path.Combine(MapsDirectoryPath, mapName, "temp", i + "-" + j + ".pmap");
+            if (File.Exists(path)) return LoadBinaryDatas<GameMapPortion>(path);
+            else return null;
+        }
+
+        // -------------------------------------------------------------------
+        // SavePortionMap
+        // -------------------------------------------------------------------
+
+        public static void SavePortionMap(GameMapPortion map, string mapName, int i, int j)
+        {
+            string path = Path.Combine(MapsDirectoryPath, mapName, "temp", i + "-" + j + ".pmap");
+            if (map == null)
+            {
+                if (File.Exists(path)) File.Delete(path);
+            }
+            else
+            {
+                SaveBinaryDatas(map, path);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // CANCEL
+        // -------------------------------------------------------------------
+
+        public static void CreateCancelMap(string mapName)
+        {
+            CancelRedo[mapName] = new List<Dictionary<int[], GameMapPortion>>();
+            CancelRedoIndex[mapName] = 0;
+            CancelRedo[mapName].Add(new Dictionary<int[], GameMapPortion>(new IntArrayComparer()));
+        }
+
+        public static void CreateCancel(string mapName)
+        {
+            int size = CancelRedo[mapName].Count;
+            if (size == MAX_CANCEL)
+            {
+                CancelRedo[mapName].RemoveAt(0);
+                CancelRedoIndex[mapName]--;
+                size--;
+            }
+            
+            int lim = -1;
+            for (int i = 0; i < size; i++)
+            {
+                if (lim == -1 && i > CancelRedoIndex[mapName]) lim = i;
+                if (lim != -1) CancelRedo[mapName].RemoveAt(lim);
+            }
+
+            CancelRedo[mapName].Add(new Dictionary<int[], GameMapPortion>(new IntArrayComparer()));
+            CancelRedoIndex[mapName]++;
+        }
+
+        public static void AddPortionsToAddCancel(string mapName, int[] portion)
+        {
+            // Adding to list
+            for (int i = PortionsToAddCancel.Count - 1; i >= 0; i--)
+            {
+                if (PortionsToAddCancel[i].SequenceEqual(portion)) return;
+            }
+            PortionsToAddCancel.Add(portion);
+
+            // Checking the previous cancel portion
+            if (!CancelRedo[mapName][CancelRedoIndex[mapName] - 1].ContainsKey(portion))
+            {
+                CancelRedo[mapName][CancelRedoIndex[mapName] - 1][portion] = LoadPortionMap(mapName, portion[0], portion[1]);
+            }
+        }
+
+        public static void LoadCancel(string mapName)
+        {
+            for (int i = 0; i < PortionsToAddCancel.Count; i++)
+            {
+                CancelRedo[mapName][CancelRedoIndex[mapName]][PortionsToAddCancel[i]] = LoadPortionMap(mapName, PortionsToAddCancel[i][0], PortionsToAddCancel[i][1]);
+            }
+            PortionsToAddCancel.Clear();
         }
     }
 }

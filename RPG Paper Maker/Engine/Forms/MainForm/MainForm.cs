@@ -359,11 +359,14 @@ namespace RPG_Paper_Maker
             switch (k)
             {
                 case Keys.ControlKey:
-                    return Convert.ToBoolean(GetAsyncKeyState(Keys.LControlKey)) ? Microsoft.Xna.Framework.Input.Keys.LeftControl : Microsoft.Xna.Framework.Input.Keys.RightControl;
+                    return Microsoft.Xna.Framework.Input.Keys.LeftControl;
+                    //return Convert.ToBoolean(GetAsyncKeyState(Keys.LControlKey)) ? Microsoft.Xna.Framework.Input.Keys.LeftControl : Microsoft.Xna.Framework.Input.Keys.RightControl;
                 case Keys.Menu:
-                    return Convert.ToBoolean(GetAsyncKeyState(Keys.LMenu)) ? Microsoft.Xna.Framework.Input.Keys.LeftAlt : Microsoft.Xna.Framework.Input.Keys.RightAlt;
+                    return Microsoft.Xna.Framework.Input.Keys.LeftAlt;
+                    //return Convert.ToBoolean(GetAsyncKeyState(Keys.LMenu)) ? Microsoft.Xna.Framework.Input.Keys.LeftAlt : Microsoft.Xna.Framework.Input.Keys.RightAlt;
                 case Keys.ShiftKey:
-                    return Convert.ToBoolean(GetAsyncKeyState(Keys.LShiftKey)) ? Microsoft.Xna.Framework.Input.Keys.LeftShift : Microsoft.Xna.Framework.Input.Keys.RightShift;
+                    return Microsoft.Xna.Framework.Input.Keys.LeftShift;
+                    //return Convert.ToBoolean(GetAsyncKeyState(Keys.LShiftKey)) ? Microsoft.Xna.Framework.Input.Keys.LeftShift : Microsoft.Xna.Framework.Input.Keys.RightShift;
             }
 
             return (Microsoft.Xna.Framework.Input.Keys)k;
@@ -439,6 +442,19 @@ namespace RPG_Paper_Maker
             WhenClosingAnyProject();
             Close();
         }
+
+        //EDITION
+
+        private void ItemUndo_Click(object sender, EventArgs e)
+        {
+            MapEditor.Control.Cancel();
+        }
+
+        private void ItemRedo_Click(object sender, EventArgs e)
+        {
+
+        }
+
 
         // MANAGEMENT
 
@@ -1307,6 +1323,8 @@ namespace RPG_Paper_Maker
             toolBarButtonNew.Enabled = b;
             ItemOpenBrowse.Enabled = b;
             toolBarButtonOpen.Enabled = b;
+            ItemUndo.Enabled = b;
+            ItemRedo.Enabled = b;
             ItemInputs.Enabled = b;
             toolBarButtonInput.Enabled = b;
             ItemDataBase.Enabled = b;
@@ -1354,6 +1372,8 @@ namespace RPG_Paper_Maker
             ItemSaveAll.Enabled = true;
             toolBarButtonSaveAll.Enabled = true;
             ItemCloseProject.Enabled = true;
+            ItemUndo.Enabled = true;
+            ItemRedo.Enabled = true;
             ItemInputs.Enabled = true;
             toolBarButtonInput.Enabled = true;
             ItemDataBase.Enabled = true;

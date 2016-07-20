@@ -28,6 +28,7 @@ namespace RPG_Paper_Maker
         public static Texture2D TexCursor, TexStartCursor, TexTileset, TexNone, TexGrid;
         public static Dictionary<int,Texture2D> TexAutotiles = new Dictionary<int, Texture2D>();
 
+        public static int Debug = 0;
 
 
         // -------------------------------------------------------------------
@@ -50,6 +51,7 @@ namespace RPG_Paper_Maker
             TexGrid = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
             TexGrid.SetData(new Color[] { new Color(Color.White, 0.5f) });
             fs.Close();
+            
 
             // Create game components
             Control.Camera = new Camera(GraphicsDevice);
@@ -64,6 +66,7 @@ namespace RPG_Paper_Maker
             effect.ReferenceAlpha = 1;
 
             // Load content
+            
             font = Content.Load<SpriteFont>("Fonts/corbel");
         }
 
@@ -194,7 +197,11 @@ namespace RPG_Paper_Maker
                 Control.Update(GraphicsDevice, Control.Camera);
                 bool moving = MouseBeforeUpdate != WANOK.MapMouseManager.GetPosition();
 
-                if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Left) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Left) && moving)) Control.Add(true);
+                if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Left) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Left) && moving))
+                {
+                    if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Left)) WANOK.CreateCancel(Control.Map.MapInfos.RealMapName);
+                    Control.Add(true);
+                }
                 if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Right) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Right) && moving)) Control.Remove(true);
                 if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorDrawCursor)) Control.Add(false);
                 if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorRemoveCursor)) Control.Remove(false);
@@ -231,7 +238,7 @@ namespace RPG_Paper_Maker
                 Control.CursorEditor.Draw(GraphicsDevice, gameTime, effect);
 
                 // Draw position
-                string pos = "[" + Control.CursorEditor.GetX() + "," + Control.CursorEditor.GetZ() + "]";
+                string pos = "[" + Control.CursorEditor.GetX() + "," + Control.CursorEditor.GetZ() + "]" + Debug;
                 string fps = string.Format("FPS: {0}", (int)FrameCounter.AverageFramesPerSecond);
 
                 SpriteBatch.Begin();

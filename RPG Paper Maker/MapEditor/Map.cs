@@ -33,22 +33,24 @@ namespace RPG_Paper_Maker
         {
             Device = device;
             Stopwatch sw = new Stopwatch();
-            bool dialogOpened = false;
+            bool dialogOpened = false, newTemp = false;
             sw.Start();
 
             // Temp files + mapInfos
             string pathTemp = Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp");
             if (Directory.GetFiles(pathTemp).Length == 0)
             {
+                newTemp = true;
                 string[] filePaths = Directory.GetFiles(Path.Combine(WANOK.MapsDirectoryPath, mapName));
                 foreach (string filePath in filePaths) File.Copy(filePath, Path.Combine(pathTemp, Path.GetFileName(filePath)));
             }
             
             MapInfos = WANOK.LoadBinaryDatas<MapInfos>(Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp", "infos.map"));
             Saved = !WANOK.ListMapToSave.Contains(mapName);
+            if (newTemp) WANOK.CreateCancelMap(MapInfos.RealMapName);
 
             // Start position
-            
+
             if (mapName == WANOK.SystemDatas.StartMapName)
             {
                 SetStartInfos(WANOK.SystemDatas, WANOK.SystemDatas.StartPosition);
@@ -102,16 +104,11 @@ namespace RPG_Paper_Maker
 
         public void LoadPortion(int real_i, int real_j, int i, int j)
         {
-            string path = Path.Combine(WANOK.MapsDirectoryPath, MapInfos.RealMapName, "temp", real_i + "-" + real_j + ".pmap");
-            if (File.Exists(path))
+            int[] portion = new int[] { i, j };
+            Portions[portion] = WANOK.LoadPortionMap(MapInfos.RealMapName, real_i, real_j);
+            if (Portions[portion] != null)
             {
-                GameMapPortion gamePortion = WANOK.LoadBinaryDatas<GameMapPortion>(path);
-                Portions[new int[] { i, j }] = gamePortion;
-                GenTextures(gamePortion);
-            }
-            else
-            {
-                Portions[new int[] { i, j }] = null;
+                GenTextures(Portions[portion]);
             }
         }
 

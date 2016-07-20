@@ -44,6 +44,43 @@ namespace RPG_Paper_Maker
 
 
         // -------------------------------------------------------------------
+        // CANCEL
+        // -------------------------------------------------------------------
+
+        #region Cancel/Redo
+
+        // -------------------------------------------------------------------
+        // Cancel
+        // -------------------------------------------------------------------
+
+        public void Cancel()
+        {
+            if (WANOK.CancelRedoIndex[Map.MapInfos.RealMapName] > 0)
+            {
+                foreach (KeyValuePair<int[], GameMapPortion> entry in WANOK.CancelRedo[Map.MapInfos.RealMapName][WANOK.CancelRedoIndex[Map.MapInfos.RealMapName] - 1])
+                {
+                    var lol = entry.Key;
+                    int[] localPortion = GetLocalPortion(entry.Key);
+                    if (WANOK.IsInPortions(localPortion, 1))
+                    {
+                        DisposeBuffers(localPortion[0], localPortion[1], false);
+                        Map.Portions[localPortion] = entry.Value == null ? new GameMapPortion() : entry.Value;
+                        AddPortionToUpdate(localPortion);
+                        AddPortionToSave(localPortion);
+                    }
+                    else
+                    {
+                        WANOK.SavePortionMap(entry.Value, Map.MapInfos.RealMapName, entry.Key[0], entry.Key[1]);
+                    }
+                }
+                WANOK.CancelRedoIndex[Map.MapInfos.RealMapName]--;
+                SetToNoSaved();
+            }
+        }
+
+        #endregion
+
+        // -------------------------------------------------------------------
         // OPTIONS
         // -------------------------------------------------------------------
 
@@ -372,10 +409,12 @@ namespace RPG_Paper_Maker
             if (WANOK.MapMouseManager.IsButtonUp(MouseButtons.Left) || WANOK.MapMouseManager.IsButtonUp(MouseButtons.Right))
             {
                 PreviousMouseCoords = null;
+                WANOK.LoadCancel(Map.MapInfos.RealMapName);
             }
             if (WANOK.KeyboardManager.IsButtonUp(WANOK.Settings.KeyboardAssign.EditorDrawCursor))
             {
                 PreviousCursorCoords = null;
+                WANOK.LoadCancel(Map.MapInfos.RealMapName);
             }
         }
 
@@ -570,6 +609,7 @@ namespace RPG_Paper_Maker
                 }
                 AddPortionToSave(portion);
                 AddPortionToUpdate(portion);
+                WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, GetGlobalPortion(coords[0], coords[3]));
             }
         }
 
@@ -614,6 +654,7 @@ namespace RPG_Paper_Maker
                 if (Map.Portions[portion].RemoveFloor(coords) && Map.Saved) SetToNoSaved();
                 AddPortionToSave(portion);
                 AddPortionToUpdate(portion);
+                WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, GetGlobalPortion(coords[0], coords[3]));
             }
         }
 
@@ -792,6 +833,7 @@ namespace RPG_Paper_Maker
                 if (Map.Portions[portion].AddSprite(coords, (int[])args[0], (Sprite)args[1]) && Map.Saved) SetToNoSaved();
                 AddPortionToSave(portion);
                 AddPortionToUpdate(portion);
+                WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, GetGlobalPortion(coords[0], coords[3]));
             }
         }
 
@@ -837,6 +879,7 @@ namespace RPG_Paper_Maker
                 if (Map.Portions[portion].RemoveSprite(coords) && Map.Saved) SetToNoSaved();
                 AddPortionToSave(portion);
                 AddPortionToUpdate(portion);
+                WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, GetGlobalPortion(coords[0], coords[3]));
             }
         }
 
@@ -933,6 +976,32 @@ namespace RPG_Paper_Maker
             {
                 (x / WANOK.PORTION_SIZE) - (CursorEditor.GetX() / WANOK.PORTION_SIZE),
                 (z / WANOK.PORTION_SIZE) - (CursorEditor.GetZ() / WANOK.PORTION_SIZE)
+            };
+        }
+
+        // -------------------------------------------------------------------
+        // GetGlobalPortion
+        // -------------------------------------------------------------------
+
+        public int[] GetGlobalPortion(int x, int z)
+        {
+            return new int[]
+            {
+                x / WANOK.PORTION_SIZE,
+                z / WANOK.PORTION_SIZE
+            };
+        }
+
+        // -------------------------------------------------------------------
+        // GetLocalPortion
+        // -------------------------------------------------------------------
+
+        public int[] GetLocalPortion(int[] portion)
+        {
+            return new int[]
+            {
+                portion[0] - (CursorEditor.GetX() / WANOK.PORTION_SIZE),
+                portion[1] - (CursorEditor.GetZ() / WANOK.PORTION_SIZE)
             };
         }
 

@@ -71,6 +71,9 @@
             this.ItemCloseProject = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ItemExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.editionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemUndo = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemRedo = new System.Windows.Forms.ToolStripMenuItem();
             this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemInputs = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemDataBase = new System.Windows.Forms.ToolStripMenuItem();
@@ -411,7 +414,7 @@
             this.ItemSprite6.ForeColor = System.Drawing.Color.DarkRed;
             this.ItemSprite6.Image = global::RPG_Paper_Maker.Properties.Resources.sprite5;
             this.ItemSprite6.Name = "ItemSprite6";
-            this.ItemSprite6.Size = new System.Drawing.Size(180, 38);
+            this.ItemSprite6.Size = new System.Drawing.Size(182, 38);
             this.ItemSprite6.Text = "Wall Sprite";
             this.ItemSprite6.Click += new System.EventHandler(this.ItemSprite6_Click);
             // 
@@ -500,6 +503,7 @@
             this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.editionToolStripMenuItem,
             this.managementToolStripMenuItem,
             this.testToolStripMenuItem,
             this.optionsToolStripMenuItem,
@@ -607,6 +611,34 @@
             this.ItemExit.Size = new System.Drawing.Size(190, 22);
             this.ItemExit.Text = "Quit";
             this.ItemExit.Click += new System.EventHandler(this.ItemExit_Click);
+            // 
+            // editionToolStripMenuItem
+            // 
+            this.editionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ItemUndo,
+            this.ItemRedo});
+            this.editionToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.editionToolStripMenuItem.Name = "editionToolStripMenuItem";
+            this.editionToolStripMenuItem.Size = new System.Drawing.Size(56, 19);
+            this.editionToolStripMenuItem.Text = "Edition";
+            // 
+            // ItemUndo
+            // 
+            this.ItemUndo.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemUndo.Name = "ItemUndo";
+            this.ItemUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.ItemUndo.Size = new System.Drawing.Size(152, 22);
+            this.ItemUndo.Text = "Undo";
+            this.ItemUndo.Click += new System.EventHandler(this.ItemUndo_Click);
+            // 
+            // ItemRedo
+            // 
+            this.ItemRedo.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemRedo.Name = "ItemRedo";
+            this.ItemRedo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+            this.ItemRedo.Size = new System.Drawing.Size(152, 22);
+            this.ItemRedo.Text = "Redo";
+            this.ItemRedo.Click += new System.EventHandler(this.ItemRedo_Click);
             // 
             // managementToolStripMenuItem
             // 
@@ -1023,6 +1055,9 @@
         private System.Windows.Forms.ToolStripMenuItem ItemSprite5;
         private System.Windows.Forms.ToolStripMenuItem ItemSprite6;
         private System.ComponentModel.BackgroundWorker BackgroundWorkerForm;
+        private System.Windows.Forms.ToolStripMenuItem editionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ItemUndo;
+        private System.Windows.Forms.ToolStripMenuItem ItemRedo;
     }
 }
 
