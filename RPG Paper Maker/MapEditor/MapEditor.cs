@@ -202,7 +202,11 @@ namespace RPG_Paper_Maker
                     if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Left)) WANOK.CreateCancel(Control.Map.MapInfos.RealMapName);
                     Control.Add(true);
                 }
-                if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Right) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Right) && moving)) Control.Remove(true);
+                if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Right) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Right) && moving))
+                {
+                    if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Right)) WANOK.CreateCancel(Control.Map.MapInfos.RealMapName);
+                    Control.Remove(true);
+                }
                 if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorDrawCursor)) Control.Add(false);
                 if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorRemoveCursor)) Control.Remove(false);
                 Control.ButtonUp();
@@ -238,7 +242,7 @@ namespace RPG_Paper_Maker
                 Control.CursorEditor.Draw(GraphicsDevice, gameTime, effect);
 
                 // Draw position
-                string pos = "[" + Control.CursorEditor.GetX() + "," + Control.CursorEditor.GetZ() + "]" + Debug;
+                string pos = "[" + Control.CursorEditor.GetX() + "," + Control.CursorEditor.GetZ() + "]";
                 string fps = string.Format("FPS: {0}", (int)FrameCounter.AverageFramesPerSecond);
 
                 SpriteBatch.Begin();

@@ -1459,9 +1459,10 @@ namespace RPG_Paper_Maker
             List<TreeNode> list = new List<TreeNode>(dir.Nodes.Cast<TreeNode>().ToList());
             foreach (TreeNode node in list)
             {
-                if (((TreeTag)node.Tag).IsMap)
+                TreeTag tag = (TreeTag)node.Tag;
+                if (tag.IsMap)
                 {
-                    Control.DeleteMapsDirectory(((TreeTag)node.Tag).RealMapName);
+                    Control.DeleteMapsDirectory(tag.RealMapName);
                     TreeMap.Nodes.Remove(node);
                 }
                 else

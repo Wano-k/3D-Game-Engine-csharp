@@ -132,6 +132,8 @@ namespace RPG_Paper_Maker.Controls
                     DeleteMapItems(newPortionMaxX, j);
                 }
             }
+
+            WANOK.CreateCancelMap(RealMapName);
         }
 
         // -------------------------------------------------------------------

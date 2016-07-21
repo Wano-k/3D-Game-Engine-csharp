@@ -33,6 +33,18 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // CreateCopy
+        // -------------------------------------------------------------------
+
+        public Sprites CreateCopy()
+        {
+            Sprites newSprites = new Sprites();
+            newSprites.ListSprites = new Dictionary<int[], Sprite>(ListSprites, new IntArrayComparer());
+
+            return newSprites;
+        }
+
+        // -------------------------------------------------------------------
         // IsEmpty
         // -------------------------------------------------------------------
 

@@ -37,7 +37,7 @@ namespace RPG_Paper_Maker
         public static int SQUARE_SIZE { get { return SystemDatas.SquareSize; } }
         public static float RELATION_SIZE { get { return (float)(BASIC_SQUARE_SIZE) / SQUARE_SIZE; } }
         public static int PORTION_SIZE = 16;
-        public static int PORTION_RADIUS = 1;
+        public static int PORTION_RADIUS = 6;
         public static int COEF_BORDER_TEX = 10000;
         public static int MAX_CANCEL = 5;
         public static EngineSettings Settings = null;
@@ -513,18 +513,20 @@ namespace RPG_Paper_Maker
         public static void CreateCancel(string mapName)
         {
             int size = CancelRedo[mapName].Count;
-            if (size == MAX_CANCEL)
-            {
-                CancelRedo[mapName].RemoveAt(0);
-                CancelRedoIndex[mapName]--;
-                size--;
-            }
-            
+
             int lim = -1;
             for (int i = 0; i < size; i++)
             {
                 if (lim == -1 && i > CancelRedoIndex[mapName]) lim = i;
-                if (lim != -1) CancelRedo[mapName].RemoveAt(lim);
+                if (lim != -1)
+                {
+                    CancelRedo[mapName].RemoveAt(lim);
+                }
+            }
+            if (CancelRedo[mapName].Count == MAX_CANCEL)
+            {
+                CancelRedo[mapName].RemoveAt(0);
+                CancelRedoIndex[mapName]--;
             }
 
             CancelRedo[mapName].Add(new Dictionary<int[], GameMapPortion>(new IntArrayComparer()));
@@ -540,6 +542,7 @@ namespace RPG_Paper_Maker
             }
             PortionsToAddCancel.Add(portion);
 
+            var lol = CancelRedoIndex[mapName];
             // Checking the previous cancel portion
             if (!CancelRedo[mapName][CancelRedoIndex[mapName] - 1].ContainsKey(portion))
             {

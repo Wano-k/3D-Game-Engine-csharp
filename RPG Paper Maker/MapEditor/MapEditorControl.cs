@@ -59,12 +59,11 @@ namespace RPG_Paper_Maker
             {
                 foreach (KeyValuePair<int[], GameMapPortion> entry in WANOK.CancelRedo[Map.MapInfos.RealMapName][WANOK.CancelRedoIndex[Map.MapInfos.RealMapName] - 1])
                 {
-                    var lol = entry.Key;
                     int[] localPortion = GetLocalPortion(entry.Key);
                     if (WANOK.IsInPortions(localPortion, 1))
                     {
                         DisposeBuffers(localPortion[0], localPortion[1], false);
-                        Map.Portions[localPortion] = entry.Value == null ? new GameMapPortion() : entry.Value;
+                        Map.Portions[localPortion] = entry.Value == null ? new GameMapPortion() : entry.Value.CreateCopy();
                         AddPortionToUpdate(localPortion);
                         AddPortionToSave(localPortion);
                     }

@@ -56,6 +56,21 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // CreateCopy
+        // -------------------------------------------------------------------
+
+        public Autotiles CreateCopy()
+        {
+            Autotiles newAutotiles = new Autotiles(Id);
+            foreach (KeyValuePair<int[], Autotile> entry in Tiles)
+            {
+                newAutotiles.Tiles[entry.Key] = entry.Value.CreateCopy();
+            }
+
+            return newAutotiles;
+        }
+
+        // -------------------------------------------------------------------
         // IsEmpty
         // -------------------------------------------------------------------
 

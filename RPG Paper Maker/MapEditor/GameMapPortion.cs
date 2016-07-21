@@ -42,6 +42,26 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // CreateCopy
+        // -------------------------------------------------------------------
+
+        public GameMapPortion CreateCopy()
+        {
+            GameMapPortion newGameMap = new GameMapPortion();
+            newGameMap.Floors = new Dictionary<int[], int[]>(Floors, new IntArrayComparer());
+            foreach (KeyValuePair<int, Autotiles> entry in Autotiles)
+            {
+                newGameMap.Autotiles[entry.Key] = entry.Value.CreateCopy();
+            }
+            foreach (KeyValuePair<int[], Sprites> entry in Sprites)
+            {
+                newGameMap.Sprites[entry.Key] = entry.Value.CreateCopy();
+            }
+
+            return newGameMap;
+        }
+
+        // -------------------------------------------------------------------
         // IsEmpty
         // -------------------------------------------------------------------
 
@@ -316,16 +336,6 @@ namespace RPG_Paper_Maker
         }
 
         #endregion
-
-        // -------------------------------------------------------------------
-        // CreateCopy
-        // -------------------------------------------------------------------
-
-        public GameMapPortion CreateCopy()
-        {
-            GameMapPortion newGameMap = new GameMapPortion();
-            return newGameMap;
-        }
 
         // -------------------------------------------------------------------
         // Draw

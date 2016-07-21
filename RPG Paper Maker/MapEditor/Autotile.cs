@@ -11,6 +11,20 @@ namespace RPG_Paper_Maker
     {
         public int[] Tiles = new int[4];
 
+        // -------------------------------------------------------------------
+        // CreateCopy
+        // -------------------------------------------------------------------
+
+        public Autotile CreateCopy()
+        {
+            Autotile newAutotile = new Autotile();
+            newAutotile.Tiles[0] = Tiles[0];
+            newAutotile.Tiles[1] = Tiles[1];
+            newAutotile.Tiles[2] = Tiles[2];
+            newAutotile.Tiles[3] = Tiles[3];
+
+            return newAutotile;
+        }
 
         // -------------------------------------------------------------------
         // Update
