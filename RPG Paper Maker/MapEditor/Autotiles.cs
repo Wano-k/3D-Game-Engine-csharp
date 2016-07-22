@@ -124,7 +124,11 @@ namespace RPG_Paper_Maker
                         else
                         {
                             int[] newPortion = MapEditor.Control.GetPortion(X, Z);
-                            if (WANOK.IsInPortions(newPortion)) MapEditor.Control.AddPortionsAutotileToUpdate(MapEditor.Control.GetPortion(X, Z));
+                            if (WANOK.IsInPortions(newPortion))
+                            {
+                                MapEditor.Control.AddPortionsAutotileToUpdate(newPortion);
+                                WANOK.AddPortionsToAddCancel(MapEditor.Control.Map.MapInfos.RealMapName, MapEditor.Control.GetGlobalPortion(newPortion));
+                            }
                             else autotileAround.Update(this, coords, portion);
                         }
                     }

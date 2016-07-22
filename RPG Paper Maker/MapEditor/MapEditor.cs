@@ -190,23 +190,15 @@ namespace RPG_Paper_Maker
                 }
 
                 // Update camera
-                Control.CursorEditor.Update(gameTime, Control.Camera, Control.Map.MapInfos);
+                bool moving = Control.CursorEditor.Update(gameTime, Control.Camera, Control.Map.MapInfos);
                 Control.Camera.Update(gameTime, Control.CursorEditor, MouseBeforeUpdate, WANOK.GetPixelHeight(Control.GridHeight));
 
                 // Map editor update
                 Control.Update(GraphicsDevice, Control.Camera);
-                bool moving = MouseBeforeUpdate != WANOK.MapMouseManager.GetPosition();
+                moving |= MouseBeforeUpdate != WANOK.MapMouseManager.GetPosition();
 
-                if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Left) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Left) && moving))
-                {
-                    if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Left)) WANOK.CreateCancel(Control.Map.MapInfos.RealMapName);
-                    Control.Add(true);
-                }
-                if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Right) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Right) && moving))
-                {
-                    if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Right)) WANOK.CreateCancel(Control.Map.MapInfos.RealMapName);
-                    Control.Remove(true);
-                }
+                if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Left) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Left) && moving)) Control.Add(true);
+                if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Right) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Right) && moving)) Control.Remove(true);
                 if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorDrawCursor)) Control.Add(false);
                 if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorRemoveCursor)) Control.Remove(false);
                 Control.ButtonUp();

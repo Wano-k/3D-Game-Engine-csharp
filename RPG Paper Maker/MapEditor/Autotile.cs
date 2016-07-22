@@ -70,6 +70,7 @@ namespace RPG_Paper_Maker
             int[] portionToUpdate = MapEditor.Control.GetPortion(coords[0], coords[3]);
             MapEditor.Control.AddPortionToUpdate(portionToUpdate);
             MapEditor.Control.AddPortionToSave(portionToUpdate);
+            WANOK.AddPortionsToAddCancel(MapEditor.Control.Map.MapInfos.RealMapName, MapEditor.Control.GetGlobalPortion(portionToUpdate));
         }
     }
 }

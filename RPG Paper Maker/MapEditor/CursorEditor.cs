@@ -69,10 +69,11 @@ namespace RPG_Paper_Maker
         // Update
         // -------------------------------------------------------------------
 
-        public void Update(GameTime gameTime, Camera camera, MapInfos map)
+        public bool Update(GameTime gameTime, Camera camera, MapInfos map)
         {
             double angle = camera.HorizontalAngle;
             int x = GetX(), z = GetZ(), x_plus, z_plus;
+            bool moving = false;
 
             if (WANOK.KeyboardManager.IsButtonDown(WANOK.Settings.KeyboardAssign.EditorMoveUp)
                 || WANOK.KeyboardManager.IsButtonDown(WANOK.Settings.KeyboardAssign.EditorMoveDown)
@@ -88,6 +89,7 @@ namespace RPG_Paper_Maker
                 z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Round(Math.Sin(angle * Math.PI / 180.0))));
                 if ((z > 0 && z_plus < 0) || (z < map.Height-1 && z_plus > 0)) Position.Z += z_plus;
                 if (z_plus == 0 && ((x > 0 && x_plus < 0) || (x < map.Width-1 && x_plus > 0))) Position.X += x_plus;
+                moving = true;
             }  
             if (WANOK.KeyboardManager.IsButtonDownFirstAndRepeat(WANOK.Settings.KeyboardAssign.EditorMoveDown, CursorWait)) // Down
             {
@@ -95,6 +97,7 @@ namespace RPG_Paper_Maker
                 z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Round(Math.Sin(angle * Math.PI / 180.0))));
                 if ((z < map.Height - 1 && z_plus < 0) || (z > 0 && z_plus > 0)) Position.Z -= z_plus;
                 if (z_plus == 0 && ((x < map.Width-1 && x_plus < 0) || (x > 0 && x_plus > 0))) Position.X -= x_plus;
+                moving = true;
             }
             if (WANOK.KeyboardManager.IsButtonDownFirstAndRepeat(WANOK.Settings.KeyboardAssign.EditorMoveLeft, CursorWait)) // Left
             {
@@ -102,6 +105,7 @@ namespace RPG_Paper_Maker
                 z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Round(Math.Sin((angle - 90.0) * Math.PI / 180.0))));
                 if ((x > 0 && x_plus < 0) || (x < map.Width-1 && x_plus > 0)) Position.X += x_plus;
                 if (x_plus == 0 && ((z > 0 && z_plus < 0) || (z < map.Height-1 && z_plus > 0))) Position.Z += z_plus;
+                moving = true;
             }
             if (WANOK.KeyboardManager.IsButtonDownFirstAndRepeat(WANOK.Settings.KeyboardAssign.EditorMoveRight, CursorWait)) // Right
             {
@@ -109,6 +113,7 @@ namespace RPG_Paper_Maker
                 z_plus = (int)(WANOK.SQUARE_SIZE * (Math.Round(Math.Sin((angle - 90.0) * Math.PI / 180.0))));
                 if ((x < map.Width - 1 && x_plus < 0) || (x > 0 && x_plus > 0)) Position.X -= x_plus;
                 if (x_plus == 0 && ((z < map.Height-1 && z_plus < 0) || (z > 0 && z_plus > 0))) Position.Z -= z_plus;
+                moving = true;
             }
               
             // Frames update  
@@ -121,6 +126,8 @@ namespace RPG_Paper_Maker
             }
 
             if (CursorWait > 0) CursorWait--;
+
+            return moving;
         }
 
         // -------------------------------------------------------------------

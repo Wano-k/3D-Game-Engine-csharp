@@ -447,12 +447,12 @@ namespace RPG_Paper_Maker
 
         private void ItemUndo_Click(object sender, EventArgs e)
         {
-            MapEditor.Control.Cancel();
+            MapEditor.Control.Undo();
         }
 
         private void ItemRedo_Click(object sender, EventArgs e)
         {
-
+            MapEditor.Control.Redo();
         }
 
 
@@ -1403,6 +1403,7 @@ namespace RPG_Paper_Maker
             WhenClosingAnyProject();
             if (Directory.Exists(dir))
             {
+                WANOK.ResetCancel();
                 WANOK.DialogProgressBar.SetValue(100);
                 Control.CloseProject();
                 SetTitle(dir);

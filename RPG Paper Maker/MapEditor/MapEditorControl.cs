@@ -44,19 +44,20 @@ namespace RPG_Paper_Maker
 
 
         // -------------------------------------------------------------------
-        // CANCEL
+        // UNDO/REDO
         // -------------------------------------------------------------------
 
-        #region Cancel/Redo
+        #region Undo/Redo
 
         // -------------------------------------------------------------------
-        // Cancel
+        // Undo
         // -------------------------------------------------------------------
 
-        public void Cancel()
+        public void Undo()
         {
             if (WANOK.CancelRedoIndex[Map.MapInfos.RealMapName] > 0)
             {
+                var lol = WANOK.CancelRedo[Map.MapInfos.RealMapName];
                 foreach (KeyValuePair<int[], GameMapPortion> entry in WANOK.CancelRedo[Map.MapInfos.RealMapName][WANOK.CancelRedoIndex[Map.MapInfos.RealMapName] - 1])
                 {
                     int[] localPortion = GetLocalPortion(entry.Key);
@@ -73,6 +74,34 @@ namespace RPG_Paper_Maker
                     }
                 }
                 WANOK.CancelRedoIndex[Map.MapInfos.RealMapName]--;
+                SetToNoSaved();
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // Redo
+        // -------------------------------------------------------------------
+
+        public void Redo()
+        {
+            if (WANOK.CancelRedoIndex[Map.MapInfos.RealMapName] < WANOK.CancelRedo[Map.MapInfos.RealMapName].Count - 1)
+            {
+                foreach (KeyValuePair<int[], GameMapPortion> entry in WANOK.CancelRedo[Map.MapInfos.RealMapName][WANOK.CancelRedoIndex[Map.MapInfos.RealMapName] + 1])
+                {
+                    int[] localPortion = GetLocalPortion(entry.Key);
+                    if (WANOK.IsInPortions(localPortion, 1))
+                    {
+                        DisposeBuffers(localPortion[0], localPortion[1], false);
+                        Map.Portions[localPortion] = entry.Value == null ? new GameMapPortion() : entry.Value.CreateCopy();
+                        AddPortionToUpdate(localPortion);
+                        AddPortionToSave(localPortion);
+                    }
+                    else
+                    {
+                        WANOK.SavePortionMap(entry.Value, Map.MapInfos.RealMapName, entry.Key[0], entry.Key[1]);
+                    }
+                }
+                WANOK.CancelRedoIndex[Map.MapInfos.RealMapName]++;
                 SetToNoSaved();
             }
         }
@@ -203,6 +232,17 @@ namespace RPG_Paper_Maker
                 UpdateMovingPortion(newPortion, CurrentPortion);
             }
             CurrentPortion = newPortion;
+
+            // Save portions
+            SavePortions();
+            
+
+            if (PortionsToUpdate.Count > 0 && DrawMode == DrawMode.Tin && WANOK.DialogProgressBar != null)
+            {
+                WANOK.DisposeProgressBar();
+            }
+
+            ClearPortions();
         }
 
         // -------------------------------------------------------------------
@@ -365,7 +405,14 @@ namespace RPG_Paper_Maker
             {
                 Map.UpdatePortions(PortionsToUpdate[i]);
             }
+        }
 
+        // -------------------------------------------------------------------
+        // SavePortions
+        // -------------------------------------------------------------------
+
+        public void SavePortions()
+        {
             if (PortionsToSave.Count > 0 && WANOK.DialogProgressBar != null && DrawMode == DrawMode.Tin) WANOK.DialogProgressBar.SetValue("Saving...", 100);
             for (int i = 0; i < PortionsToSave.Count; i++)
             {
@@ -383,12 +430,6 @@ namespace RPG_Paper_Maker
                     WANOK.SaveBinaryDatas(Map.Portions[PortionsToSave[i]], path);
                 }
             }
-
-            if (PortionsToUpdate.Count > 0 && DrawMode == DrawMode.Tin && WANOK.DialogProgressBar != null)
-            {
-                WANOK.DisposeProgressBar();
-            }
-            ClearPortions();
         }
 
         #endregion
@@ -410,7 +451,7 @@ namespace RPG_Paper_Maker
                 PreviousMouseCoords = null;
                 WANOK.LoadCancel(Map.MapInfos.RealMapName);
             }
-            if (WANOK.KeyboardManager.IsButtonUp(WANOK.Settings.KeyboardAssign.EditorDrawCursor))
+            if (WANOK.KeyboardManager.IsButtonUp(WANOK.Settings.KeyboardAssign.EditorDrawCursor) || WANOK.KeyboardManager.IsButtonUp(WANOK.Settings.KeyboardAssign.EditorRemoveCursor))
             {
                 PreviousCursorCoords = null;
                 WANOK.LoadCancel(Map.MapInfos.RealMapName);
@@ -432,11 +473,21 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // CreateCancel
+        // -------------------------------------------------------------------
+
+        public void CreateCancel()
+        {
+            WANOK.CreateCancel(Map.MapInfos.RealMapName);
+        }
+
+        // -------------------------------------------------------------------
         // Add
         // -------------------------------------------------------------------
 
         public void Add(bool isMouse)
         {
+            WANOK.CanStartCancel = true;
             switch (SelectedDrawType)
             {
                 case "ItemStart":
@@ -458,6 +509,7 @@ namespace RPG_Paper_Maker
 
         public void Remove(bool isMouse)
         {
+            WANOK.CanStartCancel = true;
             switch (SelectedDrawType)
             {
                 case "ItemFloor":
@@ -593,10 +645,8 @@ namespace RPG_Paper_Maker
             int[] portion = GetPortion(coords[0], coords[3]);
             if (IsInArea(coords) && WANOK.IsInPortions(portion))
             {
-                if (Map.Portions[portion] == null)
-                {
-                    Map.Portions[portion] = new GameMapPortion();
-                }
+                CreateCancel();
+                if (Map.Portions[portion] == null) Map.Portions[portion] = new GameMapPortion();
                 switch (SelectedDrawTypeParticular)
                 {
                     case DrawType.Floors:
@@ -608,7 +658,7 @@ namespace RPG_Paper_Maker
                 }
                 AddPortionToSave(portion);
                 AddPortionToUpdate(portion);
-                WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, GetGlobalPortion(coords[0], coords[3]));
+                WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, GetGlobalPortion(portion));
             }
         }
 
@@ -649,11 +699,12 @@ namespace RPG_Paper_Maker
             int[] portion = GetPortion(coords[0], coords[3]);
             if (IsInArea(coords) && WANOK.IsInPortions(portion))
             {
+                CreateCancel();
                 if (Map.Portions[portion] == null) Map.Portions[portion] = new GameMapPortion();
                 if (Map.Portions[portion].RemoveFloor(coords) && Map.Saved) SetToNoSaved();
                 AddPortionToSave(portion);
                 AddPortionToUpdate(portion);
-                WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, GetGlobalPortion(coords[0], coords[3]));
+                WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, GetGlobalPortion(portion));
             }
         }
 
@@ -825,14 +876,12 @@ namespace RPG_Paper_Maker
             int[] portion = GetPortion(coords[0], coords[3]);
             if (IsInArea(coords) && WANOK.IsInPortions(portion))
             {
-                if (Map.Portions[portion] == null)
-                {
-                    Map.Portions[portion] = new GameMapPortion();
-                }
+                CreateCancel();
+                if (Map.Portions[portion] == null) Map.Portions[portion] = new GameMapPortion();
                 if (Map.Portions[portion].AddSprite(coords, (int[])args[0], (Sprite)args[1]) && Map.Saved) SetToNoSaved();
                 AddPortionToSave(portion);
                 AddPortionToUpdate(portion);
-                WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, GetGlobalPortion(coords[0], coords[3]));
+                WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, GetGlobalPortion(portion));
             }
         }
 
@@ -874,11 +923,12 @@ namespace RPG_Paper_Maker
             int[] portion = GetPortion(coords[0], coords[3]);
             if (IsInArea(coords) && WANOK.IsInPortions(portion))
             {
+                CreateCancel();
                 if (Map.Portions[portion] == null) Map.Portions[portion] = new GameMapPortion();
                 if (Map.Portions[portion].RemoveSprite(coords) && Map.Saved) SetToNoSaved();
                 AddPortionToSave(portion);
                 AddPortionToUpdate(portion);
-                WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, GetGlobalPortion(coords[0], coords[3]));
+                WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, GetGlobalPortion(portion));
             }
         }
 
@@ -988,6 +1038,15 @@ namespace RPG_Paper_Maker
             {
                 x / WANOK.PORTION_SIZE,
                 z / WANOK.PORTION_SIZE
+            };
+        }
+
+        public int[] GetGlobalPortion(int[] portion)
+        {
+            return new int[]
+            {
+                portion[0] + (CursorEditor.GetX() / WANOK.PORTION_SIZE),
+                portion[1] + (CursorEditor.GetZ() / WANOK.PORTION_SIZE)
             };
         }
 
