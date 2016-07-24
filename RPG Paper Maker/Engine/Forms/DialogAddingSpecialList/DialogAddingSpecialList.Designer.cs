@@ -38,8 +38,10 @@
             this.listBoxTileset = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.listBoxComplete = new RPG_Paper_Maker.SuperListBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.textBoxGraphic = new RPG_Paper_Maker.Engine.CustomUserControls.TextBoxGraphic();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -47,8 +49,6 @@
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
-            this.listBoxComplete = new RPG_Paper_Maker.SuperListBox();
-            this.textBoxGraphic = new RPG_Paper_Maker.Engine.CustomUserControls.TextBoxGraphic();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -198,6 +198,14 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(474, 256);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
+            // listBoxComplete
+            // 
+            this.listBoxComplete.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxComplete.Location = new System.Drawing.Point(3, 3);
+            this.listBoxComplete.Name = "listBoxComplete";
+            this.listBoxComplete.Size = new System.Drawing.Size(136, 250);
+            this.listBoxComplete.TabIndex = 0;
+            // 
             // tableLayoutPanel5
             // 
             this.tableLayoutPanel5.ColumnCount = 1;
@@ -231,6 +239,16 @@
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(320, 24);
             this.tableLayoutPanel6.TabIndex = 0;
+            // 
+            // textBoxGraphic
+            // 
+            this.textBoxGraphic.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxGraphic.Location = new System.Drawing.Point(189, 0);
+            this.textBoxGraphic.Margin = new System.Windows.Forms.Padding(0);
+            this.textBoxGraphic.Name = "textBoxGraphic";
+            this.textBoxGraphic.Size = new System.Drawing.Size(131, 24);
+            this.textBoxGraphic.TabIndex = 6;
             // 
             // label1
             // 
@@ -305,24 +323,6 @@
             this.buttonDelete.UseVisualStyleBackColor = true;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
-            // listBoxComplete
-            // 
-            this.listBoxComplete.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxComplete.Location = new System.Drawing.Point(3, 3);
-            this.listBoxComplete.Name = "listBoxComplete";
-            this.listBoxComplete.Size = new System.Drawing.Size(136, 250);
-            this.listBoxComplete.TabIndex = 0;
-            // 
-            // textBoxGraphic
-            // 
-            this.textBoxGraphic.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxGraphic.Location = new System.Drawing.Point(189, 0);
-            this.textBoxGraphic.Margin = new System.Windows.Forms.Padding(0);
-            this.textBoxGraphic.Name = "textBoxGraphic";
-            this.textBoxGraphic.Size = new System.Drawing.Size(131, 24);
-            this.textBoxGraphic.TabIndex = 6;
-            // 
             // DialogAddingSpecialList
             // 
             this.AcceptButton = this.ok;
@@ -372,6 +372,6 @@
         protected Engine.CustomUserControls.TextBoxGraphic textBoxGraphic;
         protected System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ListBox listBoxTileset;
+        protected System.Windows.Forms.ListBox listBoxTileset;
     }
 }

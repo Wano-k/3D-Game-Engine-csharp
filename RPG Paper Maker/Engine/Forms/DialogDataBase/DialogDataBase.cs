@@ -26,7 +26,7 @@ namespace RPG_Paper_Maker
             InitializeComponent();
             Control = new DialogDataBaseControl(WANOK.LoadBinaryDatas<SystemDatas>(WANOK.SystemPath));
             ViewModelBindingSource.DataSource = Control;
-            ListBoxesCanceling = new ListBox[] { textBoxLangGameName.GetTextBox(), listBoxColors.GetListBox(), textBoxGraphic.GetTextBox(), listBoxAutotiles.GetListBox() };
+            ListBoxesCanceling = new ListBox[] { textBoxLangGameName.GetTextBox(), listBoxColors.GetListBox(), textBoxGraphic.GetTextBox(), listBoxAutotiles.GetListBox(), listBoxRelief.GetListBox() };
             ListBoxes = new ListBox[] { listBoxTilesets.GetListBox() };
 
             // Tilesets
@@ -36,6 +36,8 @@ namespace RPG_Paper_Maker
             collisionSettings.LoadTextures();
             listBoxAutotiles.GetButton().Text = "Choose autotiles";
             listBoxAutotiles.GetButton().Click += listBoxAutotiles_Click;
+            listBoxRelief.GetButton().Text = "Choose reliefs";
+            listBoxRelief.GetButton().Click += listBoxRelief_Click;
 
             // System
             ComboBoxResolution.SelectedIndex = Control.GetFullScreenIndex();
@@ -110,6 +112,7 @@ namespace RPG_Paper_Maker
         public void SetCommonTilesetList(Tileset tileset)
         {
             listBoxAutotiles.InitializeListParameters(Control.ModelSystem, ListBoxesCanceling, Control.ModelSystem.Autotiles.Cast<SuperListItem>().ToList(), tileset.Autotiles, typeof(DialogAddingAutotilesList), typeof(SystemAutotile), 1, SystemAutotile.MAX_AUTOTILES);
+            listBoxRelief.InitializeListParameters(Control.ModelSystem, ListBoxesCanceling, Control.ModelSystem.Reliefs.Cast<SuperListItem>().ToList(), tileset.Reliefs, typeof(DialogAddingReliefsList), typeof(SystemRelief), 1, SystemRelief.MAX_RELIEFS);
         }
 
         // -------------------------------------------------------------------
@@ -170,6 +173,35 @@ namespace RPG_Paper_Maker
                     for (int j = 0; j < list.Count; j++)
                     {
                         if (list[j] > Control.ModelSystem.Autotiles.Count) cpTileset.Autotiles.Remove(list[j]);
+                    }
+                }
+                SetCommonTilesetList(tileset);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // listBoxRelief_Click
+        // -------------------------------------------------------------------
+
+        private void listBoxRelief_Click(object sender, EventArgs e)
+        {
+            Tileset tileset = (Tileset)listBoxTilesets.GetListBox().SelectedItem;
+            DialogAddingReliefsList dialog = new DialogAddingReliefsList("Choose relief", Control.ModelSystem, tileset.Reliefs);
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                Control.ModelSystem.Reliefs = dialog.GetListReliefs();
+                tileset.Reliefs = dialog.GetListTileset();
+                for (int i = 0; i < listBoxTilesets.GetListBox().Items.Count; i++)
+                {
+                    Tileset cpTileset = (Tileset)listBoxTilesets.GetListBox().Items[i];
+                    List<int> list = new List<int>();
+                    for (int j = 0; j < cpTileset.Reliefs.Count; j++)
+                    {
+                        list.Add(cpTileset.Reliefs[j]);
+                    }
+                    for (int j = 0; j < list.Count; j++)
+                    {
+                        if (list[j] > Control.ModelSystem.Reliefs.Count) cpTileset.Reliefs.Remove(list[j]);
                     }
                 }
                 SetCommonTilesetList(tileset);

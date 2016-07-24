@@ -45,6 +45,7 @@
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.listBoxAutotiles = new RPG_Paper_Maker.AddingListBox();
             this.textBoxGraphic = new RPG_Paper_Maker.Engine.CustomUserControls.TextBoxGraphic();
             this.collisionSettings = new RPG_Paper_Maker.CollisionSettings();
             this.tabPageSystem = new System.Windows.Forms.TabPage();
@@ -75,7 +76,7 @@
             this.ok = new System.Windows.Forms.Button();
             this.cancel = new System.Windows.Forms.Button();
             this.toolTipSquareSize = new System.Windows.Forms.ToolTip(this.components);
-            this.listBoxAutotiles = new RPG_Paper_Maker.AddingListBox();
+            this.listBoxRelief = new RPG_Paper_Maker.AddingListBox();
             this.tabControl1.SuspendLayout();
             this.tabPageTilesets.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
@@ -84,6 +85,7 @@
             this.tableLayoutPanel10.SuspendLayout();
             this.tableLayoutPanel11.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
+            this.groupBox11.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.tabPageSystem.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -265,15 +267,16 @@
             // 
             // groupBox11
             // 
+            this.groupBox11.Controls.Add(this.listBoxRelief);
             this.groupBox11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox11.Location = new System.Drawing.Point(155, 152);
             this.groupBox11.Margin = new System.Windows.Forms.Padding(5);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox11.Padding = new System.Windows.Forms.Padding(10);
             this.groupBox11.Size = new System.Drawing.Size(140, 137);
             this.groupBox11.TabIndex = 4;
             this.groupBox11.TabStop = false;
-            this.groupBox11.Text = "Montains";
+            this.groupBox11.Text = "Reliefs";
             // 
             // groupBox10
             // 
@@ -311,6 +314,14 @@
             this.groupBox8.TabIndex = 1;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Autotiles";
+            // 
+            // listBoxAutotiles
+            // 
+            this.listBoxAutotiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxAutotiles.Location = new System.Drawing.Point(10, 23);
+            this.listBoxAutotiles.Name = "listBoxAutotiles";
+            this.listBoxAutotiles.Size = new System.Drawing.Size(120, 104);
+            this.listBoxAutotiles.TabIndex = 0;
             // 
             // textBoxGraphic
             // 
@@ -720,13 +731,13 @@
             this.toolTipSquareSize.InitialDelay = 500;
             this.toolTipSquareSize.ReshowDelay = 100;
             // 
-            // listBoxAutotiles
+            // listBoxRelief
             // 
-            this.listBoxAutotiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxAutotiles.Location = new System.Drawing.Point(10, 23);
-            this.listBoxAutotiles.Name = "listBoxAutotiles";
-            this.listBoxAutotiles.Size = new System.Drawing.Size(120, 104);
-            this.listBoxAutotiles.TabIndex = 0;
+            this.listBoxRelief.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxRelief.Location = new System.Drawing.Point(10, 23);
+            this.listBoxRelief.Name = "listBoxRelief";
+            this.listBoxRelief.Size = new System.Drawing.Size(120, 104);
+            this.listBoxRelief.TabIndex = 1;
             // 
             // DialogDataBase
             // 
@@ -750,6 +761,7 @@
             this.tableLayoutPanel11.ResumeLayout(false);
             this.tableLayoutPanel11.PerformLayout();
             this.tableLayoutPanel12.ResumeLayout(false);
+            this.groupBox11.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
             this.tabPageSystem.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
@@ -822,5 +834,6 @@
         private System.Windows.Forms.GroupBox groupBox12;
         private CollisionSettings collisionSettings;
         private AddingListBox listBoxAutotiles;
+        private AddingListBox listBoxRelief;
     }
 }

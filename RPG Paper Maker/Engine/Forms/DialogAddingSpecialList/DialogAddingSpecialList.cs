@@ -22,7 +22,7 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
-        public DialogAddingSpecialList(string text, SystemDatas model, List<int> superListTileset, Type type, int min, int max)
+        public DialogAddingSpecialList(string text, SystemDatas model, List<int> superListTileset, Type type)
         {
             InitializeComponent();
 
@@ -34,12 +34,6 @@ namespace RPG_Paper_Maker
             // Paint groupBox
             groupBox1.Paint += MainForm.PaintBorderGroupBox;
             groupBox2.Paint += MainForm.PaintBorderGroupBox;
-
-            listBoxComplete.InitializeListParameters(new ListBox[] { }, model.Autotiles.Cast<SuperListItem>().ToList(), null, type, min, max);
-            for (int i = 0; i < superListTileset.Count; i++)
-            {
-                listBoxTileset.Items.Add(model.GetAutotileById(superListTileset[i]));
-            }
 
             // list event handlers
             for (int i = 0; i < ListBoxesCanceling.Length; i++)

@@ -99,6 +99,8 @@ namespace RPG_Paper_Maker
                     return Path.Combine("Content", "Pictures", "Textures2D", "Tilesets");
                 case GraphicKind.Autotile:
                     return Path.Combine("Content", "Pictures", "Textures2D", "Autotiles");
+                case GraphicKind.Relief:
+                    return Path.Combine("Content", "Pictures", "Textures2D", "Reliefs");
                 default:
                     return "";
             }

@@ -10,6 +10,7 @@ namespace RPG_Paper_Maker
     {
         Picture,
         Tileset,
-        Autotile
+        Autotile,
+        Relief
     }
 }

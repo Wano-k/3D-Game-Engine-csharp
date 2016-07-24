@@ -15,6 +15,7 @@ namespace RPG_Paper_Maker
         FixSprite,
         DoubleSprite,
         QuadraSprite,
-        OnFloorSprite
+        OnFloorSprite,
+        Montains
     }
 }

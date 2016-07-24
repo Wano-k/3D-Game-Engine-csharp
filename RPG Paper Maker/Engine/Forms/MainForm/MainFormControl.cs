@@ -74,7 +74,7 @@ namespace RPG_Paper_Maker
 
 
         // -------------------------------------------------------------------
-        // SaveTreeMap()
+        // SaveTreeMap
         // -------------------------------------------------------------------
 
         public void SaveTreeMap(TreeView treeMap)

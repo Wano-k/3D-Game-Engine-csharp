@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,28 +8,28 @@ using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
-    class DialogAddingAutotilesList : DialogAddingSpecialList
+    class DialogAddingReliefsList : DialogAddingSpecialList
     {
-        CollisionSettings collisionSettings;
-
+        InterpolationPictureBox PictureBox = new InterpolationPictureBox();
+        Panel PicturePanel = new Panel();
 
         // -------------------------------------------------------------------
         // Constructor
         // -------------------------------------------------------------------
 
-        public DialogAddingAutotilesList(string text, SystemDatas model, List<int> superListTileset) : base(text, model, superListTileset, typeof(SystemAutotile))
+        public DialogAddingReliefsList(string text, SystemDatas model, List<int> superListTileset) : base(text, model, superListTileset, typeof(SystemRelief))
         {
-            listBoxComplete.InitializeListParameters(new ListBox[] { }, model.Autotiles.Cast<SuperListItem>().ToList(), null, Type, 1, SystemAutotile.MAX_AUTOTILES);
+            listBoxComplete.InitializeListParameters(new ListBox[] { }, model.Reliefs.Cast<SuperListItem>().ToList(), null, Type, 1, SystemRelief.MAX_RELIEFS);
             for (int i = 0; i < superListTileset.Count; i++)
             {
-                listBoxTileset.Items.Add(model.GetAutotileById(superListTileset[i]));
+                listBoxTileset.Items.Add(model.GetReliefById(superListTileset[i]));
             }
 
-            // Collision settings
-            collisionSettings = new CollisionSettings();
-            collisionSettings.Dock = DockStyle.Fill;
-            PanelOther.Controls.Add(collisionSettings);
-            collisionSettings.LoadTextures();
+            PictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            PictureBox.InterpolationMode = InterpolationMode.NearestNeighbor;
+            PicturePanel.AutoScroll = true;
+            PicturePanel.Controls.Add(PictureBox);
+            PanelOther.Controls.Add(PicturePanel);
 
             textBoxGraphic.GetTextBox().SelectedValueChanged += textBoxGraphic_SelectedValueChanged;
             listBoxComplete.GetListBox().SelectedIndexChanged += listBoxComplete_SelectedIndexChanged;
@@ -38,12 +39,12 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // GetListAutotiles
+        // GetListReliefs
         // -------------------------------------------------------------------
 
-        public List<SystemAutotile> GetListAutotiles()
+        public List<SystemRelief> GetListReliefs()
         {
-            return listBoxComplete.GetListBox().Items.Cast<SystemAutotile>().ToList();
+            return listBoxComplete.GetListBox().Items.Cast<SystemRelief>().ToList();
         }
 
         // -------------------------------------------------------------------
@@ -52,12 +53,12 @@ namespace RPG_Paper_Maker
 
         public void listBoxComplete_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SystemAutotile autotile = (SystemAutotile)listBoxComplete.GetListBox().SelectedItem;
-            if (autotile != null)
+            SystemRelief relief = (SystemRelief)listBoxComplete.GetListBox().SelectedItem;
+            if (relief != null)
             {
-                textBoxName.Text = autotile.Name;
-                textBoxGraphic.InitializeParameters(autotile.Graphic);
-                collisionSettings.InitializeParameters(autotile.Collision, autotile.Graphic);
+                textBoxName.Text = relief.Name;
+                textBoxGraphic.InitializeParameters(relief.Graphic);
+                PictureBox.LoadTexture(relief.Graphic);
             }
         }
 
@@ -67,8 +68,8 @@ namespace RPG_Paper_Maker
 
         public void textBoxGraphic_SelectedValueChanged(object sender, EventArgs e)
         {
-            SystemAutotile autotile = (SystemAutotile)listBoxComplete.GetListBox().SelectedItem;
-            collisionSettings.InitializeParameters(autotile.Collision, autotile.Graphic);
+            SystemRelief relief = (SystemRelief)listBoxComplete.GetListBox().SelectedItem;
+            PictureBox.LoadTexture(relief.Graphic);
         }
 
         // -------------------------------------------------------------------

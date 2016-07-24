@@ -13,24 +13,26 @@ namespace RPG_Paper_Maker
         public SystemGraphic Graphic;
         public Collision Collision;
         public List<int> Autotiles = new List<int>();
+        public List<int> Reliefs = new List<int>();
 
 
         // -------------------------------------------------------------------
         // Constructors
         // -------------------------------------------------------------------
 
-        public Tileset(int id) : this(id, "", new SystemGraphic(WANOK.NONE_IMAGE_STRING, true, GraphicKind.Tileset), new Collision(), new List<int>())
+        public Tileset(int id) : this(id, "", new SystemGraphic(WANOK.NONE_IMAGE_STRING, true, GraphicKind.Tileset), new Collision(), new List<int>(), new List<int>())
         {
             
         }
 
-        public Tileset(int id, string n, SystemGraphic graphic, Collision collision, List<int> autotiles)
+        public Tileset(int id, string n, SystemGraphic graphic, Collision collision, List<int> autotiles, List<int> reliefs)
         {
             Id = id;
             Name = n;
             Graphic = graphic;
             Collision = collision;
             Autotiles = autotiles;
+            Reliefs = reliefs;
         }
 
         // -------------------------------------------------------------------
@@ -39,7 +41,7 @@ namespace RPG_Paper_Maker
 
         public override SuperListItem CreateCopy()
         {
-            return new Tileset(Id, Name, Graphic.CreateCopy(), Collision.CreateCopy(), new List<int>(Autotiles));
+            return new Tileset(Id, Name, Graphic.CreateCopy(), Collision.CreateCopy(), new List<int>(Autotiles), new List<int>(Reliefs));
         }
     }
 }

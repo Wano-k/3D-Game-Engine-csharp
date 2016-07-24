@@ -20,6 +20,7 @@ namespace RPG_Paper_Maker
         public int SquareSize = 16;
         public List<Tileset> Tilesets = new List<Tileset>();
         public List<SystemAutotile> Autotiles = new List<SystemAutotile>();
+        public List<SystemRelief> Reliefs = new List<SystemRelief>();
         public List<SystemColor> Colors = new List<SystemColor>();
         public string PathRTP;
 
@@ -42,9 +43,10 @@ namespace RPG_Paper_Maker
             PathRTP = Path.Combine(WANOK.ExcecutablePathDir, "RTP");
 
             // Tilesets
-            Tilesets.Add(new Tileset(1, "Plains", new SystemGraphic("plains.png", true, GraphicKind.Tileset), new Collision(Collision.GetDefaultPassableCollision(8,8)), new List<int>(new int[] { 1, 2 })));
+            Tilesets.Add(new Tileset(1, "Plains", new SystemGraphic("plains.png", true, GraphicKind.Tileset), new Collision(Collision.GetDefaultPassableCollision(8,8)), new List<int>(new int[] { 1, 2 }), new List<int>(new int[] { 1, 2 })));
             for (int i = 1; i < 20; i++) Tilesets.Add(new Tileset(i + 1));
             Autotiles = SystemAutotile.GetDefaultAutotiles();
+            Reliefs = SystemRelief.GetDefaultReliefs();
 
             // Colors
             Colors.Add(SystemColor.BlackColor);
@@ -118,6 +120,25 @@ namespace RPG_Paper_Maker
         public int GetAutotileIndexById(int id)
         {
             return Autotiles.IndexOf(GetAutotileById(id));
+        }
+
+        // -------------------------------------------------------------------
+        // GetReliefById
+        // -------------------------------------------------------------------
+
+        public SystemRelief GetReliefById(int id)
+        {
+            if (id == -1 || id > Reliefs.Count) return new SystemRelief(-1);
+            return Reliefs.Find(i => i.Id == id);
+        }
+
+        // -------------------------------------------------------------------
+        // GetReliefIndexById
+        // -------------------------------------------------------------------
+
+        public int GetReliefIndexById(int id)
+        {
+            return Reliefs.IndexOf(GetReliefById(id));
         }
 
         // -------------------------------------------------------------------

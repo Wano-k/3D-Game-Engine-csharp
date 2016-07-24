@@ -115,6 +115,9 @@
     </Compile>
     <Compile Include="Engine\Enums\GraphicKind.cs" />
     <Compile Include="Engine\Enums\PassageKind.cs" />
+    <Compile Include="Engine\Forms\DialogAddingSpecialList\DialogAddingReliefsList\DialogAddingReliefsList.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Engine\Forms\DialogAddingSpecialList\DialogAddingAutotilesList\DialogAddingAutotilesList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -190,6 +193,7 @@
     <Compile Include="Engine\Forms\DialogProgressBar\DialogProgressBar.Designer.cs">
       <DependentUpon>DialogProgressBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\Models\SystemRelief.cs" />
     <Compile Include="MapEditor\Autotile.cs" />
     <Compile Include="MapEditor\Autotiles.cs" />
     <Compile Include="Engine\Models\SystemAutotile.cs" />
@@ -464,6 +468,8 @@
     <None Include="Resources\sprite3.png" />
     <None Include="Resources\sprite4.png" />
     <None Include="Resources\sprite5.png" />
+    <None Include="Resources\relief.png" />
+    <None Include="Resources\Floor3.png" />
     <Content Include="RTP\Content\Pictures\Textures2D\Autotiles\ground.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -477,6 +483,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="RTP\Content\Pictures\Textures2D\Characters\template.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RTP\Content\Pictures\Textures2D\Reliefs\grass.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RTP\Content\Pictures\Textures2D\Reliefs\halloween.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="RTP\Content\Pictures\Textures2D\Tilesets\halloween.png">
