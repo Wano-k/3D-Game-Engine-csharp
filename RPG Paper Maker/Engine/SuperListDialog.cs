@@ -25,4 +25,10 @@ namespace RPG_Paper_Maker
             return WANOK.GetStringList(Id, Name);
         }
     }
+
+    [Serializable]
+    public abstract class ComboxBoxSpecialTilesetItem : SuperListItem
+    {
+        public SystemGraphic Graphic;
+    }
 }

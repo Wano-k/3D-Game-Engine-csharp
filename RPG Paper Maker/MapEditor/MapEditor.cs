@@ -94,21 +94,21 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // SetAutotileId
+        // SetSpecialItemId
         // -------------------------------------------------------------------
 
-        public void SetCurrentAutotileId(int id)
+        public void SetCurrentSpecialItemId(int id)
         {
-            Control.CurrentAutotileId = id;
+            Control.CurrentSpecialItemId = id;
         }
 
         // -------------------------------------------------------------------
         // GetAutotileId
         // -------------------------------------------------------------------
 
-        public int GetCurrentAutotileId()
+        public int GetCurrentSpecialItemId()
         {
-            return Control.CurrentAutotileId;
+            return Control.CurrentSpecialItemId;
         }
 
         // -------------------------------------------------------------------

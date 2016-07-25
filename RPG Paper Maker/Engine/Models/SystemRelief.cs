@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 namespace RPG_Paper_Maker
 {
     [Serializable]
-    public class SystemRelief : SuperListItem
+    public class SystemRelief : ComboxBoxSpecialTilesetItem
     {
         public static int MAX_RELIEFS = 9999;
-        public SystemGraphic Graphic;
         public Collision Collision;
 
 

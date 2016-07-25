@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 namespace RPG_Paper_Maker
 {
     [Serializable]
-    public class SystemAutotile : SuperListItem
+    public class SystemAutotile : ComboxBoxSpecialTilesetItem
     {
         public static int MAX_AUTOTILES = 9999;
-        public SystemGraphic Graphic;
         public Collision Collision;
 
 

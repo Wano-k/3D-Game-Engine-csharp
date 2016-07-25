@@ -35,6 +35,8 @@ namespace RPG_Paper_Maker
         public string CopiedMap = "";
         public OpenFileDialog OpenProjectDialog = new OpenFileDialog();
 
+        public delegate ComboxBoxSpecialTilesetItem MethodGetSuperItemById(int id);
+        public delegate int MethodGetIndexById(int id);
 
         // -------------------------------------------------------------------
         // Constructor
@@ -741,18 +743,20 @@ namespace RPG_Paper_Maker
 
         public void SelectFloor()
         {
-            if (MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles || MapEditor.SelectedDrawTypeParticular == DrawType.Montains) HideSpecialTileset();
+            bool test = CanHideSpecialTileset();
             SetSelectedDrawType("ItemFloor");
             SetSelectedDrawTypeParticular(DrawType.Floors);
+            if (test) HideSpecialTileset();
             ItemFloor.Text = ItemFloor1.Text;
             ItemFloor.Image = ItemFloor1.Image;
         }
 
         public void SelectAutotiles()
         {
-            if (MapEditor.SelectedDrawTypeParticular != DrawType.Autotiles && MapEditor.SelectedDrawTypeParticular != DrawType.Montains) ShowSpecialTileset();
+            bool test = MapEditor.SelectedDrawTypeParticular != DrawType.Autotiles;
             SetSelectedDrawType("ItemFloor");
             SetSelectedDrawTypeParticular(DrawType.Autotiles);
+            if (test) ShowSpecialTileset();
             ItemFloor.Text = ItemFloor2.Text;
             ItemFloor.Image = ItemFloor2.Image;
         }
@@ -794,10 +798,12 @@ namespace RPG_Paper_Maker
             
         }
 
-        public void SelectSprite()
+        public void SelectSprite(DrawType type)
         {
-            if (MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles || MapEditor.SelectedDrawTypeParticular == DrawType.Montains) HideSpecialTileset();
+            bool test = CanHideSpecialTileset();
             SetSelectedDrawType("ItemSprite");
+            SetSelectedDrawTypeParticular(type);
+            if (test) HideSpecialTileset();
         }
 
         public void SelectSprites()
@@ -824,40 +830,35 @@ namespace RPG_Paper_Maker
 
         public void SelectFaceSprite()
         {
-            SelectSprite();
-            SetSelectedDrawTypeParticular(DrawType.FaceSprite);
+            SelectSprite(DrawType.FaceSprite);
             ItemSprite.Text = ItemSprite1.Text;
             ItemSprite.Image = ItemSprite1.Image;
         }
 
         public void SelectFixSprite()
         {
-            SelectSprite();
-            SetSelectedDrawTypeParticular(DrawType.FixSprite);
+            SelectSprite(DrawType.FixSprite);
             ItemSprite.Text = ItemSprite2.Text;
             ItemSprite.Image = ItemSprite2.Image;
         }
 
         public void SelectDoubleSprite()
         {
-            SelectSprite();
-            SetSelectedDrawTypeParticular(DrawType.DoubleSprite);
+            SelectSprite(DrawType.DoubleSprite);
             ItemSprite.Text = ItemSprite3.Text;
             ItemSprite.Image = ItemSprite3.Image;
         }
 
         public void SelectQuadraSprite()
         {
-            SelectSprite();
-            SetSelectedDrawTypeParticular(DrawType.QuadraSprite);
+            SelectSprite(DrawType.QuadraSprite);
             ItemSprite.Text = ItemSprite4.Text;
             ItemSprite.Image = ItemSprite4.Image;
         }
 
         public void SelectSpriteOnFloor()
         {
-            SelectSprite();
-            SetSelectedDrawTypeParticular(DrawType.OnFloorSprite);
+            SelectSprite(DrawType.OnFloorSprite);
             ItemSprite.Text = ItemSprite5.Text;
             ItemSprite.Image = ItemSprite5.Image;
         }
@@ -871,16 +872,7 @@ namespace RPG_Paper_Maker
 
         private void ItemRelief1_Click(object sender, EventArgs e)
         {
-            SelectRelief();
-            SetSelectedDrawTypeParticular(DrawType.Montains);
-            ItemRelief.Text = ItemRelief1.Text;
-            ItemRelief.Image = ItemRelief1.Image;
-        }
-
-        public void SelectRelief()
-        {
-            if (MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles ||MapEditor.SelectedDrawTypeParticular == DrawType.Montains) HideSpecialTileset();
-            SetSelectedDrawType("ItemRelief");
+            SelectMontain();
         }
 
         public void SelectReliefs()
@@ -888,9 +880,19 @@ namespace RPG_Paper_Maker
             switch (ItemRelief.Text)
             {
                 case "Montains":
-                    
+                    SelectMontain();
                     break;
             }
+        }
+
+        public void SelectMontain()
+        {
+            bool test = MapEditor.SelectedDrawType != "ItemRelief";
+            SetSelectedDrawType("ItemRelief");
+            SetSelectedDrawTypeParticular(DrawType.Montains);
+            if (test) ShowSpecialTileset();
+            ItemRelief.Text = ItemRelief1.Text;
+            ItemRelief.Image = ItemRelief1.Image;
         }
 
         // Start
@@ -1217,16 +1219,8 @@ namespace RPG_Paper_Maker
             if (ComboBoxSpecialTileset1.SelectedIndex != -1)
             {
                 Tileset tileset = MapEditor.GetMapTileset();
-                PictureBoxSpecialTileset.LoadTexture(WANOK.SystemDatas.GetAutotileById(tileset.Autotiles[ComboBoxSpecialTileset1.SelectedIndex]).Graphic);
-                switch (MapEditor.SelectedDrawTypeParticular)
-                {
-                    case DrawType.Autotiles:
-                        MapEditor.SetCurrentAutotileId(tileset.Autotiles[ComboBoxSpecialTileset1.SelectedIndex]);
-                        break;
-                    case DrawType.Montains:
-                        MapEditor.SetCurrentAutotileId(tileset.Autotiles[ComboBoxSpecialTileset1.SelectedIndex]);
-                        break;
-                }
+                if (MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles) ReLoadSpecialPicture(tileset.Autotiles, WANOK.SystemDatas.GetAutotileById, WANOK.SystemDatas.GetAutotileIndexById);
+                else if (MapEditor.SelectedDrawType == "ItemRelief") ReLoadSpecialPicture(tileset.Reliefs, WANOK.SystemDatas.GetReliefById, WANOK.SystemDatas.GetReliefIndexById);
             }
         }
 
@@ -1282,28 +1276,20 @@ namespace RPG_Paper_Maker
             PanelSpecialMenu.Controls.Clear();
             ComboBoxSpecialTileset1.Items.Clear();
             tableLayoutPanelTileset.RowStyles[0] = new RowStyle(SizeType.Absolute, 27);
-            switch (MapEditor.SelectedDrawTypeParticular)
-            {
-                case DrawType.Autotiles:
-                    ShowAutotiles();
-                    break;
-                case DrawType.Montains:
-                    ShowAutotiles();
-                    break;
-            }
-            ShowAutotiles();
+            Tileset tileset = MapEditor.GetMapTileset();
+            if (MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles) FillComboBox(tileset.Autotiles, WANOK.SystemDatas.GetAutotileById, WANOK.SystemDatas.GetAutotileIndexById);
+            else if (MapEditor.SelectedDrawType == "ItemRelief") FillComboBox(tileset.Reliefs, WANOK.SystemDatas.GetReliefById, WANOK.SystemDatas.GetReliefIndexById);
             PanelSpecialMenu.Controls.Add(ComboBoxSpecialTileset1);
         }
 
-        public void ShowAutotiles()
+        public void FillComboBox(List<int> list, MethodGetSuperItemById getById, MethodGetIndexById getIndexById)
         {
-            Tileset tileset = MapEditor.GetMapTileset();
-            for (int i = 0; i < tileset.Autotiles.Count; i++)
+            for (int i = 0; i < list.Count; i++)
             {
-                SystemAutotile autotile = WANOK.SystemDatas.GetAutotileById(tileset.Autotiles[i]);
-                ComboBoxSpecialTileset1.Items.Add(new DropDownItem(WANOK.GetStringComboBox(autotile.Id, autotile.Name), autotile.Graphic.LoadImage()));
+                ComboxBoxSpecialTilesetItem item = getById(list[i]);
+                ComboBoxSpecialTileset1.Items.Add(new DropDownItem(WANOK.GetStringComboBox(item.Id, item.Name), item.Graphic.LoadImage()));
             }
-            int id = WANOK.SystemDatas.GetAutotileIndexById(MapEditor.GetCurrentAutotileId());
+            int id = getIndexById(MapEditor.GetCurrentSpecialItemId());
             if (ComboBoxSpecialTileset1.Items.Count > 0)
             {
 
@@ -1311,10 +1297,25 @@ namespace RPG_Paper_Maker
                 else
                 {
                     ComboBoxSpecialTileset1.SelectedIndex = 0;
-                    MapEditor.SetCurrentAutotileId(tileset.Autotiles[0]);
+                    MapEditor.SetCurrentSpecialItemId(list[0]);
                 }
             }
-            PictureBoxSpecialTileset.LoadTexture(WANOK.SystemDatas.GetAutotileById(MapEditor.GetCurrentAutotileId()).Graphic);
+            PictureBoxSpecialTileset.LoadTexture(getById(MapEditor.GetCurrentSpecialItemId()).Graphic);
+        }
+
+        public void ReLoadSpecialPicture(List<int> list, MethodGetSuperItemById getById, MethodGetIndexById getIndexById)
+        {
+            PictureBoxSpecialTileset.LoadTexture(getById(list[ComboBoxSpecialTileset1.SelectedIndex]).Graphic);
+            MapEditor.SetCurrentSpecialItemId(list[ComboBoxSpecialTileset1.SelectedIndex]);
+        }
+
+        // -------------------------------------------------------------------
+        // CanShowSpecialTileset
+        // -------------------------------------------------------------------
+
+        public bool CanShowSpecialTileset()
+        {
+            return MapEditor.SelectedDrawTypeParticular != DrawType.Autotiles && MapEditor.SelectedDrawTypeParticular != DrawType.Montains;
         }
 
         // -------------------------------------------------------------------
@@ -1326,6 +1327,15 @@ namespace RPG_Paper_Maker
             tableLayoutPanelTileset.RowStyles[0] = new RowStyle(SizeType.Absolute, 0);
             scrollPanelTileset.Controls.Clear();
             scrollPanelTileset.Controls.Add(TilesetSelectorPicture);
+        }
+
+        // -------------------------------------------------------------------
+        // CanHideSpecialTileset
+        // -------------------------------------------------------------------
+
+        public bool CanHideSpecialTileset()
+        {
+            return MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles || MapEditor.SelectedDrawType == "ItemRelief";
         }
 
         // -------------------------------------------------------------------
@@ -1656,9 +1666,9 @@ namespace RPG_Paper_Maker
             MapEditor.SetCurrentTextureBasic();
             TilesetSelectorPicture.SetCurrentTextureBasic();
             TilesetSelectorPicture.Refresh();
-            MapEditor.SetCurrentAutotileId(-1);
+            MapEditor.SetCurrentSpecialItemId(-1);
 
-            if (MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles || MapEditor.SelectedDrawTypeParticular == DrawType.Montains) ShowSpecialTileset();
+            if (CanHideSpecialTileset()) ShowSpecialTileset();
             else HideSpecialTileset();
         }
 

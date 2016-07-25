@@ -29,7 +29,7 @@ namespace RPG_Paper_Maker
         public bool IsGridOnTop = false;
         public int[] GridHeight { get { return Map.GridHeight; } set { Map.GridHeight = value; } }
         public int[] CurrentTexture = new int[] { 0, 0, 1, 1 };
-        public int CurrentAutotileId = -1;
+        public int CurrentSpecialItemId = -1;
         public int[] CurrentPosition = new int[] { 0, 0 };
         public int CurrentOrientation = 0;
         public int[] CurrentPortion = new int[] { 0, 0 };
@@ -572,12 +572,12 @@ namespace RPG_Paper_Maker
                     texture = CurrentTexture;
                     break;
                 case DrawType.Autotiles:
-                    if (CurrentAutotileId == -1)
+                    if (CurrentSpecialItemId == -1)
                     {
                         SystemSounds.Beep.Play();
                         return;
                     }
-                    texture = CurrentAutotileId;
+                    texture = CurrentSpecialItemId;
                     break;
             }
 
@@ -618,7 +618,7 @@ namespace RPG_Paper_Maker
                                     shortTexture = new int[] { i + CurrentTexture[0], j + CurrentTexture[1], 1, 1 };
                                     break;
                                 case DrawType.Autotiles:
-                                    shortTexture = CurrentAutotileId;
+                                    shortTexture = CurrentSpecialItemId;
                                     break;
                             }
                             int[] shortCoords = new int[] { coords[0] + i, coords[1], coords[2], coords[3] + j };
