@@ -65,7 +65,10 @@ namespace RPG_Paper_Maker
                 List<int> indexesList = new List<int>();
                 int[] indexes = new int[]
                 {
-                0, 1, 2, 0, 2, 3
+                    0, 1, 2, 0, 2, 3,
+                    4, 5, 6, 4, 6, 7,
+                    8, 9, 10, 8, 10, 11,
+                    12, 13, 14, 12, 14, 15,
                 };
                 int offset = 0;
 
@@ -75,11 +78,11 @@ namespace RPG_Paper_Maker
                     {
                         verticesList.Add(vertex);
                     }
-                    for (int n = 0; n < 6; n++)
+                    for (int n = 0; n < 24; n++)
                     {
                         indexesList.Add(indexes[n] + offset);
                     }
-                    offset += 4;
+                    offset += 16;
                 }
 
                 VerticesArray = verticesList.ToArray();
@@ -99,10 +102,10 @@ namespace RPG_Paper_Maker
                 int x = coords[0], y = coords[1] * WANOK.SQUARE_SIZE + coords[2], z = coords[3];
 
                 // Texture coords
-                float left = ((float)coords[0] * WANOK.SQUARE_SIZE) / texture.Width;
-                float top = ((float)coords[1] * WANOK.SQUARE_SIZE) / texture.Height;
-                float bot = ((float)(coords[1] + coords[3]) * WANOK.SQUARE_SIZE) / texture.Height;
-                float right = ((float)(coords[0] + coords[2]) * WANOK.SQUARE_SIZE) / texture.Width;
+                float left = 0;
+                float top = 0;
+                float bot = ((float)WANOK.SQUARE_SIZE) / texture.Height;
+                float right = ((float)WANOK.SQUARE_SIZE) / texture.Width;
 
                 // Adjust in order to limit risk of textures flood
                 float width = left + right;
@@ -115,10 +118,22 @@ namespace RPG_Paper_Maker
                 // Vertex Position and Texture
                 return new VertexPositionTexture[]
                 {
-                new VertexPositionTexture(new Vector3(x, y, z), new Vector2(left, top)),
-                new VertexPositionTexture(new Vector3(x+1, y, z), new Vector2(right, top)),
-                new VertexPositionTexture(new Vector3(x+1, y, z+1), new Vector2(right, bot)),
-                new VertexPositionTexture(new Vector3(x, y, z+1), new Vector2(left, bot))
+                    new VertexPositionTexture(new Vector3(x, y + WANOK.SQUARE_SIZE, z), new Vector2(left, top)),
+                    new VertexPositionTexture(new Vector3(x + 1, y + WANOK.SQUARE_SIZE, z), new Vector2(right, top)),
+                    new VertexPositionTexture(new Vector3(x + 1, y, z), new Vector2(right, bot)),
+                    new VertexPositionTexture(new Vector3(x, y, z), new Vector2(left, bot)),
+                    new VertexPositionTexture(new Vector3(x, y + WANOK.SQUARE_SIZE, z + 1), new Vector2(left, top)),
+                    new VertexPositionTexture(new Vector3(x + 1, y + WANOK.SQUARE_SIZE, z + 1), new Vector2(right, top)),
+                    new VertexPositionTexture(new Vector3(x + 1, y, z + 1), new Vector2(right, bot)),
+                    new VertexPositionTexture(new Vector3(x, y, z + 1), new Vector2(left, bot)),
+                    new VertexPositionTexture(new Vector3(x, y + WANOK.SQUARE_SIZE, z), new Vector2(left, top)),
+                    new VertexPositionTexture(new Vector3(x, y + WANOK.SQUARE_SIZE, z + 1), new Vector2(right, top)),
+                    new VertexPositionTexture(new Vector3(x, y, z + 1), new Vector2(right, bot)),
+                    new VertexPositionTexture(new Vector3(x, y, z), new Vector2(left, bot)),
+                    new VertexPositionTexture(new Vector3(x + 1, y + WANOK.SQUARE_SIZE, z), new Vector2(left, top)),
+                    new VertexPositionTexture(new Vector3(x + 1, y + WANOK.SQUARE_SIZE, z + 1), new Vector2(right, top)),
+                    new VertexPositionTexture(new Vector3(x + 1, y, z + 1), new Vector2(right, bot)),
+                    new VertexPositionTexture(new Vector3(x + 1, y, z), new Vector2(left, bot))
                 };
             }
 

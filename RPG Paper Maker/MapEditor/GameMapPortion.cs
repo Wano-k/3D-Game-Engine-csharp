@@ -59,6 +59,10 @@ namespace RPG_Paper_Maker
             {
                 newGameMap.Sprites[entry.Key] = entry.Value.CreateCopy();
             }
+            foreach (KeyValuePair<int[], Mountains> entry in Mountains)
+            {
+                newGameMap.Mountains[entry.Key] = entry.Value.CreateCopy();
+            }
 
             return newGameMap;
         }
@@ -248,6 +252,8 @@ namespace RPG_Paper_Maker
 
             if (!Mountains.ContainsKey(new int[] { 0, 0 })) Mountains[new int[] { 0, 0 }] = new Mountains();
             Mountains[new int[] { 0, 0 }].Add(coords, newId);
+            AddFloor(new int[] { coords[0], coords[1] + 1, coords[2], coords[3] }, new int[] { 0, 0, 1, 1 });
+
 
             return modified;
         }
@@ -371,6 +377,20 @@ namespace RPG_Paper_Maker
 
         public void Draw(GraphicsDevice device, AlphaTestEffect effect, Texture2D texture, Camera camera, bool drawOthers)
         {
+            // Drawing Sprites & montains
+            if (drawOthers)
+            {
+                foreach (KeyValuePair<int[], Sprites> entry in Sprites)
+                {
+                    entry.Value.Draw(device, effect, camera, entry.Key[2], entry.Key[3]);
+                }
+                effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
+                foreach (Mountains mountains in Mountains.Values)
+                {
+                    mountains.Draw(device, effect);
+                }
+            }
+
             effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
 
             // Drawing Floors
@@ -391,20 +411,6 @@ namespace RPG_Paper_Maker
             foreach (KeyValuePair<int, Autotiles> entry in Autotiles)
             {
                 entry.Value.Draw(device, effect);
-            }
-
-            // Drawing Sprites
-            if (drawOthers)
-            {
-                foreach (KeyValuePair<int[], Sprites> entry in Sprites)
-                {
-                    entry.Value.Draw(device, effect, camera, entry.Key[2], entry.Key[3]);
-                }
-
-                foreach (Mountains mountains in Mountains.Values)
-                {
-                    mountains.Draw(device, effect);
-                }
             }
         }
 
