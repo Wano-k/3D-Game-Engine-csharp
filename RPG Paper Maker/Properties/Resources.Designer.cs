@@ -73,6 +73,16 @@ namespace RPG_Paper_Maker.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap angle {
+            get {
+                object obj = ResourceManager.GetObject("angle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap big_arrow_left {
             get {
                 object obj = ResourceManager.GetObject("big_arrow_left", resourceCulture);
@@ -196,6 +206,16 @@ namespace RPG_Paper_Maker.Properties {
         internal static System.Drawing.Bitmap lang {
             get {
                 object obj = ResourceManager.GetObject("lang", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mousewheel {
+            get {
+                object obj = ResourceManager.GetObject("mousewheel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -13,6 +13,9 @@ namespace RPG_Paper_Maker
         public const int MAX_MAP = 9999;
         public int HeightSquare;
         public int HeightPixel;
+        public int HeightSquareMountain;
+        public int HeightPixelMountain;
+        public int MountainAngle;
 
         public void InitializeMain()
         {
@@ -35,6 +38,7 @@ namespace RPG_Paper_Maker
 
             // Updating special infos
             WANOK.ABSOLUTEENGINEPATH = Path.GetDirectoryName(WANOK.ExcecutablePath);
+            ClearHeight();
         }
 
         // -------------------------------------------------------------------
@@ -155,6 +159,34 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // SetMountainHeight
+        // -------------------------------------------------------------------
+
+        public void SetMountainHeight(bool square, bool up)
+        {
+            int add = up ? 1 : -1;
+            if (square)
+            {
+                HeightSquareMountain += add;
+                if (HeightSquareMountain < 0) HeightSquareMountain = 0;
+            }
+            else {
+                HeightPixelMountain += add;
+                if (HeightPixelMountain > WANOK.SQUARE_SIZE - 1) HeightPixelMountain = 0;
+                else if (HeightPixelMountain < 0) HeightPixelMountain = WANOK.SQUARE_SIZE - 1;
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // GetHeight
+        // -------------------------------------------------------------------
+
+        public int[] GetMountainHeight()
+        {
+            return new int[] { HeightSquareMountain, HeightPixelMountain };
+        }
+
+        // -------------------------------------------------------------------
         // ClearHeight
         // -------------------------------------------------------------------
 
@@ -162,6 +194,9 @@ namespace RPG_Paper_Maker
         {
             HeightPixel = 0;
             HeightSquare = 0;
+            HeightSquareMountain = 1;
+            HeightPixelMountain = 0;
+            MountainAngle = 90;
         }
 
         // -------------------------------------------------------------------

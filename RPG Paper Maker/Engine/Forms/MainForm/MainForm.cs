@@ -25,16 +25,21 @@ namespace RPG_Paper_Maker
 
         public InterpolationPictureBox PictureBoxSpecialTileset = new InterpolationPictureBox();
         public ImageComboBox ComboBoxSpecialTileset1 = new ImageComboBox();
+        public OpenFileDialog OpenProjectDialog = new OpenFileDialog();
 
         public string Version = "0.1.0.0";
         public string TitleName { get { return "RPG Paper Maker " + Version; } }
         public MainFormControl Control = new MainFormControl();
+        public string CopiedMap = "";
+        public bool IsUsingCursorSelector = false;
+
+        // MouseWheelInfos
         public bool IsInItemHeightSquare = false;
         public bool IsInItemHeightPixel = false;
-        public bool IsUsingCursorSelector = false;
-        public string CopiedMap = "";
-        public OpenFileDialog OpenProjectDialog = new OpenFileDialog();
+        public bool IsInItemHeightSquareMountain = false;
+        public bool IsInItemHeightPixelMountain = false;
 
+        // Methods
         public delegate ComboxBoxSpecialTilesetItem MethodGetSuperItemById(int id);
         public delegate int MethodGetIndexById(int id);
 
@@ -84,6 +89,7 @@ namespace RPG_Paper_Maker
             ItemFloor.DropDown.MouseLeave += new EventHandler(ItemFloorDrop_MouseLeave);
             ItemSprite.DropDown.MouseLeave += new EventHandler(ItemSpriteDrop_MouseLeave);
             ItemRelief.DropDown.MouseLeave += new EventHandler(ItemReliefDrop_MouseLeave);
+            ItemRelief1.DropDown.MouseLeave += new EventHandler(ItemRelief1Drop_MouseLeave);
             ItemDrawMode.DropDown.MouseLeave += new EventHandler(ItemDrawModeDrop_MouseLeave);
             ItemHeight.DropDown.MouseLeave += new EventHandler(ItemHeightDrop_MouseLeave);
             ComboBoxSpecialTileset1.SelectedIndexChanged += new EventHandler(ComboBoxSpecialTileset1_SelectedIndexChanged);
@@ -265,6 +271,12 @@ namespace RPG_Paper_Maker
             {
 
             }
+
+            protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
+            {
+                e.ArrowColor = Color.White;
+                base.OnRenderArrow(e);
+            }
         }
 
         #endregion
@@ -291,6 +303,12 @@ namespace RPG_Paper_Maker
                 MapEditor.SetGridHeight(Control.GetHeight());
                 ItemHeight1.Text = "Square number: " + Control.HeightSquare;
                 ItemHeight2.Text = "Adding pixels: " + Control.HeightPixel;
+            }
+            else if (IsInItemHeightSquareMountain || IsInItemHeightPixelMountain)
+            {
+                Control.SetMountainHeight(IsInItemHeightSquareMountain, e.Delta > 0);
+                ItemReliefMontainSquareHeight.Text = "Square height: " + Control.HeightSquareMountain;
+                ItemReliefMontainPixelHeight.Text = "Pixel height: " + Control.HeightPixelMountain;
             }
         }
 
@@ -629,10 +647,17 @@ namespace RPG_Paper_Maker
         private void ItemReliefDrop_MouseLeave(object sender, EventArgs e)
         {
             Control.OpenNewDialog();
-            ItemRelief.HideDropDown();
+            if (!ItemRelief1.IsOnDropDown || !IsDropDownInControl(ItemRelief1)) ItemRelief.HideDropDown();
             menuStrip2.Focus();
         }
-        
+
+        private void ItemRelief1Drop_MouseLeave(object sender, EventArgs e)
+        {
+            Control.OpenNewDialog();
+            if (!IsDropDownInControl(ItemRelief)) ItemRelief.HideDropDown();
+            menuStrip2.Focus();
+        }
+
         private void ItemRelief_MouseEnter(object sender, EventArgs e)
         {
             Control.OpenNewDialog();
@@ -689,8 +714,8 @@ namespace RPG_Paper_Maker
             menuStrip2.Focus();
         }
 
-        // Height
-
+        // WheelMouse items
+        
         private void ItemHeight1_MouseEnter(object sender, EventArgs e)
         {
             IsInItemHeightSquare = true;
@@ -709,6 +734,26 @@ namespace RPG_Paper_Maker
         private void ItemHeight2_MouseLeave(object sender, EventArgs e)
         {
             IsInItemHeightPixel = false;
+        }
+
+        private void ItemReliefMontainSquareHeight_MouseEnter(object sender, EventArgs e)
+        {
+            IsInItemHeightSquareMountain = true;
+        }
+
+        private void ItemReliefMontainSquareHeight_MouseLeave(object sender, EventArgs e)
+        {
+            IsInItemHeightSquareMountain = false;
+        }
+
+        private void ItemReliefMontainPixelHeight_MouseEnter(object sender, EventArgs e)
+        {
+            IsInItemHeightPixelMountain = true;
+        }
+
+        private void ItemReliefMontainPixelHeight_MouseLeave(object sender, EventArgs e)
+        {
+            IsInItemHeightPixelMountain = false;
         }
 
         // Floors
@@ -873,6 +918,7 @@ namespace RPG_Paper_Maker
         private void ItemRelief1_Click(object sender, EventArgs e)
         {
             SelectMontain();
+            ItemRelief.HideDropDown();
         }
 
         public void SelectReliefs()
@@ -893,6 +939,18 @@ namespace RPG_Paper_Maker
             if (test) ShowSpecialTileset();
             ItemRelief.Text = ItemRelief1.Text;
             ItemRelief.Image = ItemRelief1.Image;
+        }
+
+        private void ItemReliefMontainAngle_Click(object sender, EventArgs e)
+        {
+            DialogEnterNumber dialog = new DialogEnterNumber(Control.MountainAngle, 0, 90);
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                Control.MountainAngle = dialog.Value;
+                ItemReliefMontainAngle.Text = "Angle: " + Control.MountainAngle;
+            }
+            ItemRelief.ShowDropDown();
+            ItemRelief1.ShowDropDown();
         }
 
         // Start
@@ -1565,11 +1623,16 @@ namespace RPG_Paper_Maker
 
         public void HideDropDownIfNotInControl(ToolStripMenuItem c)
         {
-            if (!c.DropDown.ClientRectangle.Contains(c.DropDown.PointToClient(Cursor.Position)))
+            if (!IsDropDownInControl(c))
             {
                 c.HideDropDown();
                 menuStrip2.Focus();
             }
+        }
+
+        public bool IsDropDownInControl(ToolStripMenuItem c)
+        {
+            return c.DropDown.ClientRectangle.Contains(c.DropDown.PointToClient(Cursor.Position));
         }
 
         // -------------------------------------------------------------------
@@ -1601,6 +1664,8 @@ namespace RPG_Paper_Maker
             Control.ClearHeight();
             ItemHeight1.Text = "Square number: 0";
             ItemHeight2.Text = "Adding pixels: 0";
+            ItemReliefMontainSquareHeight.Text = "Square height: 0";
+            ItemReliefMontainPixelHeight.Text = "Pixel height: 0";
         }
 
         // -------------------------------------------------------------------

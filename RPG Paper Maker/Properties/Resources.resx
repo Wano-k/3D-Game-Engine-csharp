@@ -229,4 +229,10 @@
   <data name="floor3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Floor3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="angle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\anglel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mousewheel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mousewheel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

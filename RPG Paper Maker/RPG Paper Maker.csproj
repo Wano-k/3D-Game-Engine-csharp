@@ -290,6 +290,8 @@
     <Compile Include="MapEditor\Map.cs" />
     <Compile Include="Engine\Models\MapInfos.cs" />
     <Compile Include="MapEditor\MapEditorControl.cs" />
+    <Compile Include="MapEditor\Mountains.cs" />
+    <Compile Include="MapEditor\Mountain.cs" />
     <Compile Include="MapEditor\Sprite.cs" />
     <Compile Include="MapEditor\PositionOrientation.cs" />
     <Compile Include="MapEditor\Sprites.cs" />
@@ -470,6 +472,8 @@
     <None Include="Resources\sprite5.png" />
     <None Include="Resources\relief.png" />
     <None Include="Resources\Floor3.png" />
+    <None Include="Resources\mousewheel.png" />
+    <None Include="Resources\anglel.png" />
     <Content Include="RTP\Content\Pictures\Textures2D\Autotiles\ground.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

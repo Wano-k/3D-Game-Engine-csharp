@@ -53,6 +53,9 @@
             this.ItemSprite6 = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemRelief = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemRelief1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemReliefMontainSquareHeight = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemReliefMontainPixelHeight = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemReliefMontainAngle = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemStart = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemDrawMode = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemDrawMode1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -195,7 +198,7 @@
             // 
             this.SplitContainerTree.Panel2.Controls.Add(this.TreeMap);
             this.SplitContainerTree.Size = new System.Drawing.Size(177, 443);
-            this.SplitContainerTree.SplitterDistance = 269;
+            this.SplitContainerTree.SplitterDistance = 266;
             this.SplitContainerTree.TabIndex = 0;
             // 
             // tableLayoutPanelTileset
@@ -210,7 +213,7 @@
             this.tableLayoutPanelTileset.RowCount = 2;
             this.tableLayoutPanelTileset.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanelTileset.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelTileset.Size = new System.Drawing.Size(173, 265);
+            this.tableLayoutPanelTileset.Size = new System.Drawing.Size(173, 262);
             this.tableLayoutPanelTileset.TabIndex = 1;
             // 
             // PanelSpecialMenu
@@ -234,7 +237,7 @@
             this.TreeMap.Name = "TreeMap";
             this.TreeMap.SelectedImageIndex = 0;
             this.TreeMap.ShowRootLines = false;
-            this.TreeMap.Size = new System.Drawing.Size(173, 166);
+            this.TreeMap.Size = new System.Drawing.Size(173, 169);
             this.TreeMap.TabIndex = 0;
             this.TreeMap.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TreeMap_ItemDrag);
             this.TreeMap.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeMap_AfterSelect);
@@ -268,7 +271,6 @@
             this.menuStrip2.Padding = new System.Windows.Forms.Padding(0);
             this.menuStrip2.Size = new System.Drawing.Size(705, 36);
             this.menuStrip2.TabIndex = 1;
-            this.menuStrip2.Text = "menuStrip2";
             this.menuStrip2.MouseHover += new System.EventHandler(this.menuStrip2_MouseHover);
             // 
             // ItemFloor
@@ -406,6 +408,10 @@
             // 
             // ItemRelief1
             // 
+            this.ItemRelief1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ItemReliefMontainSquareHeight,
+            this.ItemReliefMontainPixelHeight,
+            this.ItemReliefMontainAngle});
             this.ItemRelief1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemRelief1.Image = global::RPG_Paper_Maker.Properties.Resources.relief;
             this.ItemRelief1.Name = "ItemRelief1";
@@ -413,11 +419,42 @@
             this.ItemRelief1.Text = "Montains";
             this.ItemRelief1.Click += new System.EventHandler(this.ItemRelief1_Click);
             // 
+            // ItemReliefMontainSquareHeight
+            // 
+            this.ItemReliefMontainSquareHeight.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemReliefMontainSquareHeight.Image = global::RPG_Paper_Maker.Properties.Resources.mousewheel;
+            this.ItemReliefMontainSquareHeight.Name = "ItemReliefMontainSquareHeight";
+            this.ItemReliefMontainSquareHeight.Size = new System.Drawing.Size(191, 38);
+            this.ItemReliefMontainSquareHeight.Text = "Square height: 1";
+            this.ItemReliefMontainSquareHeight.MouseEnter += new System.EventHandler(this.ItemReliefMontainSquareHeight_MouseEnter);
+            this.ItemReliefMontainSquareHeight.MouseLeave += new System.EventHandler(this.ItemReliefMontainSquareHeight_MouseLeave);
+            // 
+            // ItemReliefMontainPixelHeight
+            // 
+            this.ItemReliefMontainPixelHeight.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemReliefMontainPixelHeight.Image = global::RPG_Paper_Maker.Properties.Resources.mousewheel;
+            this.ItemReliefMontainPixelHeight.Name = "ItemReliefMontainPixelHeight";
+            this.ItemReliefMontainPixelHeight.Size = new System.Drawing.Size(191, 38);
+            this.ItemReliefMontainPixelHeight.Text = "Pixel height: 0";
+            this.ItemReliefMontainPixelHeight.MouseEnter += new System.EventHandler(this.ItemReliefMontainPixelHeight_MouseEnter);
+            this.ItemReliefMontainPixelHeight.MouseLeave += new System.EventHandler(this.ItemReliefMontainPixelHeight_MouseLeave);
+            // 
+            // ItemReliefMontainAngle
+            // 
+            this.ItemReliefMontainAngle.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemReliefMontainAngle.Image = global::RPG_Paper_Maker.Properties.Resources.angle;
+            this.ItemReliefMontainAngle.Name = "ItemReliefMontainAngle";
+            this.ItemReliefMontainAngle.Size = new System.Drawing.Size(191, 38);
+            this.ItemReliefMontainAngle.Text = "Angle: 90";
+            this.ItemReliefMontainAngle.Click += new System.EventHandler(this.ItemReliefMontainAngle_Click);
+            // 
             // ItemStart
             // 
+            this.ItemStart.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemStart.Image = global::RPG_Paper_Maker.Properties.Resources.start;
             this.ItemStart.Name = "ItemStart";
-            this.ItemStart.Size = new System.Drawing.Size(44, 36);
+            this.ItemStart.Size = new System.Drawing.Size(80, 36);
+            this.ItemStart.Text = "Start";
             this.ItemStart.Click += new System.EventHandler(this.ItemStart_Click);
             // 
             // ItemDrawMode
@@ -466,6 +503,7 @@
             this.ItemHeight.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ItemHeight1,
             this.ItemHeight2});
+            this.ItemHeight.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.ItemHeight.Image = global::RPG_Paper_Maker.Properties.Resources.height;
             this.ItemHeight.Name = "ItemHeight";
             this.ItemHeight.Size = new System.Drawing.Size(44, 36);
@@ -475,20 +513,20 @@
             // 
             // ItemHeight1
             // 
-            this.ItemHeight1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.ItemHeight1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemHeight1.Image = global::RPG_Paper_Maker.Properties.Resources.mousewheel;
             this.ItemHeight1.Name = "ItemHeight1";
-            this.ItemHeight1.Size = new System.Drawing.Size(181, 22);
+            this.ItemHeight1.Size = new System.Drawing.Size(197, 38);
             this.ItemHeight1.Text = "Square number: 0";
             this.ItemHeight1.MouseEnter += new System.EventHandler(this.ItemHeight1_MouseEnter);
             this.ItemHeight1.MouseLeave += new System.EventHandler(this.ItemHeight1_MouseLeave);
             // 
             // ItemHeight2
             // 
-            this.ItemHeight2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.ItemHeight2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ItemHeight2.Image = global::RPG_Paper_Maker.Properties.Resources.mousewheel;
             this.ItemHeight2.Name = "ItemHeight2";
-            this.ItemHeight2.Size = new System.Drawing.Size(181, 22);
+            this.ItemHeight2.Size = new System.Drawing.Size(197, 38);
             this.ItemHeight2.Text = "Adding pixels: 0";
             this.ItemHeight2.MouseEnter += new System.EventHandler(this.ItemHeight2_MouseEnter);
             this.ItemHeight2.MouseLeave += new System.EventHandler(this.ItemHeight2_MouseLeave);
@@ -934,7 +972,7 @@
             this.scrollPanelTileset.Location = new System.Drawing.Point(0, 27);
             this.scrollPanelTileset.Margin = new System.Windows.Forms.Padding(0);
             this.scrollPanelTileset.Name = "scrollPanelTileset";
-            this.scrollPanelTileset.Size = new System.Drawing.Size(173, 238);
+            this.scrollPanelTileset.Size = new System.Drawing.Size(173, 235);
             this.scrollPanelTileset.TabIndex = 0;
             // 
             // TilesetSelectorPicture
@@ -1069,8 +1107,6 @@
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ItemPlay;
         private System.Windows.Forms.ToolStripMenuItem ItemHeight;
-        private System.Windows.Forms.ToolStripMenuItem ItemHeight1;
-        private System.Windows.Forms.ToolStripMenuItem ItemHeight2;
         private System.Windows.Forms.ToolStripMenuItem ItemStart;
         private System.Windows.Forms.ToolStripMenuItem ItemDataBase;
         private System.Windows.Forms.ToolBarButton toolBarButtonDataBase;
@@ -1097,6 +1133,11 @@
         private System.Windows.Forms.ToolStripMenuItem ItemRelief;
         private System.Windows.Forms.ToolStripMenuItem ItemRelief1;
         private System.Windows.Forms.ToolStripMenuItem ItemFloor3;
+        private System.Windows.Forms.ToolStripMenuItem ItemReliefMontainSquareHeight;
+        private System.Windows.Forms.ToolStripMenuItem ItemReliefMontainPixelHeight;
+        private System.Windows.Forms.ToolStripMenuItem ItemHeight1;
+        private System.Windows.Forms.ToolStripMenuItem ItemHeight2;
+        private System.Windows.Forms.ToolStripMenuItem ItemReliefMontainAngle;
     }
 }
 

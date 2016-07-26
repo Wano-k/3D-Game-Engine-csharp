@@ -18,6 +18,7 @@ namespace RPG_Paper_Maker
         public Dictionary<int[], int[]> Floors; // Coords => texture
         public Dictionary<int, Autotiles> Autotiles; // Id => Autotiles (= list autotile)
         public Dictionary<int[], Sprites> Sprites; // Texture => Sprites
+        public Mountains Montains;
 
         // Floors
         [NonSerialized()]
@@ -232,6 +233,19 @@ namespace RPG_Paper_Maker
             object[] before = ContainsSprite(coords);
             if (before == null) modified = true;
             else Sprites[(int[])before[0]].Remove(coords);
+
+            return modified;
+        }
+
+        // -------------------------------------------------------------------
+        // AddMountain
+        // -------------------------------------------------------------------
+
+        public bool AddMountain(int[] coords, int newId)
+        {
+            bool modified = false;
+
+            
 
             return modified;
         }

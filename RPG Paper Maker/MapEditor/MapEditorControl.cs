@@ -500,6 +500,9 @@ namespace RPG_Paper_Maker
                 case "ItemSprite":
                     AddSprite(isMouse);
                     break;
+                case "ItemRelief":
+                    if (SelectedDrawTypeParticular == DrawType.Montains) AddMontain(isMouse);
+                    break;
             }
         }
 
@@ -886,7 +889,7 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // RemoveFloor
+        // RemoveSprite
         // -------------------------------------------------------------------
 
         public void RemoveSprite(bool isMouse)
@@ -915,7 +918,7 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // EraseFloor
+        // EraseSprite
         // -------------------------------------------------------------------
 
         public void EraseSprite(int[] coords, params object[] args)
@@ -926,6 +929,63 @@ namespace RPG_Paper_Maker
                 CreateCancel();
                 if (Map.Portions[portion] == null) Map.Portions[portion] = new GameMapPortion();
                 if (Map.Portions[portion].RemoveSprite(coords) && Map.Saved) SetToNoSaved();
+                AddPortionToSave(portion);
+                AddPortionToUpdate(portion);
+                WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, GetGlobalPortion(portion));
+            }
+        }
+
+        #endregion
+
+        // -------------------------------------------------------------------
+        // RELIEF
+        // -------------------------------------------------------------------
+
+        #region relief
+
+        // -------------------------------------------------------------------
+        // AddMontain
+        // -------------------------------------------------------------------
+
+        public void AddMontain(bool isMouse)
+        {
+            // Getting coords
+            int[] coords = GetCoords(isMouse);
+            if (coords == null) return;
+
+            // Drawing sprites
+            switch (DrawMode)
+            {
+                case DrawMode.Pencil:
+                    if (isMouse)
+                    {
+                        if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, StockMontain, CurrentSpecialItemId);
+                    }
+                    else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, StockMontain, CurrentSpecialItemId);
+                    StockMontain(coords, CurrentSpecialItemId);
+                    break;
+                case DrawMode.Tin:
+                    SystemSounds.Beep.Play();
+                    break;
+            }
+
+            // Updating previous selected
+            if (isMouse) PreviousMouseCoords = coords;
+            else PreviousCursorCoords = coords;
+        }
+
+        // -------------------------------------------------------------------
+        // StockMontain
+        // -------------------------------------------------------------------
+
+        public void StockMontain(int[] coords, params object[] args)
+        {
+            int[] portion = GetPortion(coords[0], coords[3]);
+            if (IsInArea(coords) && WANOK.IsInPortions(portion))
+            {
+                CreateCancel();
+                if (Map.Portions[portion] == null) Map.Portions[portion] = new GameMapPortion();
+                if (Map.Portions[portion].AddMountain(coords, (int)args[0]) && Map.Saved) SetToNoSaved();
                 AddPortionToSave(portion);
                 AddPortionToUpdate(portion);
                 WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, GetGlobalPortion(portion));
