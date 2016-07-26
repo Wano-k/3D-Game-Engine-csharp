@@ -18,7 +18,7 @@ namespace RPG_Paper_Maker
         public Dictionary<int[], int[]> Floors; // Coords => texture
         public Dictionary<int, Autotiles> Autotiles; // Id => Autotiles (= list autotile)
         public Dictionary<int[], Sprites> Sprites; // Texture => Sprites
-        public Mountains Montains;
+        public Dictionary<int[], Mountains> Mountains;
 
         // Floors
         [NonSerialized()]
@@ -40,6 +40,7 @@ namespace RPG_Paper_Maker
             Floors = new Dictionary<int[], int[]>(new IntArrayComparer());
             Autotiles = new Dictionary<int, Autotiles>();
             Sprites = new Dictionary<int[], Sprites>(new IntArrayComparer());
+            Mountains = new Dictionary<int[], Mountains>(new IntArrayComparer());
         }
 
         // -------------------------------------------------------------------
@@ -68,7 +69,7 @@ namespace RPG_Paper_Maker
 
         public bool IsEmpty()
         {
-            return (Floors.Count == 0 && Autotiles.Count == 0 && Sprites.Count == 0);
+            return (Floors.Count == 0 && Autotiles.Count == 0 && Sprites.Count == 0 && Mountains.Count == 0);
         }
 
         // -------------------------------------------------------------------
@@ -245,7 +246,8 @@ namespace RPG_Paper_Maker
         {
             bool modified = false;
 
-            
+            if (!Mountains.ContainsKey(new int[] { 0, 0 })) Mountains[new int[] { 0, 0 }] = new Mountains();
+            Mountains[new int[] { 0, 0 }].Add(coords, newId);
 
             return modified;
         }
@@ -351,6 +353,18 @@ namespace RPG_Paper_Maker
 
         #endregion
 
+        #region Mountains
+
+        public void GenMountains(GraphicsDevice device)
+        {
+            foreach (KeyValuePair<int[], Mountains> entry in Mountains)
+            {
+                entry.Value.GenMountains(device);
+            }
+        }
+
+        #endregion
+
         // -------------------------------------------------------------------
         // Draw
         // -------------------------------------------------------------------
@@ -385,6 +399,11 @@ namespace RPG_Paper_Maker
                 foreach (KeyValuePair<int[], Sprites> entry in Sprites)
                 {
                     entry.Value.Draw(device, effect, camera, entry.Key[2], entry.Key[3]);
+                }
+
+                foreach (Mountains mountains in Mountains.Values)
+                {
+                    mountains.Draw(device, effect);
                 }
             }
         }
@@ -434,6 +453,10 @@ namespace RPG_Paper_Maker
             foreach (Sprites sprites in Sprites.Values)
             {
                 sprites.DisposeBuffers(device, nullable);
+            }
+            foreach (Mountains mountains in Mountains.Values)
+            {
+                mountains.DisposeBuffers(device, nullable);
             }
         }
 

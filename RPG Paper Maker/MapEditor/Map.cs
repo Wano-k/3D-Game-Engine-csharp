@@ -55,15 +55,34 @@ namespace RPG_Paper_Maker
             {
                 SetStartInfos(WANOK.SystemDatas, WANOK.SystemDatas.StartPosition);
             }
-            
-            // Set textures
-            DisposeTextures();
-            
+
+            // Dispose textures
+            if (MapEditor.TexTileset != null)
+            {
+                MapEditor.TexTileset.Dispose();
+                MapEditor.TexTileset = null;
+            }
+            foreach (int i in MapEditor.TexAutotiles.Keys)
+            {
+                MapEditor.TexAutotiles[i].Dispose();
+            }
+            MapEditor.TexAutotiles.Clear();
+            foreach (int i in MapEditor.TexReliefs.Keys)
+            {
+                MapEditor.TexReliefs[i].Dispose();
+            }
+            MapEditor.TexReliefs.Clear();
+
+            // Loading textures
             Tileset tileset = WANOK.SystemDatas.GetTilesetById(MapInfos.Tileset);
             MapEditor.TexTileset = tileset.Graphic.LoadTexture(device);
             for (int i = 0; i < tileset.Autotiles.Count; i++)
             {
                 MapEditor.TexAutotiles[tileset.Autotiles[i]] = WANOK.SystemDatas.GetAutotileById(tileset.Autotiles[i]).Graphic.LoadTexture(Device);
+            }
+            for (int i = 0; i < tileset.Reliefs.Count; i++)
+            {
+                MapEditor.TexReliefs[tileset.Reliefs[i]] = WANOK.SystemDatas.GetReliefById(tileset.Reliefs[i]).Graphic.LoadTexture(Device);
             }
 
             // Grid
@@ -197,6 +216,7 @@ namespace RPG_Paper_Maker
             portion.GenFloor(Device, MapEditor.TexTileset);
             portion.GenAutotiles(Device);
             portion.GenSprites(Device);
+            portion.GenMountains(Device);
         }
 
         // -------------------------------------------------------------------
@@ -277,25 +297,6 @@ namespace RPG_Paper_Maker
             }
 
             if (StartSquare != null) StartSquare.DisposeBuffers(Device);
-        }
-
-        // -------------------------------------------------------------------
-        // DisposeTextures
-        // -------------------------------------------------------------------
-
-        public void DisposeTextures()
-        {
-            if (MapEditor.TexTileset != null)
-            {
-                MapEditor.TexTileset.Dispose();
-                MapEditor.TexTileset = null;
-            }
-            
-            foreach (int i in MapEditor.TexAutotiles.Keys)
-            {
-                MapEditor.TexAutotiles[i].Dispose();
-            }
-            MapEditor.TexAutotiles.Clear();
         }
     }
 }

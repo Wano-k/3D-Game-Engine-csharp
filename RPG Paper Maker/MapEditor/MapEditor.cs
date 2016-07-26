@@ -27,6 +27,7 @@ namespace RPG_Paper_Maker
         // Content
         public static Texture2D TexCursor, TexStartCursor, TexTileset, TexNone, TexGrid;
         public static Dictionary<int,Texture2D> TexAutotiles = new Dictionary<int, Texture2D>();
+        public static Dictionary<int, Texture2D> TexReliefs = new Dictionary<int, Texture2D>();
 
         public static int Debug = 0;
 
