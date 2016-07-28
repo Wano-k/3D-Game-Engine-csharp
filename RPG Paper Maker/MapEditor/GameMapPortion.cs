@@ -18,7 +18,7 @@ namespace RPG_Paper_Maker
         public Dictionary<int[], int[]> Floors; // Coords => texture
         public Dictionary<int, Autotiles> Autotiles; // Id => Autotiles (= list autotile)
         public Dictionary<int[], Sprites> Sprites; // Texture => Sprites
-        public Dictionary<int[], Mountains> Mountains;
+        public Dictionary<int, Mountains> Mountains; // Height => Mountains
 
         // Floors
         [NonSerialized()]
@@ -40,7 +40,7 @@ namespace RPG_Paper_Maker
             Floors = new Dictionary<int[], int[]>(new IntArrayComparer());
             Autotiles = new Dictionary<int, Autotiles>();
             Sprites = new Dictionary<int[], Sprites>(new IntArrayComparer());
-            Mountains = new Dictionary<int[], Mountains>(new IntArrayComparer());
+            Mountains = new Dictionary<int, Mountains>();
         }
 
         // -------------------------------------------------------------------
@@ -59,7 +59,7 @@ namespace RPG_Paper_Maker
             {
                 newGameMap.Sprites[entry.Key] = entry.Value.CreateCopy();
             }
-            foreach (KeyValuePair<int[], Mountains> entry in Mountains)
+            foreach (KeyValuePair<int, Mountains> entry in Mountains)
             {
                 newGameMap.Mountains[entry.Key] = entry.Value.CreateCopy();
             }
@@ -111,6 +111,21 @@ namespace RPG_Paper_Maker
             {
                 Sprite sprite = entry.Value.ContainsCoords(coords);
                 if (sprite != null) return new object[] { entry.Key, sprite };
+            }
+
+            return null;
+        }
+
+        // -------------------------------------------------------------------
+        // ContainsMountain
+        // -------------------------------------------------------------------
+
+        public object[] ContainsMountain(int height, int[] coords)
+        {
+            if (Mountains.ContainsKey(height))
+            {
+                object[] obj = Mountains[height].ContainsInGroup(coords);
+                if (obj != null) return obj;
             }
 
             return null;
@@ -248,11 +263,26 @@ namespace RPG_Paper_Maker
 
         public bool AddMountain(int[] coords, int newId)
         {
-            bool modified = true;
+            bool modified = false;
+            int height = WANOK.GetCoordsPixelHeight(coords);
+            object[] before = ContainsMountain(height, coords);
 
-            if (!Mountains.ContainsKey(new int[] { 0, 0 })) Mountains[new int[] { 0, 0 }] = new Mountains();
-            Mountains[new int[] { 0, 0 }].Add(coords, newId);
-            //AddFloor(new int[] { coords[0], coords[1] + 1, coords[2], coords[3] }, new int[] { 0, 0, 1, 1 });
+            // Remplacing
+            if (before == null)
+            {
+                modified = true;
+            }
+            else
+            {
+                int beforeId = (int)before[0];
+                Mountain beforeMountain = (Mountain)before[1];
+                if (beforeId != newId) modified = true;
+                Mountains[height].Remove(coords, beforeId, height);
+            }
+
+            if (!Mountains.ContainsKey(height)) Mountains[height] = new Mountains();
+            Mountains[height].Add(coords, newId, height);
+            AddFloor(new int[] { coords[0], coords[1] + 1, coords[2], coords[3] }, new int[] { 0, 0, 1, 1 });
 
 
             return modified;
@@ -363,9 +393,9 @@ namespace RPG_Paper_Maker
 
         public void GenMountains(GraphicsDevice device)
         {
-            foreach (KeyValuePair<int[], Mountains> entry in Mountains)
+            foreach (Mountains mountains in Mountains.Values)
             {
-                entry.Value.GenMountains(device);
+                mountains.GenMountains(device);
             }
         }
 

@@ -33,9 +33,10 @@ namespace RPG_Paper_Maker
         public int[] CurrentPosition = new int[] { 0, 0 };
         public int CurrentOrientation = 0;
         public int[] CurrentPortion = new int[] { 0, 0 };
-        protected List<int[]> PortionsToUpdate = new List<int[]>();
-        protected List<int[]> PortionsAutotileToUpdate = new List<int[]>();
-        protected List<int[]> PortionsToSave = new List<int[]>();
+        protected HashSet<int[]> PortionsToUpdate = new HashSet<int[]>(new IntArrayComparer());
+        protected HashSet<int[]> PortionsAutotileToUpdate = new HashSet<int[]>(new IntArrayComparer());
+        protected HashSet<int[]> PortionsMountainToUpdate = new HashSet<int[]>(new IntArrayComparer());
+        protected HashSet<int[]> PortionsToSave = new HashSet<int[]>(new IntArrayComparer());
         public int[] PreviousMouseCoords = null;
         public int[] PreviousCursorCoords = null;
 
@@ -275,28 +276,21 @@ namespace RPG_Paper_Maker
 
         public void AddPortionToUpdate(int[] portion)
         {
-            for (int i = PortionsToUpdate.Count-1; i >= 0; i--)
-            {
-                if (PortionsToUpdate[i].SequenceEqual(portion)) return;
-            }
             PortionsToUpdate.Add(portion);
         }
 
         public void AddPortionsAutotileToUpdate(int[] portion)
         {
-            for (int i = PortionsAutotileToUpdate.Count - 1; i >= 0; i--)
-            {
-                if (PortionsAutotileToUpdate[i].SequenceEqual(portion)) return;
-            }
             PortionsAutotileToUpdate.Add(portion);
+        }
+
+        public void AddPortionsMountainToUpdate(int[] portion)
+        {
+            PortionsMountainToUpdate.Add(portion);
         }
 
         public void AddPortionToSave(int[] portion)
         {
-            for (int i = PortionsToSave.Count - 1; i >= 0; i--)
-            {
-                if (PortionsToSave[i].SequenceEqual(portion)) return;
-            }
             PortionsToSave.Add(portion);
         }
 
@@ -390,20 +384,35 @@ namespace RPG_Paper_Maker
         public void UpdatePortions()
         {
             if (PortionsToUpdate.Count > 0 && WANOK.DialogProgressBar != null && DrawMode == DrawMode.Tin) WANOK.DialogProgressBar.SetValue("Drawing...", 90);
-            for (int i = 0; i < PortionsAutotileToUpdate.Count; i++)
+
+            foreach (int[] portion in PortionsAutotileToUpdate)
             {
-                foreach (Autotiles autotiles in Map.Portions[PortionsAutotileToUpdate[i]].Autotiles.Values)
+                foreach (Autotiles autotiles in Map.Portions[portion].Autotiles.Values)
                 {
                     foreach (int[] coords in autotiles.Tiles.Keys)
                     {
-                        Map.Portions[PortionsAutotileToUpdate[i]].Autotiles[autotiles.Id].Update(coords, PortionsAutotileToUpdate[i]);
+                        Map.Portions[portion].Autotiles[autotiles.Id].Update(coords, portion);
                     }
                 }
             }
 
-            for (int i = 0; i < PortionsToUpdate.Count; i++)
+            foreach (int[] portion in PortionsMountainToUpdate)
             {
-                Map.UpdatePortions(PortionsToUpdate[i]);
+                foreach (KeyValuePair<int, Mountains> entry in Map.Portions[portion].Mountains)
+                {
+                    foreach (int id in entry.Value.Groups.Keys)
+                    {
+                        foreach (KeyValuePair<int[], Mountain> entry2 in entry.Value.Groups[id].Tiles)
+                        {
+                            entry2.Value.Update(entry.Value, entry2.Key, portion, entry.Key);
+                        }
+                    }
+                }
+            }
+
+            foreach (int[] portion in PortionsToUpdate)
+            {
+                Map.UpdatePortions(portion);
             }
         }
 
@@ -414,20 +423,20 @@ namespace RPG_Paper_Maker
         public void SavePortions()
         {
             if (PortionsToSave.Count > 0 && WANOK.DialogProgressBar != null && DrawMode == DrawMode.Tin) WANOK.DialogProgressBar.SetValue("Saving...", 100);
-            for (int i = 0; i < PortionsToSave.Count; i++)
+            foreach (int[] portion in PortionsToSave)
             {
-                int x = PortionsToSave[i][0] + (CursorEditor.GetX() / WANOK.PORTION_SIZE);
-                int y = PortionsToSave[i][1] + (CursorEditor.GetZ() / WANOK.PORTION_SIZE);
+                int x = portion[0] + (CursorEditor.GetX() / WANOK.PORTION_SIZE);
+                int y = portion[1] + (CursorEditor.GetZ() / WANOK.PORTION_SIZE);
                 string path = Path.Combine(WANOK.MapsDirectoryPath, Map.MapInfos.RealMapName, "temp", x + "-" + y + ".pmap");
 
-                if (((Map.Portions[PortionsToSave[i]] != null) && Map.Portions[PortionsToSave[i]].IsEmpty()) || Map.Portions[PortionsToSave[i]] == null)
+                if (((Map.Portions[portion] != null) && Map.Portions[portion].IsEmpty()) || Map.Portions[portion] == null)
                 {
-                    Map.Portions[PortionsToSave[i]] = null;
+                    Map.Portions[portion] = null;
                     if (File.Exists(path)) File.Delete(path);
                 }
                 else
                 {
-                    WANOK.SaveBinaryDatas(Map.Portions[PortionsToSave[i]], path);
+                    WANOK.SaveBinaryDatas(Map.Portions[portion], path);
                 }
             }
         }

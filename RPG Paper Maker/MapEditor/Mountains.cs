@@ -81,12 +81,15 @@ namespace RPG_Paper_Maker
                     offset += vertexPositionTextures.Count;
                 }
 
-                VerticesArray = verticesList.ToArray();
-                IndexesArray = indexesList.ToArray();
-                IB = new IndexBuffer(device, IndexElementSize.ThirtyTwoBits, IndexesArray.Length, BufferUsage.None);
-                IB.SetData(IndexesArray);
-                VB = new VertexBuffer(device, VertexPositionTexture.VertexDeclaration, VerticesArray.Length, BufferUsage.None);
-                VB.SetData(VerticesArray);
+                if (verticesList.Count > 0)
+                {
+                    VerticesArray = verticesList.ToArray();
+                    IndexesArray = indexesList.ToArray();
+                    IB = new IndexBuffer(device, IndexElementSize.ThirtyTwoBits, IndexesArray.Length, BufferUsage.None);
+                    IB.SetData(IndexesArray);
+                    VB = new VertexBuffer(device, VertexPositionTexture.VertexDeclaration, VerticesArray.Length, BufferUsage.None);
+                    VB.SetData(VerticesArray);
+                }
             }
 
             // -------------------------------------------------------------------
@@ -218,27 +221,27 @@ namespace RPG_Paper_Maker
         // ContainsInGroup
         // -------------------------------------------------------------------
 
-        public bool ContainsInGroup(int[] coords)
+        public object[] ContainsInGroup(int[] coords)
         {
             foreach (int id in Groups.Keys)
             {
-                if (Groups[id].Tiles.ContainsKey(coords)) return true;
+                if (Groups[id].Tiles.ContainsKey(coords)) return new object[] { id, Groups[id].Tiles[coords] };
             }
 
-            return false;
+            return null;
         }
 
         // -------------------------------------------------------------------
         // Add
         // -------------------------------------------------------------------
 
-        public void Add(int[] coords, int id, bool update = true)
+        public void Add(int[] coords, int id, int height, bool update = true)
         {
-            if (!ContainsInGroup(coords))
+            if (!Groups.ContainsKey(id)) Groups[id] = new MountainsGroup();
+            if (!Groups[id].Tiles.ContainsKey(coords))
             {
-                if (!Groups.ContainsKey(id)) Groups[id] = new MountainsGroup();
                 Groups[id].Tiles[coords] = new Mountain();
-                UpdateAround(coords[0], coords[1], coords[2], coords[3], update);
+                UpdateAround(coords[0], coords[1], coords[2], coords[3], height, update);
             }
         }
 
@@ -246,12 +249,12 @@ namespace RPG_Paper_Maker
         // Remove
         // -------------------------------------------------------------------
 
-        public void Remove(int[] coords, int id, bool update = true)
+        public void Remove(int[] coords, int id, int height, bool update = true)
         {
-            if (ContainsInGroup(coords) && Groups.ContainsKey(id))
+            if (Groups.ContainsKey(id) && Groups[id].Tiles.ContainsKey(coords))
             {
                 Groups[id].Tiles.Remove(coords);
-                UpdateAround(coords[0], coords[1], coords[2], coords[3], update);
+                UpdateAround(coords[0], coords[1], coords[2], coords[3], height, update);
             }
         }
 
@@ -259,7 +262,7 @@ namespace RPG_Paper_Maker
         // UpdateAround
         // -------------------------------------------------------------------
 
-        public void UpdateAround(int x, int y1, int y2, int z, bool update)
+        public void UpdateAround(int x, int y1, int y2, int z, int height, bool update)
         {
             int[] portion = MapEditor.Control.GetPortion(x, z); // portion where you are setting autotile
             for (int X = x - 1; X <= x + 1; X++)
@@ -267,19 +270,19 @@ namespace RPG_Paper_Maker
                 for (int Z = z - 1; Z <= z + 1; Z++)
                 {
                     int[] coords = new int[] { X, y1, y2, Z };
-                    Mountain mountainAround = TileOnWhatever(coords);
+                    Mountain mountainAround = TileOnWhatever(coords, height);
                     if (mountainAround != null)
                     {
-                        if (update) mountainAround.Update(this, coords, portion);
+                        if (update) mountainAround.Update(this, coords, portion, height);
                         else
                         {
                             int[] newPortion = MapEditor.Control.GetPortion(X, Z);
                             if (WANOK.IsInPortions(newPortion))
                             {
-                                //MapEditor.Control.AddPortionsAutotileToUpdate(newPortion);
+                                MapEditor.Control.AddPortionsMountainToUpdate(newPortion);
                                 WANOK.AddPortionsToAddCancel(MapEditor.Control.Map.MapInfos.RealMapName, MapEditor.Control.GetGlobalPortion(newPortion));
                             }
-                            else mountainAround.Update(this, coords, portion);
+                            else mountainAround.Update(this, coords, portion, height);
                         }
                     }
                 }
@@ -290,34 +293,34 @@ namespace RPG_Paper_Maker
         // TILES
         // -------------------------------------------------------------------
 
-        public bool TileOnLeft(int[] coords, int[] portion)
+        public bool TileOnLeft(int[] coords, int[] portion, int height)
         {
-            return TileOnWhatever(new int[] { coords[0] - 1, coords[1], coords[2], coords[3] }) != null;
+            return TileOnWhatever(new int[] { coords[0] - 1, coords[1], coords[2], coords[3] }, height) != null;
         }
 
-        public bool TileOnRight(int[] coords, int[] portion)
+        public bool TileOnRight(int[] coords, int[] portion, int height)
         {
-            return TileOnWhatever(new int[] { coords[0] + 1, coords[1], coords[2], coords[3] }) != null;
+            return TileOnWhatever(new int[] { coords[0] + 1, coords[1], coords[2], coords[3] }, height) != null;
         }
 
-        public bool TileOnTop(int[] coords, int[] portion)
+        public bool TileOnTop(int[] coords, int[] portion, int height)
         {
-            return TileOnWhatever(new int[] { coords[0], coords[1], coords[2], coords[3] - 1 }) != null;
+            return TileOnWhatever(new int[] { coords[0], coords[1], coords[2], coords[3] - 1 }, height) != null;
         }
 
-        public bool TileOnBottom(int[] coords, int[] portion)
+        public bool TileOnBottom(int[] coords, int[] portion, int height)
         {
-            return TileOnWhatever(new int[] { coords[0], coords[1], coords[2], coords[3] + 1 }) != null;
+            return TileOnWhatever(new int[] { coords[0], coords[1], coords[2], coords[3] + 1 }, height) != null;
         }
 
-        public Mountain TileOnWhatever(int[] coords)
+        public Mountain TileOnWhatever(int[] coords, int height)
         {
             int[] portion = MapEditor.Control.GetPortion(coords[0], coords[3]);
             if (MapEditor.Control.Map.Portions.ContainsKey(portion))
             {
-                if (MapEditor.Control.Map.Portions[portion] != null && MapEditor.Control.Map.Portions[portion].Mountains.ContainsKey(new int[] { 0, 0 }))
+                if (MapEditor.Control.Map.Portions[portion] != null && MapEditor.Control.Map.Portions[portion].Mountains.ContainsKey(height))
                 {
-                    foreach(MountainsGroup mountains in MapEditor.Control.Map.Portions[portion].Mountains[new int[] { 0, 0 }].Groups.Values)
+                    foreach(MountainsGroup mountains in MapEditor.Control.Map.Portions[portion].Mountains[height].Groups.Values)
                     {
                         if (mountains.Tiles.ContainsKey(coords)) return mountains.Tiles[coords];
                     }

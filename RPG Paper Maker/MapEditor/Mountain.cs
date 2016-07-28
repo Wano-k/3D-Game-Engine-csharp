@@ -40,12 +40,12 @@ namespace RPG_Paper_Maker
         // Update
         // -------------------------------------------------------------------
 
-        public void Update(Mountains mountains, int[] coords, int[] portion)
+        public void Update(Mountains mountains, int[] coords, int[] portion, int height)
         {
-            if (mountains.TileOnTop(coords, portion)) DrawTop = false;
-            if (mountains.TileOnBottom(coords, portion)) DrawBot = false;
-            if (mountains.TileOnLeft(coords, portion)) DrawLeft = false;
-            if (mountains.TileOnRight(coords, portion)) DrawRight = false;
+            if (mountains.TileOnTop(coords, portion, height)) DrawTop = false;
+            if (mountains.TileOnBottom(coords, portion, height)) DrawBot = false;
+            if (mountains.TileOnLeft(coords, portion, height)) DrawLeft = false;
+            if (mountains.TileOnRight(coords, portion, height)) DrawRight = false;
 
             // Update & save update
             int[] portionToUpdate = MapEditor.Control.GetPortion(coords[0], coords[3]);
