@@ -63,26 +63,22 @@ namespace RPG_Paper_Maker
             {
                 List<VertexPositionTexture> verticesList = new List<VertexPositionTexture>();
                 List<int> indexesList = new List<int>();
-                int[] indexes = new int[]
-                {
-                    0, 1, 2, 0, 2, 3,
-                    4, 5, 6, 4, 6, 7,
-                    8, 9, 10, 8, 10, 11,
-                    12, 13, 14, 12, 14, 15,
-                };
+                int[] indexes = new int[] { 0, 1, 2, 0, 2, 3 };
                 int offset = 0;
 
                 foreach (KeyValuePair<int[], Mountain> entry in Tiles)
                 {
-                    foreach (VertexPositionTexture vertex in CreateTex(MapEditor.TexReliefs[id], entry.Key, entry.Value))
+                    List<VertexPositionTexture> vertexPositionTextures = CreateTex(MapEditor.TexReliefs[id], entry.Key, entry.Value);
+                    foreach (VertexPositionTexture vertex in vertexPositionTextures)
                     {
                         verticesList.Add(vertex);
                     }
-                    for (int n = 0; n < 24; n++)
+                    int count = vertexPositionTextures.Count * indexes.Length / 4;
+                    for (int n = 0; n < count; n++)
                     {
-                        indexesList.Add(indexes[n] + offset);
+                        indexesList.Add(indexes[n % indexes.Length] + (n / indexes.Length * 4) + offset);
                     }
-                    offset += 16;
+                    offset += vertexPositionTextures.Count;
                 }
 
                 VerticesArray = verticesList.ToArray();
@@ -97,7 +93,7 @@ namespace RPG_Paper_Maker
             // CreateTex
             // -------------------------------------------------------------------
 
-            protected VertexPositionTexture[] CreateTex(Texture2D texture, int[] coords, Mountain mountain)
+            protected List<VertexPositionTexture> CreateTex(Texture2D texture, int[] coords, Mountain mountain)
             {
                 int x = coords[0], y = coords[1] * WANOK.SQUARE_SIZE + coords[2], z = coords[3];
 
@@ -115,26 +111,37 @@ namespace RPG_Paper_Maker
                 top += height / WANOK.COEF_BORDER_TEX;
                 bot -= height / WANOK.COEF_BORDER_TEX;
 
-                // Vertex Position and Texture
-                return new VertexPositionTexture[]
+                List<VertexPositionTexture> res = new List<VertexPositionTexture>();
+                if (mountain.DrawTop)
                 {
-                    new VertexPositionTexture(new Vector3(x, y + WANOK.SQUARE_SIZE, z), new Vector2(left, top)),
-                    new VertexPositionTexture(new Vector3(x + 1, y + WANOK.SQUARE_SIZE, z), new Vector2(right, top)),
-                    new VertexPositionTexture(new Vector3(x + 1, y, z), new Vector2(right, bot)),
-                    new VertexPositionTexture(new Vector3(x, y, z), new Vector2(left, bot)),
-                    new VertexPositionTexture(new Vector3(x, y + WANOK.SQUARE_SIZE, z + 1), new Vector2(left, top)),
-                    new VertexPositionTexture(new Vector3(x + 1, y + WANOK.SQUARE_SIZE, z + 1), new Vector2(right, top)),
-                    new VertexPositionTexture(new Vector3(x + 1, y, z + 1), new Vector2(right, bot)),
-                    new VertexPositionTexture(new Vector3(x, y, z + 1), new Vector2(left, bot)),
-                    new VertexPositionTexture(new Vector3(x, y + WANOK.SQUARE_SIZE, z), new Vector2(left, top)),
-                    new VertexPositionTexture(new Vector3(x, y + WANOK.SQUARE_SIZE, z + 1), new Vector2(right, top)),
-                    new VertexPositionTexture(new Vector3(x, y, z + 1), new Vector2(right, bot)),
-                    new VertexPositionTexture(new Vector3(x, y, z), new Vector2(left, bot)),
-                    new VertexPositionTexture(new Vector3(x + 1, y + WANOK.SQUARE_SIZE, z), new Vector2(left, top)),
-                    new VertexPositionTexture(new Vector3(x + 1, y + WANOK.SQUARE_SIZE, z + 1), new Vector2(right, top)),
-                    new VertexPositionTexture(new Vector3(x + 1, y, z + 1), new Vector2(right, bot)),
-                    new VertexPositionTexture(new Vector3(x + 1, y, z), new Vector2(left, bot))
-                };
+                    res.Add(new VertexPositionTexture(new Vector3(x, y + WANOK.SQUARE_SIZE, z), new Vector2(left, top)));
+                    res.Add(new VertexPositionTexture(new Vector3(x + 1, y + WANOK.SQUARE_SIZE, z), new Vector2(right, top)));
+                    res.Add(new VertexPositionTexture(new Vector3(x + 1, y, z), new Vector2(right, bot)));
+                    res.Add(new VertexPositionTexture(new Vector3(x, y, z), new Vector2(left, bot)));
+                }
+                if (mountain.DrawBot)
+                {
+                    res.Add(new VertexPositionTexture(new Vector3(x, y + WANOK.SQUARE_SIZE, z + 1), new Vector2(left, top)));
+                    res.Add(new VertexPositionTexture(new Vector3(x + 1, y + WANOK.SQUARE_SIZE, z + 1), new Vector2(right, top)));
+                    res.Add(new VertexPositionTexture(new Vector3(x + 1, y, z + 1), new Vector2(right, bot)));
+                    res.Add(new VertexPositionTexture(new Vector3(x, y, z + 1), new Vector2(left, bot)));
+                }
+                if (mountain.DrawLeft)
+                {
+                    res.Add(new VertexPositionTexture(new Vector3(x, y + WANOK.SQUARE_SIZE, z), new Vector2(left, top)));
+                    res.Add(new VertexPositionTexture(new Vector3(x, y + WANOK.SQUARE_SIZE, z + 1), new Vector2(right, top)));
+                    res.Add(new VertexPositionTexture(new Vector3(x, y, z + 1), new Vector2(right, bot)));
+                    res.Add(new VertexPositionTexture(new Vector3(x, y, z), new Vector2(left, bot)));
+                }
+                if (mountain.DrawRight)
+                {
+                    res.Add(new VertexPositionTexture(new Vector3(x + 1, y + WANOK.SQUARE_SIZE, z), new Vector2(left, top)));
+                    res.Add(new VertexPositionTexture(new Vector3(x + 1, y + WANOK.SQUARE_SIZE, z + 1), new Vector2(right, top)));
+                    res.Add(new VertexPositionTexture(new Vector3(x + 1, y, z + 1), new Vector2(right, bot)));
+                    res.Add(new VertexPositionTexture(new Vector3(x + 1, y, z), new Vector2(left, bot)));
+                }
+
+                return res;
             }
 
             // -------------------------------------------------------------------
@@ -231,6 +238,95 @@ namespace RPG_Paper_Maker
             {
                 if (!Groups.ContainsKey(id)) Groups[id] = new MountainsGroup();
                 Groups[id].Tiles[coords] = new Mountain();
+                UpdateAround(coords[0], coords[1], coords[2], coords[3], update);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // Remove
+        // -------------------------------------------------------------------
+
+        public void Remove(int[] coords, int id, bool update = true)
+        {
+            if (ContainsInGroup(coords) && Groups.ContainsKey(id))
+            {
+                Groups[id].Tiles.Remove(coords);
+                UpdateAround(coords[0], coords[1], coords[2], coords[3], update);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // UpdateAround
+        // -------------------------------------------------------------------
+
+        public void UpdateAround(int x, int y1, int y2, int z, bool update)
+        {
+            int[] portion = MapEditor.Control.GetPortion(x, z); // portion where you are setting autotile
+            for (int X = x - 1; X <= x + 1; X++)
+            {
+                for (int Z = z - 1; Z <= z + 1; Z++)
+                {
+                    int[] coords = new int[] { X, y1, y2, Z };
+                    Mountain mountainAround = TileOnWhatever(coords);
+                    if (mountainAround != null)
+                    {
+                        if (update) mountainAround.Update(this, coords, portion);
+                        else
+                        {
+                            int[] newPortion = MapEditor.Control.GetPortion(X, Z);
+                            if (WANOK.IsInPortions(newPortion))
+                            {
+                                //MapEditor.Control.AddPortionsAutotileToUpdate(newPortion);
+                                WANOK.AddPortionsToAddCancel(MapEditor.Control.Map.MapInfos.RealMapName, MapEditor.Control.GetGlobalPortion(newPortion));
+                            }
+                            else mountainAround.Update(this, coords, portion);
+                        }
+                    }
+                }
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // TILES
+        // -------------------------------------------------------------------
+
+        public bool TileOnLeft(int[] coords, int[] portion)
+        {
+            return TileOnWhatever(new int[] { coords[0] - 1, coords[1], coords[2], coords[3] }) != null;
+        }
+
+        public bool TileOnRight(int[] coords, int[] portion)
+        {
+            return TileOnWhatever(new int[] { coords[0] + 1, coords[1], coords[2], coords[3] }) != null;
+        }
+
+        public bool TileOnTop(int[] coords, int[] portion)
+        {
+            return TileOnWhatever(new int[] { coords[0], coords[1], coords[2], coords[3] - 1 }) != null;
+        }
+
+        public bool TileOnBottom(int[] coords, int[] portion)
+        {
+            return TileOnWhatever(new int[] { coords[0], coords[1], coords[2], coords[3] + 1 }) != null;
+        }
+
+        public Mountain TileOnWhatever(int[] coords)
+        {
+            int[] portion = MapEditor.Control.GetPortion(coords[0], coords[3]);
+            if (MapEditor.Control.Map.Portions.ContainsKey(portion))
+            {
+                if (MapEditor.Control.Map.Portions[portion] != null && MapEditor.Control.Map.Portions[portion].Mountains.ContainsKey(new int[] { 0, 0 }))
+                {
+                    foreach(MountainsGroup mountains in MapEditor.Control.Map.Portions[portion].Mountains[new int[] { 0, 0 }].Groups.Values)
+                    {
+                        if (mountains.Tiles.ContainsKey(coords)) return mountains.Tiles[coords];
+                    }
+                }
+                return null;
+            }
+            else
+            {
+                return null;
             }
         }
 

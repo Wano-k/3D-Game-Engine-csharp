@@ -245,7 +245,7 @@ namespace RPG_Paper_Maker
                 for (int j = -WANOK.PORTION_RADIUS; j <= WANOK.PORTION_RADIUS; j++)
                 {
                     GameMapPortion gameMap = Portions[new int[] { i, j }];
-                    if (gameMap != null) gameMap.Draw(Device, effect, MapEditor.TexTileset, camera, true);
+                    if (gameMap != null) gameMap.Draw(Device, effect, MapEditor.TexTileset, camera);
                 }
             }
             

@@ -248,11 +248,11 @@ namespace RPG_Paper_Maker
 
         public bool AddMountain(int[] coords, int newId)
         {
-            bool modified = false;
+            bool modified = true;
 
             if (!Mountains.ContainsKey(new int[] { 0, 0 })) Mountains[new int[] { 0, 0 }] = new Mountains();
             Mountains[new int[] { 0, 0 }].Add(coords, newId);
-            AddFloor(new int[] { coords[0], coords[1] + 1, coords[2], coords[3] }, new int[] { 0, 0, 1, 1 });
+            //AddFloor(new int[] { coords[0], coords[1] + 1, coords[2], coords[3] }, new int[] { 0, 0, 1, 1 });
 
 
             return modified;
@@ -375,20 +375,13 @@ namespace RPG_Paper_Maker
         // Draw
         // -------------------------------------------------------------------
 
-        public void Draw(GraphicsDevice device, AlphaTestEffect effect, Texture2D texture, Camera camera, bool drawOthers)
+        public void Draw(GraphicsDevice device, AlphaTestEffect effect, Texture2D texture, Camera camera)
         {
             // Drawing Sprites & montains
-            if (drawOthers)
+            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
+            foreach (Mountains mountains in Mountains.Values)
             {
-                foreach (KeyValuePair<int[], Sprites> entry in Sprites)
-                {
-                    entry.Value.Draw(device, effect, camera, entry.Key[2], entry.Key[3]);
-                }
-                effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
-                foreach (Mountains mountains in Mountains.Values)
-                {
-                    mountains.Draw(device, effect);
-                }
+                mountains.Draw(device, effect);
             }
 
             effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
@@ -411,6 +404,11 @@ namespace RPG_Paper_Maker
             foreach (KeyValuePair<int, Autotiles> entry in Autotiles)
             {
                 entry.Value.Draw(device, effect);
+            }
+
+            foreach (KeyValuePair<int[], Sprites> entry in Sprites)
+            {
+                entry.Value.Draw(device, effect, camera, entry.Key[2], entry.Key[3]);
             }
         }
 
