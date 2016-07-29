@@ -18,6 +18,7 @@ namespace RPG_Paper_Maker
         TableLayoutPanel RadioPanel = new TableLayoutPanel();
         Dictionary<DrawType, RadioButton> Radios = new Dictionary<DrawType, RadioButton>();
         TextBoxVariables TextBoxVariable = new TextBoxVariables();
+        ImageComboBox ComboBoxAutotile = new ImageComboBox();
         Tileset Tileset;
 
 
@@ -29,6 +30,8 @@ namespace RPG_Paper_Maker
         {
             Tileset = tileset;
             TextBoxVariable.InitializeParameters(new object[] { 0, 0, 1, 1 }, new object[] { Tileset.Graphic }, typeof(DialogTileset), WANOK.GetStringTileset);
+            ComboBoxAutotile.Dock = DockStyle.Fill;
+            ComboBoxAutotile.FillComboBox(Tileset.Autotiles, WANOK.SystemDatas.GetAutotileById, WANOK.SystemDatas.GetAutotileIndexById, 1);
             ListBoxesCanceling.Add(TextBoxVariable.GetTextBox());
             for (int i = 0; i < ListBoxesCanceling.Count; i++)
             {
@@ -77,7 +80,7 @@ namespace RPG_Paper_Maker
             RadioPanel.Controls.Add(Radios[DrawType.Water], 0, 3);
             RadioPanel.Controls.Add(new Panel(), 1, 0);
             RadioPanel.Controls.Add(TextBoxVariable, 1, 1);
-            RadioPanel.Controls.Add(new Panel(), 1, 2);
+            RadioPanel.Controls.Add(ComboBoxAutotile, 1, 2);
             RadioPanel.Controls.Add(new Panel(), 1, 3);
             RadioPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25));
             RadioPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25));
@@ -114,7 +117,8 @@ namespace RPG_Paper_Maker
             Radios[DrawType.Floors].CheckedChanged += RadioCheckedFloor;
             Radios[DrawType.Autotiles].CheckedChanged += RadioCheckedAutotile;
             Radios[DrawType.Water].CheckedChanged += RadioCheckedWater;
-            
+            ComboBoxAutotile.SelectedIndexChanged += ComboBoxAutotileSelectedIndexChanged;
+
             UnselectAllLists();
         }
 
@@ -135,9 +139,13 @@ namespace RPG_Paper_Maker
         {
             Radios[DrawType.Water].Enabled = false;
             TextBoxVariable.Enabled = false;
+            ComboBoxAutotile.Enabled = false;
 
             if (drawType == DrawType.Floors) TextBoxVariable.Enabled = true;
+            if (drawType == DrawType.Autotiles) ComboBoxAutotile.Enabled = true;
             SystemRelief relief = (SystemRelief)listBoxComplete.GetListBox().SelectedItem;
+            if (drawType == DrawType.Floors) relief.TopTexture = TextBoxVariable.Value;
+            if (drawType == DrawType.Autotiles) relief.TopTexture = new object[] { Tileset.Autotiles[ComboBoxAutotile.SelectedIndex] };
             relief.TopDrawType = drawType;
 
             /*
@@ -165,6 +173,11 @@ namespace RPG_Paper_Maker
 
                 if (relief.TopDrawType == DrawType.Floors) TextBoxVariable.InitializeParameters(relief.TopTexture, new object[] { Tileset.Graphic }, typeof(DialogTileset), WANOK.GetStringTileset);
                 else TextBoxVariable.InitializeParameters(new object[] { 0, 0, 1, 1 }, new object[] { Tileset.Graphic }, typeof(DialogTileset), WANOK.GetStringTileset);
+                if (relief.TopDrawType == DrawType.Autotiles)
+                {
+                    ComboBoxAutotile.SelectedIndex = WANOK.SystemDatas.GetAutotileIndexById((int)relief.TopTexture[0]);
+                }
+                else ComboBoxAutotile.SelectedIndex = 0;
                 /*
                 if (relief.TopDrawType == DrawType.Floors) TextBoxVariables[DrawType.Floors].InitializeParameters(relief.TopTexture, new object[] { Tileset.Graphic }, typeof(DialogTileset), WANOK.GetStringTileset);
                 else TextBoxVariables[DrawType.Floors].InitializeParameters(new object[] { 0, 0, 1, 1 }, new object[] { Tileset.Graphic }, typeof(DialogTileset), WANOK.GetStringTileset);
@@ -210,6 +223,12 @@ namespace RPG_Paper_Maker
         private void RadioCheckedWater(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked == true) RadioSelect(DrawType.Water);
+        }
+
+        private void ComboBoxAutotileSelectedIndexChanged(object sender, EventArgs e)
+        {
+            SystemRelief relief = (SystemRelief)listBoxComplete.GetListBox().SelectedItem;
+            relief.TopTexture = new object[] { Tileset.Autotiles[ComboBoxAutotile.SelectedIndex] };
         }
     }
 }

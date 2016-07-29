@@ -18,6 +18,9 @@ using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
+    public delegate ComboxBoxSpecialTilesetItem MethodGetSuperItemById(int id);
+    public delegate int MethodGetIndexById(int id);
+
     public partial class MainForm : Form
     {
         [System.Runtime.InteropServices.DllImport("user32.dll")]
@@ -38,10 +41,6 @@ namespace RPG_Paper_Maker
         public bool IsInItemHeightPixel = false;
         public bool IsInItemHeightSquareMountain = false;
         public bool IsInItemHeightPixelMountain = false;
-
-        // Methods
-        public delegate ComboxBoxSpecialTilesetItem MethodGetSuperItemById(int id);
-        public delegate int MethodGetIndexById(int id);
 
         // -------------------------------------------------------------------
         // Constructor
@@ -1342,22 +1341,8 @@ namespace RPG_Paper_Maker
 
         public void FillComboBox(List<int> list, MethodGetSuperItemById getById, MethodGetIndexById getIndexById)
         {
-            for (int i = 0; i < list.Count; i++)
-            {
-                ComboxBoxSpecialTilesetItem item = getById(list[i]);
-                ComboBoxSpecialTileset1.Items.Add(new DropDownItem(WANOK.GetStringComboBox(item.Id, item.Name), item.Graphic.LoadImage()));
-            }
-            int id = getIndexById(MapEditor.GetCurrentSpecialItemId());
-            if (ComboBoxSpecialTileset1.Items.Count > 0)
-            {
-
-                if (id >= 0 && id < ComboBoxSpecialTileset1.Items.Count) ComboBoxSpecialTileset1.SelectedIndex = id;
-                else
-                {
-                    ComboBoxSpecialTileset1.SelectedIndex = 0;
-                    MapEditor.SetCurrentSpecialItemId(list[0]);
-                }
-            }
+            ComboBoxSpecialTileset1.FillComboBox(list, getById, getIndexById, MapEditor.GetCurrentSpecialItemId());
+            if (ComboBoxSpecialTileset1.SelectedIndex == 0) MapEditor.SetCurrentSpecialItemId(list[0]);
             PictureBoxSpecialTileset.LoadTexture(getById(MapEditor.GetCurrentSpecialItemId()).Graphic);
         }
 

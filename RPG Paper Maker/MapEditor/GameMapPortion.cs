@@ -289,6 +289,9 @@ namespace RPG_Paper_Maker
                 case DrawType.Floors:
                     AddFloor(new int[] { coords[0], coords[1] + 1, coords[2], coords[3] }, new int[] { (int)relief.TopTexture[0], (int)relief.TopTexture[1], (int)relief.TopTexture[2], (int)relief.TopTexture[3] });
                     break;
+                case DrawType.Autotiles:
+                    AddAutotile(new int[] { coords[0], coords[1] + 1, coords[2], coords[3] }, (int)relief.TopTexture[0], true);
+                    break;
             }
 
 

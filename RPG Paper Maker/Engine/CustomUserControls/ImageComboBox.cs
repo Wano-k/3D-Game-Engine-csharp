@@ -16,6 +16,25 @@ namespace RPG_Paper_Maker
             DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
+        public void FillComboBox(List<int> list, MethodGetSuperItemById getById, MethodGetIndexById getIndexById, int currentId)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                ComboxBoxSpecialTilesetItem item = getById(list[i]);
+                Items.Add(new DropDownItem(WANOK.GetStringComboBox(item.Id, item.Name), item.Graphic.LoadImage()));
+            }
+            int id = getIndexById(currentId);
+            if (Items.Count > 0)
+            {
+
+                if (id >= 0 && id < Items.Count) SelectedIndex = id;
+                else
+                {
+                    SelectedIndex = 0;
+                }
+            }
+        }
+
         protected override void OnDrawItem(DrawItemEventArgs e)
         {
             e.DrawBackground();
