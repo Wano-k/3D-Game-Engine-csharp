@@ -12,6 +12,12 @@ namespace RPG_Paper_Maker
         public abstract SuperListItem GetObject();
     }
 
+    public abstract class DialogVariable : Form
+    {
+        public abstract object[] GetObject();
+        public abstract void InitializeParameters(object[] value, object[] others);
+    }
+
     [Serializable]
     public abstract class SuperListItem
     {

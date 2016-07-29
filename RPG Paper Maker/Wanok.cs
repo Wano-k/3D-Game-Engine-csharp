@@ -371,7 +371,7 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // GetStringList
+        // GetStrings
         // -------------------------------------------------------------------
 
         public static string GetStringList(int id, string name)
@@ -379,22 +379,19 @@ namespace RPG_Paper_Maker
             return string.Format("{0} {1}", GetStringBegining(id), name);
         }
 
-        // -------------------------------------------------------------------
-        // GetStringComboBox
-        // -------------------------------------------------------------------
-
         public static string GetStringComboBox(int id, string name)
         {
             return string.Format("ID{0:D4}: {1}", id, name);
         }
 
-        // -------------------------------------------------------------------
-        // GetStringComboBox
-        // -------------------------------------------------------------------
-
         public static string GetStringBegining(int id)
         {
             return string.Format("{0}ID{1:D4}:", ListBeginning, id);
+        }
+
+        public static string GetStringTileset(object[] args)
+        {
+            return args[0] + ", " + args[1] + ", " + args[2] + ", " + args[3];
         }
 
         // -------------------------------------------------------------------

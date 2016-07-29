@@ -90,7 +90,7 @@ namespace RPG_Paper_Maker
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems[0].Text != WANOK.NONE_IMAGE_STRING)
+            if (listView1.SelectedItems.Count == 1 && listView1.SelectedItems[0].Text != WANOK.NONE_IMAGE_STRING)
             {
                 string path = listView1.SelectedItems[0].ImageIndex == 0 ? Control.Model.GetLocalPath(listView1.SelectedItems[0].Text) : Control.Model.GetRTPPath(listView1.SelectedItems[0].Text);
                 Image image;

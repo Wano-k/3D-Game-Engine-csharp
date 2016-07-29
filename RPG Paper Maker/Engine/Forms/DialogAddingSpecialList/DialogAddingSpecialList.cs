@@ -13,7 +13,7 @@ namespace RPG_Paper_Maker
     public partial class DialogAddingSpecialList : Form
     {
         public Type Type;
-        public ListBox[] ListBoxesCanceling, ListBoxes;
+        public List<ListBox> ListBoxesCanceling, ListBoxes;
         public System.Timers.Timer DragTimer = new System.Timers.Timer(20);
         public bool CanDrag = false;
 
@@ -28,19 +28,19 @@ namespace RPG_Paper_Maker
 
             Text = text;
             Type = type;
-            ListBoxesCanceling = new ListBox[] { textBoxGraphic.GetTextBox(), listBoxTileset };
-            ListBoxes = new ListBox[] { listBoxComplete.GetListBox() };
+            ListBoxesCanceling = new List<ListBox>(new ListBox[] { textBoxGraphic.GetTextBox(), listBoxTileset });
+            ListBoxes = new List<ListBox>(new ListBox[] { listBoxComplete.GetListBox() });
 
             // Paint groupBox
             groupBox1.Paint += MainForm.PaintBorderGroupBox;
             groupBox2.Paint += MainForm.PaintBorderGroupBox;
 
             // list event handlers
-            for (int i = 0; i < ListBoxesCanceling.Length; i++)
+            for (int i = 0; i < ListBoxesCanceling.Count; i++)
             {
                 ListBoxesCanceling[i].MouseClick += listBox_MouseClick;
             }
-            for (int i = 0; i < ListBoxes.Length; i++)
+            for (int i = 0; i < ListBoxes.Count; i++)
             {
                 ListBoxes[i].MouseClick += listBox_MouseClick;
             }
@@ -69,7 +69,7 @@ namespace RPG_Paper_Maker
 
         public void UnselectAllCancelingLists()
         {
-            for (int i = 0; i < ListBoxesCanceling.Length; i++)
+            for (int i = 0; i < ListBoxesCanceling.Count; i++)
             {
                 ListBoxesCanceling[i].ClearSelected();
             }
@@ -82,7 +82,7 @@ namespace RPG_Paper_Maker
         public void UnselectAllLists()
         {
             UnselectAllCancelingLists();
-            for (int i = 0; i < ListBoxes.Length; i++)
+            for (int i = 0; i < ListBoxes.Count; i++)
             {
                 ListBoxes[i].SelectedIndex = 0;
             }

@@ -186,7 +186,7 @@ namespace RPG_Paper_Maker
         private void listBoxRelief_Click(object sender, EventArgs e)
         {
             Tileset tileset = (Tileset)listBoxTilesets.GetListBox().SelectedItem;
-            DialogAddingReliefsList dialog = new DialogAddingReliefsList("Choose relief", Control.ModelSystem, tileset.Reliefs);
+            DialogAddingReliefsList dialog = new DialogAddingReliefsList("Choose relief", Control.ModelSystem, tileset);
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 Control.ModelSystem.Reliefs = dialog.GetListReliefs();

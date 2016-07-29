@@ -107,6 +107,12 @@
     <Compile Include="Engine\CustomUserControls\AddingListBox.Designer.cs">
       <DependentUpon>AddingListBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\CustomUserControls\TextBoxVariables.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Engine\CustomUserControls\TextBoxVariables.Designer.cs">
+      <DependentUpon>TextBoxVariables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Engine\CustomUserControls\TextBoxGraphic.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -193,6 +199,12 @@
     <Compile Include="Engine\Forms\DialogProgressBar\DialogProgressBar.Designer.cs">
       <DependentUpon>DialogProgressBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\Forms\DialogTileset\DialogTileset.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogTileset\DialogTileset.Designer.cs">
+      <DependentUpon>DialogTileset.cs</DependentUpon>
+    </Compile>
     <Compile Include="Engine\Models\SystemRelief.cs" />
     <Compile Include="MapEditor\Autotile.cs" />
     <Compile Include="MapEditor\Autotiles.cs" />
@@ -256,7 +268,7 @@
     <Compile Include="Engine\Models\SystemGraphic.cs" />
     <Compile Include="Engine\Models\Tileset.cs" />
     <Compile Include="Engine\Models\TilesetPassage.cs" />
-    <Compile Include="Engine\SuperListDialog.cs">
+    <Compile Include="Engine\CustomUserControls\SuperListDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Engine\CustomUserControls\TextBoxLang.cs">
@@ -311,6 +323,9 @@
     <EmbeddedResource Include="Engine\CustomUserControls\AddingListBox.resx">
       <DependentUpon>AddingListBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Engine\CustomUserControls\TextBoxVariables.resx">
+      <DependentUpon>TextBoxVariables.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Engine\CustomUserControls\TextBoxGraphic.resx">
       <DependentUpon>TextBoxGraphic.cs</DependentUpon>
     </EmbeddedResource>
@@ -361,6 +376,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogProgressBar\DialogProgressBar.resx">
       <DependentUpon>DialogProgressBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogTileset\DialogTileset.resx">
+      <DependentUpon>DialogTileset.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\MainForm\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
