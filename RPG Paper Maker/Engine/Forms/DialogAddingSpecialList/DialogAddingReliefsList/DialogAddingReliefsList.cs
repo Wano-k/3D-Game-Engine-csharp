@@ -20,6 +20,7 @@ namespace RPG_Paper_Maker
         TextBoxVariables TextBoxVariable = new TextBoxVariables();
         ImageComboBox ComboBoxAutotile = new ImageComboBox();
         Tileset Tileset;
+        SystemDatas Model;
 
 
         // -------------------------------------------------------------------
@@ -29,9 +30,10 @@ namespace RPG_Paper_Maker
         public DialogAddingReliefsList(string text, SystemDatas model, Tileset tileset) : base(text, model, tileset.Reliefs, typeof(SystemRelief))
         {
             Tileset = tileset;
+            Model = model;
             TextBoxVariable.InitializeParameters(new object[] { 0, 0, 1, 1 }, new object[] { Tileset.Graphic }, typeof(DialogTileset), WANOK.GetStringTileset);
             ComboBoxAutotile.Dock = DockStyle.Fill;
-            ComboBoxAutotile.FillComboBox(Tileset.Autotiles, WANOK.SystemDatas.GetAutotileById, WANOK.SystemDatas.GetAutotileIndexById, 1);
+            ComboBoxAutotile.FillComboBox(Tileset.Autotiles, Model.GetAutotileById, Model.GetAutotileIndexById, 0);
             ListBoxesCanceling.Add(TextBoxVariable.GetTextBox());
             for (int i = 0; i < ListBoxesCanceling.Count; i++)
             {
@@ -145,7 +147,11 @@ namespace RPG_Paper_Maker
             if (drawType == DrawType.Autotiles) ComboBoxAutotile.Enabled = true;
             SystemRelief relief = (SystemRelief)listBoxComplete.GetListBox().SelectedItem;
             if (drawType == DrawType.Floors) relief.TopTexture = TextBoxVariable.Value;
-            if (drawType == DrawType.Autotiles) relief.TopTexture = new object[] { Tileset.Autotiles[ComboBoxAutotile.SelectedIndex] };
+            if (drawType == DrawType.Autotiles)
+            {
+                if (ComboBoxAutotile.SelectedIndex == -1) relief.TopTexture = new object[] { 0 };
+                else relief.TopTexture = new object[] { Tileset.Autotiles[ComboBoxAutotile.SelectedIndex] };
+            }
             relief.TopDrawType = drawType;
 
             /*
@@ -175,9 +181,10 @@ namespace RPG_Paper_Maker
                 else TextBoxVariable.InitializeParameters(new object[] { 0, 0, 1, 1 }, new object[] { Tileset.Graphic }, typeof(DialogTileset), WANOK.GetStringTileset);
                 if (relief.TopDrawType == DrawType.Autotiles)
                 {
-                    ComboBoxAutotile.SelectedIndex = WANOK.SystemDatas.GetAutotileIndexById((int)relief.TopTexture[0]);
+                    int id = (int)relief.TopTexture[0];
+                    if (id > 0 && id <= Tileset.Autotiles.Count) ComboBoxAutotile.SelectedIndex = Tileset.Autotiles.IndexOf((int)relief.TopTexture[0]);
                 }
-                else ComboBoxAutotile.SelectedIndex = 0;
+                else if (ComboBoxAutotile.Items.Count > 0) ComboBoxAutotile.SelectedIndex = 0;
                 /*
                 if (relief.TopDrawType == DrawType.Floors) TextBoxVariables[DrawType.Floors].InitializeParameters(relief.TopTexture, new object[] { Tileset.Graphic }, typeof(DialogTileset), WANOK.GetStringTileset);
                 else TextBoxVariables[DrawType.Floors].InitializeParameters(new object[] { 0, 0, 1, 1 }, new object[] { Tileset.Graphic }, typeof(DialogTileset), WANOK.GetStringTileset);

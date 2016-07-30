@@ -155,7 +155,7 @@ namespace RPG_Paper_Maker
             {
                 if (VB != null)
                 {
-                    if (!MapEditor.TexAutotiles.ContainsKey(id)) effect.Texture = MapEditor.TexNone;
+                    if (!MapEditor.TexReliefs.ContainsKey(id)) effect.Texture = MapEditor.TexNone;
                     else effect.Texture = MapEditor.TexReliefs[id];
 
                     device.SetVertexBuffer(VB);

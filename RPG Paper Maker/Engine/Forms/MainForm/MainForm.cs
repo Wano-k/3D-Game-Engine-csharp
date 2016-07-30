@@ -18,7 +18,7 @@ using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
-    public delegate ComboxBoxSpecialTilesetItem MethodGetSuperItemById(int id);
+    public delegate SuperListItem MethodGetSuperItemById(int id);
     public delegate int MethodGetIndexById(int id);
 
     public partial class MainForm : Form
@@ -1343,12 +1343,12 @@ namespace RPG_Paper_Maker
         {
             ComboBoxSpecialTileset1.FillComboBox(list, getById, getIndexById, MapEditor.GetCurrentSpecialItemId());
             if (ComboBoxSpecialTileset1.SelectedIndex == 0) MapEditor.SetCurrentSpecialItemId(list[0]);
-            PictureBoxSpecialTileset.LoadTexture(getById(MapEditor.GetCurrentSpecialItemId()).Graphic);
+            PictureBoxSpecialTileset.LoadTexture(((ComboxBoxSpecialTilesetItem)getById(MapEditor.GetCurrentSpecialItemId())).Graphic);
         }
 
         public void ReLoadSpecialPicture(List<int> list, MethodGetSuperItemById getById, MethodGetIndexById getIndexById)
         {
-            PictureBoxSpecialTileset.LoadTexture(getById(list[ComboBoxSpecialTileset1.SelectedIndex]).Graphic);
+            PictureBoxSpecialTileset.LoadTexture(((ComboxBoxSpecialTilesetItem)getById(list[ComboBoxSpecialTileset1.SelectedIndex])).Graphic);
             MapEditor.SetCurrentSpecialItemId(list[ComboBoxSpecialTileset1.SelectedIndex]);
         }
 

@@ -111,8 +111,8 @@ namespace RPG_Paper_Maker
 
         public void SetCommonTilesetList(Tileset tileset)
         {
-            listBoxAutotiles.InitializeListParameters(Control.ModelSystem, ListBoxesCanceling, Control.ModelSystem.Autotiles.Cast<SuperListItem>().ToList(), tileset.Autotiles, typeof(DialogAddingAutotilesList), typeof(SystemAutotile), 1, SystemAutotile.MAX_AUTOTILES);
-            listBoxRelief.InitializeListParameters(Control.ModelSystem, ListBoxesCanceling, Control.ModelSystem.Reliefs.Cast<SuperListItem>().ToList(), tileset.Reliefs, typeof(DialogAddingReliefsList), typeof(SystemRelief), 1, SystemRelief.MAX_RELIEFS);
+            listBoxAutotiles.InitializeListParameters(Control.ModelSystem, ListBoxesCanceling, Control.ModelSystem.Autotiles.Cast<SuperListItem>().ToList(), tileset.Autotiles, typeof(DialogAddingAutotilesList), typeof(SystemAutotile), 1, SystemAutotile.MAX_AUTOTILES, Control.ModelSystem.GetAutotileById);
+            listBoxRelief.InitializeListParameters(Control.ModelSystem, ListBoxesCanceling, Control.ModelSystem.Reliefs.Cast<SuperListItem>().ToList(), tileset.Reliefs, typeof(DialogAddingReliefsList), typeof(SystemRelief), 1, SystemRelief.MAX_RELIEFS, Control.ModelSystem.GetReliefById);
         }
 
         // -------------------------------------------------------------------

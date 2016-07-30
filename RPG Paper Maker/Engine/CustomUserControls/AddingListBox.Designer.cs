@@ -40,7 +40,6 @@
             this.listBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBox.FormattingEnabled = true;
-            this.listBox.HorizontalScrollbar = true;
             this.listBox.Location = new System.Drawing.Point(3, 3);
             this.listBox.Name = "listBox";
             this.listBox.Size = new System.Drawing.Size(144, 114);

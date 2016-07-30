@@ -38,7 +38,7 @@ namespace RPG_Paper_Maker
         // InitializeListParameters
         // -------------------------------------------------------------------
 
-        public void InitializeListParameters(SystemDatas model, ListBox[] list, List<SuperListItem> modelListComplete, List<int> modelListTileset, Type type, Type typeItem, int min, int max)
+        public void InitializeListParameters(SystemDatas model, ListBox[] list, List<SuperListItem> modelListComplete, List<int> modelListTileset, Type type, Type typeItem, int min, int max, MethodGetSuperItemById getById)
         {
             ListBoxes = list;
             ModelListComplete = modelListComplete;
@@ -52,7 +52,7 @@ namespace RPG_Paper_Maker
             listBox.Items.Clear();
             for (int i = 0; i < modelListTileset.Count; i++)
             {
-                listBox.Items.Add(model.GetAutotileById(modelListTileset[i]));
+                listBox.Items.Add(getById(modelListTileset[i]));
             }
         }
 

@@ -20,10 +20,10 @@ namespace RPG_Paper_Maker
         {
             for (int i = 0; i < list.Count; i++)
             {
-                ComboxBoxSpecialTilesetItem item = getById(list[i]);
+                ComboxBoxSpecialTilesetItem item = (ComboxBoxSpecialTilesetItem)getById(list[i]);
                 Items.Add(new DropDownItem(WANOK.GetStringComboBox(item.Id, item.Name), item.Graphic.LoadImage()));
             }
-            int id = getIndexById(currentId);
+            int id = list.IndexOf(currentId);
             if (Items.Count > 0)
             {
 
