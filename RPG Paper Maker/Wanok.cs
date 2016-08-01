@@ -362,12 +362,17 @@ namespace RPG_Paper_Maker
 
         public static int GetPixelHeight(int[] height)
         {
-            return (height[0] * SQUARE_SIZE) + height[1];
+            return GetPixelHeight(height[0], height[1]);
         }
 
         public static int GetCoordsPixelHeight(int[] coords)
         {
-            return (coords[1] * SQUARE_SIZE) + coords[2];
+            return GetPixelHeight(coords[1], coords[2]);
+        }
+
+        public static int GetPixelHeight(int y, int yPlus)
+        {
+            return (y * SQUARE_SIZE) + yPlus;
         }
 
         // -------------------------------------------------------------------

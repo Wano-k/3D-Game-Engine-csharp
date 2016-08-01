@@ -27,7 +27,6 @@ namespace RPG_Paper_Maker
             SquareHeight = squareHeight;
             PixelHeight = pixelHeight;
             Angle = angle;
-
         }
 
         // -------------------------------------------------------------------
@@ -56,16 +55,25 @@ namespace RPG_Paper_Maker
 
         public void Update(Mountains mountains, int[] coords, int[] portion, int height)
         {
-            if (mountains.TileOnTop(coords, portion, height)) DrawTop = false;
-            if (mountains.TileOnBottom(coords, portion, height)) DrawBot = false;
-            if (mountains.TileOnLeft(coords, portion, height)) DrawLeft = false;
-            if (mountains.TileOnRight(coords, portion, height)) DrawRight = false;
+            if (CanDraw(mountains.TileOnTop(coords, portion, height))) DrawTop = false;
+            if (CanDraw(mountains.TileOnBottom(coords, portion, height))) DrawBot = false;
+            if (CanDraw(mountains.TileOnLeft(coords, portion, height))) DrawLeft = false;
+            if (CanDraw(mountains.TileOnRight(coords, portion, height))) DrawRight = false;
 
             // Update & save update
             int[] portionToUpdate = MapEditor.Control.GetPortion(coords[0], coords[3]);
             MapEditor.Control.AddPortionToUpdate(portionToUpdate);
             MapEditor.Control.AddPortionToSave(portionToUpdate);
             WANOK.AddPortionsToAddCancel(MapEditor.Control.Map.MapInfos.RealMapName, MapEditor.Control.GetGlobalPortion(portionToUpdate));
+        }
+
+        // -------------------------------------------------------------------
+        // CanDraw
+        // -------------------------------------------------------------------
+
+        public bool CanDraw(Mountain mountain)
+        {
+            return (mountain != null && WANOK.GetPixelHeight(SquareHeight, PixelHeight) <= WANOK.GetPixelHeight(mountain.SquareHeight, mountain.PixelHeight));
         }
     }
 }

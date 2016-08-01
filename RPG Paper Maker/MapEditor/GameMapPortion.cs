@@ -287,11 +287,11 @@ namespace RPG_Paper_Maker
             switch (relief.TopDrawType)
             {
                 case DrawType.Floors:
-                    AddFloor(new int[] { coords[0], coords[1] + newMountain.SquareHeight, coords[2], coords[3] }, new int[] { (int)relief.TopTexture[0], (int)relief.TopTexture[1], (int)relief.TopTexture[2], (int)relief.TopTexture[3] });
+                    AddFloor(new int[] { coords[0], coords[1] + newMountain.SquareHeight, coords[2] + newMountain.PixelHeight, coords[3] }, new int[] { (int)relief.TopTexture[0], (int)relief.TopTexture[1], (int)relief.TopTexture[2], (int)relief.TopTexture[3] });
                     break;
                 case DrawType.Autotiles:
                     int id = (int)relief.TopTexture[0];
-                    if (id > 0) AddAutotile(new int[] { coords[0], coords[1] + newMountain.SquareHeight, coords[2], coords[3] }, id, true);
+                    if (id > 0) AddAutotile(new int[] { coords[0], coords[1] + newMountain.SquareHeight, coords[2] + newMountain.PixelHeight, coords[3] }, id, true);
                     break;
             }
 
