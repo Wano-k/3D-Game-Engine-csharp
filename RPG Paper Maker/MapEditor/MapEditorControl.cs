@@ -33,6 +33,7 @@ namespace RPG_Paper_Maker
         public int[] CurrentPosition = new int[] { 0, 0 };
         public int CurrentOrientation = 0;
         public int[] CurrentPortion = new int[] { 0, 0 };
+        public int[] CurrentMountainHeight = new int[] { 1, 0 };
         protected HashSet<int[]> PortionsToUpdate = new HashSet<int[]>(new IntArrayComparer());
         protected HashSet<int[]> PortionsAutotileToUpdate = new HashSet<int[]>(new IntArrayComparer());
         protected HashSet<int[]> PortionsMountainToUpdate = new HashSet<int[]>(new IntArrayComparer());
@@ -962,16 +963,18 @@ namespace RPG_Paper_Maker
             int[] coords = GetCoords(isMouse);
             if (coords == null) return;
 
+            Mountain mountain = new Mountain(CurrentMountainHeight[0], CurrentMountainHeight[1], 90);
+
             // Drawing sprites
             switch (DrawMode)
             {
                 case DrawMode.Pencil:
                     if (isMouse)
                     {
-                        if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, StockMontain, CurrentSpecialItemId);
+                        if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, StockMontain, CurrentSpecialItemId, mountain);
                     }
-                    else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, StockMontain, CurrentSpecialItemId);
-                    StockMontain(coords, CurrentSpecialItemId);
+                    else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, StockMontain, CurrentSpecialItemId, mountain);
+                    StockMontain(coords, CurrentSpecialItemId, mountain);
                     break;
                 case DrawMode.Tin:
                     SystemSounds.Beep.Play();
@@ -994,7 +997,7 @@ namespace RPG_Paper_Maker
             {
                 CreateCancel();
                 if (Map.Portions[portion] == null) Map.Portions[portion] = new GameMapPortion();
-                if (Map.Portions[portion].AddMountain(coords, (int)args[0]) && Map.Saved) SetToNoSaved();
+                if (Map.Portions[portion].AddMountain(coords, (int)args[0], (Mountain)args[1]) && Map.Saved) SetToNoSaved();
                 AddPortionToSave(portion);
                 AddPortionToUpdate(portion);
                 WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, GetGlobalPortion(portion));

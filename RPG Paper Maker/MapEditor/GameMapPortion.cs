@@ -261,7 +261,7 @@ namespace RPG_Paper_Maker
         // AddMountain
         // -------------------------------------------------------------------
 
-        public bool AddMountain(int[] coords, int newId)
+        public bool AddMountain(int[] coords, int newId, Mountain newMountain)
         {
             bool modified = false;
             int height = WANOK.GetCoordsPixelHeight(coords);
@@ -281,17 +281,17 @@ namespace RPG_Paper_Maker
             }
 
             if (!Mountains.ContainsKey(height)) Mountains[height] = new Mountains();
-            Mountains[height].Add(coords, newId, height);
+            Mountains[height].Add(coords, newId, newMountain, height);
 
             SystemRelief relief = WANOK.SystemDatas.GetReliefById(newId);
             switch (relief.TopDrawType)
             {
                 case DrawType.Floors:
-                    AddFloor(new int[] { coords[0], coords[1] + 1, coords[2], coords[3] }, new int[] { (int)relief.TopTexture[0], (int)relief.TopTexture[1], (int)relief.TopTexture[2], (int)relief.TopTexture[3] });
+                    AddFloor(new int[] { coords[0], coords[1] + newMountain.SquareHeight, coords[2], coords[3] }, new int[] { (int)relief.TopTexture[0], (int)relief.TopTexture[1], (int)relief.TopTexture[2], (int)relief.TopTexture[3] });
                     break;
                 case DrawType.Autotiles:
                     int id = (int)relief.TopTexture[0];
-                    if (id > 0) AddAutotile(new int[] { coords[0], coords[1] + 1, coords[2], coords[3] }, id, true);
+                    if (id > 0) AddAutotile(new int[] { coords[0], coords[1] + newMountain.SquareHeight, coords[2], coords[3] }, id, true);
                     break;
             }
 

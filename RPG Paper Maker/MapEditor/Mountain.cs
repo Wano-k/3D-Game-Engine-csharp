@@ -19,21 +19,35 @@ namespace RPG_Paper_Maker
 
 
         // -------------------------------------------------------------------
+        // Constructor
+        // -------------------------------------------------------------------
+
+        public Mountain(int squareHeight, int pixelHeight, int angle)
+        {
+            SquareHeight = squareHeight;
+            PixelHeight = pixelHeight;
+            Angle = angle;
+
+        }
+
+        // -------------------------------------------------------------------
         // CreateCopy
         // -------------------------------------------------------------------
 
         public Mountain CreateCopy()
         {
-            Mountain newMountain = new Mountain();
-            newMountain.SquareHeight = SquareHeight;
-            newMountain.PixelHeight = PixelHeight;
-            newMountain.Angle = Angle;
+            Mountain newMountain = CreatePartialCopy();
             newMountain.DrawTop = DrawTop;
             newMountain.DrawBot = DrawBot;
             newMountain.DrawLeft = DrawLeft;
             newMountain.DrawRight = DrawRight;
 
             return newMountain;
+        }
+
+        public Mountain CreatePartialCopy()
+        {
+            return new Mountain(SquareHeight, PixelHeight, Angle);
         }
 
         // -------------------------------------------------------------------

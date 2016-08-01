@@ -306,6 +306,7 @@ namespace RPG_Paper_Maker
             else if (IsInItemHeightSquareMountain || IsInItemHeightPixelMountain)
             {
                 Control.SetMountainHeight(IsInItemHeightSquareMountain, e.Delta > 0);
+                MapEditor.SetMountainHeight(Control.GetMountainHeight());
                 ItemReliefMontainSquareHeight.Text = "Square height: " + Control.HeightSquareMountain;
                 ItemReliefMontainPixelHeight.Text = "Pixel height: " + Control.HeightPixelMountain;
             }

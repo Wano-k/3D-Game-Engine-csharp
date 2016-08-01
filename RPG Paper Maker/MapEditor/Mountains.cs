@@ -107,44 +107,76 @@ namespace RPG_Paper_Maker
                 float right = ((float)WANOK.SQUARE_SIZE) / texture.Width;
 
                 // Adjust in order to limit risk of textures flood
-                float width = left + right;
-                float height = top + bot;
-                left += width / WANOK.COEF_BORDER_TEX;
-                right -= width / WANOK.COEF_BORDER_TEX;
-                top += height / WANOK.COEF_BORDER_TEX;
-                bot -= height / WANOK.COEF_BORDER_TEX;
+                float floodOffset = ((float)WANOK.SQUARE_SIZE) / WANOK.COEF_BORDER_TEX;
 
                 List<VertexPositionTexture> res = new List<VertexPositionTexture>();
                 if (mountain.DrawTop)
                 {
-                    res.Add(new VertexPositionTexture(new Vector3(x, y + WANOK.SQUARE_SIZE, z), new Vector2(left, top)));
-                    res.Add(new VertexPositionTexture(new Vector3(x + 1, y + WANOK.SQUARE_SIZE, z), new Vector2(right, top)));
-                    res.Add(new VertexPositionTexture(new Vector3(x + 1, y, z), new Vector2(right, bot)));
-                    res.Add(new VertexPositionTexture(new Vector3(x, y, z), new Vector2(left, bot)));
+                    FillTexture(res, bot, top, texture.Width, mountain.SquareHeight, x, x + 1, x + 1, x, z, z, z, z, y);
                 }
                 if (mountain.DrawBot)
                 {
-                    res.Add(new VertexPositionTexture(new Vector3(x, y + WANOK.SQUARE_SIZE, z + 1), new Vector2(left, top)));
-                    res.Add(new VertexPositionTexture(new Vector3(x + 1, y + WANOK.SQUARE_SIZE, z + 1), new Vector2(right, top)));
-                    res.Add(new VertexPositionTexture(new Vector3(x + 1, y, z + 1), new Vector2(right, bot)));
-                    res.Add(new VertexPositionTexture(new Vector3(x, y, z + 1), new Vector2(left, bot)));
+                    FillTexture(res, bot, top, texture.Width, mountain.SquareHeight, x, x + 1, x + 1, x, z + 1, z + 1, z + 1, z + 1, y);
                 }
                 if (mountain.DrawLeft)
                 {
-                    res.Add(new VertexPositionTexture(new Vector3(x, y + WANOK.SQUARE_SIZE, z), new Vector2(left, top)));
-                    res.Add(new VertexPositionTexture(new Vector3(x, y + WANOK.SQUARE_SIZE, z + 1), new Vector2(right, top)));
-                    res.Add(new VertexPositionTexture(new Vector3(x, y, z + 1), new Vector2(right, bot)));
-                    res.Add(new VertexPositionTexture(new Vector3(x, y, z), new Vector2(left, bot)));
+                    FillTexture(res, bot, top, texture.Width, mountain.SquareHeight, x, x, x, x, z, z + 1, z + 1, z, y);
                 }
                 if (mountain.DrawRight)
                 {
-                    res.Add(new VertexPositionTexture(new Vector3(x + 1, y + WANOK.SQUARE_SIZE, z), new Vector2(left, top)));
-                    res.Add(new VertexPositionTexture(new Vector3(x + 1, y + WANOK.SQUARE_SIZE, z + 1), new Vector2(right, top)));
-                    res.Add(new VertexPositionTexture(new Vector3(x + 1, y, z + 1), new Vector2(right, bot)));
-                    res.Add(new VertexPositionTexture(new Vector3(x + 1, y, z), new Vector2(left, bot)));
+                    FillTexture(res, bot, top, texture.Width, mountain.SquareHeight, x + 1, x + 1, x + 1, x + 1, z, z + 1, z + 1, z, y);
                 }
 
                 return res;
+            }
+
+            public float GetHorizontalTexture(int i, int height)
+            {
+                return ((float)WANOK.SQUARE_SIZE * i) / height;
+            }
+
+            public void FillTexture(List<VertexPositionTexture> res, float bot, float top, int width, int height, int x1, int x2, int x3, int x4, int z1, int z2, int z3, int z4, int y)
+            {
+
+                float left;
+                float right;
+                if (height == 1)
+                {
+                    left = GetHorizontalTexture(0, width);
+                    right = GetHorizontalTexture(1, width);
+                }
+                else
+                {
+                    left = GetHorizontalTexture(1, width);
+                    right = GetHorizontalTexture(2, width);
+                }
+                res.Add(new VertexPositionTexture(new Vector3(x1, y + WANOK.SQUARE_SIZE, z1), new Vector2(left, top)));
+                res.Add(new VertexPositionTexture(new Vector3(x2, y + WANOK.SQUARE_SIZE, z2), new Vector2(right, top)));
+                res.Add(new VertexPositionTexture(new Vector3(x3, y, z3), new Vector2(right, bot)));
+                res.Add(new VertexPositionTexture(new Vector3(x4, y, z4), new Vector2(left, bot)));
+
+                if (height > 2)
+                {
+                    left = GetHorizontalTexture(2, width);
+                    right = GetHorizontalTexture(3, width);
+                    for (int i = 1; i < height - 1; i++)
+                    {
+                        res.Add(new VertexPositionTexture(new Vector3(x1, y + (WANOK.SQUARE_SIZE * (i + 1)), z1), new Vector2(left, top)));
+                        res.Add(new VertexPositionTexture(new Vector3(x2, y + (WANOK.SQUARE_SIZE * (i + 1)), z2), new Vector2(right, top)));
+                        res.Add(new VertexPositionTexture(new Vector3(x3, y + (WANOK.SQUARE_SIZE * i), z3), new Vector2(right, bot)));
+                        res.Add(new VertexPositionTexture(new Vector3(x4, y + (WANOK.SQUARE_SIZE * i), z4), new Vector2(left, bot)));
+                    }
+                }
+
+                if (height > 1)
+                {
+                    left = GetHorizontalTexture(3, width);
+                    right = GetHorizontalTexture(4, width);
+                    res.Add(new VertexPositionTexture(new Vector3(x1, y + (WANOK.SQUARE_SIZE * height), z1), new Vector2(left, top)));
+                    res.Add(new VertexPositionTexture(new Vector3(x2, y + (WANOK.SQUARE_SIZE * height), z2), new Vector2(right, top)));
+                    res.Add(new VertexPositionTexture(new Vector3(x3, y + (WANOK.SQUARE_SIZE * (height - 1)), z3), new Vector2(right, bot)));
+                    res.Add(new VertexPositionTexture(new Vector3(x4, y + (WANOK.SQUARE_SIZE * (height - 1)), z4), new Vector2(left, bot)));
+                }
             }
 
             // -------------------------------------------------------------------
@@ -235,12 +267,12 @@ namespace RPG_Paper_Maker
         // Add
         // -------------------------------------------------------------------
 
-        public void Add(int[] coords, int id, int height, bool update = true)
+        public void Add(int[] coords, int id, Mountain mountain, int height, bool update = true)
         {
             if (!Groups.ContainsKey(id)) Groups[id] = new MountainsGroup();
             if (!Groups[id].Tiles.ContainsKey(coords))
             {
-                Groups[id].Tiles[coords] = new Mountain();
+                Groups[id].Tiles[coords] = mountain.CreatePartialCopy();
                 UpdateAround(coords[0], coords[1], coords[2], coords[3], height, update);
             }
         }
