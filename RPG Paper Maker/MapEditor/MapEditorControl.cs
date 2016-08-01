@@ -26,6 +26,11 @@ namespace RPG_Paper_Maker
         public int[] PointOnPlane = null;
         public int[] PointOnFloor = null;
         public int[] PointOnSprites = null;
+        public int[] PointOnMountains = null;
+        public float PlaneDistance = 0;
+        public float FloorDistance = 0;
+        public float SpriteDistance = 0;
+        public float MountainDistance = 0;
         public bool IsGridOnTop = false;
         public int[] GridHeight { get { return Map.GridHeight; } set { Map.GridHeight = value; } }
         public int[] CurrentTexture = new int[] { 0, 0, 1, 1 };
@@ -155,16 +160,16 @@ namespace RPG_Paper_Maker
             float? newDistance;
             Ray ray = WANOK.CalculateRay(new Vector2(MouseBeforeUpdate.X, MouseBeforeUpdate.Y), camera.View, camera.Projection, graphicsDevice.Viewport);
             int height = PreviousMouseCoords == null ? WANOK.GetPixelHeight(GridHeight) : PreviousMouseCoords[1] * WANOK.SQUARE_SIZE + PreviousMouseCoords[2];
-            float distance = (height - camera.Position.Y) / ray.Direction.Y;
-            if (distance < 0) PointOnPlane = null;
+            PlaneDistance = (height - camera.Position.Y) / ray.Direction.Y;
+            if (PlaneDistance < 0) PointOnPlane = null;
             else
             {
-                PointOnPlane = WANOK.GetCorrectPointOnRay(ray, camera, distance, height);
+                PointOnPlane = WANOK.GetCorrectPointOnRay(ray, camera, PlaneDistance, height);
             }
 
             // Raycasting floor
-            float floorDistance = 0;
             PointOnFloor = null;
+            FloorDistance = 0;
             for (int i = -WANOK.PORTION_RADIUS; i <= WANOK.PORTION_RADIUS; i++)
             {
                 for (int j = -WANOK.PORTION_RADIUS; j <= WANOK.PORTION_RADIUS; j++)
@@ -174,25 +179,25 @@ namespace RPG_Paper_Maker
                     {
                         foreach (int[] coords in gameMapPortion.Floors.Keys)
                         {
-                            floorDistance = RaycastFloor(coords, camera, ray, floorDistance);
+                            FloorDistance = RaycastFloor(coords, camera, ray, FloorDistance);
                         }
                         foreach (Autotiles autotiles in gameMapPortion.Autotiles.Values)
                         {
                             foreach (int[] coords in autotiles.Tiles.Keys)
                             {
-                                floorDistance = RaycastFloor(coords, camera, ray, floorDistance);
+                                FloorDistance = RaycastFloor(coords, camera, ray, FloorDistance);
                             }
                         }
                     }
                 }
             }
-            IsGridOnTop = (PointOnPlane == null || PointOnFloor == null || !IsInArea(PointOnPlane)) ? false : distance < floorDistance;
+            IsGridOnTop = (PointOnPlane == null || PointOnFloor == null || !IsInArea(PointOnPlane)) ? false : PlaneDistance < FloorDistance;
 
             // Raycasting sprites
             PointOnSprites = null;
+            SpriteDistance = 0;
             if (SelectedDrawType == "ItemSprite")
             {
-                float spriteDistance = 0;
                 for (int i = -WANOK.PORTION_RADIUS; i <= WANOK.PORTION_RADIUS; i++)
                 {
                     for (int j = -WANOK.PORTION_RADIUS; j <= WANOK.PORTION_RADIUS; j++)
@@ -208,12 +213,48 @@ namespace RPG_Paper_Maker
 
                                     if (newDistance != null)
                                     {
-                                        if (PointOnSprites == null || spriteDistance > newDistance.Value)
+                                        if (PointOnSprites == null || SpriteDistance > newDistance.Value)
                                         {
                                             if (newDistance.Value > 0)
                                             {
                                                 PointOnSprites = entry2.Key;
-                                                spriteDistance = newDistance.Value;
+                                                SpriteDistance = newDistance.Value;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Raycasting mountains
+            PointOnMountains = null;
+            MountainDistance = 0;
+            for (int i = -WANOK.PORTION_RADIUS; i <= WANOK.PORTION_RADIUS; i++)
+            {
+                for (int j = -WANOK.PORTION_RADIUS; j <= WANOK.PORTION_RADIUS; j++)
+                {
+                    GameMapPortion gameMapPortion = Map.Portions[new int[] { i, j }];
+                    if (gameMapPortion != null)
+                    {
+                        foreach (KeyValuePair<int, Mountains> entry1 in gameMapPortion.Mountains)
+                        {
+                            foreach (MountainsGroup group in entry1.Value.Groups.Values)
+                            {
+                                foreach (KeyValuePair<int[], Mountain> entry2 in group.Tiles)
+                                {
+                                    newDistance = entry2.Value.GetDistanceIntersection(new Ray(ray.Position, ray.Direction), camera, entry2.Key);
+
+                                    if (newDistance != null)
+                                    {
+                                        if (PointOnMountains == null || MountainDistance > newDistance.Value)
+                                        {
+                                            if (newDistance.Value > 0)
+                                            {
+                                                PointOnMountains = entry2.Key;
+                                                MountainDistance = newDistance.Value;
                                             }
                                         }
                                     }
@@ -530,6 +571,9 @@ namespace RPG_Paper_Maker
                     break;
                 case "ItemSprite":
                     RemoveSprite(isMouse);
+                    break;
+                case "ItemRelief":
+                    if (SelectedDrawTypeParticular == DrawType.Montains) RemoveMountain(isMouse);
                     break;
             }
         }
@@ -1004,6 +1048,55 @@ namespace RPG_Paper_Maker
             }
         }
 
+        // -------------------------------------------------------------------
+        // RemoveMountain
+        // -------------------------------------------------------------------
+
+        public void RemoveMountain(bool isMouse)
+        {
+            // Getting coords
+            int[] coords = GetCoords(isMouse, true);
+            if (coords == null) return;
+
+            // Removing squares
+            switch (DrawMode)
+            {
+                case DrawMode.Pencil:
+                    if (isMouse)
+                    {
+                        if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, EraseMountain);
+                    }
+                    else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, EraseMountain);
+                    EraseMountain(coords);
+                    break;
+                case DrawMode.Tin:
+                    SystemSounds.Beep.Play();
+                    break;
+            }
+
+            // Updating previous selected
+            if (isMouse) PreviousMouseCoords = coords;
+            else PreviousCursorCoords = coords;
+        }
+
+        // -------------------------------------------------------------------
+        // EraseMountain
+        // -------------------------------------------------------------------
+
+        public void EraseMountain(int[] coords, params object[] args)
+        {
+            int[] portion = GetPortion(coords[0], coords[3]);
+            if (IsInArea(coords) && WANOK.IsInPortions(portion))
+            {
+                CreateCancel();
+                if (Map.Portions[portion] == null) Map.Portions[portion] = new GameMapPortion();
+                if (Map.Portions[portion].RemoveMountain(coords) && Map.Saved) SetToNoSaved();
+                AddPortionToSave(portion);
+                AddPortionToUpdate(portion);
+                WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, GetGlobalPortion(portion));
+            }
+        }
+
         #endregion
 
         #endregion
@@ -1070,6 +1163,21 @@ namespace RPG_Paper_Maker
                     if (PointOnSprites != null) coords = PointOnSprites;
                     else return null;
                 }
+                else if (SelectedDrawType == "ItemRelief" && remove)
+                {
+                    if (PointOnMountains != null) coords = PointOnMountains;
+                    else return null;
+                }
+                /*
+                else if (SelectedDrawType == "ItemRelief")
+                {
+                    if (PointOnMountains == null || PointOnPlane == null)
+                    {
+                        if (PointOnMountains != null && PointOnPlane != null) coords = PlaneDistance < MountainDistance ? PointOnPlane : PointOnMountains;
+                        else coords = PointOnMountains == null ? PointOnPlane : PointOnMountains;
+                    }
+                    else return null;
+                }*/
                 else {
                     if (PreviousMouseCoords == null && PointOnFloor != null && !IsGridOnTop) coords = PointOnFloor;
                     else if (PointOnPlane != null) coords = GetCoordsMouse();

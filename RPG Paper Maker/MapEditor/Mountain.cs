@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 namespace RPG_Paper_Maker
 {
     [Serializable]
-    public class Mountain
+    class Mountain
     {
         public int SquareHeight;
         public int PixelHeight;
@@ -55,10 +56,10 @@ namespace RPG_Paper_Maker
 
         public void Update(Mountains mountains, int[] coords, int[] portion, int height)
         {
-            if (CanDraw(mountains.TileOnTop(coords, portion, height))) DrawTop = false;
-            if (CanDraw(mountains.TileOnBottom(coords, portion, height))) DrawBot = false;
-            if (CanDraw(mountains.TileOnLeft(coords, portion, height))) DrawLeft = false;
-            if (CanDraw(mountains.TileOnRight(coords, portion, height))) DrawRight = false;
+            DrawTop = !CanDraw(mountains.TileOnTop(coords, portion, height));
+            DrawBot = !CanDraw(mountains.TileOnBottom(coords, portion, height));
+            DrawLeft = !CanDraw(mountains.TileOnLeft(coords, portion, height));
+            DrawRight = !CanDraw(mountains.TileOnRight(coords, portion, height));
 
             // Update & save update
             int[] portionToUpdate = MapEditor.Control.GetPortion(coords[0], coords[3]);
@@ -74,6 +75,20 @@ namespace RPG_Paper_Maker
         public bool CanDraw(Mountain mountain)
         {
             return (mountain != null && WANOK.GetPixelHeight(SquareHeight, PixelHeight) <= WANOK.GetPixelHeight(mountain.SquareHeight, mountain.PixelHeight));
+        }
+
+        // -------------------------------------------------------------------
+        // GetDistanceIntersection
+        // -------------------------------------------------------------------
+
+        public float? GetDistanceIntersection(Ray ray, Camera camera, int[] coords)
+        {
+            BoundingBox box = new BoundingBox(new Vector3(0, 0, 0), new Vector3(1, WANOK.GetPixelHeight(SquareHeight, PixelHeight), 1));
+            Matrix inverse = Matrix.Invert(Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(coords[0] * WANOK.SQUARE_SIZE, WANOK.GetCoordsPixelHeight(coords), coords[3] * WANOK.SQUARE_SIZE));
+            ray.Position = Vector3.Transform(ray.Position, inverse);
+            ray.Direction = Vector3.TransformNormal(ray.Direction, inverse);
+            ray.Direction.Normalize();
+            return ray.Intersects(box);
         }
     }
 }

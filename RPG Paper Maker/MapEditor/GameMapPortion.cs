@@ -251,8 +251,11 @@ namespace RPG_Paper_Maker
             bool modified = false;
 
             object[] before = ContainsSprite(coords);
-            if (before == null) modified = true;
-            else Sprites[(int[])before[0]].Remove(coords);
+            if (before != null)
+            {
+                modified = true;
+                Sprites[(int[])before[0]].Remove(coords);
+            }
 
             return modified;
         }
@@ -295,6 +298,27 @@ namespace RPG_Paper_Maker
                     break;
             }
 
+
+            return modified;
+        }
+
+        // -------------------------------------------------------------------
+        // RemoveMountain
+        // -------------------------------------------------------------------
+
+        public bool RemoveMountain(int[] coords)
+        {
+            bool modified = false;
+            int height = WANOK.GetCoordsPixelHeight(coords);
+            object[] before = ContainsMountain(height, coords);
+            if (before != null)
+            {
+                modified = true;
+                int beforeId = (int)before[0];
+                Mountain beforeMountain = (Mountain)before[1];
+                Mountains[height].Remove(coords, beforeId, height);
+                RemoveFloor(new int[] { coords[0], coords[1] + beforeMountain.SquareHeight, coords[2] + beforeMountain.PixelHeight, coords[3] });
+            }
 
             return modified;
         }

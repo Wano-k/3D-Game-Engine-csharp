@@ -304,6 +304,7 @@
     <Compile Include="MapEditor\MapEditorControl.cs" />
     <Compile Include="MapEditor\Mountains.cs" />
     <Compile Include="MapEditor\Mountain.cs" />
+    <Compile Include="MapEditor\MountainsGroup.cs" />
     <Compile Include="MapEditor\Sprite.cs" />
     <Compile Include="MapEditor\PositionOrientation.cs" />
     <Compile Include="MapEditor\Sprites.cs" />

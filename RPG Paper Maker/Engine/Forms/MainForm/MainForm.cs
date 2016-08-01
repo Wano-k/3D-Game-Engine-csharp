@@ -921,6 +921,16 @@ namespace RPG_Paper_Maker
             ItemRelief.HideDropDown();
         }
 
+        private void ItemReliefMontainSquareHeight_Click(object sender, EventArgs e)
+        {
+            SelectMontain();
+        }
+
+        private void ItemReliefMontainPixelHeight_Click(object sender, EventArgs e)
+        {
+            SelectMontain();
+        }
+
         public void SelectReliefs()
         {
             switch (ItemRelief.Text)
@@ -943,6 +953,7 @@ namespace RPG_Paper_Maker
 
         private void ItemReliefMontainAngle_Click(object sender, EventArgs e)
         {
+            /*
             DialogEnterNumber dialog = new DialogEnterNumber(Control.MountainAngle, 0, 90);
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -951,6 +962,7 @@ namespace RPG_Paper_Maker
             }
             ItemRelief.ShowDropDown();
             ItemRelief1.ShowDropDown();
+            */
         }
 
         // Start
