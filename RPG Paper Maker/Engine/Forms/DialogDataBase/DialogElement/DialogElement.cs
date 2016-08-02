@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,9 +11,10 @@ using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
-    public partial class DialogSystemColors : SuperListDialog
+    // SuperListDialog
+    public partial class DialogElement : SuperListDialog
     {
-        protected DialogSystemColorControl Control;
+        protected DialogElementControl Control;
         protected BindingSource ViewModelBindingSource = new BindingSource();
 
 
@@ -20,14 +22,23 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
-        public DialogSystemColors(SystemColor color)
+        public DialogElement(SystemElement element)
         {
             InitializeComponent();
 
-            Control = new DialogSystemColorControl(color);
+            Control = new DialogElementControl(element);
             ViewModelBindingSource.DataSource = Control;
+            /*
             panelColor.BackColor = color.GetWinformsColor();
-            textBoxName.Select();
+            textBoxName.Select();*/
+            textBoxName.GetTextBox().Items.Add(Control.Model.Names[WANOK.Game.System.Langs[0]]);
+            textBoxName.AllNames = Control.Model.Names;
+            textBoxGraphicIcon.InitializeParameters(element.Icon);
+            PictureBoxIcon.SizeMode = PictureBoxSizeMode.StretchImage;
+            PictureBoxIcon.InterpolationMode = InterpolationMode.NearestNeighbor;
+            PictureBoxIcon.Image = element.Icon.LoadImage();
+            PictureBoxIcon.Size = new Size((WANOK.BASIC_SQUARE_SIZE / 2) + 2, (WANOK.BASIC_SQUARE_SIZE / 2) + 2);
+            PictureBoxIcon.Location = new Point(0, 0);
 
             InitializeDataBindings();
         }
@@ -48,29 +59,6 @@ namespace RPG_Paper_Maker
         public override SuperListItem GetObject()
         {
             return Control.Model;
-        }
-
-        // -------------------------------------------------------------------
-        // panelColor_DoubleClick
-        // -------------------------------------------------------------------
-
-        private void panelColor_DoubleClick(object sender, EventArgs e)
-        {
-            if (colorDialog.ShowDialog() == DialogResult.OK)
-            {
-                Control.SetColor(colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
-                panelColor.BackColor = colorDialog.Color;
-            }
-        }
-
-        // -------------------------------------------------------------------
-        // ok_Click
-        // -------------------------------------------------------------------
-
-        private void ok_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.OK;
-            Close();
         }
     }
 }

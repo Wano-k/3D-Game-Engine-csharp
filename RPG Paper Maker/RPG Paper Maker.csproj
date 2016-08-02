@@ -140,12 +140,19 @@
       <DependentUpon>DialogDataBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Forms\DialogDataBase\DialogDataBaseControl.cs" />
+    <Compile Include="Engine\Forms\DialogDataBase\DialogElement\DialogElementControl.cs" />
     <Compile Include="Engine\Forms\DialogDataBase\DialogSystemColors\DialogSystemColorControl.cs" />
     <Compile Include="Engine\Forms\DialogDataBase\DialogSystemColors\DialogSystemColors.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Engine\Forms\DialogDataBase\DialogSystemColors\DialogSystemColors.Designer.cs">
       <DependentUpon>DialogSystemColors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogDataBase\DialogElement\DialogElement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogDataBase\DialogElement\DialogElement.Designer.cs">
+      <DependentUpon>DialogElement.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Forms\DialogEnterNumber\DialogEnterNumber.cs">
       <SubType>Form</SubType>
@@ -206,6 +213,7 @@
       <DependentUpon>DialogTileset.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Models\GameDatas.cs" />
+    <Compile Include="Engine\Models\SystemElement.cs" />
     <Compile Include="Engine\Models\SystemRelief.cs" />
     <Compile Include="Engine\Models\TilesetsDatas.cs" />
     <Compile Include="MapEditor\Autotile.cs" />
@@ -349,6 +357,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogDataBase\DialogSystemColors\DialogSystemColors.resx">
       <DependentUpon>DialogSystemColors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogDataBase\DialogElement\DialogElement.resx">
+      <DependentUpon>DialogElement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogEnterNumber\DialogEnterNumber.resx">
       <DependentUpon>DialogEnterNumber.cs</DependentUpon>
@@ -508,6 +519,24 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="RTP\Content\Pictures\Textures2D\Characters\template.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RTP\Content\Pictures\Textures2D\Icons\darkness.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RTP\Content\Pictures\Textures2D\Icons\fire.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RTP\Content\Pictures\Textures2D\Icons\grass.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RTP\Content\Pictures\Textures2D\Icons\light.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RTP\Content\Pictures\Textures2D\Icons\water.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RTP\Content\Pictures\Textures2D\Icons\wind.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="RTP\Content\Pictures\Textures2D\Reliefs\grass.png">

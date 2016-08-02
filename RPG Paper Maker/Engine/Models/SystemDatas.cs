@@ -19,6 +19,7 @@ namespace RPG_Paper_Maker
         public bool FullScreen = false;
         public int SquareSize = 16;
         public List<SystemColor> Colors = new List<SystemColor>();
+        public List<SystemElement> Elements = new List<SystemElement>();
         public string PathRTP;
 
 
@@ -30,7 +31,7 @@ namespace RPG_Paper_Maker
         {
             // Game name and langages
             GameName = new Dictionary<string, string>();
-            Langs = new List<string>(new string[] { "eng", "fr" });
+            Langs = new List<string>(new string[] { "eng" });
             for (int i = 0; i < Langs.Count; i++)
             {
                 GameName[Langs[i]] = gameName;
@@ -54,6 +55,14 @@ namespace RPG_Paper_Maker
             Colors.Add(SystemColor.MagentaColor);
             Colors.Add(SystemColor.PinkColor);
             for (int i = 13; i < 20; i++) Colors.Add(new SystemColor(i+1));
+
+            // Elements
+            Elements.Add(new SystemElement(1, WANOK.GetDefaultNames("Fire"), new SystemGraphic("fire.png", true, GraphicKind.Icon), Langs[0]));
+            Elements.Add(new SystemElement(2, WANOK.GetDefaultNames("Water"), new SystemGraphic("water.png", true, GraphicKind.Icon), Langs[0]));
+            Elements.Add(new SystemElement(3, WANOK.GetDefaultNames("Grass"), new SystemGraphic("grass.png", true, GraphicKind.Icon), Langs[0]));
+            Elements.Add(new SystemElement(4, WANOK.GetDefaultNames("Wind"), new SystemGraphic("wind.png", true, GraphicKind.Icon), Langs[0]));
+            Elements.Add(new SystemElement(5, WANOK.GetDefaultNames("Light"), new SystemGraphic("light.png", true, GraphicKind.Icon), Langs[0]));
+            Elements.Add(new SystemElement(6, WANOK.GetDefaultNames("Darkness"), new SystemGraphic("darkness.png", true, GraphicKind.Icon), Langs[0]));
         }
 
         // -------------------------------------------------------------------
@@ -83,6 +92,19 @@ namespace RPG_Paper_Maker
         {
             StartMapName = "";
             StartPosition = new int[] { 0, 0, 0 };
+        }
+
+        // -------------------------------------------------------------------
+        // MajElementsNames
+        // -------------------------------------------------------------------
+
+        public void MajElementsNames()
+        {
+            /*
+            for (int i = 0; i < Elements.Count; i++)
+            {
+                Elements[i].SetName();
+            }*/
         }
     }
 }

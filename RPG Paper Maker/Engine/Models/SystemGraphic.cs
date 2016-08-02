@@ -22,6 +22,11 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
+        public SystemGraphic(GraphicKind graphicKind) : this(WANOK.NONE_IMAGE_STRING, true, graphicKind)
+        {
+
+        }
+
         public SystemGraphic(string graphicName, bool isRTP, GraphicKind graphicKind)
         {
             GraphicName = graphicName;
@@ -101,6 +106,8 @@ namespace RPG_Paper_Maker
                     return Path.Combine("Content", "Pictures", "Textures2D", "Autotiles");
                 case GraphicKind.Relief:
                     return Path.Combine("Content", "Pictures", "Textures2D", "Reliefs");
+                case GraphicKind.Icon:
+                    return Path.Combine("Content", "Pictures", "Textures2D", "Icons");
                 default:
                     return "";
             }

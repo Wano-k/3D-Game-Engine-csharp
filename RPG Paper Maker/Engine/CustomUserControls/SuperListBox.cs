@@ -104,7 +104,6 @@ namespace RPG_Paper_Maker
             if (DialogKind != null)
             {
                 SuperListDialog dialog = (SuperListDialog)Activator.CreateInstance(DialogKind, listBox.Items[listBox.SelectedIndex]);
-
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     int index = listBox.SelectedIndex;

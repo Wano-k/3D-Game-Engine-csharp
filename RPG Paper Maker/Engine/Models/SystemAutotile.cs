@@ -17,7 +17,7 @@ namespace RPG_Paper_Maker
         // Constructors
         // -------------------------------------------------------------------
 
-        public SystemAutotile(int id) : this(id, "", new SystemGraphic(WANOK.NONE_IMAGE_STRING, true, GraphicKind.Autotile), new Collision())
+        public SystemAutotile(int id) : this(id, "", new SystemGraphic(GraphicKind.Autotile), new Collision())
         {
 
         }

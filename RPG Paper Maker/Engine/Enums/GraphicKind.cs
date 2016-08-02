@@ -11,6 +11,7 @@ namespace RPG_Paper_Maker
         Picture,
         Tileset,
         Autotile,
-        Relief
+        Relief,
+        Icon
     }
 }

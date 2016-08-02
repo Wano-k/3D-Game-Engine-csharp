@@ -26,7 +26,7 @@ namespace RPG_Paper_Maker
             InitializeComponent();
             Control = new DialogDataBaseControl();
             ViewModelBindingSource.DataSource = Control;
-            ListBoxesCanceling = new ListBox[] { textBoxLangGameName.GetTextBox(), listBoxColors.GetListBox(), textBoxGraphic.GetTextBox(), listBoxAutotiles.GetListBox(), listBoxRelief.GetListBox() };
+            ListBoxesCanceling = new ListBox[] { textBoxLangGameName.GetTextBox(), listBoxColors.GetListBox(), listBoxElements.GetListBox(), textBoxGraphic.GetTextBox(), listBoxAutotiles.GetListBox(), listBoxRelief.GetListBox() };
             ListBoxes = new ListBox[] { listBoxTilesets.GetListBox() };
 
             // Tilesets
@@ -45,6 +45,7 @@ namespace RPG_Paper_Maker
             textBoxLangGameName.GetTextBox().Items.Add(Control.GameName[Control.Langs[0]]);
             textBoxLangGameName.AllNames = Control.GameName;
             listBoxColors.InitializeListParameters(ListBoxesCanceling, Control.Model.System.Colors.Cast<SuperListItem>().ToList(), typeof(DialogSystemColors), typeof(SystemColor), 1, SystemColor.MAX_COLORS);
+            listBoxElements.InitializeListParameters(ListBoxesCanceling, Control.Model.System.Elements.Cast<SuperListItem>().ToList(), typeof(DialogElement), typeof(SystemElement), 1, SystemElement.MAX_ELEMENTS);
 
             // list event handlers
             for (int i = 0; i < ListBoxesCanceling.Length; i++)
@@ -289,6 +290,7 @@ namespace RPG_Paper_Maker
         {
             DialogResult = DialogResult.OK;
             Control.Model.System.Colors = listBoxColors.ModelList.Cast<SystemColor>().ToList();
+            Control.Model.System.Elements = listBoxElements.ModelList.Cast<SystemElement>().ToList();
             Control.Model.Tilesets.Tilesets = listBoxTilesets.ModelList.Cast<Tileset>().ToList();
             Control.Save();
             Close();

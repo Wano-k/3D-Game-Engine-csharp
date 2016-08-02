@@ -72,6 +72,17 @@ namespace RPG_Paper_Maker
         public static string MapsDirectoryPath { get { return Path.Combine(CurrentDir, "Content", "Datas", "Maps"); } }
 
 
+        // -------------------------------------------------------------------
+        // GetDefaultNames
+        // -------------------------------------------------------------------
+
+        public static Dictionary<string, string> GetDefaultNames(string name = "")
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic["eng"] = name;
+
+            return dic;
+        }
 
         // -------------------------------------------------------------------
         // CopyAll

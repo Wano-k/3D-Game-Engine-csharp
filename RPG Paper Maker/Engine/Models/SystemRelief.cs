@@ -19,7 +19,7 @@ namespace RPG_Paper_Maker
         // Constructors
         // -------------------------------------------------------------------
 
-        public SystemRelief(int id) : this(id, "", new SystemGraphic(WANOK.NONE_IMAGE_STRING, true, GraphicKind.Relief), new Collision(), DrawType.None, null)
+        public SystemRelief(int id) : this(id, "", new SystemGraphic(GraphicKind.Relief), new Collision(), DrawType.None, null)
         {
 
         }
