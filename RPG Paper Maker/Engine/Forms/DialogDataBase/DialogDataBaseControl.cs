@@ -9,28 +9,28 @@ namespace RPG_Paper_Maker
 {
     public class DialogDataBaseControl : INotifyPropertyChanged
     {
-        public SystemDatas ModelSystem;
-        public Dictionary<string, string> GameName { get { return ModelSystem.GameName; } }
-        public List<string> Langs { get { return ModelSystem.Langs; } }
+        public GameDatas Model = new GameDatas();
+        public Dictionary<string, string> GameName { get { return Model.System.GameName; } }
+        public List<string> Langs { get { return Model.System.Langs; } }
         public int ScreenWidth
         {
-            get { return ModelSystem.ScreenWidth; }
-            set { ModelSystem.ScreenWidth = value; NotifyPropertyChanged("ScreenWidth"); }
+            get { return Model.System.ScreenWidth; }
+            set { Model.System.ScreenWidth = value; NotifyPropertyChanged("ScreenWidth"); }
         }
         public int ScreenHeight
         {
-            get { return ModelSystem.ScreenHeight; }
-            set { ModelSystem.ScreenHeight = value; NotifyPropertyChanged("ScreenHeight"); }
+            get { return Model.System.ScreenHeight; }
+            set { Model.System.ScreenHeight = value; NotifyPropertyChanged("ScreenHeight"); }
         }
         public bool FullScreen
         {
-            get { return ModelSystem.FullScreen; }
-            set { ModelSystem.FullScreen = value; NotifyPropertyChanged("FullScreen"); }
+            get { return Model.System.FullScreen; }
+            set { Model.System.FullScreen = value; NotifyPropertyChanged("FullScreen"); }
         }
         public int SquareSize
         {
-            get { return ModelSystem.SquareSize; }
-            set { ModelSystem.SquareSize = value; NotifyPropertyChanged("SquareSize"); }
+            get { return Model.System.SquareSize; }
+            set { Model.System.SquareSize = value; NotifyPropertyChanged("SquareSize"); }
         }
 
 
@@ -38,9 +38,9 @@ namespace RPG_Paper_Maker
         // Constructors
         // -------------------------------------------------------------------
 
-        public DialogDataBaseControl(SystemDatas system)
+        public DialogDataBaseControl()
         {
-            ModelSystem = system;
+            Model.LoadDatas();
         }
 
         // -------------------------------------------------------------------
@@ -77,7 +77,7 @@ namespace RPG_Paper_Maker
 
         public void SetFullScreen(int index)
         {
-            ModelSystem.FullScreen = index == 1;
+            Model.System.FullScreen = index == 1;
         }
 
         // -------------------------------------------------------------------
@@ -86,7 +86,7 @@ namespace RPG_Paper_Maker
 
         public int GetFullScreenIndex()
         {
-            return ModelSystem.FullScreen ? 1 : 0;
+            return Model.System.FullScreen ? 1 : 0;
         }
 
         // -------------------------------------------------------------------
@@ -109,8 +109,8 @@ namespace RPG_Paper_Maker
 
         public void Save()
         {
-            WANOK.SystemDatas = ModelSystem;
-            WANOK.SaveBinaryDatas(ModelSystem, WANOK.SystemPath);
+            WANOK.Game = Model;
+            Model.SaveDatas();
         }
     }
 }

@@ -516,12 +516,12 @@ namespace RPG_Paper_Maker
         private void ItemRTP_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
-            dialog.SelectedPath = WANOK.SystemDatas.PathRTP;
+            dialog.SelectedPath = WANOK.Game.System.PathRTP;
             dialog.Description = "Select your new RTP directory here.";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                WANOK.SystemDatas.PathRTP = dialog.SelectedPath;
-                WANOK.SaveBinaryDatas(WANOK.SystemDatas, WANOK.SystemPath);
+                WANOK.Game.System.PathRTP = dialog.SelectedPath;
+                WANOK.SaveBinaryDatas(WANOK.Game.System, WANOK.SystemPath);
                 TreeTag tag = (TreeTag)WANOK.SelectedNode.Tag;
                 if (tag.IsMap) ReLoadMap(tag.RealMapName);
             }
@@ -1289,8 +1289,8 @@ namespace RPG_Paper_Maker
             if (ComboBoxSpecialTileset1.SelectedIndex != -1)
             {
                 Tileset tileset = MapEditor.GetMapTileset();
-                if (MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles) ReLoadSpecialPicture(tileset.Autotiles, WANOK.SystemDatas.GetAutotileById, WANOK.SystemDatas.GetAutotileIndexById);
-                else if (MapEditor.SelectedDrawType == "ItemRelief") ReLoadSpecialPicture(tileset.Reliefs, WANOK.SystemDatas.GetReliefById, WANOK.SystemDatas.GetReliefIndexById);
+                if (MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles) ReLoadSpecialPicture(tileset.Autotiles, WANOK.Game.Tilesets.GetAutotileById, WANOK.Game.Tilesets.GetAutotileIndexById);
+                else if (MapEditor.SelectedDrawType == "ItemRelief") ReLoadSpecialPicture(tileset.Reliefs, WANOK.Game.Tilesets.GetReliefById, WANOK.Game.Tilesets.GetReliefIndexById);
             }
         }
 
@@ -1347,8 +1347,8 @@ namespace RPG_Paper_Maker
             ComboBoxSpecialTileset1.Items.Clear();
             tableLayoutPanelTileset.RowStyles[0] = new RowStyle(SizeType.Absolute, 27);
             Tileset tileset = MapEditor.GetMapTileset();
-            if (MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles) FillComboBox(tileset.Autotiles, WANOK.SystemDatas.GetAutotileById, WANOK.SystemDatas.GetAutotileIndexById);
-            else if (MapEditor.SelectedDrawType == "ItemRelief") FillComboBox(tileset.Reliefs, WANOK.SystemDatas.GetReliefById, WANOK.SystemDatas.GetReliefIndexById);
+            if (MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles) FillComboBox(tileset.Autotiles, WANOK.Game.Tilesets.GetAutotileById, WANOK.Game.Tilesets.GetAutotileIndexById);
+            else if (MapEditor.SelectedDrawType == "ItemRelief") FillComboBox(tileset.Reliefs, WANOK.Game.Tilesets.GetReliefById, WANOK.Game.Tilesets.GetReliefIndexById);
             PanelSpecialMenu.Controls.Add(ComboBoxSpecialTileset1);
         }
 

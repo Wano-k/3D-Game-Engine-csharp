@@ -51,9 +51,9 @@ namespace RPG_Paper_Maker
 
             // Start position
 
-            if (mapName == WANOK.SystemDatas.StartMapName)
+            if (mapName == WANOK.Game.System.StartMapName)
             {
-                SetStartInfos(WANOK.SystemDatas, WANOK.SystemDatas.StartPosition);
+                SetStartInfos(WANOK.Game.System, WANOK.Game.System.StartPosition);
             }
 
             // Dispose textures
@@ -74,15 +74,15 @@ namespace RPG_Paper_Maker
             MapEditor.TexReliefs.Clear();
 
             // Loading textures
-            Tileset tileset = WANOK.SystemDatas.GetTilesetById(MapInfos.Tileset);
+            Tileset tileset = WANOK.Game.Tilesets.GetTilesetById(MapInfos.Tileset);
             MapEditor.TexTileset = tileset.Graphic.LoadTexture(device);
             for (int i = 0; i < tileset.Autotiles.Count; i++)
             {
-                MapEditor.TexAutotiles[tileset.Autotiles[i]] = WANOK.SystemDatas.GetAutotileById(tileset.Autotiles[i]).Graphic.LoadTexture(Device);
+                MapEditor.TexAutotiles[tileset.Autotiles[i]] = WANOK.Game.Tilesets.GetAutotileById(tileset.Autotiles[i]).Graphic.LoadTexture(Device);
             }
             for (int i = 0; i < tileset.Reliefs.Count; i++)
             {
-                MapEditor.TexReliefs[tileset.Reliefs[i]] = WANOK.SystemDatas.GetReliefById(tileset.Reliefs[i]).Graphic.LoadTexture(Device);
+                MapEditor.TexReliefs[tileset.Reliefs[i]] = WANOK.Game.Tilesets.GetReliefById(tileset.Reliefs[i]).Graphic.LoadTexture(Device);
             }
 
             // Grid

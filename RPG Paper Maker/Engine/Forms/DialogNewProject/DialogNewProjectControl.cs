@@ -90,6 +90,7 @@ namespace RPG_Paper_Maker.Controls
                                 string basicPath = Path.Combine(executablePath, "Basic");
                                 WANOK.CopyAll(new DirectoryInfo(basicPath), new DirectoryInfo(fullPath));
                                 WANOK.SaveBinaryDatas(new SystemDatas(ProjectName), Path.Combine(fullPath, "Content", "Datas", "System.rpmd"));
+                                WANOK.SaveBinaryDatas(new TilesetsDatas(), Path.Combine(fullPath, "Content", "Datas", "Tilesets.rpmd"));
                                 Directory.CreateDirectory(Path.Combine(fullPath, "Content", "Pictures"));
                                 Directory.CreateDirectory(Path.Combine(fullPath, "Content", "Pictures","Textures2D"));
                                 Directory.CreateDirectory(Path.Combine(fullPath, "Content", "Pictures", "Textures2D", "Characters"));

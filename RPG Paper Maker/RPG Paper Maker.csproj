@@ -205,7 +205,9 @@
     <Compile Include="Engine\Forms\DialogTileset\DialogTileset.Designer.cs">
       <DependentUpon>DialogTileset.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\Models\GameDatas.cs" />
     <Compile Include="Engine\Models\SystemRelief.cs" />
+    <Compile Include="Engine\Models\TilesetsDatas.cs" />
     <Compile Include="MapEditor\Autotile.cs" />
     <Compile Include="MapEditor\Autotiles.cs" />
     <Compile Include="Engine\Models\SystemAutotile.cs" />

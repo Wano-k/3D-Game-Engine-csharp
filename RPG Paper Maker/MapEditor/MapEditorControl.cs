@@ -600,7 +600,7 @@ namespace RPG_Paper_Maker
                 system.StartMapName = Map.MapInfos.RealMapName;
                 system.StartPosition = coords;
                 WANOK.SaveBinaryDatas(system, WANOK.SystemPath);
-                WANOK.SystemDatas = system;
+                WANOK.Game.System = system;
 
                 // Updating in map
                 Map.SetStartInfos(coords);

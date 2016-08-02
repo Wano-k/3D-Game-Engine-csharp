@@ -42,6 +42,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.listBoxRelief = new RPG_Paper_Maker.AddingListBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
@@ -76,7 +77,7 @@
             this.ok = new System.Windows.Forms.Button();
             this.cancel = new System.Windows.Forms.Button();
             this.toolTipSquareSize = new System.Windows.Forms.ToolTip(this.components);
-            this.listBoxRelief = new RPG_Paper_Maker.AddingListBox();
+            this.tabPageHeroes = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabPageTilesets.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
@@ -108,6 +109,7 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Controls.Add(this.tabPageHeroes);
             this.tabControl1.Controls.Add(this.tabPageTilesets);
             this.tabControl1.Controls.Add(this.tabPageSystem);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -277,6 +279,14 @@
             this.groupBox11.TabIndex = 4;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Reliefs";
+            // 
+            // listBoxRelief
+            // 
+            this.listBoxRelief.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxRelief.Location = new System.Drawing.Point(10, 23);
+            this.listBoxRelief.Name = "listBoxRelief";
+            this.listBoxRelief.Size = new System.Drawing.Size(120, 104);
+            this.listBoxRelief.TabIndex = 1;
             // 
             // groupBox10
             // 
@@ -731,13 +741,14 @@
             this.toolTipSquareSize.InitialDelay = 500;
             this.toolTipSquareSize.ReshowDelay = 100;
             // 
-            // listBoxRelief
+            // tabPageHeroes
             // 
-            this.listBoxRelief.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxRelief.Location = new System.Drawing.Point(10, 23);
-            this.listBoxRelief.Name = "listBoxRelief";
-            this.listBoxRelief.Size = new System.Drawing.Size(120, 104);
-            this.listBoxRelief.TabIndex = 1;
+            this.tabPageHeroes.Location = new System.Drawing.Point(4, 22);
+            this.tabPageHeroes.Name = "tabPageHeroes";
+            this.tabPageHeroes.Size = new System.Drawing.Size(811, 421);
+            this.tabPageHeroes.TabIndex = 2;
+            this.tabPageHeroes.Text = "Heroes";
+            this.tabPageHeroes.UseVisualStyleBackColor = true;
             // 
             // DialogDataBase
             // 
@@ -835,5 +846,6 @@
         private CollisionSettings collisionSettings;
         private AddingListBox listBoxAutotiles;
         private AddingListBox listBoxRelief;
+        private System.Windows.Forms.TabPage tabPageHeroes;
     }
 }

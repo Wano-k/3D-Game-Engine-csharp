@@ -286,7 +286,7 @@ namespace RPG_Paper_Maker
             if (!Mountains.ContainsKey(height)) Mountains[height] = new Mountains();
             Mountains[height].Add(coords, newId, newMountain, height);
 
-            SystemRelief relief = WANOK.SystemDatas.GetReliefById(newId);
+            SystemRelief relief = WANOK.Game.Tilesets.GetReliefById(newId);
             switch (relief.TopDrawType)
             {
                 case DrawType.Floors:

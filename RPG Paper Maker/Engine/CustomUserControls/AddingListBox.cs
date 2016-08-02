@@ -19,7 +19,7 @@ namespace RPG_Paper_Maker
         public Type DialogKind;
         public Type TypeItem;
         public ListBox[] ListBoxes;
-        public SystemDatas Model;
+        public TilesetsDatas Model;
         public int Min, Max;
 
 
@@ -38,7 +38,7 @@ namespace RPG_Paper_Maker
         // InitializeListParameters
         // -------------------------------------------------------------------
 
-        public void InitializeListParameters(SystemDatas model, ListBox[] list, List<SuperListItem> modelListComplete, List<int> modelListTileset, Type type, Type typeItem, int min, int max, MethodGetSuperItemById getById)
+        public void InitializeListParameters(TilesetsDatas model, ListBox[] list, List<SuperListItem> modelListComplete, List<int> modelListTileset, Type type, Type typeItem, int min, int max, MethodGetSuperItemById getById)
         {
             ListBoxes = list;
             ModelListComplete = modelListComplete;

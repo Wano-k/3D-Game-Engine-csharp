@@ -77,7 +77,7 @@ namespace RPG_Paper_Maker
 
         public Tileset GetMapTileset()
         {
-            return WANOK.SystemDatas.GetTilesetById(Control.Map.MapInfos.Tileset);
+            return WANOK.Game.Tilesets.GetTilesetById(Control.Map.MapInfos.Tileset);
         }
 
         // -------------------------------------------------------------------

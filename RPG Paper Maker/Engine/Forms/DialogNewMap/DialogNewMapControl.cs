@@ -82,7 +82,7 @@ namespace RPG_Paper_Maker.Controls
 
         public void SetTileset(int index)
         {
-            Model.Tileset = WANOK.SystemDatas.Tilesets[index].Id;
+            Model.Tileset = WANOK.Game.Tilesets.Tilesets[index].Id;
         }
 
         // -------------------------------------------------------------------
@@ -91,7 +91,7 @@ namespace RPG_Paper_Maker.Controls
 
         public void SetSkyColor(int index)
         {
-            Model.SkyColor = WANOK.SystemDatas.Colors[index].Id;
+            Model.SkyColor = WANOK.Game.System.Colors[index].Id;
         }
 
         // -------------------------------------------------------------------

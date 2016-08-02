@@ -16,7 +16,7 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
-        public DialogAddingAutotilesList(string text, SystemDatas model, List<int> superListTileset) : base(text, model, superListTileset, typeof(SystemAutotile))
+        public DialogAddingAutotilesList(string text, TilesetsDatas model, List<int> superListTileset) : base(text, model, superListTileset, typeof(SystemAutotile))
         {
             listBoxComplete.InitializeListParameters(new ListBox[] { }, model.Autotiles.Cast<SuperListItem>().ToList(), null, Type, 1, SystemAutotile.MAX_AUTOTILES);
             for (int i = 0; i < superListTileset.Count; i++)

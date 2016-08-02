@@ -35,7 +35,7 @@ namespace RPG_Paper_Maker
             new Vector3(0.0f, 0.0f, 0.0f)
         };
         public static int BASIC_SQUARE_SIZE = 32;
-        public static int SQUARE_SIZE { get { return SystemDatas.SquareSize; } }
+        public static int SQUARE_SIZE { get { return Game.System.SquareSize; } }
         public static float RELATION_SIZE { get { return (float)(BASIC_SQUARE_SIZE) / SQUARE_SIZE; } }
         public static int PORTION_SIZE = 16;
         public static int PORTION_RADIUS = 6;
@@ -49,7 +49,7 @@ namespace RPG_Paper_Maker
         public static MouseManager TilesetMouseManager = new MouseManager();
         public static MouseManager MapMouseManager = new MouseManager();
         public static string ListBeginning = "<> ";
-        public static SystemDatas SystemDatas;
+        public static GameDatas Game = new GameDatas();
         public static HashSet<string> ListMapToSave = new HashSet<string>();
         public static TreeNode SelectedNode = null;
         public static string NONE_IMAGE_STRING = "<None>";
@@ -68,6 +68,7 @@ namespace RPG_Paper_Maker
         public static string ExcecutablePath { get { return Application.ExecutablePath; } }
         public static string ExcecutablePathDir { get { return Path.GetDirectoryName(ExcecutablePath); } }
         public static string SystemPath { get { return Path.Combine(CurrentDir, "Content", "Datas", "System.rpmd"); } }
+        public static string TilesetsPath { get { return Path.Combine(CurrentDir, "Content", "Datas", "Tilesets.rpmd"); } }
         public static string MapsDirectoryPath { get { return Path.Combine(CurrentDir, "Content", "Datas", "Maps"); } }
 
 
@@ -415,7 +416,7 @@ namespace RPG_Paper_Maker
 
         public static Color GetColor(int id)
         {
-            return SystemColor.GetMonogameColor(SystemDatas.GetColorById(id));
+            return SystemColor.GetMonogameColor(Game.System.GetColorById(id));
         }
 
         // -------------------------------------------------------------------

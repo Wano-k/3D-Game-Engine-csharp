@@ -36,16 +36,16 @@ namespace RPG_Paper_Maker
             groupBox3.Paint += MainForm.PaintBorderGroupBox;
 
             // ComboBox
-            for (int i = 0; i < WANOK.SystemDatas.Tilesets.Count; i++)
+            for (int i = 0; i < WANOK.Game.Tilesets.Tilesets.Count; i++)
             {
-                ComboBoxTileset.Items.Add(WANOK.GetStringComboBox(WANOK.SystemDatas.Tilesets[i].Id, WANOK.SystemDatas.Tilesets[i].Name));
+                ComboBoxTileset.Items.Add(WANOK.GetStringComboBox(WANOK.Game.Tilesets.Tilesets[i].Id, WANOK.Game.Tilesets.Tilesets[i].Name));
             }
-            ComboBoxTileset.SelectedIndex = WANOK.SystemDatas.GetTilesetIndexById(Control.Model.Tileset);
-            for (int i = 0; i < WANOK.SystemDatas.Colors.Count; i++)
+            ComboBoxTileset.SelectedIndex = WANOK.Game.Tilesets.GetTilesetIndexById(Control.Model.Tileset);
+            for (int i = 0; i < WANOK.Game.System.Colors.Count; i++)
             {
-                ComboBoxColor.Items.Add(WANOK.GetStringComboBox(WANOK.SystemDatas.Colors[i].Id, WANOK.SystemDatas.Colors[i].Name));
+                ComboBoxColor.Items.Add(WANOK.GetStringComboBox(WANOK.Game.System.Colors[i].Id, WANOK.Game.System.Colors[i].Name));
             }
-            ComboBoxColor.SelectedIndex = WANOK.SystemDatas.GetColorIndexById(Control.Model.SkyColor);
+            ComboBoxColor.SelectedIndex = WANOK.Game.System.GetColorIndexById(Control.Model.SkyColor);
             if (ComboBoxSkyBox.Items.Count > 0) ComboBoxSkyBox.SelectedIndex = 0;
 
             // Is setting

@@ -63,7 +63,7 @@ namespace RPG_Paper_Maker
 
         public string GetRTPPath()
         {
-            return Path.Combine(WANOK.SystemDatas.PathRTP, GetRessourcesPath());
+            return Path.Combine(WANOK.Game.System.PathRTP, GetRessourcesPath());
         }
 
         public string GetRTPPath(string fileName)

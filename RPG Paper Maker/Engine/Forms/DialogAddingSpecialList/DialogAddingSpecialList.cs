@@ -22,7 +22,7 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
-        public DialogAddingSpecialList(string text, SystemDatas model, List<int> superListTileset, Type type)
+        public DialogAddingSpecialList(string text, TilesetsDatas model, List<int> superListTileset, Type type)
         {
             InitializeComponent();
 

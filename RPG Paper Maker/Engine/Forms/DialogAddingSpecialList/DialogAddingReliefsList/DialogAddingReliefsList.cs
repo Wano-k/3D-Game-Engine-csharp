@@ -20,14 +20,14 @@ namespace RPG_Paper_Maker
         TextBoxVariables TextBoxVariable = new TextBoxVariables();
         ImageComboBox ComboBoxAutotile = new ImageComboBox();
         Tileset Tileset;
-        SystemDatas Model;
+        TilesetsDatas Model;
 
 
         // -------------------------------------------------------------------
         // Constructor
         // -------------------------------------------------------------------
 
-        public DialogAddingReliefsList(string text, SystemDatas model, Tileset tileset) : base(text, model, tileset.Reliefs, typeof(SystemRelief))
+        public DialogAddingReliefsList(string text, TilesetsDatas model, Tileset tileset) : base(text, model, tileset.Reliefs, typeof(SystemRelief))
         {
             Tileset = tileset;
             Model = model;
