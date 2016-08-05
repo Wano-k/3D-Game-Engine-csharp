@@ -33,9 +33,10 @@ namespace RPG_Paper_Maker
             textBoxGraphicIcon.InitializeParameters(element.Icon);
             PictureBoxIcon.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBoxIcon.InterpolationMode = InterpolationMode.NearestNeighbor;
-            PictureBoxIcon.Image = element.Icon.LoadImage();
-            PictureBoxIcon.Size = new Size((WANOK.BASIC_SQUARE_SIZE / 2) + 2, (WANOK.BASIC_SQUARE_SIZE / 2) + 2);
-            PictureBoxIcon.Location = new Point(0, 0);
+            LoadIcon(element.Icon);
+
+            // Events
+            textBoxGraphicIcon.GetTextBox().SelectedValueChanged += textBoxGraphicIcon_SelectedValueChanged;
 
             InitializeDataBindings();
         }
@@ -59,8 +60,24 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // LoadIcon
+        // -------------------------------------------------------------------
+
+        public void LoadIcon(SystemGraphic graphic)
+        {
+            PictureBoxIcon.Image = graphic.LoadImage();
+            PictureBoxIcon.Size = new Size((WANOK.BASIC_SQUARE_SIZE / 2) + 2, (WANOK.BASIC_SQUARE_SIZE / 2) + 2);
+            PictureBoxIcon.Location = new Point(0, 0);
+        }
+
+        // -------------------------------------------------------------------
         // Events
         // -------------------------------------------------------------------
+
+        private void textBoxGraphicIcon_SelectedValueChanged(object sender, EventArgs e)
+        {
+            LoadIcon(Control.Model.Icon);
+        }
 
         private void ok_Click(object sender, EventArgs e)
         {

@@ -33,6 +33,12 @@ namespace RPG_Paper_Maker
             // list
             listView1.Select();
             listView1.HideSelection = false;
+            listView1.HeaderStyle = ColumnHeaderStyle.None;
+            ColumnHeader header = new ColumnHeader();
+            header.Text = "";
+            header.Name = "";
+            listView1.Columns.Add(header);
+            listView1.Columns[0].Width = listView1.Size.Width;
             listView1.Items[0].Selected = true;
 
             List<string> LocalFiles = Control.GetLocalFiles();

@@ -1218,7 +1218,7 @@ namespace RPG_Paper_Maker
 
         private void MenuItemMoveMap_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            WANOK.ShowActionMessage();
         }
 
         private void MenuItemCopyMap_Click(object sender, EventArgs e)

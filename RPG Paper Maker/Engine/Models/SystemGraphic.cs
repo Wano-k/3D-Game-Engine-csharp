@@ -107,7 +107,7 @@ namespace RPG_Paper_Maker
                 case GraphicKind.Relief:
                     return Path.Combine("Content", "Pictures", "Textures2D", "Reliefs");
                 case GraphicKind.Icon:
-                    return Path.Combine("Content", "Pictures", "Textures2D", "Icons");
+                    return Path.Combine("Content", "Pictures", "UI", "Icons");
                 default:
                     return "";
             }

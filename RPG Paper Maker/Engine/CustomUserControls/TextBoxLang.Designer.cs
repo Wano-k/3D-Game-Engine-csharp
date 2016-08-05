@@ -58,6 +58,7 @@
             this.Button.Size = new System.Drawing.Size(34, 21);
             this.Button.TabIndex = 1;
             this.Button.UseVisualStyleBackColor = true;
+            this.Button.Click += new System.EventHandler(this.Button_Click);
             // 
             // textBox1
             // 
@@ -67,6 +68,7 @@
             this.textBox1.Size = new System.Drawing.Size(158, 20);
             this.textBox1.TabIndex = 2;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox1.DoubleClick += new System.EventHandler(this.textBox1_DoubleClick);
             // 
             // TextBoxLang
             // 

@@ -521,22 +521,22 @@
     <Content Include="RTP\Content\Pictures\Textures2D\Characters\template.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="RTP\Content\Pictures\Textures2D\Icons\darkness.png">
+    <Content Include="RTP\Content\Pictures\UI\Icons\darkness.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="RTP\Content\Pictures\Textures2D\Icons\fire.png">
+    <Content Include="RTP\Content\Pictures\UI\Icons\fire.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="RTP\Content\Pictures\Textures2D\Icons\grass.png">
+    <Content Include="RTP\Content\Pictures\UI\Icons\grass.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="RTP\Content\Pictures\Textures2D\Icons\light.png">
+    <Content Include="RTP\Content\Pictures\UI\Icons\light.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="RTP\Content\Pictures\Textures2D\Icons\water.png">
+    <Content Include="RTP\Content\Pictures\UI\Icons\water.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="RTP\Content\Pictures\Textures2D\Icons\wind.png">
+    <Content Include="RTP\Content\Pictures\UI\Icons\wind.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="RTP\Content\Pictures\Textures2D\Reliefs\grass.png">

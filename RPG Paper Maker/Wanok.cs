@@ -523,6 +523,15 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // ShowActionMessage
+        // -------------------------------------------------------------------
+
+        public static void ShowActionMessage()
+        {
+            MessageBox.Show("Action unavailable now.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        // -------------------------------------------------------------------
         // CANCEL
         // -------------------------------------------------------------------
 

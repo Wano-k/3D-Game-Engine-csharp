@@ -97,6 +97,7 @@ namespace RPG_Paper_Maker.Controls
                                 Directory.CreateDirectory(Path.Combine(fullPath, "Content", "Pictures", "Textures2D", "Tilesets"));
                                 Directory.CreateDirectory(Path.Combine(fullPath, "Content", "Pictures", "Textures2D", "Autotiles"));
                                 Directory.CreateDirectory(Path.Combine(fullPath, "Content", "Pictures", "Textures2D", "Reliefs"));
+                                Directory.CreateDirectory(Path.Combine(fullPath, "Content", "Pictures", "UI", "Icons"));
                                 Directory.CreateDirectory(Path.Combine(fullPath, "Content", "Datas", "Maps", "MAP0001"));
                                 Directory.CreateDirectory(Path.Combine(fullPath, "Content", "Datas", "Maps", "MAP0001", "temp"));
                                 WANOK.SaveBinaryDatas(new MapInfos(), Path.Combine(fullPath, "Content", "Datas", "Maps", "MAP0001","infos.map"));

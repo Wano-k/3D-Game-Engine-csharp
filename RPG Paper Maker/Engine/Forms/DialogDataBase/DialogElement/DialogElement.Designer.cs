@@ -147,10 +147,10 @@
             // tableLayoutPanel4
             // 
             this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel4.Controls.Add(this.textBoxGraphicIcon, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.PictureBoxIcon, 1, 0);
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.Controls.Add(this.PictureBoxIcon, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.textBoxGraphicIcon, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(47, 33);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -163,10 +163,10 @@
             // 
             this.textBoxGraphicIcon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxGraphicIcon.Location = new System.Drawing.Point(0, 0);
+            this.textBoxGraphicIcon.Location = new System.Drawing.Point(23, 0);
             this.textBoxGraphicIcon.Margin = new System.Windows.Forms.Padding(0);
             this.textBoxGraphicIcon.Name = "textBoxGraphicIcon";
-            this.textBoxGraphicIcon.Size = new System.Drawing.Size(233, 24);
+            this.textBoxGraphicIcon.Size = new System.Drawing.Size(269, 24);
             this.textBoxGraphicIcon.TabIndex = 0;
             // 
             // PictureBoxIcon
@@ -175,7 +175,7 @@
             this.PictureBoxIcon.BackColor = System.Drawing.Color.Gainsboro;
             this.PictureBoxIcon.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PictureBoxIcon.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
-            this.PictureBoxIcon.Location = new System.Drawing.Point(251, 3);
+            this.PictureBoxIcon.Location = new System.Drawing.Point(0, 3);
             this.PictureBoxIcon.Margin = new System.Windows.Forms.Padding(0);
             this.PictureBoxIcon.Name = "PictureBoxIcon";
             this.PictureBoxIcon.Size = new System.Drawing.Size(23, 18);
