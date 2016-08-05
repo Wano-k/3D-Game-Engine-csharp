@@ -8,6 +8,7 @@ namespace RPG_Paper_Maker
 {
     public class GameDatas
     {
+        public HeroesDatas Heroes;
         public SystemDatas System;
         public TilesetsDatas Tilesets;
 
@@ -18,6 +19,7 @@ namespace RPG_Paper_Maker
 
         public void LoadDatas()
         {
+            Heroes = WANOK.LoadBinaryDatas<HeroesDatas>(WANOK.HeroesPath);
             System = WANOK.LoadBinaryDatas<SystemDatas>(WANOK.SystemPath);
             Tilesets = WANOK.LoadBinaryDatas<TilesetsDatas>(WANOK.TilesetsPath);
         }
@@ -28,6 +30,7 @@ namespace RPG_Paper_Maker
 
         public void SaveDatas()
         {
+            WANOK.SaveBinaryDatas(Heroes, WANOK.HeroesPath);
             WANOK.SaveBinaryDatas(System, WANOK.SystemPath);
             WANOK.SaveBinaryDatas(Tilesets, WANOK.TilesetsPath);
         }

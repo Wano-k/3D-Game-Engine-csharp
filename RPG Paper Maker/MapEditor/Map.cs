@@ -74,7 +74,7 @@ namespace RPG_Paper_Maker
             MapEditor.TexReliefs.Clear();
 
             // Loading textures
-            Tileset tileset = WANOK.Game.Tilesets.GetTilesetById(MapInfos.Tileset);
+            SystemTileset tileset = WANOK.Game.Tilesets.GetTilesetById(MapInfos.Tileset);
             MapEditor.TexTileset = tileset.Graphic.LoadTexture(device);
             for (int i = 0; i < tileset.Autotiles.Count; i++)
             {

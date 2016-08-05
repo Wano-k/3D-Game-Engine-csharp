@@ -838,7 +838,6 @@
             // listBoxCommonStats
             // 
             this.listBoxCommonStats.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxCommonStats.Enabled = false;
             this.listBoxCommonStats.Location = new System.Drawing.Point(10, 23);
             this.listBoxCommonStats.Name = "listBoxCommonStats";
             this.listBoxCommonStats.Size = new System.Drawing.Size(166, 161);

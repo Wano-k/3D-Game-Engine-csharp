@@ -8,10 +8,11 @@ namespace RPG_Paper_Maker
 {
     public enum GraphicKind
     {
-        Picture,
+        Other,
         Tileset,
         Autotile,
         Relief,
-        Icon
+        Icon,
+        Bar
     }
 }

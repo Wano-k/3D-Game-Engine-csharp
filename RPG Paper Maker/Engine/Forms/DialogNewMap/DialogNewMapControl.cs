@@ -82,7 +82,7 @@ namespace RPG_Paper_Maker.Controls
 
         public void SetTileset(int index)
         {
-            Model.Tileset = WANOK.Game.Tilesets.Tilesets[index].Id;
+            Model.Tileset = WANOK.Game.Tilesets.TilesetsList[index].Id;
         }
 
         // -------------------------------------------------------------------

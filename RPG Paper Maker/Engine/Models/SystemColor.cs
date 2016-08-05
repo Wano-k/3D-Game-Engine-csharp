@@ -68,5 +68,29 @@ namespace RPG_Paper_Maker
         {
             return new Microsoft.Xna.Framework.Color(c.Color[0], c.Color[1], c.Color[2]);
         }
+
+        // -------------------------------------------------------------------
+        // GetDefaultColors
+        // -------------------------------------------------------------------
+
+        public static List<SystemColor> GetDefaultColors()
+        {
+            List<SystemColor> list = new List<SystemColor>();
+            list.Add(BlackColor);
+            list.Add(BlackGrayColor);
+            list.Add(SilverColor);
+            list.Add(WhiteColor);
+            list.Add(RedColor);
+            list.Add(OrangeColor);
+            list.Add(YellowColor);
+            list.Add(GreenColor);
+            list.Add(CyanColor);
+            list.Add(BlueColor);
+            list.Add(PurpleColor);
+            list.Add(MagentaColor);
+            list.Add(PinkColor);
+
+            return list;
+        }
     }
 }

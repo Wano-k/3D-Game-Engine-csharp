@@ -9,7 +9,7 @@ namespace RPG_Paper_Maker
     [Serializable]
     public class TilesetsDatas
     {
-        public List<Tileset> Tilesets = new List<Tileset>();
+        public List<SystemTileset> TilesetsList = new List<SystemTileset>();
         public List<SystemAutotile> Autotiles = new List<SystemAutotile>();
         public List<SystemRelief> Reliefs = new List<SystemRelief>();
 
@@ -20,8 +20,7 @@ namespace RPG_Paper_Maker
 
         public TilesetsDatas()
         {
-            Tilesets.Add(new Tileset(1, "Plains", new SystemGraphic("plains.png", true, GraphicKind.Tileset), new Collision(Collision.GetDefaultPassableCollision(8, 8)), new List<int>(new int[] { 1, 2 }), new List<int>(new int[] { 1, 2 })));
-            for (int i = 1; i < 20; i++) Tilesets.Add(new Tileset(i + 1));
+            TilesetsList = SystemTileset.GetDefaultTilesets();
             Autotiles = SystemAutotile.GetDefaultAutotiles();
             Reliefs = SystemRelief.GetDefaultReliefs();
         }
@@ -30,10 +29,10 @@ namespace RPG_Paper_Maker
         // GetTilesetById
         // -------------------------------------------------------------------
 
-        public Tileset GetTilesetById(int id)
+        public SystemTileset GetTilesetById(int id)
         {
-            if (id > Tilesets.Count) return new Tileset(-1);
-            return Tilesets.Find(i => i.Id == id);
+            if (id > TilesetsList.Count) return new SystemTileset(-1);
+            return TilesetsList.Find(i => i.Id == id);
         }
 
         // -------------------------------------------------------------------
@@ -42,7 +41,7 @@ namespace RPG_Paper_Maker
 
         public int GetTilesetIndexById(int id)
         {
-            return Tilesets.IndexOf(GetTilesetById(id));
+            return TilesetsList.IndexOf(GetTilesetById(id));
         }
 
         // -------------------------------------------------------------------

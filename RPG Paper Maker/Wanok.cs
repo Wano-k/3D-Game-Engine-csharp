@@ -68,6 +68,7 @@ namespace RPG_Paper_Maker
         public static string CurrentDir = ".";
         public static string ExcecutablePath { get { return Application.ExecutablePath; } }
         public static string ExcecutablePathDir { get { return Path.GetDirectoryName(ExcecutablePath); } }
+        public static string HeroesPath { get { return Path.Combine(CurrentDir, "Content", "Datas", "Heroes.rpmd"); } }
         public static string SystemPath { get { return Path.Combine(CurrentDir, "Content", "Datas", "System.rpmd"); } }
         public static string TilesetsPath { get { return Path.Combine(CurrentDir, "Content", "Datas", "Tilesets.rpmd"); } }
         public static string MapsDirectoryPath { get { return Path.Combine(CurrentDir, "Content", "Datas", "Maps"); } }

@@ -26,11 +26,11 @@ namespace RPG_Paper_Maker
             InitializeComponent();
             Control = new DialogDataBaseControl();
             ViewModelBindingSource.DataSource = Control;
-            ListBoxesCanceling = new ListBox[] { listBoxColors.GetListBox(), listBoxElements.GetListBox(), textBoxGraphic.GetTextBox(), listBoxAutotiles.GetListBox(), listBoxRelief.GetListBox() };
+            ListBoxesCanceling = new ListBox[] { listBoxColors.GetListBox(), listBoxElements.GetListBox(), listBoxCommonStats.GetListBox(), textBoxGraphic.GetTextBox(), listBoxAutotiles.GetListBox(), listBoxRelief.GetListBox() };
             ListBoxes = new ListBox[] { listBoxTilesets.GetListBox() };
 
             // Tilesets
-            listBoxTilesets.InitializeListParameters(ListBoxesCanceling, Control.Model.Tilesets.Tilesets.Cast<SuperListItem>().ToList(), null, typeof(Tileset), 1, Tileset.MAX_TILESETS);
+            listBoxTilesets.InitializeListParameters(ListBoxesCanceling, Control.Model.Tilesets.TilesetsList.Cast<SuperListItem>().ToList(), null, typeof(SystemTileset), 1, SystemTileset.MAX_TILESETS);
             listBoxTilesets.GetListBox().SelectedIndexChanged += listBoxTilesets_SelectedIndexChanged;
             textBoxGraphic.GetTextBox().SelectedValueChanged += textBoxGraphic_SelectedValueChanged;
             collisionSettings.LoadTextures();
@@ -45,6 +45,7 @@ namespace RPG_Paper_Maker
             textBoxLangGameName.InitializeParameters(Control.GameName);
             listBoxColors.InitializeListParameters(ListBoxesCanceling, Control.Model.System.Colors.Cast<SuperListItem>().ToList(), typeof(DialogSystemColors), typeof(SystemColor), 1, SystemColor.MAX_COLORS);
             listBoxElements.InitializeListParameters(ListBoxesCanceling, Control.Model.System.Elements.Cast<SuperListItem>().ToList(), typeof(DialogElement), typeof(SystemElement), 1, SystemElement.MAX_ELEMENTS);
+            listBoxCommonStats.InitializeListParameters(ListBoxesCanceling, Control.Model.System.Statistics.Cast<SuperListItem>().ToList(), typeof(DialogStatistics), typeof(SystemStatistics), 1, SystemStatistics.MAX_STATISTICS);
 
             // list event handlers
             for (int i = 0; i < ListBoxesCanceling.Length; i++)
@@ -109,7 +110,7 @@ namespace RPG_Paper_Maker
         // SetCommonTilesetList
         // -------------------------------------------------------------------
 
-        public void SetCommonTilesetList(Tileset tileset)
+        public void SetCommonTilesetList(SystemTileset tileset)
         {
             listBoxAutotiles.InitializeListParameters(Control.Model.Tilesets, ListBoxesCanceling, Control.Model.Tilesets.Autotiles.Cast<SuperListItem>().ToList(), tileset.Autotiles, typeof(DialogAddingAutotilesList), typeof(SystemAutotile), 1, SystemAutotile.MAX_AUTOTILES, Control.Model.Tilesets.GetAutotileById);
             listBoxRelief.InitializeListParameters(Control.Model.Tilesets, ListBoxesCanceling, Control.Model.Tilesets.Reliefs.Cast<SuperListItem>().ToList(), tileset.Reliefs, typeof(DialogAddingReliefsList), typeof(SystemRelief), 1, SystemRelief.MAX_RELIEFS, Control.Model.Tilesets.GetReliefById);
@@ -121,7 +122,7 @@ namespace RPG_Paper_Maker
 
         public void listBoxTilesets_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Tileset tileset = (Tileset)listBoxTilesets.GetListBox().SelectedItem;
+            SystemTileset tileset = (SystemTileset)listBoxTilesets.GetListBox().SelectedItem;
             if (tileset != null)
             {
                 textBoxTilesetName.Text = tileset.Name;
@@ -137,7 +138,7 @@ namespace RPG_Paper_Maker
 
         public void textBoxGraphic_SelectedValueChanged(object sender, EventArgs e)
         {
-            Tileset tileset = (Tileset)listBoxTilesets.GetListBox().SelectedItem;
+            SystemTileset tileset = (SystemTileset)listBoxTilesets.GetListBox().SelectedItem;
             collisionSettings.InitializeParameters(tileset.Collision, tileset.Graphic);
         }
 
@@ -156,7 +157,7 @@ namespace RPG_Paper_Maker
 
         private void listBoxAutotiles_Click(object sender, EventArgs e)
         {
-            Tileset tileset = (Tileset)listBoxTilesets.GetListBox().SelectedItem;
+            SystemTileset tileset = (SystemTileset)listBoxTilesets.GetListBox().SelectedItem;
             DialogAddingAutotilesList dialog = new DialogAddingAutotilesList("Choose Autotile", Control.Model.Tilesets, tileset.Autotiles);
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -164,7 +165,7 @@ namespace RPG_Paper_Maker
                 tileset.Autotiles = dialog.GetListTileset();
                 for (int i = 0; i < listBoxTilesets.GetListBox().Items.Count; i++)
                 {
-                    Tileset cpTileset = (Tileset)listBoxTilesets.GetListBox().Items[i];
+                    SystemTileset cpTileset = (SystemTileset)listBoxTilesets.GetListBox().Items[i];
                     List<int> list = new List<int>();
                     for (int j = 0; j < cpTileset.Autotiles.Count; j++)
                     {
@@ -185,7 +186,7 @@ namespace RPG_Paper_Maker
 
         private void listBoxRelief_Click(object sender, EventArgs e)
         {
-            Tileset tileset = (Tileset)listBoxTilesets.GetListBox().SelectedItem;
+            SystemTileset tileset = (SystemTileset)listBoxTilesets.GetListBox().SelectedItem;
             DialogAddingReliefsList dialog = new DialogAddingReliefsList("Choose relief", Control.Model.Tilesets, tileset);
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -193,7 +194,7 @@ namespace RPG_Paper_Maker
                 tileset.Reliefs = dialog.GetListTileset();
                 for (int i = 0; i < listBoxTilesets.GetListBox().Items.Count; i++)
                 {
-                    Tileset cpTileset = (Tileset)listBoxTilesets.GetListBox().Items[i];
+                    SystemTileset cpTileset = (SystemTileset)listBoxTilesets.GetListBox().Items[i];
                     List<int> list = new List<int>();
                     for (int j = 0; j < cpTileset.Reliefs.Count; j++)
                     {
@@ -290,7 +291,7 @@ namespace RPG_Paper_Maker
             DialogResult = DialogResult.OK;
             Control.Model.System.Colors = listBoxColors.ModelList.Cast<SystemColor>().ToList();
             Control.Model.System.Elements = listBoxElements.ModelList.Cast<SystemElement>().ToList();
-            Control.Model.Tilesets.Tilesets = listBoxTilesets.ModelList.Cast<Tileset>().ToList();
+            Control.Model.Tilesets.TilesetsList = listBoxTilesets.ModelList.Cast<SystemTileset>().ToList();
             Control.Save();
             Close();
         }      

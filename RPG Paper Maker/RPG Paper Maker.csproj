@@ -140,6 +140,13 @@
       <DependentUpon>DialogDataBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Forms\DialogDataBase\DialogDataBaseControl.cs" />
+    <Compile Include="Engine\Forms\DialogDataBase\DialogStatistics\DialogStatistics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogDataBase\DialogStatistics\DialogStatistics.Designer.cs">
+      <DependentUpon>DialogStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogDataBase\DialogStatistics\DialogStatisticsControl.cs" />
     <Compile Include="Engine\Forms\DialogDataBase\DialogElement\DialogElementControl.cs" />
     <Compile Include="Engine\Forms\DialogDataBase\DialogSystemColors\DialogSystemColorControl.cs" />
     <Compile Include="Engine\Forms\DialogDataBase\DialogSystemColors\DialogSystemColors.cs">
@@ -213,8 +220,11 @@
       <DependentUpon>DialogTileset.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Models\GameDatas.cs" />
+    <Compile Include="Engine\Models\HeroesDatas.cs" />
     <Compile Include="Engine\Models\SystemElement.cs" />
+    <Compile Include="Engine\Models\SystemHero.cs" />
     <Compile Include="Engine\Models\SystemRelief.cs" />
+    <Compile Include="Engine\Models\SystemStatistics.cs" />
     <Compile Include="Engine\Models\TilesetsDatas.cs" />
     <Compile Include="MapEditor\Autotile.cs" />
     <Compile Include="MapEditor\Autotiles.cs" />
@@ -276,7 +286,7 @@
       <DependentUpon>SuperListBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Models\SystemGraphic.cs" />
-    <Compile Include="Engine\Models\Tileset.cs" />
+    <Compile Include="Engine\Models\SystemTileset.cs" />
     <Compile Include="Engine\Models\TilesetPassage.cs" />
     <Compile Include="Engine\CustomUserControls\SuperListDialog.cs">
       <SubType>Form</SubType>
@@ -354,6 +364,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogDataBase\DialogDataBase.resx">
       <DependentUpon>DialogDataBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogDataBase\DialogStatistics\DialogStatistics.resx">
+      <DependentUpon>DialogStatistics.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogDataBase\DialogSystemColors\DialogSystemColors.resx">
       <DependentUpon>DialogSystemColors.cs</DependentUpon>
@@ -521,6 +534,9 @@
     <Content Include="RTP\Content\Pictures\Textures2D\Characters\template.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="RTP\Content\Pictures\UI\Bars\hpBar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="RTP\Content\Pictures\UI\Icons\darkness.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -572,7 +588,9 @@
     <None Include="Resources\about.png" />
     <None Include="Resources\open_file.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="RTP\Content\Pictures\UI\Others\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

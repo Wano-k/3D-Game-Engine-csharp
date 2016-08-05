@@ -98,16 +98,18 @@ namespace RPG_Paper_Maker
         {
             switch (GraphicKind)
             {
-                case GraphicKind.Picture:
-                    return "";
                 case GraphicKind.Tileset:
                     return Path.Combine("Content", "Pictures", "Textures2D", "Tilesets");
                 case GraphicKind.Autotile:
                     return Path.Combine("Content", "Pictures", "Textures2D", "Autotiles");
                 case GraphicKind.Relief:
                     return Path.Combine("Content", "Pictures", "Textures2D", "Reliefs");
+                case GraphicKind.Other:
+                    return Path.Combine("Content", "Pictures", "UI", "Others");
                 case GraphicKind.Icon:
                     return Path.Combine("Content", "Pictures", "UI", "Icons");
+                case GraphicKind.Bar:
+                    return Path.Combine("Content", "Pictures", "UI", "Bars");
                 default:
                     return "";
             }

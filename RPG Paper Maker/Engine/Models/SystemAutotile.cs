@@ -48,7 +48,6 @@ namespace RPG_Paper_Maker
             List<SystemAutotile> list = new List<SystemAutotile>();
             list.Add(new SystemAutotile(1, "Grass", new SystemGraphic("grass.png", true, GraphicKind.Autotile), new Collision()));
             list.Add(new SystemAutotile(2, "Ground", new SystemGraphic("ground.png", true, GraphicKind.Autotile), new Collision()));
-            for (int i = 2; i < 20; i++) list.Add(new SystemAutotile(i + 1));
 
             return list;
         }

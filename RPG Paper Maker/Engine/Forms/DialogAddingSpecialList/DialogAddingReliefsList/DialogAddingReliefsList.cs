@@ -19,7 +19,7 @@ namespace RPG_Paper_Maker
         Dictionary<DrawType, RadioButton> Radios = new Dictionary<DrawType, RadioButton>();
         TextBoxVariables TextBoxVariable = new TextBoxVariables();
         ImageComboBox ComboBoxAutotile = new ImageComboBox();
-        Tileset Tileset;
+        SystemTileset Tileset;
         TilesetsDatas Model;
 
 
@@ -27,7 +27,7 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
-        public DialogAddingReliefsList(string text, TilesetsDatas model, Tileset tileset) : base(text, model, tileset.Reliefs, typeof(SystemRelief))
+        public DialogAddingReliefsList(string text, TilesetsDatas model, SystemTileset tileset) : base(text, model, tileset.Reliefs, typeof(SystemRelief))
         {
             Tileset = tileset;
             Model = model;

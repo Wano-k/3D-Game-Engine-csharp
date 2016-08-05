@@ -36,9 +36,9 @@ namespace RPG_Paper_Maker
             groupBox3.Paint += MainForm.PaintBorderGroupBox;
 
             // ComboBox
-            for (int i = 0; i < WANOK.Game.Tilesets.Tilesets.Count; i++)
+            for (int i = 0; i < WANOK.Game.Tilesets.TilesetsList.Count; i++)
             {
-                ComboBoxTileset.Items.Add(WANOK.GetStringComboBox(WANOK.Game.Tilesets.Tilesets[i].Id, WANOK.Game.Tilesets.Tilesets[i].Name));
+                ComboBoxTileset.Items.Add(WANOK.GetStringComboBox(WANOK.Game.Tilesets.TilesetsList[i].Id, WANOK.Game.Tilesets.TilesetsList[i].Name));
             }
             ComboBoxTileset.SelectedIndex = WANOK.Game.Tilesets.GetTilesetIndexById(Control.Model.Tileset);
             for (int i = 0; i < WANOK.Game.System.Colors.Count; i++)

@@ -1288,7 +1288,7 @@ namespace RPG_Paper_Maker
         {
             if (ComboBoxSpecialTileset1.SelectedIndex != -1)
             {
-                Tileset tileset = MapEditor.GetMapTileset();
+                SystemTileset tileset = MapEditor.GetMapTileset();
                 if (MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles) ReLoadSpecialPicture(tileset.Autotiles, WANOK.Game.Tilesets.GetAutotileById, WANOK.Game.Tilesets.GetAutotileIndexById);
                 else if (MapEditor.SelectedDrawType == "ItemRelief") ReLoadSpecialPicture(tileset.Reliefs, WANOK.Game.Tilesets.GetReliefById, WANOK.Game.Tilesets.GetReliefIndexById);
             }
@@ -1346,7 +1346,7 @@ namespace RPG_Paper_Maker
             PanelSpecialMenu.Controls.Clear();
             ComboBoxSpecialTileset1.Items.Clear();
             tableLayoutPanelTileset.RowStyles[0] = new RowStyle(SizeType.Absolute, 27);
-            Tileset tileset = MapEditor.GetMapTileset();
+            SystemTileset tileset = MapEditor.GetMapTileset();
             if (MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles) FillComboBox(tileset.Autotiles, WANOK.Game.Tilesets.GetAutotileById, WANOK.Game.Tilesets.GetAutotileIndexById);
             else if (MapEditor.SelectedDrawType == "ItemRelief") FillComboBox(tileset.Reliefs, WANOK.Game.Tilesets.GetReliefById, WANOK.Game.Tilesets.GetReliefIndexById);
             PanelSpecialMenu.Controls.Add(ComboBoxSpecialTileset1);
