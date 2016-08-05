@@ -28,11 +28,8 @@ namespace RPG_Paper_Maker
 
             Control = new DialogElementControl(element);
             ViewModelBindingSource.DataSource = Control;
-            /*
-            panelColor.BackColor = color.GetWinformsColor();
-            textBoxName.Select();*/
-            textBoxName.GetTextBox().Items.Add(Control.Model.Names[WANOK.Game.System.Langs[0]]);
-            textBoxName.AllNames = Control.Model.Names;
+
+            textBoxName.InitializeParameters(Control.Model.Names);
             textBoxGraphicIcon.InitializeParameters(element.Icon);
             PictureBoxIcon.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBoxIcon.InterpolationMode = InterpolationMode.NearestNeighbor;
@@ -49,7 +46,7 @@ namespace RPG_Paper_Maker
 
         private void InitializeDataBindings()
         {
-            textBoxName.DataBindings.Add("Text", ViewModelBindingSource, "Name", true);
+            textBoxName.GetTextBox().DataBindings.Add("Text", ViewModelBindingSource, "Name", true);
         }
 
         // -------------------------------------------------------------------
@@ -59,6 +56,16 @@ namespace RPG_Paper_Maker
         public override SuperListItem GetObject()
         {
             return Control.Model;
+        }
+
+        // -------------------------------------------------------------------
+        // Events
+        // -------------------------------------------------------------------
+
+        private void ok_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 }

@@ -26,7 +26,7 @@ namespace RPG_Paper_Maker
             InitializeComponent();
             Control = new DialogDataBaseControl();
             ViewModelBindingSource.DataSource = Control;
-            ListBoxesCanceling = new ListBox[] { textBoxLangGameName.GetTextBox(), listBoxColors.GetListBox(), listBoxElements.GetListBox(), textBoxGraphic.GetTextBox(), listBoxAutotiles.GetListBox(), listBoxRelief.GetListBox() };
+            ListBoxesCanceling = new ListBox[] { listBoxColors.GetListBox(), listBoxElements.GetListBox(), textBoxGraphic.GetTextBox(), listBoxAutotiles.GetListBox(), listBoxRelief.GetListBox() };
             ListBoxes = new ListBox[] { listBoxTilesets.GetListBox() };
 
             // Tilesets
@@ -42,8 +42,7 @@ namespace RPG_Paper_Maker
             // System
             ComboBoxResolution.SelectedIndex = Control.GetFullScreenIndex();
             toolTipSquareSize.SetToolTip(buttonSquareSize, "This option set the maps displaying, it is recommended to put multiple 8 numbers.\nNote that the pixel height addings are not modified.");
-            textBoxLangGameName.GetTextBox().Items.Add(Control.GameName[Control.Langs[0]]);
-            textBoxLangGameName.AllNames = Control.GameName;
+            textBoxLangGameName.InitializeParameters(Control.GameName);
             listBoxColors.InitializeListParameters(ListBoxesCanceling, Control.Model.System.Colors.Cast<SuperListItem>().ToList(), typeof(DialogSystemColors), typeof(SystemColor), 1, SystemColor.MAX_COLORS);
             listBoxElements.InitializeListParameters(ListBoxesCanceling, Control.Model.System.Elements.Cast<SuperListItem>().ToList(), typeof(DialogElement), typeof(SystemElement), 1, SystemElement.MAX_ELEMENTS);
 

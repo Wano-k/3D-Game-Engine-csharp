@@ -13,7 +13,7 @@ namespace RPG_Paper_Maker
         public string Name
         {
             get { return Model.Name; }
-            set { Model.Names[WANOK.Game.System.Langs[0]] = value; NotifyPropertyChanged("Name"); }
+            set { Model.Name = value; NotifyPropertyChanged("Name"); }
         }
 
 

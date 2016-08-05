@@ -25,30 +25,27 @@ namespace RPG_Paper_Maker.Engine
         }
 
         // -------------------------------------------------------------------
-        // GetTextBox
+        // InitializeParameters
         // -------------------------------------------------------------------
 
-        public ListBox GetTextBox()
+        public void InitializeParameters(Dictionary<string, string> allNames)
         {
-            return listBox1;
+            AllNames = allNames;
+            textBox1.Text = allNames[WANOK.CurrentLang];
         }
 
         // -------------------------------------------------------------------
-        // listBox1_DoubleClick
+        // GetTextBox
         // -------------------------------------------------------------------
 
-        private void listBox1_DoubleClick(object sender, EventArgs e)
+        public TextBox GetTextBox()
         {
-            DialogLangSetAll dialog = new DialogLangSetAll((string)listBox1.Items[0]);
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                listBox1.Items[0] = dialog.Content;
-                List<string> keys = new List<string>(AllNames.Keys);
-                foreach (string lang in keys)
-                {
-                    AllNames[lang] = dialog.Content;
-                }
-            }
+            return textBox1;
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            AllNames[WANOK.CurrentLang] = textBox1.Text;
         }
     }
 }

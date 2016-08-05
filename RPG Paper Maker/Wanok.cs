@@ -54,6 +54,7 @@ namespace RPG_Paper_Maker
         public static TreeNode SelectedNode = null;
         public static string NONE_IMAGE_STRING = "<None>";
         public static DialogProgressBar DialogProgressBar = null;
+        public static string CurrentMainLang { get { return Game.System.Langs[0]; } }
 
         // CANCEL
         public static Dictionary<string, List<Dictionary<int[], GameMapPortion>>> CancelRedo = new Dictionary<string, List<Dictionary<int[], GameMapPortion>>>();
