@@ -31,6 +31,7 @@ namespace RPG_Paper_Maker
                 {
                     TexCursor = Image.FromStream(stream);
                 }
+
             }
             catch { }
             SelectionRectangle = new SelectionRectangle(0, 0, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE, BORDER_SIZE);

@@ -14,7 +14,11 @@ namespace RPG_Paper_Maker
 {
     public partial class DialogPreviewGraphic : Form
     {
+        public int ZoomTime = 5;
+        public int CurrentValue = 0;
+        public float Zoom = 1.0f;
         protected DialogPreviewGraphicControl Control;
+        protected InterpolationPictureBox PictureBox = new InterpolationPictureBox();
 
 
         // -------------------------------------------------------------------
@@ -43,7 +47,6 @@ namespace RPG_Paper_Maker
 
             List<string> LocalFiles = Control.GetLocalFiles();
             List<string> RTPFiles = Control.GetRTPFiles();
-
             for (int i = 0; i < LocalFiles.Count; i++)
             {
                 listView1.Items.Add(Path.GetFileName(LocalFiles[i]), 0);
@@ -55,12 +58,20 @@ namespace RPG_Paper_Maker
                 if (!graphic.IsNone() && graphic.GraphicName == listView1.Items[i+1].Text && graphic.IsRTP) listView1.Items[i+1].Selected = true;
             }
 
+            // Picture
+            PictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            PictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            panelPicture.Controls.Add(PictureBox);
+
+            // Zoom
+            trackBarZoom.Minimum = -ZoomTime;
+            trackBarZoom.Maximum = ZoomTime;
+
             // Paint groupBox
             groupBox1.Paint += MainForm.PaintBorderGroupBox;
 
-            // Options
-            tableLayoutPanel3.ColumnCount = 2;
-            tableLayoutPanel3.ColumnStyles[1] = new ColumnStyle(SizeType.Percent, 80);
+            // Events
+            PictureBox.MouseEnter += PictureBox_MouseEnter;
         }
 
         // -------------------------------------------------------------------
@@ -82,49 +93,47 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // listView1_MouseEnter
+        // Events
         // -------------------------------------------------------------------
+
 
         private void listView1_MouseEnter(object sender, EventArgs e)
         {
             listView1.Focus();
         }
 
-        // -------------------------------------------------------------------
-        // listView1_SelectedIndexChanged
-        // -------------------------------------------------------------------
+        private void PictureBox_MouseEnter(object sender, EventArgs e)
+        {
+            PictureBox.Focus();
+        }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count == 1 && listView1.SelectedItems[0].Text != WANOK.NONE_IMAGE_STRING)
             {
-                string path = listView1.SelectedItems[0].ImageIndex == 0 ? Control.Model.GetLocalPath(listView1.SelectedItems[0].Text) : Control.Model.GetRTPPath(listView1.SelectedItems[0].Text);
-                Image image;
-                try
-                {
-                    using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
-                    {
-                        image = Image.FromStream(stream);
-                    }
-                    pictureBox.Image = image;
-                    pictureBox.Size = new Size(image.Width, image.Height);
-                }
-                catch
-                {
-                    pictureBox.Image = null;
-                }
+                PictureBox.LoadTexture(new SystemGraphic(listView1.SelectedItems[0].Text, listView1.SelectedItems[0].ImageIndex == 1, Control.Model.GraphicKind), 1.0f);
                 Control.SetImageDatas(listView1.SelectedItems[0].Text, listView1.SelectedItems[0].ImageIndex == 1);
             }
             else
             {
-                pictureBox.Image = null;
+                PictureBox.LoadTexture(new SystemGraphic(Control.Model.GraphicKind), 1.0f);
                 Control.SetImageDatas(WANOK.NONE_IMAGE_STRING, true);
             }
+            CurrentValue = 0;
+            trackBarZoom.Value = 0;
         }
 
-        // -------------------------------------------------------------------
-        // ok_Click
-        // -------------------------------------------------------------------
+        private void trackBarZoom_Scroll(object sender, EventArgs e)
+        {
+            int offset = trackBarZoom.Value - CurrentValue;
+            CurrentValue = trackBarZoom.Value;
+
+            if (offset > 0) Zoom *= (float)Math.Pow(2, offset);
+            else Zoom /= (float)Math.Pow(2, -offset);
+
+            PictureBox.Zoom(Zoom);
+            PictureBox.Focus();
+        }
 
         private void ok_Click(object sender, EventArgs e)
         {

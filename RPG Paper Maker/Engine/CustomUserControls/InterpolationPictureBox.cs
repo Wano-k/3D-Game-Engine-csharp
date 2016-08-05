@@ -11,17 +11,28 @@ namespace RPG_Paper_Maker
 {
     public class InterpolationPictureBox : PictureBox
     {
+
         public InterpolationMode InterpolationMode { get; set; }
 
         // -------------------------------------------------------------------
         // LoadTexture
         // -------------------------------------------------------------------
 
-        public void LoadTexture(SystemGraphic graphic)
+        public void LoadTexture(SystemGraphic graphic, float zoom = -1)
         {
             Image = graphic.LoadImage();
-            Size = new Size((int)(Image.Width * WANOK.RELATION_SIZE), (int)(Image.Height * WANOK.RELATION_SIZE));
+            if (zoom == -1) zoom = WANOK.RELATION_SIZE;
+            Zoom(zoom);
             Location = new Point(0, 0);
+        }
+
+        // -------------------------------------------------------------------
+        // Zoom
+        // -------------------------------------------------------------------
+
+        public void Zoom(float zoom)
+        {
+            Size = new Size((int)(Image.Width * zoom), (int)(Image.Height * zoom));
         }
 
         // -------------------------------------------------------------------
