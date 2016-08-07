@@ -12,14 +12,58 @@ namespace RPG_Paper_Maker
 {
     public partial class DialogPreviewGraphicSelectRectangle : DialogPreviewGraphic
     {
+        public bool IsUsingCursorSelector = false;
+
+
         public DialogPreviewGraphicSelectRectangle(SystemGraphic graphic, object[] options = null) : base(graphic) 
         {
+            // Picture
+            PictureBox = new PixelSelectPictureBox();
+            PictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            PictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            panelPicture.Controls.Clear();
+            panelPicture.Controls.Add(PictureBox);
+            PictureBox.BackColor = Color.Aqua;
 
-            // Show options
-            tableLayoutPanel3.ColumnCount = 3;
-            tableLayoutPanel3.ColumnStyles[0] = new ColumnStyle(SizeType.Percent, 20);
-            tableLayoutPanel3.ColumnStyles[1] = new ColumnStyle(SizeType.Percent, 60);
-            tableLayoutPanel3.ColumnStyles[2] = new ColumnStyle(SizeType.Percent, 20);
+            // Events
+            PictureBox.MouseEnter += PictureBox_MouseEnter;
+            PictureBox.MouseDown += PictureBox_MouseDown;
+            PictureBox.MouseUp += PictureBox_MouseUp;
+            PictureBox.MouseMove += PictureBox_MouseMove;
+        }
+
+        private void PictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                IsUsingCursorSelector = true;
+                ((PixelSelectPictureBox)PictureBox).MakeFirstRectangleSelection(e.X, e.Y, (int)(((PixelSelectPictureBox)PictureBox).ZoomPixel));
+                PictureBox.Refresh();
+            }
+        }
+
+        private void PictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            var lol = ((PixelSelectPictureBox)PictureBox).GetCurrentTexture();
+            ((PixelSelectPictureBox)PictureBox).SetCursorRealPosition();
+            lol = ((PixelSelectPictureBox)PictureBox).GetCurrentTexture();
+            IsUsingCursorSelector = false;
+            PictureBox.Refresh();
+            //MapEditor.SetCurrentTexture(((PixelSelectPictureBox)PictureBox).GetCurrentTexture());
+        }
+
+        private void PictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (IsUsingCursorSelector)
+            {
+                ((PixelSelectPictureBox)PictureBox).MakeRectangleSelection(e.X, e.Y, (int)(((PixelSelectPictureBox)PictureBox).ZoomPixel));
+                PictureBox.Refresh();
+            }
+        }
+
+        private void PictureBox_MouseEnter(object sender, EventArgs e)
+        {
+            PictureBox.Focus();
         }
     }
 }

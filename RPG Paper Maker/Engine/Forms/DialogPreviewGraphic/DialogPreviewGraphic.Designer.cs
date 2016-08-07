@@ -253,6 +253,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar trackBarZoom;
-        private ScrollPanel panelPicture;
+        protected ScrollPanel panelPicture;
     }
 }

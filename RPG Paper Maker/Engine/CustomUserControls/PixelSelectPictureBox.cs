@@ -8,10 +8,31 @@ using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
-    class PixelSelectPictureBox : InterpolationPictureBox
+    class PixelSelectPictureBox : SelectionPictureBox
     {
-        public Rectangle CurrentSelection = new Rectangle(0, 0, 20, 20);
-        public Pen Pen = new Pen(Color.Red);
+        public float ZoomPixel = 1.0f;
+
+
+        // -------------------------------------------------------------------
+        // Constructor
+        // -------------------------------------------------------------------
+
+        public PixelSelectPictureBox()
+        {
+            SelectionRectangle = new SelectionRectangle(0, 0, 1, 1, 1);
+            SelectionRectangle.Pen = new Pen(Color.Red, (int)ZoomPixel);
+        }
+
+        // -------------------------------------------------------------------
+        // Zoom
+        // -------------------------------------------------------------------
+
+        public override void Zoom(float zoom)
+        {
+            base.Zoom(zoom);
+            ZoomPixel = zoom;
+            SelectionRectangle.Pen = new Pen(Color.Red, (int)ZoomPixel);
+        }
 
         // -------------------------------------------------------------------
         // OnPaint
@@ -23,7 +44,11 @@ namespace RPG_Paper_Maker
 
             base.OnPaint(e);
 
-            g.DrawRectangle(Pen, CurrentSelection);
+            try
+            {
+                SelectionRectangle.Draw(g, SelectionRectangle.DrawWithPixel, ZoomPixel);
+            }
+            catch { }
         }
     }
 }

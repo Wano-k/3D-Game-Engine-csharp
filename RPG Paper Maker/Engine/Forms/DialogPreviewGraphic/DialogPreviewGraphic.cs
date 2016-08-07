@@ -71,6 +71,15 @@ namespace RPG_Paper_Maker
             groupBox1.Paint += MainForm.PaintBorderGroupBox;
 
             // Events
+            AddEvent();
+        }
+
+        // -------------------------------------------------------------------
+        // AddEvent
+        // -------------------------------------------------------------------
+
+        public void AddEvent()
+        {
             PictureBox.MouseEnter += PictureBox_MouseEnter;
         }
 
@@ -121,6 +130,7 @@ namespace RPG_Paper_Maker
             }
             CurrentValue = 0;
             trackBarZoom.Value = 0;
+            Zoom = 1.0f;
         }
 
         private void trackBarZoom_Scroll(object sender, EventArgs e)

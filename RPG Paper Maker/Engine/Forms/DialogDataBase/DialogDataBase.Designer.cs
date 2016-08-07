@@ -862,7 +862,8 @@
             // 
             // textBoxLangGameName
             // 
-            this.textBoxLangGameName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.textBoxLangGameName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxLangGameName.Location = new System.Drawing.Point(3, 16);
             this.textBoxLangGameName.Name = "textBoxLangGameName";
             this.textBoxLangGameName.Size = new System.Drawing.Size(179, 24);

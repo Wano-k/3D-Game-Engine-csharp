@@ -30,7 +30,7 @@ namespace RPG_Paper_Maker
         // Zoom
         // -------------------------------------------------------------------
 
-        public void Zoom(float zoom)
+        public virtual void Zoom(float zoom)
         {
             Size = new Size((int)(Image.Width * zoom), (int)(Image.Height * zoom));
         }

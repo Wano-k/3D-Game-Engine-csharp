@@ -110,6 +110,9 @@
     <Compile Include="Engine\CustomUserControls\PixelSelectPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Engine\CustomUserControls\SelectionPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Engine\CustomUserControls\TextBoxVariables.cs">
       <SubType>UserControl</SubType>
     </Compile>
