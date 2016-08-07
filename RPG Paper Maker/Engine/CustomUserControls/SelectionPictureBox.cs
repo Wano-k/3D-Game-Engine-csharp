@@ -9,7 +9,7 @@ namespace RPG_Paper_Maker
 
     class SelectionPictureBox : InterpolationPictureBox
     {
-        protected SelectionRectangle SelectionRectangle;
+        public SelectionRectangle SelectionRectangle;
 
 
         // -------------------------------------------------------------------

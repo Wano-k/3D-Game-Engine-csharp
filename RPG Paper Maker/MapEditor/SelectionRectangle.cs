@@ -17,7 +17,7 @@ namespace RPG_Paper_Maker
         public int Width;
         public int Height;
         public int SquareSize;
-        protected int RealX, RealY;
+        public int RealX, RealY;
 
         public delegate void DrawMethod(Graphics g, int x, int y, float zoom);
 

@@ -139,6 +139,7 @@ namespace RPG_Paper_Maker
         public void textBoxGraphic_SelectedValueChanged(object sender, EventArgs e)
         {
             SystemTileset tileset = (SystemTileset)listBoxTilesets.GetListBox().SelectedItem;
+            tileset.Graphic = textBoxGraphic.Graphic;
             collisionSettings.InitializeParameters(tileset.Collision, tileset.Graphic);
         }
 

@@ -92,6 +92,9 @@
     <Compile Include="Engine\CustomUserControls\CollisionSettings.Designer.cs">
       <DependentUpon>CollisionSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\CustomUserControls\GrowLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Engine\CustomUserControls\ImageComboBox.cs">
       <SubType>Component</SubType>
     </Compile>

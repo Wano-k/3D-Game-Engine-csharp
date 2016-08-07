@@ -16,22 +16,24 @@ namespace RPG_Paper_Maker
         public string GraphicName;
         public bool IsRTP;
         public GraphicKind GraphicKind;
+        public object[] Options;
 
 
         // -------------------------------------------------------------------
         // Constructor
         // -------------------------------------------------------------------
 
-        public SystemGraphic(GraphicKind graphicKind) : this(WANOK.NONE_IMAGE_STRING, true, graphicKind)
+        public SystemGraphic(GraphicKind graphicKind, object[] options = null) : this(WANOK.NONE_IMAGE_STRING, true, graphicKind, options)
         {
 
         }
 
-        public SystemGraphic(string graphicName, bool isRTP, GraphicKind graphicKind)
+        public SystemGraphic(string graphicName, bool isRTP, GraphicKind graphicKind, object[] options = null)
         {
             GraphicName = graphicName;
             IsRTP = isRTP;
             GraphicKind = graphicKind;
+            Options = options;
         }
 
         // -------------------------------------------------------------------
@@ -40,7 +42,7 @@ namespace RPG_Paper_Maker
 
         public SystemGraphic CreateCopy()
         {
-            return new SystemGraphic(GraphicName, IsRTP, GraphicKind);
+            return new SystemGraphic(GraphicName, IsRTP, GraphicKind, Options);
         }
 
         // -------------------------------------------------------------------

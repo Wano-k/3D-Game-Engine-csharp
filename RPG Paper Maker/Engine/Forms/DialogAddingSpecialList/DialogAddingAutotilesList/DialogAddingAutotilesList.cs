@@ -18,7 +18,8 @@ namespace RPG_Paper_Maker
 
         public DialogAddingAutotilesList(string text, TilesetsDatas model, List<int> superListTileset) : base(text, model, superListTileset, typeof(SystemAutotile))
         {
-            listBoxComplete.InitializeListParameters(new ListBox[] { }, model.Autotiles.Cast<SuperListItem>().ToList(), null, Type, 1, SystemAutotile.MAX_AUTOTILES);
+            listBoxComplete.InitializeListParameters(new ListBox[] { }, WANOK.GetSuperListItem(model.Autotiles.Cast<SuperListItem>().ToList()), null, Type, 1, SystemAutotile.MAX_AUTOTILES);
+
             for (int i = 0; i < superListTileset.Count; i++)
             {
                 listBoxTileset.Items.Add(model.GetAutotileById(superListTileset[i]));
@@ -68,6 +69,7 @@ namespace RPG_Paper_Maker
         public void textBoxGraphic_SelectedValueChanged(object sender, EventArgs e)
         {
             SystemAutotile autotile = (SystemAutotile)listBoxComplete.GetListBox().SelectedItem;
+            autotile.Graphic = textBoxGraphic.Graphic;
             collisionSettings.InitializeParameters(autotile.Collision, autotile.Graphic);
         }
 

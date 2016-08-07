@@ -30,7 +30,7 @@ namespace RPG_Paper_Maker
             ViewModelBindingSource.DataSource = Control;
 
             textBoxName.InitializeParameters(Control.Model.Names);
-            textBoxGraphicIcon.InitializeParameters(statistics.Bar);
+            textBoxGraphicIcon.InitializeParameters(statistics.Bar.CreateCopy(), typeof(DialogPreviewGraphicSelectRectangle), OptionsKind.BarSelection);
             PictureBoxIcon.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBoxIcon.InterpolationMode = InterpolationMode.NearestNeighbor;
             LoadBar(statistics.Bar);
@@ -74,11 +74,6 @@ namespace RPG_Paper_Maker
             if (PictureBoxIcon.Image.Size.Height > PanelBar.Size.Height) height = PanelBar.Size.Height;
             else height = PictureBoxIcon.Image.Size.Height;
 
-
-            /*
-            if (PictureBoxIcon.Image.Size.Width > PanelBar.Size.Width || PictureBoxIcon.Image.Size.Height > PanelBar.Size.Height) PictureBoxIcon.Size = PanelBar.Size;
-            else PictureBoxIcon.Size = PictureBoxIcon.Image.Size;
-            */
             PictureBoxIcon.Size = new Size(width, height);
             PictureBoxIcon.Location = new Point(0, 0);
         }
@@ -89,6 +84,7 @@ namespace RPG_Paper_Maker
 
         private void textBoxGraphicIcon_SelectedValueChanged(object sender, EventArgs e)
         {
+            Control.Model.Bar = textBoxGraphicIcon.Graphic;
             LoadBar(Control.Model.Bar);
         }
 

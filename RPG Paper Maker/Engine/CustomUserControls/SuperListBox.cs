@@ -103,7 +103,7 @@ namespace RPG_Paper_Maker
             // If double clic is opening a window...
             if (DialogKind != null)
             {
-                SuperListDialog dialog = (SuperListDialog)Activator.CreateInstance(DialogKind, listBox.Items[listBox.SelectedIndex]);
+                SuperListDialog dialog = (SuperListDialog)Activator.CreateInstance(DialogKind, ((SuperListItem)listBox.Items[listBox.SelectedIndex]).CreateCopy());
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     int index = listBox.SelectedIndex;

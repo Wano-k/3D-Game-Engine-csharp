@@ -45,12 +45,7 @@ namespace RPG_Paper_Maker
             }
 
             // Fill boxes
-            List<SuperListItem> list = new List<SuperListItem>();
-            for (int i = 0; i < model.Reliefs.Count; i++)
-            {
-                list.Add(model.Reliefs[i].CreateCopy());
-            }
-            listBoxComplete.InitializeListParameters(new ListBox[] { }, list, null, Type, 1, SystemRelief.MAX_RELIEFS);
+            listBoxComplete.InitializeListParameters(new ListBox[] { }, WANOK.GetSuperListItem(model.Reliefs.Cast<SuperListItem>().ToList()), null, Type, 1, SystemRelief.MAX_RELIEFS);
             for (int i = 0; i < tileset.Reliefs.Count; i++)
             {
                 listBoxTileset.Items.Add(model.GetReliefById(tileset.Reliefs[i]));
@@ -201,6 +196,7 @@ namespace RPG_Paper_Maker
         public void textBoxGraphic_SelectedValueChanged(object sender, EventArgs e)
         {
             SystemRelief relief = (SystemRelief)listBoxComplete.GetListBox().SelectedItem;
+            relief.Graphic = textBoxGraphic.Graphic;
             PictureBox.LoadTexture(relief.Graphic);
         }
 

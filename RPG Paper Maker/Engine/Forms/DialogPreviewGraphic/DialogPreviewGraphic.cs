@@ -25,12 +25,12 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
-        public DialogPreviewGraphic(SystemGraphic graphic, object[] options)
+        public DialogPreviewGraphic(SystemGraphic graphic, OptionsKind optionsKind)
         {
             InitializeComponent();
 
             // Control
-            Control = new DialogPreviewGraphicControl(graphic);
+            Control = new DialogPreviewGraphicControl(graphic.CreateCopy());
 
             Text = graphic.GraphicKind.ToString() + " graphic preview";
 
@@ -60,6 +60,7 @@ namespace RPG_Paper_Maker
             // Picture
             PictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            PictureBox.BackColor = Color.FromArgb(210, 210, 210);
             panelPicture.Controls.Add(PictureBox);
 
             // Zoom
@@ -119,18 +120,22 @@ namespace RPG_Paper_Maker
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Set background color of selected item
-            this.listView1.Items.Cast<ListViewItem>()
-        .ToList().ForEach(item =>
-        {
-            item.BackColor = SystemColors.Window;
-            item.ForeColor = SystemColors.WindowText;
-        });
-            this.listView1.SelectedItems.Cast<ListViewItem>()
-                .ToList().ForEach(item =>
-                {
-                    item.BackColor = SystemColors.Highlight;
-                    item.ForeColor = SystemColors.HighlightText;
-                });
+            listView1.Items.Cast<ListViewItem>().ToList().ForEach(item =>
+            {
+                item.BackColor = SystemColors.Window;
+                item.ForeColor = SystemColors.WindowText;
+            });
+            listView1.SelectedItems.Cast<ListViewItem>().ToList().ForEach(item =>
+            {
+                item.BackColor = SystemColors.Highlight;
+                item.ForeColor = SystemColors.HighlightText;
+            });
+            if (listView1.SelectedItems.Count == 1 && listView1.SelectedIndices[0] == 0) PictureBox.Hide();
+            else
+            {
+                if (listView1.SelectedItems.Count == 0) PictureBox.Hide();
+                else PictureBox.Show();
+            }
 
             // Set the image selected
             if (listView1.SelectedItems.Count == 1 && listView1.SelectedItems[0].Text != WANOK.NONE_IMAGE_STRING)

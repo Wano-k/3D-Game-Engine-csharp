@@ -602,5 +602,17 @@ namespace RPG_Paper_Maker
             }
             PortionsToAddCancel.Clear();
         }
+
+
+        public static List<SuperListItem> GetSuperListItem(List<SuperListItem> list)
+        {
+            List<SuperListItem> newList = new List<SuperListItem>();
+            for (int i = 0; i < list.Count; i++)
+            {
+                newList.Add(list[i].CreateCopy());
+            }
+
+            return newList;
+        }
     }
 }

@@ -42,7 +42,12 @@ namespace RPG_Paper_Maker
 
         public override SuperListItem CreateCopy()
         {
-            return new SystemStatistics(Id, new Dictionary<string, string>(Names), Bar.CreateCopy());
+            object[] newOptions = new object[Bar.Options.Length];
+            newOptions[0] = new int[] { ((int[])Bar.Options[0])[0], ((int[])Bar.Options[0])[1], ((int[])Bar.Options[0])[2], ((int[])Bar.Options[0])[3] };
+            SystemGraphic newGraphic = Bar.CreateCopy();
+            newGraphic.Options = newOptions;
+
+            return new SystemStatistics(Id, new Dictionary<string, string>(Names), newGraphic);
         }
 
         // -------------------------------------------------------------------
@@ -52,7 +57,7 @@ namespace RPG_Paper_Maker
         public static List<SystemStatistics> GetDefaultStatistics()
         {
             List<SystemStatistics> list = new List<SystemStatistics>();
-            list.Add(new SystemStatistics(1, WANOK.GetDefaultNames("HP"), new SystemGraphic(GraphicKind.Bar)));
+            list.Add(new SystemStatistics(1, WANOK.GetDefaultNames("HP"), new SystemGraphic(GraphicKind.Bar, new object[] { new int[] { 0, 0, 1, 1 } })));
 
             return list;
         }

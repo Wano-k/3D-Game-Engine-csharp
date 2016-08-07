@@ -76,6 +76,7 @@ namespace RPG_Paper_Maker
 
         private void textBoxGraphicIcon_SelectedValueChanged(object sender, EventArgs e)
         {
+            Control.Model.Icon = textBoxGraphicIcon.Graphic;
             LoadIcon(Control.Model.Icon);
         }
 
