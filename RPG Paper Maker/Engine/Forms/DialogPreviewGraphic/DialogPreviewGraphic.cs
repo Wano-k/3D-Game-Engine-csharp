@@ -25,7 +25,7 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
-        public DialogPreviewGraphic(SystemGraphic graphic)
+        public DialogPreviewGraphic(SystemGraphic graphic, object[] options)
         {
             InitializeComponent();
 
@@ -36,13 +36,12 @@ namespace RPG_Paper_Maker
 
             // list
             listView1.Select();
-            listView1.HideSelection = false;
             listView1.HeaderStyle = ColumnHeaderStyle.None;
             ColumnHeader header = new ColumnHeader();
             header.Text = "";
             header.Name = "";
             listView1.Columns.Add(header);
-            listView1.Columns[0].Width = listView1.Size.Width;
+            listView1.Columns[0].Width = listView1.Size.Width - 4;
             listView1.Items[0].Selected = true;
 
             List<string> LocalFiles = Control.GetLocalFiles();
@@ -81,6 +80,7 @@ namespace RPG_Paper_Maker
         public void AddEvent()
         {
             PictureBox.MouseEnter += PictureBox_MouseEnter;
+            PictureBox.PreviewKeyDown += PictureBox_PreviewKeyDown;
         }
 
         // -------------------------------------------------------------------
@@ -118,6 +118,21 @@ namespace RPG_Paper_Maker
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Set background color of selected item
+            this.listView1.Items.Cast<ListViewItem>()
+        .ToList().ForEach(item =>
+        {
+            item.BackColor = SystemColors.Window;
+            item.ForeColor = SystemColors.WindowText;
+        });
+            this.listView1.SelectedItems.Cast<ListViewItem>()
+                .ToList().ForEach(item =>
+                {
+                    item.BackColor = SystemColors.Highlight;
+                    item.ForeColor = SystemColors.HighlightText;
+                });
+
+            // Set the image selected
             if (listView1.SelectedItems.Count == 1 && listView1.SelectedItems[0].Text != WANOK.NONE_IMAGE_STRING)
             {
                 PictureBox.LoadTexture(new SystemGraphic(listView1.SelectedItems[0].Text, listView1.SelectedItems[0].ImageIndex == 1, Control.Model.GraphicKind), 1.0f);
@@ -128,6 +143,8 @@ namespace RPG_Paper_Maker
                 PictureBox.LoadTexture(new SystemGraphic(Control.Model.GraphicKind), 1.0f);
                 Control.SetImageDatas(WANOK.NONE_IMAGE_STRING, true);
             }
+
+            // Set zoom value to normal value
             CurrentValue = 0;
             trackBarZoom.Value = 0;
             Zoom = 1.0f;
@@ -143,6 +160,22 @@ namespace RPG_Paper_Maker
 
             PictureBox.Zoom(Zoom);
             PictureBox.Focus();
+        }
+
+        private void PictureBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (listView1.SelectedItems.Count == 1)
+            {
+                int index = listView1.SelectedItems[0].Index;
+                if (e.KeyCode == Keys.Up && index > 0)
+                {
+                    listView1.Items[index - 1].Selected = true;
+                }
+                if (e.KeyCode == Keys.Down && index < listView1.Items.Count - 1)
+                {
+                    listView1.Items[index + 1].Selected = true;
+                }
+            }
         }
 
         private void ok_Click(object sender, EventArgs e)

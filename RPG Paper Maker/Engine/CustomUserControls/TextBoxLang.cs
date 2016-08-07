@@ -60,9 +60,7 @@ namespace RPG_Paper_Maker.Engine
 
         private void Button_Click(object sender, EventArgs e)
         {
-            DialogPreviewGraphicSelectRectangle dialog = new DialogPreviewGraphicSelectRectangle(new SystemGraphic(GraphicKind.Icon));
-            dialog.ShowDialog();
-            //WANOK.ShowActionMessage();
+            WANOK.ShowActionMessage();
         }
 
         private void textBox1_DoubleClick(object sender, EventArgs e)

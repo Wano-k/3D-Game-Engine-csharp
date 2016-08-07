@@ -13,6 +13,8 @@ namespace RPG_Paper_Maker.Engine.CustomUserControls
     public partial class TextBoxGraphic : UserControl
     {
         public SystemGraphic Graphic;
+        public Type DialogKind;
+        public object[] Options;
 
 
         // -------------------------------------------------------------------
@@ -29,9 +31,11 @@ namespace RPG_Paper_Maker.Engine.CustomUserControls
         // InitializeParameters
         // -------------------------------------------------------------------
 
-        public void InitializeParameters(SystemGraphic graphic)
+        public void InitializeParameters(SystemGraphic graphic, Type type = null, object[] options = null)
         {
             Graphic = graphic;
+            DialogKind = type == null ? typeof(DialogPreviewGraphic) : type;
+            Options = options;
             listBox1.Items[0] = graphic.GraphicName;
         }
 
@@ -51,7 +55,7 @@ namespace RPG_Paper_Maker.Engine.CustomUserControls
         public void OpenDialog()
         {
             listBox1.SelectedIndex = 0;
-            DialogPreviewGraphic dialog = new DialogPreviewGraphic(Graphic);
+            DialogPreviewGraphic dialog = (DialogPreviewGraphic)Activator.CreateInstance(DialogKind, Graphic, Options);
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 Graphic = dialog.GetGraphic();

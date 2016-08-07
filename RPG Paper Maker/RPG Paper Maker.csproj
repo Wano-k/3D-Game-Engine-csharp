@@ -126,6 +126,7 @@
       <DependentUpon>TextBoxGraphic.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Enums\GraphicKind.cs" />
+    <Compile Include="Engine\Enums\OptionsKind.cs" />
     <Compile Include="Engine\Enums\PassageKind.cs" />
     <Compile Include="Engine\Forms\DialogAddingSpecialList\DialogAddingReliefsList\DialogAddingReliefsList.cs">
       <SubType>Form</SubType>

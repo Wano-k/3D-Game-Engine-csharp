@@ -15,7 +15,7 @@ namespace RPG_Paper_Maker
         public bool IsUsingCursorSelector = false;
 
 
-        public DialogPreviewGraphicSelectRectangle(SystemGraphic graphic, object[] options = null) : base(graphic) 
+        public DialogPreviewGraphicSelectRectangle(SystemGraphic graphic, object[] options) : base(graphic, options) 
         {
             // Picture
             PictureBox = new PixelSelectPictureBox();
@@ -23,7 +23,6 @@ namespace RPG_Paper_Maker
             PictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             panelPicture.Controls.Clear();
             panelPicture.Controls.Add(PictureBox);
-            PictureBox.BackColor = Color.Aqua;
 
             // Events
             PictureBox.MouseEnter += PictureBox_MouseEnter;
@@ -44,9 +43,7 @@ namespace RPG_Paper_Maker
 
         private void PictureBox_MouseUp(object sender, MouseEventArgs e)
         {
-            var lol = ((PixelSelectPictureBox)PictureBox).GetCurrentTexture();
             ((PixelSelectPictureBox)PictureBox).SetCursorRealPosition();
-            lol = ((PixelSelectPictureBox)PictureBox).GetCurrentTexture();
             IsUsingCursorSelector = false;
             PictureBox.Refresh();
             //MapEditor.SetCurrentTexture(((PixelSelectPictureBox)PictureBox).GetCurrentTexture());
