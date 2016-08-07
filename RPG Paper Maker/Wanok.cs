@@ -603,6 +603,9 @@ namespace RPG_Paper_Maker
             PortionsToAddCancel.Clear();
         }
 
+        // -------------------------------------------------------------------
+        // GetSuperListItem
+        // -------------------------------------------------------------------
 
         public static List<SuperListItem> GetSuperListItem(List<SuperListItem> list)
         {
@@ -613,6 +616,25 @@ namespace RPG_Paper_Maker
             }
 
             return newList;
+        }
+
+        // -------------------------------------------------------------------
+        // CheckControls
+        // -------------------------------------------------------------------
+
+        public static void CheckControls(List<Control[]> list, int index)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                for (int j = 0; j < list[i].Length; j++)
+                {
+                    list[i][j].Enabled = false;
+                }
+            }
+            for (int i = 0; i < list[index].Length; i++)
+            {
+                list[index][i].Enabled = true;
+            }
         }
     }
 }

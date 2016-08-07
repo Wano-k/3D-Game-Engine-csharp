@@ -495,6 +495,8 @@ namespace RPG_Paper_Maker
                 TreeTag tag = (TreeTag)WANOK.SelectedNode.Tag;
                 if (tag.IsMap) ReLoadMap(tag.RealMapName);
             }
+            WANOK.Game = new GameDatas();
+            WANOK.Game.LoadDatas();
         }
 
         // TEST

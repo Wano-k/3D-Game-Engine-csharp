@@ -41,6 +41,7 @@ namespace RPG_Paper_Maker
         public DialogDataBaseControl()
         {
             Model.LoadDatas();
+            WANOK.Game = Model;
         }
 
         // -------------------------------------------------------------------

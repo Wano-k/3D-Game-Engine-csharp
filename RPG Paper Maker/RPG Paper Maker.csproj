@@ -92,6 +92,9 @@
     <Compile Include="Engine\CustomUserControls\CollisionSettings.Designer.cs">
       <DependentUpon>CollisionSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\CustomUserControls\ComboBoxes.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Engine\CustomUserControls\GrowLabel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -128,6 +131,7 @@
     <Compile Include="Engine\CustomUserControls\TextBoxGraphic.Designer.cs">
       <DependentUpon>TextBoxGraphic.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\Enums\Comparaison.cs" />
     <Compile Include="Engine\Enums\GraphicKind.cs" />
     <Compile Include="Engine\Enums\OptionsKind.cs" />
     <Compile Include="Engine\Enums\PassageKind.cs" />

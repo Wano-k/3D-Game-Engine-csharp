@@ -52,7 +52,7 @@ namespace RPG_Paper_Maker
         {
             List<SystemTileset> list = new List<SystemTileset>();
             list.Add(new SystemTileset(1, "Plains", new SystemGraphic("plains.png", true, GraphicKind.Tileset), new Collision(Collision.GetDefaultPassableCollision(8, 8)), new List<int>(new int[] { 1, 2 }), new List<int>(new int[] { 1 })));
-            list.Add(new SystemTileset(1, "Halloween", new SystemGraphic("halloween.png", true, GraphicKind.Tileset), new Collision(Collision.GetDefaultPassableCollision(8, 8)), new List<int>(), new List<int>(new int[] { 2 })));
+            list.Add(new SystemTileset(2, "Halloween", new SystemGraphic("halloween.png", true, GraphicKind.Tileset), new Collision(Collision.GetDefaultPassableCollision(8, 8)), new List<int>(), new List<int>(new int[] { 2 })));
 
             return list;
         }

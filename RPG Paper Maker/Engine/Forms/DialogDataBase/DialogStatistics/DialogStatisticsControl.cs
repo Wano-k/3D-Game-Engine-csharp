@@ -15,6 +15,11 @@ namespace RPG_Paper_Maker
             get { return Model.Name; }
             set { Model.Name = value; NotifyPropertyChanged("Name"); }
         }
+        public int Value
+        {
+            get { return Model.AllGameOverOptions.Value; }
+            set { Model.AllGameOverOptions.Value = value; NotifyPropertyChanged("Value"); }
+        }
 
 
         // -------------------------------------------------------------------
