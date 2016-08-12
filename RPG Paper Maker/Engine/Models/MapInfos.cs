@@ -15,6 +15,8 @@ namespace RPG_Paper_Maker
         public int Height = 25;
         public int Tileset = 1;
         public int SkyColor = 1;
+        // 1 : portion, 2 : texture, 3 : coords
+        public Dictionary<int[], Dictionary<int[], Dictionary<int[], SystemEvent>>> EventSprites = new Dictionary<int[], Dictionary<int[], Dictionary<int[], SystemEvent>>>(new IntArrayComparer());
 
 
         // -------------------------------------------------------------------

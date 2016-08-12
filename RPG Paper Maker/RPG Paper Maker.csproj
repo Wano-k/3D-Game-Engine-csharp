@@ -132,6 +132,7 @@
       <DependentUpon>TextBoxGraphic.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Enums\Comparaison.cs" />
+    <Compile Include="Engine\Enums\GeneralDrawType.cs" />
     <Compile Include="Engine\Enums\GraphicKind.cs" />
     <Compile Include="Engine\Enums\OptionsKind.cs" />
     <Compile Include="Engine\Enums\PassageKind.cs" />
@@ -180,6 +181,12 @@
     </Compile>
     <Compile Include="Engine\Forms\DialogEnterNumber\DialogEnterNumber.Designer.cs">
       <DependentUpon>DialogEnterNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogEvent\DialogEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogEvent\DialogEvent.Designer.cs">
+      <DependentUpon>DialogEvent.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Forms\DialogInputsManager\DialogInputsManager.cs">
       <SubType>Form</SubType>
@@ -239,6 +246,7 @@
     <Compile Include="Engine\Models\GameDatas.cs" />
     <Compile Include="Engine\Models\HeroesDatas.cs" />
     <Compile Include="Engine\Models\SystemElement.cs" />
+    <Compile Include="Engine\Models\SystemEvent.cs" />
     <Compile Include="Engine\Models\SystemHero.cs" />
     <Compile Include="Engine\Models\SystemRelief.cs" />
     <Compile Include="Engine\Models\SystemStatistics.cs" />
@@ -393,6 +401,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogEnterNumber\DialogEnterNumber.resx">
       <DependentUpon>DialogEnterNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogEvent\DialogEvent.resx">
+      <DependentUpon>DialogEvent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogInputsManager\DialogInputsManager.resx">
       <DependentUpon>DialogInputsManager.cs</DependentUpon>

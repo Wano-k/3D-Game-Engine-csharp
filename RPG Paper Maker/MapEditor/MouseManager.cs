@@ -21,6 +21,25 @@ namespace RPG_Paper_Maker
         private bool WheelUp = false;
         private bool WheelDown = false;
 
+        // -------------------------------------------------------------------
+        // InitializeMouse
+        // -------------------------------------------------------------------
+
+        public void InitializeMouse()
+        {
+            FirstLeftClick = false;
+            FirstRightClick = false;
+            FirstWheelClick = false;
+            OnLeftClick = false;
+            OnRightClick = false;
+            OnWheelClick = false;
+            WheelUp = false;
+            WheelDown = false;
+        }
+
+        // -------------------------------------------------------------------
+        // Set mouse status
+        // -------------------------------------------------------------------
 
         public void SetMouseDownStatus(MouseEventArgs e)
         {
@@ -66,6 +85,10 @@ namespace RPG_Paper_Maker
             else WheelDown = true;
         }
 
+        // -------------------------------------------------------------------
+        // Position
+        // -------------------------------------------------------------------
+
         public Point GetPosition()
         {
             return MousePosition;
@@ -76,6 +99,10 @@ namespace RPG_Paper_Maker
             MousePosition = new Point(x,y);
         }
 
+        // -------------------------------------------------------------------
+        // Update
+        // -------------------------------------------------------------------
+
         public void Update()
         {
             FirstLeftClick = false;
@@ -84,6 +111,10 @@ namespace RPG_Paper_Maker
             WheelUp = false;
             WheelDown = false;
         }
+
+        // -------------------------------------------------------------------
+        // Is button
+        // -------------------------------------------------------------------
 
         public bool IsButtonDown(MouseButtons button)
         {

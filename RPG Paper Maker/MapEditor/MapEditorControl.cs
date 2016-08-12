@@ -45,6 +45,7 @@ namespace RPG_Paper_Maker
         protected HashSet<int[]> PortionsToSave = new HashSet<int[]>(new IntArrayComparer());
         public int[] PreviousMouseCoords = null;
         public int[] PreviousCursorCoords = null;
+        public bool OpenEvent = false;
 
         public delegate void MethodStock(int[] coords, params object[] args);
         public delegate object MethodReduce(object after, int localX, int localZ);
@@ -544,6 +545,9 @@ namespace RPG_Paper_Maker
                 case "ItemStart":
                     AddStart(isMouse);
                     break;
+                case "ItemEvent":
+                    AddEvent(isMouse);
+                    break;
                 case "ItemFloor":
                     if (SelectedDrawTypeParticular == DrawType.Autotiles && MapEditor.TexAutotiles.Count == 0) return;
                     AddFloor(isMouse);
@@ -604,6 +608,55 @@ namespace RPG_Paper_Maker
 
                 // Updating in map
                 Map.SetStartInfos(coords);
+            }
+        }
+
+        #endregion
+
+        // -------------------------------------------------------------------
+        // EVENT
+        // -------------------------------------------------------------------
+
+        #region event
+
+        // -------------------------------------------------------------------
+        // AddEvent
+        // -------------------------------------------------------------------
+
+        public void AddEvent(bool isMouse)
+        {
+            // Getting coords
+            int[] coords = GetCoords(isMouse);
+            if (coords == null) return;
+
+            if (IsInArea(coords))
+            {
+                int[] portion = GetGlobalPortion(coords[0], coords[3]);
+                bool test = false;
+                if (Map.MapInfos.EventSprites.ContainsKey(portion))
+                {
+                    foreach (Dictionary<int[], SystemEvent> entry in Map.MapInfos.EventSprites[portion].Values)
+                    {
+                        foreach (int[] coords2 in entry.Keys)
+                        {
+                            if (coords.SequenceEqual(coords2))
+                            {
+                                test = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (!test)
+                {
+                    WANOK.KeyboardManager.InitializeKeyboard();
+                    WANOK.MapMouseManager.InitializeMouse();
+                    DialogEvent dialog = new DialogEvent();
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+
+                    }
+                }
             }
         }
 
