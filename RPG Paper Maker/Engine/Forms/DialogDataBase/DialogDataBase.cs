@@ -27,7 +27,10 @@ namespace RPG_Paper_Maker
             Control = new DialogDataBaseControl();
             ViewModelBindingSource.DataSource = Control;
             ListBoxesCanceling = new ListBox[] { listBoxColors.GetListBox(), listBoxElements.GetListBox(), listBoxCommonStats.GetListBox(), textBoxGraphic.GetTextBox(), listBoxAutotiles.GetListBox(), listBoxRelief.GetListBox() };
-            ListBoxes = new ListBox[] { listBoxTilesets.GetListBox() };
+            ListBoxes = new ListBox[] { listBoxHeroes.GetListBox(), listBoxTilesets.GetListBox() };
+
+            // Heroes
+            listBoxHeroes.InitializeListParameters(ListBoxesCanceling, Control.Model.Heroes.HeroesList.Cast<SuperListItem>().ToList(), null, typeof(SystemHero), 1, SystemHero.MAX_HEROES);
 
             // Tilesets
             listBoxTilesets.InitializeListParameters(ListBoxesCanceling, Control.Model.Tilesets.TilesetsList.Cast<SuperListItem>().ToList(), null, typeof(SystemTileset), 1, SystemTileset.MAX_TILESETS);
@@ -99,6 +102,16 @@ namespace RPG_Paper_Maker
                 ListBoxes[i].SelectedIndex = 0;
             }
         }
+
+        // -------------------------------------------------------------------
+        // HEROES
+        // -------------------------------------------------------------------
+
+        #region Heroes
+
+        
+
+        #endregion
 
         // -------------------------------------------------------------------
         // TILESETS
@@ -193,6 +206,7 @@ namespace RPG_Paper_Maker
             {
                 Control.Model.Tilesets.Reliefs = dialog.GetListReliefs();
                 tileset.Reliefs = dialog.GetListTileset();
+                tileset.ReliefTop = dialog.GetListReliefsTop();
                 for (int i = 0; i < listBoxTilesets.GetListBox().Items.Count; i++)
                 {
                     SystemTileset cpTileset = (SystemTileset)listBoxTilesets.GetListBox().Items[i];
@@ -250,6 +264,10 @@ namespace RPG_Paper_Maker
             if (tabControl1.SelectedTab == tabPageTilesets)
             {
                 listBoxTilesets.GetListBox().Focus();
+            }
+            else if (tabControl1.SelectedTab == tabPageHeroes)
+            {
+                listBoxHeroes.GetListBox().Focus();
             }
         }
 

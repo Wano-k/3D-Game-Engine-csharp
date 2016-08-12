@@ -286,14 +286,17 @@ namespace RPG_Paper_Maker
             if (!Mountains.ContainsKey(height)) Mountains[height] = new Mountains();
             Mountains[height].Add(coords, newId, newMountain, height);
 
-            SystemRelief relief = WANOK.Game.Tilesets.GetReliefById(newId);
-            switch (relief.TopDrawType)
+            SystemTileset tileset = MapEditor.GetMapTileset();
+            object[] reliefTop = tileset.ReliefTop[tileset.Reliefs.IndexOf(newId)];
+
+
+            switch ((DrawType)reliefTop[0])
             {
                 case DrawType.Floors:
-                    AddFloor(new int[] { coords[0], coords[1] + newMountain.SquareHeight, coords[2] + newMountain.PixelHeight, coords[3] }, new int[] { (int)relief.TopTexture[0], (int)relief.TopTexture[1], (int)relief.TopTexture[2], (int)relief.TopTexture[3] });
+                    AddFloor(new int[] { coords[0], coords[1] + newMountain.SquareHeight, coords[2] + newMountain.PixelHeight, coords[3] }, (int[])reliefTop[1]);
                     break;
                 case DrawType.Autotiles:
-                    int id = (int)relief.TopTexture[0];
+                    int id = ((int[])reliefTop[1])[0];
                     if (id > 0) AddAutotile(new int[] { coords[0], coords[1] + newMountain.SquareHeight, coords[2] + newMountain.PixelHeight, coords[3] }, id, true);
                     break;
             }

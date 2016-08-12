@@ -489,14 +489,21 @@ namespace RPG_Paper_Maker
         private void ItemDataBase_Click(object sender, EventArgs e)
         {
             Control.OpenNewDialog();
-            DialogDataBase dialog = new DialogDataBase();
-            if (dialog.ShowDialog() == DialogResult.OK){
-                SetTitle();
-                TreeTag tag = (TreeTag)WANOK.SelectedNode.Tag;
-                if (tag.IsMap) ReLoadMap(tag.RealMapName);
+            try
+            {
+                DialogDataBase dialog = new DialogDataBase();
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    SetTitle();
+                    TreeTag tag = (TreeTag)WANOK.SelectedNode.Tag;
+                    if (tag.IsMap) ReLoadMap(tag.RealMapName);
+                }
+                WANOK.Game = new GameDatas();
+                WANOK.Game.LoadDatas();
+            } catch(Exception ex)
+            {
+                WANOK.PathErrorMessage(ex);
             }
-            WANOK.Game = new GameDatas();
-            WANOK.Game.LoadDatas();
         }
 
         // TEST
@@ -972,6 +979,13 @@ namespace RPG_Paper_Maker
         private void ItemStart_Click(object sender, EventArgs e)
         {
             SetSelectedDrawType("ItemStart");
+        }
+
+        // Event
+
+        private void ItemEvent_Click(object sender, EventArgs e)
+        {
+            SetSelectedDrawType("ItemEvent");
         }
 
         // DrawMode

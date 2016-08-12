@@ -109,6 +109,7 @@ namespace RPG_Paper_Maker
                     int index = listBox.SelectedIndex;
                     listBox.Items.RemoveAt(index);
                     listBox.Items.Insert(index, dialog.GetObject());
+                    listBox.SelectedIndex = index;
                 }
             }
         }
@@ -184,6 +185,10 @@ namespace RPG_Paper_Maker
             if (listBox.SelectedIndex != -1)
             {
                 EditItem();
+            }
+            else
+            {
+                listBox.SelectedIndex = listBox.Items.Count - 1;
             }
         }
 
@@ -287,7 +292,7 @@ namespace RPG_Paper_Maker
 
         private void listBox_MouseMove(object sender, MouseEventArgs e)
         {
-            if (CanDrag)
+            if (CanDrag && listBox.SelectedItem != null)
             {
                 listBox.DoDragDrop(listBox.SelectedItem, DragDropEffects.Move);
                 CanDrag = false;

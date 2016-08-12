@@ -536,10 +536,14 @@
     <None Include="Resources\Floor3.png" />
     <None Include="Resources\mousewheel.png" />
     <None Include="Resources\anglel.png" />
+    <None Include="Resources\ev.png" />
     <Content Include="RTP\Content\Pictures\Textures2D\Autotiles\ground.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="RTP\Content\Pictures\Textures2D\Autotiles\grass.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RTP\Content\Pictures\Textures2D\Autotiles\water.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="RTP\Content\Pictures\Textures2D\Characters\lucas.png">
@@ -551,7 +555,19 @@
     <Content Include="RTP\Content\Pictures\Textures2D\Characters\template.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="RTP\Content\Pictures\Textures2D\Reliefs\desert.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RTP\Content\Pictures\Textures2D\Tilesets\beach.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="RTP\Content\Pictures\UI\Bars\hpBar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RTP\Content\Pictures\UI\Bars\mpBar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RTP\Content\Pictures\UI\Bars\spBar.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="RTP\Content\Pictures\UI\Icons\darkness.png">

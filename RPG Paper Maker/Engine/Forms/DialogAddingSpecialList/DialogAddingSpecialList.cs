@@ -16,6 +16,9 @@ namespace RPG_Paper_Maker
         public List<ListBox> ListBoxesCanceling, ListBoxes;
         public System.Timers.Timer DragTimer = new System.Timers.Timer(20);
         public bool CanDrag = false;
+        protected int SelectedItemTileset = -1;
+        protected int OldIndex = -1;
+        protected int NewIndex = -1;
 
 
         // -------------------------------------------------------------------
@@ -118,6 +121,7 @@ namespace RPG_Paper_Maker
             SuperListItem item = (SuperListItem)listBoxTileset.SelectedItem;
             if (item != null)
             {
+                SelectedItemTileset = listBoxTileset.SelectedIndex;
                 listBoxTileset.Items.Remove(item);
             }
         }
@@ -206,7 +210,11 @@ namespace RPG_Paper_Maker
             if (e.Button == MouseButtons.Left)
             {
                 if (listBoxTileset.SelectedItem == null) return;
-                if (!DragTimer.Enabled) DragTimer.Start();
+                if (!DragTimer.Enabled)
+                {
+                    OldIndex = listBoxTileset.SelectedIndex;
+                    DragTimer.Start();
+                }
             }
         }
 
@@ -222,10 +230,11 @@ namespace RPG_Paper_Maker
             int newIndex = listBoxTileset.IndexFromPoint(point);
             if (newIndex < 0) newIndex = listBoxTileset.Items.Count - 1;
             object data = e.Data.GetData(Type);
-
+            
             listBoxTileset.Items.Remove(data);
             listBoxTileset.Items.Insert(newIndex, data);
             listBoxTileset.SelectedIndex = newIndex;
+            NewIndex = newIndex;
         }
 
         private void listBoxTileset_DragOver(object sender, DragEventArgs e)

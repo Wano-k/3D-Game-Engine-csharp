@@ -101,6 +101,12 @@ namespace RPG_Paper_Maker
             list.Add(new SystemStatistics(1, WANOK.GetDefaultNames("HP"), 
                 new SystemGraphic("hpBar.png", true, GraphicKind.Bar, new object[] { new int[] { 68, 4, 56, 8 } }), 
                 new GameOverOptions(false, true, null, Comparaison.Equal, 0, Measure.Unit)));
+            list.Add(new SystemStatistics(2, WANOK.GetDefaultNames("MP"),
+                new SystemGraphic("mpBar.png", true, GraphicKind.Bar, new object[] { new int[] { 68, 4, 56, 8 } }),
+                new GameOverOptions(true)));
+            list.Add(new SystemStatistics(3, WANOK.GetDefaultNames("SP"),
+                new SystemGraphic("spBar.png", true, GraphicKind.Bar, new object[] { new int[] { 68, 4, 56, 8 } }),
+                new GameOverOptions(true)));
 
             return list;
         }
