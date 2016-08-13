@@ -13,7 +13,7 @@ namespace RPG_Paper_Maker
     
     class TilesetSelectorPicture : SelectionPictureBox
     {
-
+        public float ZoomPixel = 1.0f;
 
         // -------------------------------------------------------------------
         // Constructor
@@ -21,9 +21,8 @@ namespace RPG_Paper_Maker
 
         public TilesetSelectorPicture()
         {
-            
             int BORDER_SIZE = 4;
-            SelectionRectangle = new SelectionRectangle(0, 0, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE, BORDER_SIZE);
+            SelectionRectangle = new SelectionRectangle(0, 0, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE, BORDER_SIZE);
             try
             {
                 using (FileStream stream = new FileStream(Path.Combine("Config", "bmp", "tileset_cursor.png"), FileMode.Open, FileAccess.Read))
@@ -33,6 +32,16 @@ namespace RPG_Paper_Maker
 
             }
             catch { }
+        }
+
+        // -------------------------------------------------------------------
+        // Zoom
+        // -------------------------------------------------------------------
+
+        public override void Zoom(float zoom)
+        {
+            base.Zoom(zoom);
+            ZoomPixel = zoom;
         }
 
         // -------------------------------------------------------------------
@@ -47,7 +56,7 @@ namespace RPG_Paper_Maker
 
             try
             {
-                if (Image.Width >= WANOK.SQUARE_SIZE && Image.Height >= WANOK.SQUARE_SIZE) SelectionRectangle.Draw(g, SelectionRectangle.DrawWithImage);
+                if (Image.Width >= WANOK.SQUARE_SIZE && Image.Height >= WANOK.SQUARE_SIZE) SelectionRectangle.Draw(g, SelectionRectangle.DrawWithImage, ZoomPixel);
             }
             catch { }
         }

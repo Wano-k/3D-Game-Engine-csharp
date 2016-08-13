@@ -9,6 +9,7 @@ namespace RPG_Paper_Maker
     public enum OptionsKind
     {
         None,
-        BarSelection
+        BarSelection,
+        CharacterSelection
     }
 }

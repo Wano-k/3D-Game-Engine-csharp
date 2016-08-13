@@ -19,7 +19,7 @@ namespace RPG_Paper_Maker
 
         public PixelSelectPictureBox()
         {
-            SelectionRectangle = new SelectionRectangle(0, 0, 1, 1, 1);
+            SelectionRectangle = new SelectionRectangle(0, 0, 1, 1, 1, 1);
             SelectionRectangle.Pen = new Pen(Color.Red, (int)ZoomPixel);
         }
 

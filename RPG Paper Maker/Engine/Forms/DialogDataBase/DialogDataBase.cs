@@ -35,6 +35,7 @@ namespace RPG_Paper_Maker
             // Tilesets
             listBoxTilesets.InitializeListParameters(ListBoxesCanceling, Control.Model.Tilesets.TilesetsList.Cast<SuperListItem>().ToList(), null, typeof(SystemTileset), 1, SystemTileset.MAX_TILESETS);
             listBoxTilesets.GetListBox().SelectedIndexChanged += listBoxTilesets_SelectedIndexChanged;
+            listBoxTilesets.GetListBox().MouseDown += listBoxTilesets_SelectedIndexChanged;
             textBoxGraphic.GetTextBox().SelectedValueChanged += textBoxGraphic_SelectedValueChanged;
             collisionSettings.LoadTextures();
             listBoxAutotiles.GetButton().Text = "Choose autotiles";

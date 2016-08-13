@@ -22,7 +22,7 @@ namespace RPG_Paper_Maker
         {
             Image = graphic.LoadImage();
             if (zoom == -1) zoom = WANOK.RELATION_SIZE;
-            Zoom(zoom);
+            Size = new Size((int)(Image.Width * zoom), (int)(Image.Height * zoom));
             Location = new Point(0, 0);
         }
 

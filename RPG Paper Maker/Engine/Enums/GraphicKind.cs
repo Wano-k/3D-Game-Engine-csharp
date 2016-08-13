@@ -10,6 +10,7 @@ namespace RPG_Paper_Maker
     {
         Other,
         Tileset,
+        Character,
         Autotile,
         Relief,
         Icon,

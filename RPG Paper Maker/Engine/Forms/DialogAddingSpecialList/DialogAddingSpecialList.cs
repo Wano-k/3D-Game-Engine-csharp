@@ -54,6 +54,7 @@ namespace RPG_Paper_Maker
             DragTimer.Elapsed += new System.Timers.ElapsedEventHandler(DoDrag);
         }
 
+
         // -------------------------------------------------------------------
         // GetListTilesetAutotiles
         // -------------------------------------------------------------------
@@ -254,7 +255,7 @@ namespace RPG_Paper_Maker
                 listBoxTileset.DoDragDrop(listBoxTileset.SelectedItem, DragDropEffects.Move);
                 CanDrag = false;
             }
-        }    
+        }
 
         // -------------------------------------------------------------------
         // ok_Click

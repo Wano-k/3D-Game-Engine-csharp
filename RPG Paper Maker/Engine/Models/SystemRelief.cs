@@ -47,7 +47,8 @@ namespace RPG_Paper_Maker
         {
             List<SystemRelief> list = new List<SystemRelief>();
             list.Add(new SystemRelief(1, "Grass", new SystemGraphic("grass.png", true, GraphicKind.Relief), new Collision()));
-            list.Add(new SystemRelief(2, "Halloween", new SystemGraphic("halloween.png", true, GraphicKind.Relief), new Collision()));
+            list.Add(new SystemRelief(2, "Desert", new SystemGraphic("desert.png", true, GraphicKind.Relief), new Collision()));
+            list.Add(new SystemRelief(3, "Halloween", new SystemGraphic("halloween.png", true, GraphicKind.Relief), new Collision()));
 
             return list;
         }

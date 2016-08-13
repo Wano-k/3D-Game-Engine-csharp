@@ -16,7 +16,7 @@ namespace RPG_Paper_Maker
         public int Y;
         public int Width;
         public int Height;
-        public int SquareSize;
+        public int SquareWidth, SquareHeight;
         public int RealX, RealY;
 
         public delegate void DrawMethod(Graphics g, int x, int y, float zoom);
@@ -25,7 +25,7 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
-        public SelectionRectangle(int x, int y, int width, int height, int squareSize, int borderSize = 0)
+        public SelectionRectangle(int x, int y, int width, int height, int squareWidth, int squareHeight, int borderSize = 0)
         {
             X = x;
             Y = y;
@@ -33,7 +33,8 @@ namespace RPG_Paper_Maker
             Height = height;
             RealX = 0;
             RealY = 0;
-            SquareSize = squareSize;
+            SquareWidth = squareWidth;
+            SquareHeight = squareHeight;
             BORDER_SIZE = borderSize;
         }
 
@@ -43,7 +44,8 @@ namespace RPG_Paper_Maker
 
         public int[] GetRectangleArray()
         {
-            return new int[] { (X / SquareSize), (Y / SquareSize), (Width / SquareSize), (Height / SquareSize) };
+            if (SquareWidth != 0 && SquareHeight != 0) return new int[] { (X / SquareWidth), (Y / SquareHeight), (Width / SquareWidth), (Height / SquareHeight) };
+            else return new int[]{ 0, 0, 0, 0 };
         }
 
         // -------------------------------------------------------------------
@@ -52,10 +54,13 @@ namespace RPG_Paper_Maker
 
         public void SetRectangle(int x, int y, int width, int height)
         {
-            X = (x / SquareSize) * SquareSize;
-            Y = (y / SquareSize) * SquareSize;
-            Width = width * SquareSize;
-            Height = height * SquareSize;
+            if (SquareWidth != 0 && SquareHeight != 0)
+            {
+                X = (x / SquareWidth) * SquareWidth;
+                Y = (y / SquareHeight) * SquareHeight;
+                Width = width * SquareWidth;
+                Height = height * SquareHeight;
+            }
         }
 
         // -------------------------------------------------------------------
@@ -80,9 +85,9 @@ namespace RPG_Paper_Maker
 
             if (Width < 0)
             {
-                x += Width + SquareSize;
+                x += Width + SquareWidth;
                 Width = -Width;
-                x_width = Width - SquareSize;
+                x_width = Width - SquareWidth;
             }
 
             int y = Y;
@@ -90,12 +95,12 @@ namespace RPG_Paper_Maker
 
             if (Height < 0)
             {
-                y += Height + SquareSize;
+                y += Height + SquareHeight;
                 Height = -Height;
-                y_height = Height - SquareSize;
+                y_height = Height - SquareHeight;
             }
 
-            drawMethod(g, x, y, zoom);
+            if (SquareWidth != 0 && SquareHeight != 0) drawMethod(g, x, y, zoom);
 
             RealX = X - x_width;
             RealY = Y - y_height;
@@ -106,11 +111,11 @@ namespace RPG_Paper_Maker
             // Left-Top
             g.DrawImage(TexCursor, new Rectangle((int)(x * zoom), (int)(y * zoom), (int)(BORDER_SIZE * zoom), (int)(BORDER_SIZE * zoom)), new Rectangle(0, 0, BORDER_SIZE, BORDER_SIZE), GraphicsUnit.Pixel);
             // Right-Top
-            g.DrawImage(TexCursor, new Rectangle((int)((x + Width - BORDER_SIZE) * zoom), (int)(y * zoom), (int)(BORDER_SIZE * zoom), (int)(BORDER_SIZE * zoom)), new Rectangle(SquareSize - BORDER_SIZE, 0, BORDER_SIZE, BORDER_SIZE), GraphicsUnit.Pixel);
+            g.DrawImage(TexCursor, new Rectangle((int)((x + Width - BORDER_SIZE) * zoom), (int)(y * zoom), (int)(BORDER_SIZE * zoom), (int)(BORDER_SIZE * zoom)), new Rectangle(TexCursor.Width - BORDER_SIZE, 0, BORDER_SIZE, BORDER_SIZE), GraphicsUnit.Pixel);
             // Right-Bot
-            g.DrawImage(TexCursor, new Rectangle((int)((x + Width - BORDER_SIZE) * zoom), (int)((y + Height - BORDER_SIZE) * zoom), (int)(BORDER_SIZE * zoom), (int)(BORDER_SIZE * zoom)), new Rectangle(SquareSize - BORDER_SIZE, SquareSize - BORDER_SIZE, BORDER_SIZE, BORDER_SIZE), GraphicsUnit.Pixel);
+            g.DrawImage(TexCursor, new Rectangle((int)((x + Width - BORDER_SIZE) * zoom), (int)((y + Height - BORDER_SIZE) * zoom), (int)(BORDER_SIZE * zoom), (int)(BORDER_SIZE * zoom)), new Rectangle(TexCursor.Width - BORDER_SIZE, TexCursor.Height - BORDER_SIZE, BORDER_SIZE, BORDER_SIZE), GraphicsUnit.Pixel);
             // Left-Bot
-            g.DrawImage(TexCursor, new Rectangle((int)(x * zoom), (int)((y + Height - BORDER_SIZE) * zoom), (int)(BORDER_SIZE * zoom), (int)(BORDER_SIZE * zoom)), new Rectangle(0, SquareSize - BORDER_SIZE, BORDER_SIZE, BORDER_SIZE), GraphicsUnit.Pixel);
+            g.DrawImage(TexCursor, new Rectangle((int)(x * zoom), (int)((y + Height - BORDER_SIZE) * zoom), (int)(BORDER_SIZE * zoom), (int)(BORDER_SIZE * zoom)), new Rectangle(0, TexCursor.Height - BORDER_SIZE, BORDER_SIZE, BORDER_SIZE), GraphicsUnit.Pixel);
 
             // Top
             g.DrawImage(TexCursor, new Rectangle((int)((x + BORDER_SIZE) * zoom), (int)(y * zoom), (int)((Width - (BORDER_SIZE * 2)) * zoom), (int)(BORDER_SIZE * zoom)), new Rectangle(BORDER_SIZE, 0, 1, BORDER_SIZE), GraphicsUnit.Pixel);

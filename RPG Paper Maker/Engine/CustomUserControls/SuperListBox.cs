@@ -24,6 +24,7 @@ namespace RPG_Paper_Maker
         public bool CanDrag = false, SelectLast = false;
         public Engine.TextBoxLang TextBoxLang;
         public bool NameDisplay = false;
+        public int IndexDrag = -1;
 
 
         // -------------------------------------------------------------------
@@ -165,9 +166,9 @@ namespace RPG_Paper_Maker
 
         private void listBox_MouseDown(object sender, MouseEventArgs e)
         {
-            int index = listBox.IndexFromPoint(e.X, e.Y);
+            IndexDrag = listBox.IndexFromPoint(e.X, e.Y);
             UnselectAllLists();
-            listBox.SelectedIndex = index;
+            listBox.SelectedIndex = IndexDrag;
             if (listBox.SelectedIndex == -1) SelectLast = true;
 
             // If left clic, can drag and drop

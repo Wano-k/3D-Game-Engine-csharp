@@ -109,6 +109,7 @@ namespace RPG_Paper_Maker
             // Events
             textBoxGraphic.GetTextBox().SelectedValueChanged += textBoxGraphic_SelectedValueChanged;
             listBoxComplete.GetListBox().SelectedIndexChanged += listBoxComplete_SelectedIndexChanged;
+            listBoxComplete.GetListBox().MouseDown += listBoxComplete_SelectedIndexChanged;
             listBoxComplete.GetButton().Click += listBoxComplete_Click;
             listBoxTileset.SelectedIndexChanged += ListBoxTileset_SelectedIndexChanged;
             listBoxTileset.MouseUp += ListBoxMouseUp;
@@ -217,7 +218,7 @@ namespace RPG_Paper_Maker
         // Events
         // -------------------------------------------------------------------
 
-        public void listBoxComplete_SelectedIndexChanged(object sender, EventArgs e)
+        protected void listBoxComplete_SelectedIndexChanged(object sender, EventArgs e)
         {
             SystemRelief relief = (SystemRelief)listBoxComplete.GetListBox().SelectedItem;
             if (relief != null)

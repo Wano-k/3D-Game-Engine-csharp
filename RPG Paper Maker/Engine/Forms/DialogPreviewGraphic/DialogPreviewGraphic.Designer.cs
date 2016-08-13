@@ -247,12 +247,12 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ImageList imageList;
         protected System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar trackBarZoom;
         protected ScrollPanel panelPicture;
         protected System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        protected System.Windows.Forms.ListView listView1;
     }
 }

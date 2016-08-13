@@ -33,6 +33,7 @@ namespace RPG_Paper_Maker
 
             textBoxGraphic.GetTextBox().SelectedValueChanged += textBoxGraphic_SelectedValueChanged;
             listBoxComplete.GetListBox().SelectedIndexChanged += listBoxComplete_SelectedIndexChanged;
+            listBoxComplete.GetListBox().MouseDown += listBoxComplete_SelectedIndexChanged;
             listBoxComplete.GetButton().Click += listBoxComplete_Click;
 
             UnselectAllLists();

@@ -169,7 +169,7 @@ namespace RPG_Paper_Maker
             if (e.Button == MouseButtons.Left)
             {
                 IsUsingCursorSelector = true;
-                ((PixelSelectPictureBox)PictureBox).MakeFirstRectangleSelection(e.X, e.Y, (int)(((PixelSelectPictureBox)PictureBox).ZoomPixel));
+                ((PixelSelectPictureBox)PictureBox).MakeFirstRectangleSelection(e.X, e.Y, ((PixelSelectPictureBox)PictureBox).ZoomPixel);
                 UpdateNumerics();
             }
         }
@@ -186,7 +186,7 @@ namespace RPG_Paper_Maker
         {
             if (IsUsingCursorSelector)
             {
-                ((PixelSelectPictureBox)PictureBox).MakeRectangleSelection(e.X, e.Y, (int)(((PixelSelectPictureBox)PictureBox).ZoomPixel));
+                ((PixelSelectPictureBox)PictureBox).MakeRectangleSelection(e.X, e.Y, ((PixelSelectPictureBox)PictureBox).ZoomPixel);
                 UpdateNumerics();
             }
         }

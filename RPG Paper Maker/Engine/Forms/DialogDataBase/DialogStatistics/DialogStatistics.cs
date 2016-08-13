@@ -40,7 +40,7 @@ namespace RPG_Paper_Maker
 
             // Game over
             listView1.Columns[0].Width = listView1.Size.Width - 4;
-            for (int i = 0; i < WANOK.Game.Tilesets.TilesetsList.Count; i++)
+            for (int i = 0; i < WANOK.Game.Heroes.HeroesList.Count; i++)
             {
                 listView1.Items.Add(WANOK.GetStringList(WANOK.Game.Heroes.HeroesList[i].Id, WANOK.Game.Heroes.HeroesList[i].Name));
                 if (statistics.AllGameOverOptions.HeroesSelected != null && statistics.AllGameOverOptions.HeroesSelected.Contains(WANOK.Game.Heroes.HeroesList[i].Id)) listView1.Items[i].Checked = true;

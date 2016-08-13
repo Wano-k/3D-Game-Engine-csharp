@@ -82,7 +82,10 @@ namespace RPG_Paper_Maker
             List<SystemTileset> list = new List<SystemTileset>();
             list.Add(new SystemTileset(1, "Plains", new SystemGraphic("plains.png", true, GraphicKind.Tileset), new Collision(Collision.GetDefaultPassableCollision(8, 8)), new List<int>(new int[] { 1, 2 }), new List<int>(new int[] { 1 }), new List<object[]> {
                 new object[] { DrawType.Floors, new int[] { 0, 0, 1, 1 } } }));
-            list.Add(new SystemTileset(2, "Halloween", new SystemGraphic("halloween.png", true, GraphicKind.Tileset), new Collision(Collision.GetDefaultPassableCollision(8, 8)), new List<int>(), new List<int>(new int[] { 2 }), new List<object[]> {
+            list.Add(new SystemTileset(2, "Beach", new SystemGraphic("beach.png", true, GraphicKind.Tileset), new Collision(Collision.GetDefaultPassableCollision(8, 8)), new List<int>(new int[] { }), new List<int>(new int[] { 1, 2 }), new List<object[]> {
+                new object[] { DrawType.Floors, new int[] { 4, 0, 1, 1 } },
+                new object[] { DrawType.Floors, new int[] { 0, 0, 1, 1 } } }));
+            list.Add(new SystemTileset(3, "Halloween", new SystemGraphic("halloween.png", true, GraphicKind.Tileset), new Collision(Collision.GetDefaultPassableCollision(8, 8)), new List<int>(), new List<int>(new int[] { 3 }), new List<object[]> {
                 new object[] { DrawType.Floors, new int[] { 0, 0, 1, 1 } } }));
 
             return list;
