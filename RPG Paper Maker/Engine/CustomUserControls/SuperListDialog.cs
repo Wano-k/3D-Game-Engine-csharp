@@ -24,11 +24,40 @@ namespace RPG_Paper_Maker
         public int Id;
         public string Name = "";
 
+
         public abstract SuperListItem CreateCopy();
 
         public override string ToString()
         {
             return WANOK.GetStringList(Id, Name);
+        }
+    }
+
+    [Serializable]
+    public class SuperListItemName : SuperListItem
+    {
+        public Dictionary<string, string> Names;
+
+        public SuperListItemName(int id) : this(id, WANOK.GetDefaultNames())
+        {
+
+        }
+
+        public SuperListItemName(int id, Dictionary<string, string> names)
+        {
+            Id = id;
+            Names = names;
+            SetName();
+        }
+
+        public void SetName()
+        {
+            Name = Names[WANOK.CurrentLang];
+        }
+
+        public override SuperListItem CreateCopy()
+        {
+            return new SuperListItemName(Id, new Dictionary<string, string>(Names));
         }
     }
 

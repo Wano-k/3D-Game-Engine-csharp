@@ -31,9 +31,13 @@
             this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageHeroes = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox16 = new System.Windows.Forms.GroupBox();
+            this.listBoxHeroes = new RPG_Paper_Maker.SuperListBox();
             this.tabPageTilesets = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBoxTilesets = new System.Windows.Forms.GroupBox();
+            this.listBoxTilesets = new RPG_Paper_Maker.SuperListBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
@@ -42,19 +46,24 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.listBoxRelief = new RPG_Paper_Maker.AddingListBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.listBoxAutotiles = new RPG_Paper_Maker.AddingListBox();
+            this.textBoxGraphic = new RPG_Paper_Maker.Engine.CustomUserControls.TextBoxGraphic();
+            this.collisionSettings = new RPG_Paper_Maker.CollisionSettings();
             this.tabPageSystem = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox14 = new System.Windows.Forms.GroupBox();
-            this.groupBox15 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.listBoxColors = new RPG_Paper_Maker.SuperListBox();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.listBoxWindowSkins = new RPG_Paper_Maker.SuperListBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBoxLangGameName = new RPG_Paper_Maker.Engine.TextBoxLang();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
@@ -69,30 +78,33 @@
             this.buttonSquareSize = new System.Windows.Forms.Button();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.tabPageBattleSystem = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox17 = new System.Windows.Forms.GroupBox();
+            this.listBoxElements = new RPG_Paper_Maker.SuperListBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.listBoxCommonBattleCommands = new RPG_Paper_Maker.SuperListBox();
+            this.tableLayoutPanel18 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox15 = new System.Windows.Forms.GroupBox();
+            this.listBoxCommonEquipment = new RPG_Paper_Maker.SuperListBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.listBoxCommonStats = new RPG_Paper_Maker.SuperListBox();
+            this.tableLayoutPanel19 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox18 = new System.Windows.Forms.GroupBox();
+            this.listBoxArmorsKind = new RPG_Paper_Maker.SuperListBox();
+            this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.listBoxWeaponsKind = new RPG_Paper_Maker.SuperListBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.ok = new System.Windows.Forms.Button();
             this.cancel = new System.Windows.Forms.Button();
             this.toolTipSquareSize = new System.Windows.Forms.ToolTip(this.components);
-            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox16 = new System.Windows.Forms.GroupBox();
-            this.listBoxHeroes = new RPG_Paper_Maker.SuperListBox();
-            this.listBoxTilesets = new RPG_Paper_Maker.SuperListBox();
-            this.listBoxRelief = new RPG_Paper_Maker.AddingListBox();
-            this.listBoxAutotiles = new RPG_Paper_Maker.AddingListBox();
-            this.textBoxGraphic = new RPG_Paper_Maker.Engine.CustomUserControls.TextBoxGraphic();
-            this.collisionSettings = new RPG_Paper_Maker.CollisionSettings();
-            this.listBoxCommonEquipment = new RPG_Paper_Maker.SuperListBox();
-            this.listBoxCommonStats = new RPG_Paper_Maker.SuperListBox();
-            this.listBoxColors = new RPG_Paper_Maker.SuperListBox();
-            this.listBoxWindowSkins = new RPG_Paper_Maker.SuperListBox();
-            this.textBoxLangGameName = new RPG_Paper_Maker.Engine.TextBoxLang();
-            this.listBoxCommonBattleCommands = new RPG_Paper_Maker.SuperListBox();
-            this.listBoxElements = new RPG_Paper_Maker.SuperListBox();
+            this.groupBox19 = new System.Windows.Forms.GroupBox();
             this.tabControl1.SuspendLayout();
             this.tabPageHeroes.SuspendLayout();
+            this.tableLayoutPanel15.SuspendLayout();
+            this.groupBox16.SuspendLayout();
             this.tabPageTilesets.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
             this.groupBoxTilesets.SuspendLayout();
@@ -104,9 +116,6 @@
             this.groupBox8.SuspendLayout();
             this.tabPageSystem.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.tableLayoutPanel14.SuspendLayout();
-            this.groupBox14.SuspendLayout();
-            this.groupBox15.SuspendLayout();
             this.tableLayoutPanel13.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox13.SuspendLayout();
@@ -120,13 +129,19 @@
             this.groupBox5.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericSquareSize)).BeginInit();
-            this.tableLayoutPanel7.SuspendLayout();
-            this.groupBox4.SuspendLayout();
+            this.tabPageBattleSystem.SuspendLayout();
+            this.tableLayoutPanel16.SuspendLayout();
+            this.tableLayoutPanel17.SuspendLayout();
+            this.groupBox17.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.tableLayoutPanel18.SuspendLayout();
+            this.groupBox15.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.tableLayoutPanel19.SuspendLayout();
+            this.groupBox18.SuspendLayout();
+            this.groupBox14.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.tableLayoutPanel15.SuspendLayout();
-            this.groupBox16.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -134,6 +149,7 @@
             this.tabControl1.Controls.Add(this.tabPageHeroes);
             this.tabControl1.Controls.Add(this.tabPageTilesets);
             this.tabControl1.Controls.Add(this.tabPageSystem);
+            this.tabControl1.Controls.Add(this.tabPageBattleSystem);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(10, 10);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(10);
@@ -155,6 +171,42 @@
             this.tabPageHeroes.TabIndex = 2;
             this.tabPageHeroes.Text = "Heroes";
             this.tabPageHeroes.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel15
+            // 
+            this.tableLayoutPanel15.ColumnCount = 2;
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
+            this.tableLayoutPanel15.Controls.Add(this.groupBox16, 0, 0);
+            this.tableLayoutPanel15.Controls.Add(this.groupBox19, 1, 0);
+            this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel15.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
+            this.tableLayoutPanel15.RowCount = 1;
+            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel15.Size = new System.Drawing.Size(805, 415);
+            this.tableLayoutPanel15.TabIndex = 0;
+            // 
+            // groupBox16
+            // 
+            this.groupBox16.Controls.Add(this.listBoxHeroes);
+            this.groupBox16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox16.Location = new System.Drawing.Point(5, 5);
+            this.groupBox16.Margin = new System.Windows.Forms.Padding(5);
+            this.groupBox16.Name = "groupBox16";
+            this.groupBox16.Padding = new System.Windows.Forms.Padding(5);
+            this.groupBox16.Size = new System.Drawing.Size(151, 405);
+            this.groupBox16.TabIndex = 1;
+            this.groupBox16.TabStop = false;
+            this.groupBox16.Text = "Heroes";
+            // 
+            // listBoxHeroes
+            // 
+            this.listBoxHeroes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxHeroes.Location = new System.Drawing.Point(5, 18);
+            this.listBoxHeroes.Name = "listBoxHeroes";
+            this.listBoxHeroes.Size = new System.Drawing.Size(141, 382);
+            this.listBoxHeroes.TabIndex = 0;
             // 
             // tabPageTilesets
             // 
@@ -194,6 +246,14 @@
             this.groupBoxTilesets.TabIndex = 0;
             this.groupBoxTilesets.TabStop = false;
             this.groupBoxTilesets.Text = "Tilesets";
+            // 
+            // listBoxTilesets
+            // 
+            this.listBoxTilesets.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxTilesets.Location = new System.Drawing.Point(5, 18);
+            this.listBoxTilesets.Name = "listBoxTilesets";
+            this.listBoxTilesets.Size = new System.Drawing.Size(141, 382);
+            this.listBoxTilesets.TabIndex = 0;
             // 
             // groupBox7
             // 
@@ -305,6 +365,14 @@
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Reliefs";
             // 
+            // listBoxRelief
+            // 
+            this.listBoxRelief.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxRelief.Location = new System.Drawing.Point(10, 23);
+            this.listBoxRelief.Name = "listBoxRelief";
+            this.listBoxRelief.Size = new System.Drawing.Size(120, 104);
+            this.listBoxRelief.TabIndex = 1;
+            // 
             // groupBox10
             // 
             this.groupBox10.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -342,6 +410,32 @@
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Autotiles";
             // 
+            // listBoxAutotiles
+            // 
+            this.listBoxAutotiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxAutotiles.Location = new System.Drawing.Point(10, 23);
+            this.listBoxAutotiles.Name = "listBoxAutotiles";
+            this.listBoxAutotiles.Size = new System.Drawing.Size(120, 104);
+            this.listBoxAutotiles.TabIndex = 0;
+            // 
+            // textBoxGraphic
+            // 
+            this.textBoxGraphic.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxGraphic.Location = new System.Drawing.Point(0, 52);
+            this.textBoxGraphic.Margin = new System.Windows.Forms.Padding(0);
+            this.textBoxGraphic.Name = "textBoxGraphic";
+            this.textBoxGraphic.Size = new System.Drawing.Size(306, 24);
+            this.textBoxGraphic.TabIndex = 5;
+            // 
+            // collisionSettings
+            // 
+            this.collisionSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.collisionSettings.Location = new System.Drawing.Point(315, 3);
+            this.collisionSettings.Name = "collisionSettings";
+            this.collisionSettings.Size = new System.Drawing.Size(306, 376);
+            this.collisionSettings.TabIndex = 1;
+            // 
             // tabPageSystem
             // 
             this.tabPageSystem.Controls.Add(this.tableLayoutPanel3);
@@ -377,8 +471,6 @@
             // 
             this.tableLayoutPanel14.ColumnCount = 1;
             this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel14.Controls.Add(this.groupBox14, 0, 1);
-            this.tableLayoutPanel14.Controls.Add(this.groupBox15, 0, 0);
             this.tableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel14.Location = new System.Drawing.Point(606, 3);
             this.tableLayoutPanel14.Name = "tableLayoutPanel14";
@@ -387,32 +479,6 @@
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel14.Size = new System.Drawing.Size(196, 409);
             this.tableLayoutPanel14.TabIndex = 5;
-            // 
-            // groupBox14
-            // 
-            this.groupBox14.Controls.Add(this.listBoxCommonEquipment);
-            this.groupBox14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox14.Location = new System.Drawing.Point(5, 209);
-            this.groupBox14.Margin = new System.Windows.Forms.Padding(5);
-            this.groupBox14.Name = "groupBox14";
-            this.groupBox14.Padding = new System.Windows.Forms.Padding(10);
-            this.groupBox14.Size = new System.Drawing.Size(186, 195);
-            this.groupBox14.TabIndex = 4;
-            this.groupBox14.TabStop = false;
-            this.groupBox14.Text = "Common equipment";
-            // 
-            // groupBox15
-            // 
-            this.groupBox15.Controls.Add(this.listBoxCommonStats);
-            this.groupBox15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox15.Location = new System.Drawing.Point(5, 5);
-            this.groupBox15.Margin = new System.Windows.Forms.Padding(5);
-            this.groupBox15.Name = "groupBox15";
-            this.groupBox15.Padding = new System.Windows.Forms.Padding(10);
-            this.groupBox15.Size = new System.Drawing.Size(186, 194);
-            this.groupBox15.TabIndex = 3;
-            this.groupBox15.TabStop = false;
-            this.groupBox15.Text = "Common stats";
             // 
             // tableLayoutPanel13
             // 
@@ -442,6 +508,14 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Colors";
             // 
+            // listBoxColors
+            // 
+            this.listBoxColors.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxColors.Location = new System.Drawing.Point(10, 23);
+            this.listBoxColors.Name = "listBoxColors";
+            this.listBoxColors.Size = new System.Drawing.Size(165, 161);
+            this.listBoxColors.TabIndex = 0;
+            // 
             // groupBox13
             // 
             this.groupBox13.Controls.Add(this.listBoxWindowSkins);
@@ -454,6 +528,15 @@
             this.groupBox13.TabIndex = 2;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Window skins";
+            // 
+            // listBoxWindowSkins
+            // 
+            this.listBoxWindowSkins.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxWindowSkins.Enabled = false;
+            this.listBoxWindowSkins.Location = new System.Drawing.Point(10, 23);
+            this.listBoxWindowSkins.Name = "listBoxWindowSkins";
+            this.listBoxWindowSkins.Size = new System.Drawing.Size(165, 162);
+            this.listBoxWindowSkins.TabIndex = 0;
             // 
             // tableLayoutPanel4
             // 
@@ -486,6 +569,15 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Game name";
+            // 
+            // textBoxLangGameName
+            // 
+            this.textBoxLangGameName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxLangGameName.Location = new System.Drawing.Point(3, 16);
+            this.textBoxLangGameName.Name = "textBoxLangGameName";
+            this.textBoxLangGameName.Size = new System.Drawing.Size(179, 24);
+            this.textBoxLangGameName.TabIndex = 0;
             // 
             // groupBox2
             // 
@@ -695,8 +787,6 @@
             // 
             this.tableLayoutPanel7.ColumnCount = 1;
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.Controls.Add(this.groupBox4, 0, 1);
-            this.tableLayoutPanel7.Controls.Add(this.groupBox3, 0, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(405, 3);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
@@ -706,31 +796,207 @@
             this.tableLayoutPanel7.Size = new System.Drawing.Size(195, 409);
             this.tableLayoutPanel7.TabIndex = 4;
             // 
-            // groupBox4
+            // tabPageBattleSystem
             // 
-            this.groupBox4.Controls.Add(this.listBoxCommonBattleCommands);
-            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox4.Location = new System.Drawing.Point(5, 209);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(5);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(10);
-            this.groupBox4.Size = new System.Drawing.Size(185, 195);
-            this.groupBox4.TabIndex = 4;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Common battle commands";
+            this.tabPageBattleSystem.Controls.Add(this.tableLayoutPanel16);
+            this.tabPageBattleSystem.Location = new System.Drawing.Point(4, 22);
+            this.tabPageBattleSystem.Name = "tabPageBattleSystem";
+            this.tabPageBattleSystem.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageBattleSystem.Size = new System.Drawing.Size(811, 421);
+            this.tabPageBattleSystem.TabIndex = 3;
+            this.tabPageBattleSystem.Text = "Battle system";
+            this.tabPageBattleSystem.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel16
+            // 
+            this.tableLayoutPanel16.ColumnCount = 4;
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel16.Controls.Add(this.tableLayoutPanel17, 1, 0);
+            this.tableLayoutPanel16.Controls.Add(this.tableLayoutPanel18, 2, 0);
+            this.tableLayoutPanel16.Controls.Add(this.tableLayoutPanel19, 3, 0);
+            this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel16.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel16.Name = "tableLayoutPanel16";
+            this.tableLayoutPanel16.RowCount = 1;
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel16.Size = new System.Drawing.Size(805, 415);
+            this.tableLayoutPanel16.TabIndex = 0;
+            // 
+            // tableLayoutPanel17
+            // 
+            this.tableLayoutPanel17.ColumnCount = 1;
+            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel17.Controls.Add(this.groupBox17, 0, 0);
+            this.tableLayoutPanel17.Controls.Add(this.groupBox3, 0, 1);
+            this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel17.Location = new System.Drawing.Point(204, 3);
+            this.tableLayoutPanel17.Name = "tableLayoutPanel17";
+            this.tableLayoutPanel17.RowCount = 2;
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel17.Size = new System.Drawing.Size(195, 409);
+            this.tableLayoutPanel17.TabIndex = 8;
+            // 
+            // groupBox17
+            // 
+            this.groupBox17.Controls.Add(this.listBoxElements);
+            this.groupBox17.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox17.Location = new System.Drawing.Point(5, 5);
+            this.groupBox17.Margin = new System.Windows.Forms.Padding(5);
+            this.groupBox17.Name = "groupBox17";
+            this.groupBox17.Padding = new System.Windows.Forms.Padding(10);
+            this.groupBox17.Size = new System.Drawing.Size(185, 194);
+            this.groupBox17.TabIndex = 4;
+            this.groupBox17.TabStop = false;
+            this.groupBox17.Text = "Elements";
+            // 
+            // listBoxElements
+            // 
+            this.listBoxElements.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxElements.Location = new System.Drawing.Point(10, 23);
+            this.listBoxElements.Name = "listBoxElements";
+            this.listBoxElements.Size = new System.Drawing.Size(165, 161);
+            this.listBoxElements.TabIndex = 0;
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.listBoxElements);
+            this.groupBox3.Controls.Add(this.listBoxCommonBattleCommands);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(5, 5);
+            this.groupBox3.Location = new System.Drawing.Point(5, 209);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(5);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(10);
-            this.groupBox3.Size = new System.Drawing.Size(185, 194);
-            this.groupBox3.TabIndex = 3;
+            this.groupBox3.Size = new System.Drawing.Size(185, 195);
+            this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Elements";
+            this.groupBox3.Text = "Common battle commands";
+            // 
+            // listBoxCommonBattleCommands
+            // 
+            this.listBoxCommonBattleCommands.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxCommonBattleCommands.Enabled = false;
+            this.listBoxCommonBattleCommands.Location = new System.Drawing.Point(10, 23);
+            this.listBoxCommonBattleCommands.Name = "listBoxCommonBattleCommands";
+            this.listBoxCommonBattleCommands.Size = new System.Drawing.Size(165, 162);
+            this.listBoxCommonBattleCommands.TabIndex = 0;
+            // 
+            // tableLayoutPanel18
+            // 
+            this.tableLayoutPanel18.ColumnCount = 1;
+            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel18.Controls.Add(this.groupBox15, 0, 1);
+            this.tableLayoutPanel18.Controls.Add(this.groupBox4, 0, 0);
+            this.tableLayoutPanel18.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel18.Location = new System.Drawing.Point(405, 3);
+            this.tableLayoutPanel18.Name = "tableLayoutPanel18";
+            this.tableLayoutPanel18.RowCount = 2;
+            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel18.Size = new System.Drawing.Size(195, 409);
+            this.tableLayoutPanel18.TabIndex = 9;
+            // 
+            // groupBox15
+            // 
+            this.groupBox15.Controls.Add(this.listBoxCommonEquipment);
+            this.groupBox15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox15.Location = new System.Drawing.Point(5, 209);
+            this.groupBox15.Margin = new System.Windows.Forms.Padding(5);
+            this.groupBox15.Name = "groupBox15";
+            this.groupBox15.Padding = new System.Windows.Forms.Padding(10);
+            this.groupBox15.Size = new System.Drawing.Size(185, 195);
+            this.groupBox15.TabIndex = 7;
+            this.groupBox15.TabStop = false;
+            this.groupBox15.Text = "Common equipment";
+            // 
+            // listBoxCommonEquipment
+            // 
+            this.listBoxCommonEquipment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxCommonEquipment.Enabled = false;
+            this.listBoxCommonEquipment.Location = new System.Drawing.Point(10, 23);
+            this.listBoxCommonEquipment.Name = "listBoxCommonEquipment";
+            this.listBoxCommonEquipment.Size = new System.Drawing.Size(165, 162);
+            this.listBoxCommonEquipment.TabIndex = 0;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.listBoxCommonStats);
+            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox4.Location = new System.Drawing.Point(5, 5);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(5);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(10);
+            this.groupBox4.Size = new System.Drawing.Size(185, 194);
+            this.groupBox4.TabIndex = 6;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Common statistics";
+            // 
+            // listBoxCommonStats
+            // 
+            this.listBoxCommonStats.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxCommonStats.Location = new System.Drawing.Point(10, 23);
+            this.listBoxCommonStats.Name = "listBoxCommonStats";
+            this.listBoxCommonStats.Size = new System.Drawing.Size(165, 161);
+            this.listBoxCommonStats.TabIndex = 0;
+            // 
+            // tableLayoutPanel19
+            // 
+            this.tableLayoutPanel19.ColumnCount = 1;
+            this.tableLayoutPanel19.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel19.Controls.Add(this.groupBox18, 0, 1);
+            this.tableLayoutPanel19.Controls.Add(this.groupBox14, 0, 0);
+            this.tableLayoutPanel19.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel19.Location = new System.Drawing.Point(606, 3);
+            this.tableLayoutPanel19.Name = "tableLayoutPanel19";
+            this.tableLayoutPanel19.RowCount = 2;
+            this.tableLayoutPanel19.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel19.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel19.Size = new System.Drawing.Size(196, 409);
+            this.tableLayoutPanel19.TabIndex = 10;
+            // 
+            // groupBox18
+            // 
+            this.groupBox18.Controls.Add(this.listBoxArmorsKind);
+            this.groupBox18.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox18.Location = new System.Drawing.Point(5, 209);
+            this.groupBox18.Margin = new System.Windows.Forms.Padding(5);
+            this.groupBox18.Name = "groupBox18";
+            this.groupBox18.Padding = new System.Windows.Forms.Padding(10);
+            this.groupBox18.Size = new System.Drawing.Size(186, 195);
+            this.groupBox18.TabIndex = 8;
+            this.groupBox18.TabStop = false;
+            this.groupBox18.Text = "Armors kind";
+            // 
+            // listBoxArmorsKind
+            // 
+            this.listBoxArmorsKind.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxArmorsKind.Location = new System.Drawing.Point(10, 23);
+            this.listBoxArmorsKind.Name = "listBoxArmorsKind";
+            this.listBoxArmorsKind.Size = new System.Drawing.Size(166, 162);
+            this.listBoxArmorsKind.TabIndex = 0;
+            // 
+            // groupBox14
+            // 
+            this.groupBox14.Controls.Add(this.listBoxWeaponsKind);
+            this.groupBox14.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox14.Location = new System.Drawing.Point(5, 5);
+            this.groupBox14.Margin = new System.Windows.Forms.Padding(5);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Padding = new System.Windows.Forms.Padding(10);
+            this.groupBox14.Size = new System.Drawing.Size(186, 194);
+            this.groupBox14.TabIndex = 7;
+            this.groupBox14.TabStop = false;
+            this.groupBox14.Text = "Weapons kind";
+            // 
+            // listBoxWeaponsKind
+            // 
+            this.listBoxWeaponsKind.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxWeaponsKind.Location = new System.Drawing.Point(10, 23);
+            this.listBoxWeaponsKind.Name = "listBoxWeaponsKind";
+            this.listBoxWeaponsKind.Size = new System.Drawing.Size(166, 161);
+            this.listBoxWeaponsKind.TabIndex = 0;
             // 
             // tableLayoutPanel1
             // 
@@ -792,142 +1058,17 @@
             this.toolTipSquareSize.IsBalloon = true;
             this.toolTipSquareSize.ReshowDelay = 100;
             // 
-            // tableLayoutPanel15
+            // groupBox19
             // 
-            this.tableLayoutPanel15.ColumnCount = 2;
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPanel15.Controls.Add(this.groupBox16, 0, 0);
-            this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel15.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
-            this.tableLayoutPanel15.RowCount = 1;
-            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel15.Size = new System.Drawing.Size(805, 415);
-            this.tableLayoutPanel15.TabIndex = 0;
-            // 
-            // groupBox16
-            // 
-            this.groupBox16.Controls.Add(this.listBoxHeroes);
-            this.groupBox16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox16.Location = new System.Drawing.Point(5, 5);
-            this.groupBox16.Margin = new System.Windows.Forms.Padding(5);
-            this.groupBox16.Name = "groupBox16";
-            this.groupBox16.Padding = new System.Windows.Forms.Padding(5);
-            this.groupBox16.Size = new System.Drawing.Size(151, 405);
-            this.groupBox16.TabIndex = 1;
-            this.groupBox16.TabStop = false;
-            this.groupBox16.Text = "Heroes";
-            // 
-            // listBoxHeroes
-            // 
-            this.listBoxHeroes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxHeroes.Location = new System.Drawing.Point(5, 18);
-            this.listBoxHeroes.Name = "listBoxHeroes";
-            this.listBoxHeroes.Size = new System.Drawing.Size(141, 382);
-            this.listBoxHeroes.TabIndex = 0;
-            // 
-            // listBoxTilesets
-            // 
-            this.listBoxTilesets.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxTilesets.Location = new System.Drawing.Point(5, 18);
-            this.listBoxTilesets.Name = "listBoxTilesets";
-            this.listBoxTilesets.Size = new System.Drawing.Size(141, 382);
-            this.listBoxTilesets.TabIndex = 0;
-            // 
-            // listBoxRelief
-            // 
-            this.listBoxRelief.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxRelief.Location = new System.Drawing.Point(10, 23);
-            this.listBoxRelief.Name = "listBoxRelief";
-            this.listBoxRelief.Size = new System.Drawing.Size(120, 104);
-            this.listBoxRelief.TabIndex = 1;
-            // 
-            // listBoxAutotiles
-            // 
-            this.listBoxAutotiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxAutotiles.Location = new System.Drawing.Point(10, 23);
-            this.listBoxAutotiles.Name = "listBoxAutotiles";
-            this.listBoxAutotiles.Size = new System.Drawing.Size(120, 104);
-            this.listBoxAutotiles.TabIndex = 0;
-            // 
-            // textBoxGraphic
-            // 
-            this.textBoxGraphic.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxGraphic.Location = new System.Drawing.Point(0, 52);
-            this.textBoxGraphic.Margin = new System.Windows.Forms.Padding(0);
-            this.textBoxGraphic.Name = "textBoxGraphic";
-            this.textBoxGraphic.Size = new System.Drawing.Size(306, 24);
-            this.textBoxGraphic.TabIndex = 5;
-            // 
-            // collisionSettings
-            // 
-            this.collisionSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.collisionSettings.Location = new System.Drawing.Point(315, 3);
-            this.collisionSettings.Name = "collisionSettings";
-            this.collisionSettings.Size = new System.Drawing.Size(306, 376);
-            this.collisionSettings.TabIndex = 1;
-            // 
-            // listBoxCommonEquipment
-            // 
-            this.listBoxCommonEquipment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxCommonEquipment.Enabled = false;
-            this.listBoxCommonEquipment.Location = new System.Drawing.Point(10, 23);
-            this.listBoxCommonEquipment.Name = "listBoxCommonEquipment";
-            this.listBoxCommonEquipment.Size = new System.Drawing.Size(166, 162);
-            this.listBoxCommonEquipment.TabIndex = 0;
-            // 
-            // listBoxCommonStats
-            // 
-            this.listBoxCommonStats.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxCommonStats.Location = new System.Drawing.Point(10, 23);
-            this.listBoxCommonStats.Name = "listBoxCommonStats";
-            this.listBoxCommonStats.Size = new System.Drawing.Size(166, 161);
-            this.listBoxCommonStats.TabIndex = 0;
-            // 
-            // listBoxColors
-            // 
-            this.listBoxColors.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxColors.Location = new System.Drawing.Point(10, 23);
-            this.listBoxColors.Name = "listBoxColors";
-            this.listBoxColors.Size = new System.Drawing.Size(165, 161);
-            this.listBoxColors.TabIndex = 0;
-            // 
-            // listBoxWindowSkins
-            // 
-            this.listBoxWindowSkins.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxWindowSkins.Enabled = false;
-            this.listBoxWindowSkins.Location = new System.Drawing.Point(10, 23);
-            this.listBoxWindowSkins.Name = "listBoxWindowSkins";
-            this.listBoxWindowSkins.Size = new System.Drawing.Size(165, 162);
-            this.listBoxWindowSkins.TabIndex = 0;
-            // 
-            // textBoxLangGameName
-            // 
-            this.textBoxLangGameName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxLangGameName.Location = new System.Drawing.Point(3, 16);
-            this.textBoxLangGameName.Name = "textBoxLangGameName";
-            this.textBoxLangGameName.Size = new System.Drawing.Size(179, 24);
-            this.textBoxLangGameName.TabIndex = 0;
-            // 
-            // listBoxCommonBattleCommands
-            // 
-            this.listBoxCommonBattleCommands.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxCommonBattleCommands.Enabled = false;
-            this.listBoxCommonBattleCommands.Location = new System.Drawing.Point(10, 23);
-            this.listBoxCommonBattleCommands.Name = "listBoxCommonBattleCommands";
-            this.listBoxCommonBattleCommands.Size = new System.Drawing.Size(165, 162);
-            this.listBoxCommonBattleCommands.TabIndex = 0;
-            // 
-            // listBoxElements
-            // 
-            this.listBoxElements.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxElements.Location = new System.Drawing.Point(10, 23);
-            this.listBoxElements.Name = "listBoxElements";
-            this.listBoxElements.Size = new System.Drawing.Size(165, 161);
-            this.listBoxElements.TabIndex = 0;
+            this.groupBox19.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox19.Location = new System.Drawing.Point(166, 5);
+            this.groupBox19.Margin = new System.Windows.Forms.Padding(5);
+            this.groupBox19.Name = "groupBox19";
+            this.groupBox19.Padding = new System.Windows.Forms.Padding(5);
+            this.groupBox19.Size = new System.Drawing.Size(634, 405);
+            this.groupBox19.TabIndex = 2;
+            this.groupBox19.TabStop = false;
+            this.groupBox19.Text = "Settings";
             // 
             // DialogDataBase
             // 
@@ -944,6 +1085,8 @@
             this.Text = "Database";
             this.tabControl1.ResumeLayout(false);
             this.tabPageHeroes.ResumeLayout(false);
+            this.tableLayoutPanel15.ResumeLayout(false);
+            this.groupBox16.ResumeLayout(false);
             this.tabPageTilesets.ResumeLayout(false);
             this.tableLayoutPanel9.ResumeLayout(false);
             this.groupBoxTilesets.ResumeLayout(false);
@@ -956,9 +1099,6 @@
             this.groupBox8.ResumeLayout(false);
             this.tabPageSystem.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel14.ResumeLayout(false);
-            this.groupBox14.ResumeLayout(false);
-            this.groupBox15.ResumeLayout(false);
             this.tableLayoutPanel13.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox13.ResumeLayout(false);
@@ -973,13 +1113,19 @@
             this.groupBox5.ResumeLayout(false);
             this.tableLayoutPanel8.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericSquareSize)).EndInit();
-            this.tableLayoutPanel7.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
+            this.tabPageBattleSystem.ResumeLayout(false);
+            this.tableLayoutPanel16.ResumeLayout(false);
+            this.tableLayoutPanel17.ResumeLayout(false);
+            this.groupBox17.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
+            this.tableLayoutPanel18.ResumeLayout(false);
+            this.groupBox15.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.tableLayoutPanel19.ResumeLayout(false);
+            this.groupBox18.ResumeLayout(false);
+            this.groupBox14.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel15.ResumeLayout(false);
-            this.groupBox16.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1037,16 +1183,26 @@
         private SuperListBox listBoxWindowSkins;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel14;
-        private System.Windows.Forms.GroupBox groupBox14;
-        private SuperListBox listBoxCommonEquipment;
-        private System.Windows.Forms.GroupBox groupBox15;
-        private SuperListBox listBoxCommonStats;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private SuperListBox listBoxCommonBattleCommands;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private SuperListBox listBoxElements;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
         private System.Windows.Forms.GroupBox groupBox16;
         private SuperListBox listBoxHeroes;
+        private System.Windows.Forms.TabPage tabPageBattleSystem;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel16;
+        private System.Windows.Forms.GroupBox groupBox17;
+        private SuperListBox listBoxElements;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private SuperListBox listBoxCommonBattleCommands;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private SuperListBox listBoxCommonStats;
+        private System.Windows.Forms.GroupBox groupBox15;
+        private SuperListBox listBoxCommonEquipment;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel17;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel18;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel19;
+        private System.Windows.Forms.GroupBox groupBox14;
+        private SuperListBox listBoxWeaponsKind;
+        private System.Windows.Forms.GroupBox groupBox18;
+        private SuperListBox listBoxArmorsKind;
+        private System.Windows.Forms.GroupBox groupBox19;
     }
 }

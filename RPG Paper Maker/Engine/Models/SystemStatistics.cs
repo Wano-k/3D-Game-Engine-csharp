@@ -30,7 +30,7 @@ namespace RPG_Paper_Maker
             // Constructor
             // -------------------------------------------------------------------
 
-            public GameOverOptions(bool noImplication = false, bool allHeroes = true, List<int> heroesSelected = null, Comparaison comparaison = Comparaison.Equal, int value = 0, Measure measure = Measure.Percent)
+            public GameOverOptions(bool noImplication = true, bool allHeroes = true, List<int> heroesSelected = null, Comparaison comparaison = Comparaison.Equal, int value = 0, Measure measure = Measure.Percent)
             {
                 NoImplication = noImplication;
                 AllHeroes = allHeroes;
@@ -57,7 +57,7 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
-        public SystemStatistics(int id) : this(id, WANOK.GetDefaultNames(), new SystemGraphic(GraphicKind.Bar), new GameOverOptions())
+        public SystemStatistics(int id) : this(id, WANOK.GetDefaultNames(), new SystemGraphic(GraphicKind.Bar, new object[] { new int[] { 0, 0, 1, 1 } }), new GameOverOptions())
         {
 
         }

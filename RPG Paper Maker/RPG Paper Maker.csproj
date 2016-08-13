@@ -83,6 +83,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\CustomUserControls\ApparenceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Engine\CustomUserControls\ApparenceControl.Designer.cs">
+      <DependentUpon>ApparenceControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Engine\CustomUserControls\CollisionPicture.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -94,6 +100,12 @@
     </Compile>
     <Compile Include="Engine\CustomUserControls\ComboBoxes.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Engine\CustomUserControls\ConditionsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Engine\CustomUserControls\ConditionsPanel.Designer.cs">
+      <DependentUpon>ConditionsPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\CustomUserControls\GrowLabel.cs">
       <SubType>Component</SubType>
@@ -243,6 +255,7 @@
     <Compile Include="Engine\Forms\DialogTileset\DialogTileset.Designer.cs">
       <DependentUpon>DialogTileset.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\Models\BattleSystemDatas.cs" />
     <Compile Include="Engine\Models\GameDatas.cs" />
     <Compile Include="Engine\Models\HeroesDatas.cs" />
     <Compile Include="Engine\Models\SystemElement.cs" />
@@ -363,11 +376,17 @@
     </Compile>
     <Compile Include="MapEditor\SelectionRectangle.cs" />
     <Compile Include="Engine\TreeTag.cs" />
+    <EmbeddedResource Include="Engine\CustomUserControls\ApparenceControl.resx">
+      <DependentUpon>ApparenceControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Engine\CustomUserControls\CollisionSettings.resx">
       <DependentUpon>CollisionSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\CustomUserControls\AddingListBox.resx">
       <DependentUpon>AddingListBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\CustomUserControls\ConditionsPanel.resx">
+      <DependentUpon>ConditionsPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\CustomUserControls\TextBoxVariables.resx">
       <DependentUpon>TextBoxVariables.cs</DependentUpon>

@@ -47,8 +47,12 @@ namespace RPG_Paper_Maker
             toolTipSquareSize.SetToolTip(buttonSquareSize, "This option set the maps displaying, it is recommended to put multiple 8 numbers.\nNote that the pixel height addings are not modified.");
             textBoxLangGameName.InitializeParameters(Control.GameName);
             listBoxColors.InitializeListParameters(ListBoxesCanceling, Control.Model.System.Colors.Cast<SuperListItem>().ToList(), typeof(DialogSystemColors), typeof(SystemColor), 1, SystemColor.MAX_COLORS);
-            listBoxElements.InitializeListParameters(ListBoxesCanceling, Control.Model.System.Elements.Cast<SuperListItem>().ToList(), typeof(DialogElement), typeof(SystemElement), 1, SystemElement.MAX_ELEMENTS);
-            listBoxCommonStats.InitializeListParameters(ListBoxesCanceling, Control.Model.System.Statistics.Cast<SuperListItem>().ToList(), typeof(DialogStatistics), typeof(SystemStatistics), 1, SystemStatistics.MAX_STATISTICS);
+
+            // Battle System
+            listBoxElements.InitializeListParameters(ListBoxesCanceling, Control.Model.BattleSystem.Elements.Cast<SuperListItem>().ToList(), typeof(DialogElement), typeof(SystemElement), 1, SystemElement.MAX_ELEMENTS);
+            listBoxCommonStats.InitializeListParameters(ListBoxesCanceling, Control.Model.BattleSystem.Statistics.Cast<SuperListItem>().ToList(), typeof(DialogStatistics), typeof(SystemStatistics), 1, SystemStatistics.MAX_STATISTICS);
+            listBoxWeaponsKind.InitializeListParameters(ListBoxesCanceling, Control.Model.BattleSystem.WeaponsKind.Cast<SuperListItem>().ToList(), null, typeof(SuperListItemName), 1, BattleSystemDatas.MAX_WEAPONS_KIND, true);
+            listBoxArmorsKind.InitializeListParameters(ListBoxesCanceling, Control.Model.BattleSystem.ArmorsKind.Cast<SuperListItem>().ToList(), null, typeof(SuperListItemName), 1, BattleSystemDatas.MAX_ARMORS_KIND, true);
 
             // list event handlers
             for (int i = 0; i < ListBoxesCanceling.Length; i++)
@@ -269,6 +273,8 @@ namespace RPG_Paper_Maker
             {
                 listBoxHeroes.GetListBox().Focus();
             }
+
+
         }
 
         // -------------------------------------------------------------------
@@ -309,7 +315,10 @@ namespace RPG_Paper_Maker
         {
             DialogResult = DialogResult.OK;
             Control.Model.System.Colors = listBoxColors.ModelList.Cast<SystemColor>().ToList();
-            Control.Model.System.Elements = listBoxElements.ModelList.Cast<SystemElement>().ToList();
+            Control.Model.BattleSystem.Elements = listBoxElements.ModelList.Cast<SystemElement>().ToList();
+            Control.Model.BattleSystem.Statistics = listBoxCommonStats.ModelList.Cast<SystemStatistics>().ToList();
+            Control.Model.BattleSystem.WeaponsKind = listBoxWeaponsKind.ModelList.Cast<SuperListItemName>().ToList();
+            Control.Model.BattleSystem.ArmorsKind = listBoxArmorsKind.ModelList.Cast<SuperListItemName>().ToList();
             Control.Model.Tilesets.TilesetsList = listBoxTilesets.ModelList.Cast<SystemTileset>().ToList();
             Control.Save();
             Close();

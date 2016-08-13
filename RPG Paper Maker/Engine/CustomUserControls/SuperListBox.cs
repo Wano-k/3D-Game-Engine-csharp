@@ -22,6 +22,8 @@ namespace RPG_Paper_Maker
         public int Min, Max;
         public System.Timers.Timer DragTimer = new System.Timers.Timer(20);
         public bool CanDrag = false, SelectLast = false;
+        public Engine.TextBoxLang TextBoxLang;
+        public bool NameDisplay = false;
 
 
         // -------------------------------------------------------------------
@@ -40,7 +42,7 @@ namespace RPG_Paper_Maker
         // InitializeListParameters
         // -------------------------------------------------------------------
 
-        public void InitializeListParameters(ListBox[] list, List<SuperListItem> modelList, Type type, Type typeItem, int min, int max)
+        public void InitializeListParameters(ListBox[] list, List<SuperListItem> modelList, Type type, Type typeItem, int min, int max, bool name = false)
         {
             ListBoxes = list;
             DialogKind = type;
@@ -52,7 +54,17 @@ namespace RPG_Paper_Maker
             {
                 listBox.Items.Add(modelList[i]);
             }
+
+            if (name)
+            {
+                NameDisplay = true;
+                TextBoxLang = new Engine.TextBoxLang();
+                tableLayoutPanel1.Controls.Add(TextBoxLang, 0, 1);
+                listBox.SelectedIndex = 0;
+                TextBoxLang.GetTextBox().TextChanged += SuperListBox_TextChanged;
+            }
         }
+
 
         // -------------------------------------------------------------------
         // GetListBox
@@ -310,6 +322,8 @@ namespace RPG_Paper_Maker
                 listBox.SelectedIndex = listBox.Items.Count - 1;
                 SelectLast = false;
             }
+
+            if (NameDisplay && listBox.SelectedItem != null) TextBoxLang.InitializeParameters(((SuperListItemName)listBox.SelectedItem).Names);
         }
 
         // -------------------------------------------------------------------
@@ -337,6 +351,12 @@ namespace RPG_Paper_Maker
                     }
                 }
             }
+        }
+
+        private void SuperListBox_TextChanged(object sender, EventArgs e)
+        {
+            ((SuperListItemName)listBox.SelectedItem).SetName();
+            SetName(((SuperListItemName)listBox.SelectedItem).Name);
         }
     }
 }

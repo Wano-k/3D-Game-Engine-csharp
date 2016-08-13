@@ -22,8 +22,6 @@ namespace RPG_Paper_Maker
 
         // ListBoxes
         public List<SystemColor> Colors = new List<SystemColor>();
-        public List<SystemElement> Elements = new List<SystemElement>();
-        public List<SystemStatistics> Statistics = new List<SystemStatistics>();
 
 
         // -------------------------------------------------------------------
@@ -45,8 +43,6 @@ namespace RPG_Paper_Maker
 
             // Get defaults lists
             Colors = SystemColor.GetDefaultColors();
-            Elements = SystemElement.GetDefaultElements();
-            Statistics = SystemStatistics.GetDefaultStatistics();
         }
 
         // -------------------------------------------------------------------
