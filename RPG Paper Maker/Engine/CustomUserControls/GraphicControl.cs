@@ -14,10 +14,14 @@ namespace RPG_Paper_Maker
     public partial class GraphicControl : UserControl
     {
         public GraphicPanel panel = new GraphicPanel();
-        public SystemGraphic Graphic;
+        public delegate void EventHandlerGraphic(SystemGraphic graphic);
+        public event EventHandlerGraphic ClosingDialogEvent;
+
 
         public class GraphicPanel : Panel
         {
+            public SystemGraphic Graphic;
+            public Image Image = null;
             public Pen BorderPen = new Pen(Color.LightGray);
 
             public GraphicPanel()
@@ -28,7 +32,21 @@ namespace RPG_Paper_Maker
 
             protected override void OnPaint(PaintEventArgs e)
             {
+                e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+
                 base.OnPaint(e);
+
+                if (Image != null)
+                {
+                    int frames = (int)Graphic.Options[0];
+                    int rows = (int)Graphic.Options[1] == 0 ? 4 : 8;
+                    Size size = new Size((int)((Image.Size.Width / frames) * WANOK.RELATION_SIZE), (int)((Image.Size.Height / rows) * WANOK.RELATION_SIZE));
+                    Point point = new Point((Size.Width - size.Width) / 2, (Size.Height - size.Height) / 2);
+                    int index = (int)Graphic.Options[2];
+                    Size frameSize = new Size(Image.Size.Width / frames, Image.Size.Height / rows);
+                    Point framePoint = new Point((index % frames) * frameSize.Width, (index / frames) * frameSize.Height);
+                    e.Graphics.DrawImage(Image, new Rectangle(point, size), new Rectangle(framePoint, frameSize), GraphicsUnit.Pixel);
+                }
 
                 if (Focused) e.Graphics.DrawRectangle(BorderPen, new Rectangle(ClientRectangle.X + 5, ClientRectangle.Y + 5, ClientRectangle.Width - 11, ClientRectangle.Height - 11));
             }
@@ -46,6 +64,12 @@ namespace RPG_Paper_Maker
             panel.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(panel, 0, 1);
 
+            // Combobox draw type
+            foreach (DrawType drawtype in Enum.GetValues(typeof(DrawType)))
+            {
+                comboBox1.Items.Add(WANOK.DrawTypeToString(drawtype));
+            }
+
             // Event
             panel.Click += panel_Click;
             panel.DoubleClick += Panel_DoubleClick;
@@ -58,7 +82,7 @@ namespace RPG_Paper_Maker
 
         public void InitializeListParameters(SystemGraphic graphic)
         {
-            Graphic = graphic;
+            panel.Graphic = graphic;
         }
 
         // -------------------------------------------------------------------
@@ -73,10 +97,14 @@ namespace RPG_Paper_Maker
 
         private void Panel_DoubleClick(object sender, EventArgs e)
         {
-            DialogPreviewGraphicSelectFrame dialog = new DialogPreviewGraphicSelectFrame(Graphic, OptionsKind.CharacterSelection);
+            DialogPreviewGraphicSelectFrame dialog = new DialogPreviewGraphicSelectFrame(panel.Graphic.CreateCopy(), OptionsKind.CharacterSelection);
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-
+                panel.Graphic = dialog.GetGraphic();
+                panel.Image = panel.Graphic.LoadImage();
+                panel.Refresh();
+                var eventSubscribers = ClosingDialogEvent;
+                if (eventSubscribers != null) eventSubscribers(panel.Graphic);
             }
         }
 

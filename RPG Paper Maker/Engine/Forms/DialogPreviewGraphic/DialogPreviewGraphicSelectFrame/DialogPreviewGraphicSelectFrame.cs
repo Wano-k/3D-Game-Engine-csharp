@@ -31,6 +31,7 @@ namespace RPG_Paper_Maker
             PictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             PictureBox.BackColor = Color.FromArgb(210, 210, 210);
+
             panelPicture.Controls.Clear();
             panelPicture.Controls.Add(PictureBox);
 
@@ -109,10 +110,19 @@ namespace RPG_Paper_Maker
 
         public void UpdateSquareSize()
         {
-            ((TilesetSelectorPicture)PictureBox).SelectionRectangle.SquareWidth = PictureBox.Image.Size.Width / (int)NumericFrames.Value;
+            PictureBox.SelectionRectangle.SquareWidth = PictureBox.Image.Size.Width / (int)NumericFrames.Value;
             int rows = ComboBoxDialog.SelectedIndex == 0 ? 4 : 8;
-            ((TilesetSelectorPicture)PictureBox).SelectionRectangle.SquareHeight = PictureBox.Image.Size.Height / rows;
-            ((TilesetSelectorPicture)PictureBox).SelectionRectangle.SetRectangle(0, 0, 1, 1);
+            PictureBox.SelectionRectangle.SquareHeight = PictureBox.Image.Size.Height / rows;
+            int index = (int)Control.Model.Options[2];
+            int columns = (int)Control.Model.Options[0];
+            int x = index % columns;
+            int y = index / columns;
+            if (y >= rows)
+            {
+                x = 0;
+                y = 0;
+            }
+            PictureBox.SelectionRectangle.SetRectangle(x * PictureBox.SelectionRectangle.SquareWidth, y * PictureBox.SelectionRectangle.SquareHeight, 1, 1);
             PictureBox.Refresh();
         }
 
@@ -124,17 +134,17 @@ namespace RPG_Paper_Maker
         {
             if (e.Button == MouseButtons.Left)
             {
-                ((TilesetSelectorPicture)PictureBox).MakeFirstRectangleSelection(e.X, e.Y, ((TilesetSelectorPicture)PictureBox).ZoomPixel);
+                PictureBox.MakeFirstRectangleSelection(e.X, e.Y, PictureBox.ZoomPixel);
                 PictureBox.Refresh();
             }
         }
 
         private void PictureBox_MouseUp(object sender, MouseEventArgs e)
         {
-            ((TilesetSelectorPicture)PictureBox).SetCursorRealPosition();
+            PictureBox.SetCursorRealPosition();
             PictureBox.Refresh();
-            int[] texture = ((TilesetSelectorPicture)PictureBox).GetCurrentTexture();
-            //Texture = new object[] { texture[0], texture[1], texture[2], texture[3] };
+            int[] texture = PictureBox.GetCurrentTexture();
+            Control.Model.Options[2] = texture[0] + ((int)Control.Model.Options[0] * texture[1]);
         }
 
         private void PictureBox_MouseEnter(object sender, EventArgs e)
@@ -149,11 +159,15 @@ namespace RPG_Paper_Maker
 
         private void ComboBoxDialog_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Control.Model.Options[1] = ComboBoxDialog.SelectedIndex;
+            Control.Model.Options[2] = 0;
             UpdateSquareSize();
         }
 
         private void NumericFrames_ValueChanged(object sender, EventArgs e)
         {
+            Control.Model.Options[0] = (int)NumericFrames.Value;
+            Control.Model.Options[2] = 0;
             UpdateSquareSize();
         }
     }

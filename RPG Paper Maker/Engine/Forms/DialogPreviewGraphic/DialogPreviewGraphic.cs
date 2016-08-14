@@ -18,7 +18,7 @@ namespace RPG_Paper_Maker
         public int CurrentValue = 0;
         public float Zoom = 1.0f;
         protected DialogPreviewGraphicControl Control;
-        protected InterpolationPictureBox PictureBox = new InterpolationPictureBox();
+        protected SelectionPictureBox PictureBox = new SelectionPictureBox();
 
 
         // -------------------------------------------------------------------

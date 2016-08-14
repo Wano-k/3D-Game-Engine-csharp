@@ -24,7 +24,7 @@ namespace RPG_Paper_Maker
         // GenEvents
         // -------------------------------------------------------------------
 
-        public void GenEvents(GraphicsDevice device, Dictionary<SystemGraphic, Dictionary<int[], SystemEvent>> dictionary)
+        public void GenEvents(GraphicsDevice device, Dictionary<int[], SystemEvent> dictionary)
         {
             DisposeBuffers(device);
             if (dictionary.Count > 0) CreatePortion(device, dictionary);
@@ -34,7 +34,7 @@ namespace RPG_Paper_Maker
         // CreatePortion
         // -------------------------------------------------------------------
 
-        public void CreatePortion(GraphicsDevice device, Dictionary<SystemGraphic, Dictionary<int[], SystemEvent>> dictionary)
+        public void CreatePortion(GraphicsDevice device, Dictionary<int[], SystemEvent> dictionary)
         {
             // Square
             List<VertexPositionTexture> squareVerticesList = new List<VertexPositionTexture>();
@@ -45,20 +45,17 @@ namespace RPG_Paper_Maker
             };
 
             int squareOffset = 0;
-            foreach (KeyValuePair<SystemGraphic, Dictionary<int[], SystemEvent>> entry in dictionary)
+            foreach (KeyValuePair<int[], SystemEvent> entry in dictionary)
             {
-                foreach (KeyValuePair<int[], SystemEvent> entry2 in entry.Value)
+                foreach (VertexPositionTexture vertex in CreateSquareTex(entry.Key[0], (entry.Key[1] * WANOK.SQUARE_SIZE) + entry.Key[2], entry.Key[3]))
                 {
-                    foreach (VertexPositionTexture vertex in CreateSquareTex(entry2.Key[0], (entry2.Key[1] * WANOK.SQUARE_SIZE) + entry2.Key[2], entry2.Key[3]))
-                    {
-                        squareVerticesList.Add(vertex);
-                    }
-                    for (int n = 0; n < 6; n++)
-                    {
-                        squareIndexesList.Add(squareIndexes[n] + squareOffset);
-                    }
-                    squareOffset += 4;
+                    squareVerticesList.Add(vertex);
                 }
+                for (int n = 0; n < 6; n++)
+                {
+                    squareIndexesList.Add(squareIndexes[n] + squareOffset);
+                }
+                squareOffset += 4;
             }
 
             SquaresVertices = squareVerticesList.ToArray();

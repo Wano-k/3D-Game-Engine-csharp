@@ -41,13 +41,14 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxEventName = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutMainPage = new System.Windows.Forms.TableLayoutPanel();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.conditionsPanel1 = new RPG_Paper_Maker.ConditionsPanel();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -77,7 +78,6 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.conditionsPanel1 = new RPG_Paper_Maker.ConditionsPanel();
             this.graphicControl1 = new RPG_Paper_Maker.GraphicControl();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -87,7 +87,7 @@
             this.tableLayoutPanel5.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tableLayoutPanel6.SuspendLayout();
+            this.tableLayoutMainPage.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
@@ -180,7 +180,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
             this.tableLayoutPanel4.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.groupBox1, 2, 0);
-            this.tableLayoutPanel4.Controls.Add(this.textBox1, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.textBoxEventName, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
@@ -273,14 +273,14 @@
             this.button1.Text = "New";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // textBoxEventName
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(47, 25);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 18, 3, 3);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(225, 20);
-            this.textBox1.TabIndex = 1;
+            this.textBoxEventName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxEventName.Location = new System.Drawing.Point(47, 25);
+            this.textBoxEventName.Margin = new System.Windows.Forms.Padding(3, 18, 3, 3);
+            this.textBoxEventName.Name = "textBoxEventName";
+            this.textBoxEventName.Size = new System.Drawing.Size(225, 20);
+            this.textBoxEventName.TabIndex = 1;
             // 
             // tabControl1
             // 
@@ -291,10 +291,11 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(811, 457);
             this.tabControl1.TabIndex = 1;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.tableLayoutPanel6);
+            this.tabPage1.Controls.Add(this.tableLayoutMainPage);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -303,20 +304,21 @@
             this.tabPage1.Text = "1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel6
+            // tableLayoutMainPage
             // 
-            this.tableLayoutPanel6.ColumnCount = 2;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tableLayoutPanel6.Controls.Add(this.treeView1, 1, 0);
-            this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel7, 0, 0);
-            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 1;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(797, 425);
-            this.tableLayoutPanel6.TabIndex = 0;
+            this.tableLayoutMainPage.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.tableLayoutMainPage.ColumnCount = 2;
+            this.tableLayoutMainPage.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutMainPage.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutMainPage.Controls.Add(this.treeView1, 1, 0);
+            this.tableLayoutMainPage.Controls.Add(this.tableLayoutPanel7, 0, 0);
+            this.tableLayoutMainPage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutMainPage.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutMainPage.Name = "tableLayoutMainPage";
+            this.tableLayoutMainPage.RowCount = 1;
+            this.tableLayoutMainPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutMainPage.Size = new System.Drawing.Size(797, 425);
+            this.tableLayoutMainPage.TabIndex = 0;
             // 
             // treeView1
             // 
@@ -354,6 +356,14 @@
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Page conditions";
+            // 
+            // conditionsPanel1
+            // 
+            this.conditionsPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.conditionsPanel1.Location = new System.Drawing.Point(10, 23);
+            this.conditionsPanel1.Name = "conditionsPanel1";
+            this.conditionsPanel1.Size = new System.Drawing.Size(280, 45);
+            this.conditionsPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel8
             // 
@@ -723,14 +733,6 @@
             this.checkBox4.Text = "Through";
             this.checkBox4.UseVisualStyleBackColor = true;
             // 
-            // conditionsPanel1
-            // 
-            this.conditionsPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.conditionsPanel1.Location = new System.Drawing.Point(10, 23);
-            this.conditionsPanel1.Name = "conditionsPanel1";
-            this.conditionsPanel1.Size = new System.Drawing.Size(280, 45);
-            this.conditionsPanel1.TabIndex = 0;
-            // 
             // graphicControl1
             // 
             this.graphicControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -760,7 +762,7 @@
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tableLayoutPanel6.ResumeLayout(false);
+            this.tableLayoutMainPage.ResumeLayout(false);
             this.tableLayoutPanel7.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.tableLayoutPanel8.ResumeLayout(false);
@@ -794,7 +796,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxEventName;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Button button4;
@@ -803,7 +805,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutMainPage;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.GroupBox groupBox2;

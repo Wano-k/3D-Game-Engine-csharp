@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 namespace RPG_Paper_Maker
 {
 
-    class SelectionPictureBox : InterpolationPictureBox
+    public class SelectionPictureBox : InterpolationPictureBox
     {
         public SelectionRectangle SelectionRectangle;
+        public float ZoomPixel = 1.0f;
 
 
         // -------------------------------------------------------------------

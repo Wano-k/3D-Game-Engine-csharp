@@ -9,14 +9,36 @@ namespace RPG_Paper_Maker
     [Serializable]
     public class Events
     {
-        // 1: portion, 2: graphic, 3: coords
-        public Dictionary<int[], Dictionary<SystemGraphic, Dictionary<int[], SystemEvent>>> Sprites = new Dictionary<int[], Dictionary<SystemGraphic, Dictionary<int[], SystemEvent>>>(new IntArrayComparer());
+        // 1: portion, 3: coords
+        public Dictionary<int[], Dictionary<int[], SystemEvent>> CompleteList = new Dictionary<int[], Dictionary<int[], SystemEvent>>(new IntArrayComparer());
 
-        public void AddSprite(int[] portion, SystemGraphic graphic, int[] coords, SystemEvent ev)
+
+        // -------------------------------------------------------------------
+        // Add
+        // -------------------------------------------------------------------
+
+        public void Add(int[] portion, int[] coords, SystemEvent ev)
         {
-            if (!Sprites.ContainsKey(portion)) Sprites[portion] = new Dictionary<SystemGraphic, Dictionary<int[], SystemEvent>>();
-            if (!Sprites[portion].ContainsKey(graphic)) Sprites[portion][graphic] = new Dictionary<int[], SystemEvent>(new IntArrayComparer());
-            Sprites[portion][graphic][coords] = ev;
+            if (!CompleteList.ContainsKey(portion)) CompleteList[portion] = new Dictionary<int[], SystemEvent>(new IntArrayComparer());
+            CompleteList[portion][coords] = ev;
+        }
+
+        // -------------------------------------------------------------------
+        // Count
+        // -------------------------------------------------------------------
+
+        public int Count()
+        {
+            int count = 0;
+            foreach (Dictionary<int[], SystemEvent> entry in CompleteList.Values)
+            {
+                foreach (SystemEvent entry2 in entry.Values)
+                {
+                    count++;
+                }
+            }
+
+            return count;
         }
     }
 }

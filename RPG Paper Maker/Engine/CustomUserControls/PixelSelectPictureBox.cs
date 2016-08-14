@@ -10,8 +10,6 @@ namespace RPG_Paper_Maker
 {
     class PixelSelectPictureBox : SelectionPictureBox
     {
-        public float ZoomPixel = 1.0f;
-
 
         // -------------------------------------------------------------------
         // Constructor

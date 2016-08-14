@@ -224,7 +224,7 @@ namespace RPG_Paper_Maker
         public void GenEvent(int[] portion)
         {
             int[] globalPortion = MapEditor.Control.GetGlobalPortion(portion);
-            if (Events.Sprites.ContainsKey(globalPortion)) EventsPortions[portion].GenEvents(Device, Events.Sprites[globalPortion]);
+            if (Events.CompleteList.ContainsKey(globalPortion)) EventsPortions[portion].GenEvents(Device, Events.CompleteList[globalPortion]);
         }
 
         // -------------------------------------------------------------------
@@ -293,7 +293,11 @@ namespace RPG_Paper_Maker
 
         public void DisposeBuffers(int[] portion, bool nullable = true)
         {
-            Portions[portion].DisposeBuffers(Device, nullable);
+            if (Portions[portion] != null)
+            {
+                Portions[portion].DisposeBuffers(Device, nullable);
+            }
+            EventsPortions[portion].DisposeBuffers(Device, nullable);
         }
 
         // -------------------------------------------------------------------

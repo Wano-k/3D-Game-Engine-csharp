@@ -11,6 +11,11 @@ namespace RPG_Paper_Maker
     {
         public SystemEvent Model;
 
+        public string Name
+        {
+            get { return Model.Name; }
+            set { Model.Name = value; NotifyPropertyChanged("Name"); }
+        }
 
         // -------------------------------------------------------------------
         // Constructors

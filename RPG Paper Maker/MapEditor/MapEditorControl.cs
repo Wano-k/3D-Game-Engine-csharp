@@ -408,6 +408,7 @@ namespace RPG_Paper_Maker
         {
             DisposeBuffers(i, j, false);
             Map.Portions[new int[] { i, j }] = Map.Portions[new int[] { k, l }];
+            Map.EventsPortions[new int[] { i, j }] = Map.EventsPortions[new int[] { k, l }];
         }
 
         // -------------------------------------------------------------------
@@ -501,12 +502,12 @@ namespace RPG_Paper_Maker
             if (WANOK.MapMouseManager.IsButtonUp(MouseButtons.Left) || WANOK.MapMouseManager.IsButtonUp(MouseButtons.Right))
             {
                 PreviousMouseCoords = null;
-                WANOK.LoadCancel(Map.MapInfos.RealMapName);
+                if (SelectedDrawType != "ItemStart" && SelectedDrawType != "ItemEvent") WANOK.LoadCancel(Map.MapInfos.RealMapName);
             }
             if (WANOK.KeyboardManager.IsButtonUp(WANOK.Settings.KeyboardAssign.EditorDrawCursor) || WANOK.KeyboardManager.IsButtonUp(WANOK.Settings.KeyboardAssign.EditorRemoveCursor))
             {
                 PreviousCursorCoords = null;
-                WANOK.LoadCancel(Map.MapInfos.RealMapName);
+                if (SelectedDrawType != "ItemStart" && SelectedDrawType != "ItemEvent") WANOK.LoadCancel(Map.MapInfos.RealMapName);
             }
         }
 
@@ -652,11 +653,11 @@ namespace RPG_Paper_Maker
                 {
                     WANOK.KeyboardManager.InitializeKeyboard();
                     WANOK.MapMouseManager.InitializeMouse();
-                    DialogEvent dialog = new DialogEvent(new SystemGraphic(GraphicKind.Character, new object[] { 4, 0 }), new SystemEvent());
+                    DialogEvent dialog = new DialogEvent(new SystemEvent(WANOK.GetStringEvent(Map.Events.Count() + 1)));
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         int[] portion = GetPortion(coords[0], coords[3]);
-                        Map.Events.AddSprite(globalPortion, new SystemGraphic(GraphicKind.Character, new object[] { 4, 0 }), coords, new SystemEvent());
+                        Map.Events.Add(globalPortion, coords, new SystemEvent(""));
                         Map.GenEvent(portion);
                     }
                 }
@@ -1314,10 +1315,7 @@ namespace RPG_Paper_Maker
 
         public void DisposeBuffers(int i, int j, bool nullable = true)
         {
-            if (Map.Portions[new int[] { i, j }] != null)
-            {
-                Map.DisposeBuffers(new int[] { i, j }, nullable);
-            }
+            Map.DisposeBuffers(new int[] { i, j }, nullable);
         }
 
         // -------------------------------------------------------------------

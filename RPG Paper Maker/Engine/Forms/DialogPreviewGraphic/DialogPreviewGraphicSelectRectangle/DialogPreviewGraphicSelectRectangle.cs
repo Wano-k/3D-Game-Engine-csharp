@@ -79,10 +79,10 @@ namespace RPG_Paper_Maker
             numericButtonY.Maximum = 32000;
             numericButtonWidth.Maximum = 32000;
             numericButtonHeight.Maximum = 32000;
-            numericButtonX.Value = ((int[])graphic.Options[0])[0];
-            numericButtonY.Value = ((int[])graphic.Options[0])[1];
-            numericButtonWidth.Value = ((int[])graphic.Options[0])[2];
-            numericButtonHeight.Value = ((int[])graphic.Options[0])[3];
+            numericButtonX.Value = (int)graphic.Options[0];
+            numericButtonY.Value = (int)graphic.Options[1];
+            numericButtonWidth.Value = (int)graphic.Options[2];
+            numericButtonHeight.Value = (int)graphic.Options[3];
             panelRectangle.Controls.Add(numericButtonX, 1, 0);
             panelRectangle.Controls.Add(numericButtonY, 1, 1);
             panelRectangle.Controls.Add(numericButtonWidth, 1, 2);
@@ -97,10 +97,10 @@ namespace RPG_Paper_Maker
             panelRectangle.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
 
             // Update image rectangle
-            ((PixelSelectPictureBox)PictureBox).SelectionRectangle.X = (int)numericButtonX.Value;
-            ((PixelSelectPictureBox)PictureBox).SelectionRectangle.Y = (int)numericButtonY.Value;
-            ((PixelSelectPictureBox)PictureBox).SelectionRectangle.Width = (int)numericButtonWidth.Value;
-            ((PixelSelectPictureBox)PictureBox).SelectionRectangle.Height = (int)numericButtonHeight.Value;
+            PictureBox.SelectionRectangle.X = (int)numericButtonX.Value;
+            PictureBox.SelectionRectangle.Y = (int)numericButtonY.Value;
+            PictureBox.SelectionRectangle.Width = (int)numericButtonWidth.Value;
+            PictureBox.SelectionRectangle.Height = (int)numericButtonHeight.Value;
             PictureBox.Refresh();
 
             // Events
@@ -120,7 +120,7 @@ namespace RPG_Paper_Maker
 
         public void UpdateOptions()
         {
-            Control.Model.Options = new object[] { new int[] { (int)numericButtonX.Value, (int)numericButtonY.Value, (int)numericButtonWidth.Value, (int)numericButtonHeight.Value } };
+            Control.Model.Options = new object[] { (int)numericButtonX.Value, (int)numericButtonY.Value, (int)numericButtonWidth.Value, (int)numericButtonHeight.Value };
         }
 
         // -------------------------------------------------------------------
@@ -141,7 +141,7 @@ namespace RPG_Paper_Maker
                 numericButtonWidth.Value = width;
                 numericButtonHeight.Value = height;
 
-                ((PixelSelectPictureBox)PictureBox).SelectionRectangle.SetRectangle(x, y, width, height);
+                PictureBox.SelectionRectangle.SetRectangle(x, y, width, height);
                 PictureBox.Refresh();
                 UpdateOptions();
             }
@@ -154,10 +154,10 @@ namespace RPG_Paper_Maker
         public void UpdateNumerics()
         {
             PictureBox.Refresh();
-            numericButtonX.Value = ((PixelSelectPictureBox)PictureBox).SelectionRectangle.RealX;
-            numericButtonY.Value = ((PixelSelectPictureBox)PictureBox).SelectionRectangle.RealY;
-            numericButtonWidth.Value = ((PixelSelectPictureBox)PictureBox).SelectionRectangle.Width;
-            numericButtonHeight.Value = ((PixelSelectPictureBox)PictureBox).SelectionRectangle.Height;
+            numericButtonX.Value = PictureBox.SelectionRectangle.RealX;
+            numericButtonY.Value = PictureBox.SelectionRectangle.RealY;
+            numericButtonWidth.Value = PictureBox.SelectionRectangle.Width;
+            numericButtonHeight.Value = PictureBox.SelectionRectangle.Height;
         }
 
         // -------------------------------------------------------------------
@@ -169,14 +169,14 @@ namespace RPG_Paper_Maker
             if (e.Button == MouseButtons.Left)
             {
                 IsUsingCursorSelector = true;
-                ((PixelSelectPictureBox)PictureBox).MakeFirstRectangleSelection(e.X, e.Y, ((PixelSelectPictureBox)PictureBox).ZoomPixel);
+                PictureBox.MakeFirstRectangleSelection(e.X, e.Y, PictureBox.ZoomPixel);
                 UpdateNumerics();
             }
         }
 
         private void PictureBox_MouseUp(object sender, MouseEventArgs e)
         {
-            ((PixelSelectPictureBox)PictureBox).SetCursorRealPosition();
+            PictureBox.SetCursorRealPosition();
             IsUsingCursorSelector = false;
             PictureBox.Refresh();
             UpdateOptions();
@@ -186,7 +186,7 @@ namespace RPG_Paper_Maker
         {
             if (IsUsingCursorSelector)
             {
-                ((PixelSelectPictureBox)PictureBox).MakeRectangleSelection(e.X, e.Y, ((PixelSelectPictureBox)PictureBox).ZoomPixel);
+                PictureBox.MakeRectangleSelection(e.X, e.Y, PictureBox.ZoomPixel);
                 UpdateNumerics();
             }
         }

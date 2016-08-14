@@ -42,7 +42,13 @@ namespace RPG_Paper_Maker
 
         public SystemGraphic CreateCopy()
         {
-            return new SystemGraphic(GraphicName, IsRTP, GraphicKind, Options);
+            object[] options = new object[Options.Length];
+            for (int i = 0; i < Options.Length; i++)
+            {
+                options[i] = Options[i];
+            }
+
+            return new SystemGraphic(GraphicName, IsRTP, GraphicKind, options);
         }
 
         // -------------------------------------------------------------------

@@ -13,7 +13,6 @@ namespace RPG_Paper_Maker
     
     class TilesetSelectorPicture : SelectionPictureBox
     {
-        public float ZoomPixel = 1.0f;
 
         // -------------------------------------------------------------------
         // Constructor

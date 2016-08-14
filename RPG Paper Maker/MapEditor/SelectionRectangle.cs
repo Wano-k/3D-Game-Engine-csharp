@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RPG_Paper_Maker
 {
-    class SelectionRectangle
+    public class SelectionRectangle
     {
         int BORDER_SIZE;
         public Image TexCursor;

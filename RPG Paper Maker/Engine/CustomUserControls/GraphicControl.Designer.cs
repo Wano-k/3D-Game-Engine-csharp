@@ -66,24 +66,17 @@
             this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "None",
-            "Face Sprite",
-            "Fix Sprite",
-            "Double Sprite",
-            "QuadraSprite",
-            "Sprite on Floor"});
             this.comboBox1.Location = new System.Drawing.Point(3, 314);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(227, 21);
             this.comboBox1.TabIndex = 1;
             // 
-            // ApparenceControl
+            // GraphicControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "ApparenceControl";
+            this.Name = "GraphicControl";
             this.Size = new System.Drawing.Size(233, 338);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

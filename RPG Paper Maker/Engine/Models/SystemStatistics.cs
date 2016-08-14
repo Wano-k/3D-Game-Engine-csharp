@@ -82,12 +82,7 @@ namespace RPG_Paper_Maker
 
         public override SuperListItem CreateCopy()
         {
-            object[] newOptions = new object[Bar.Options.Length];
-            newOptions[0] = new int[] { ((int[])Bar.Options[0])[0], ((int[])Bar.Options[0])[1], ((int[])Bar.Options[0])[2], ((int[])Bar.Options[0])[3] };
-            SystemGraphic newGraphic = Bar.CreateCopy();
-            newGraphic.Options = newOptions;
-
-            return new SystemStatistics(Id, new Dictionary<string, string>(Names), newGraphic, AllGameOverOptions.CreateCopy());
+            return new SystemStatistics(Id, new Dictionary<string, string>(Names), Bar.CreateCopy(), AllGameOverOptions.CreateCopy());
         }
 
         // -------------------------------------------------------------------
@@ -98,15 +93,9 @@ namespace RPG_Paper_Maker
         {
             List<SystemStatistics> list = new List<SystemStatistics>();
 
-            list.Add(new SystemStatistics(1, WANOK.GetDefaultNames("HP"), 
-                new SystemGraphic("hpBar.png", true, GraphicKind.Bar, new object[] { new int[] { 68, 4, 56, 8 } }), 
-                new GameOverOptions(false, true, null, Comparaison.Equal, 0, Measure.Unit)));
-            list.Add(new SystemStatistics(2, WANOK.GetDefaultNames("MP"),
-                new SystemGraphic("mpBar.png", true, GraphicKind.Bar, new object[] { new int[] { 68, 4, 56, 8 } }),
-                new GameOverOptions(true)));
-            list.Add(new SystemStatistics(3, WANOK.GetDefaultNames("SP"),
-                new SystemGraphic("spBar.png", true, GraphicKind.Bar, new object[] { new int[] { 68, 4, 56, 8 } }),
-                new GameOverOptions(true)));
+            list.Add(new SystemStatistics(1, WANOK.GetDefaultNames("HP"), new SystemGraphic("hpBar.png", true, GraphicKind.Bar, new object[] { 68, 4, 56, 8 }), new GameOverOptions(false, true, null, Comparaison.Equal, 0, Measure.Unit)));
+            list.Add(new SystemStatistics(2, WANOK.GetDefaultNames("MP"),new SystemGraphic("mpBar.png", true, GraphicKind.Bar, new object[] { 68, 4, 56, 8 }), new GameOverOptions(true)));
+            list.Add(new SystemStatistics(3, WANOK.GetDefaultNames("SP"),new SystemGraphic("spBar.png", true, GraphicKind.Bar, new object[] { 68, 4, 56, 8 }),new GameOverOptions(true)));
 
             return list;
         }

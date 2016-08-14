@@ -414,6 +414,11 @@ namespace RPG_Paper_Maker
             return args[0] + ", " + args[1] + ", " + args[2] + ", " + args[3];
         }
 
+        public static string GetStringEvent(int num)
+        {
+            return string.Format("EV{0:D4}", num);
+        }
+
         // -------------------------------------------------------------------
         // Mod
         // -------------------------------------------------------------------
@@ -635,6 +640,37 @@ namespace RPG_Paper_Maker
             for (int i = 0; i < list[index].Length; i++)
             {
                 list[index][i].Enabled = true;
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // DrawTypeToString
+        // -------------------------------------------------------------------
+
+        public static string DrawTypeToString(DrawType type)
+        {
+            switch (type)
+            {
+                case DrawType.None:
+                    return "None";
+                case DrawType.Floors:
+                    return "Floor";
+                case DrawType.Autotiles:
+                    return "Autotile";
+                case DrawType.FaceSprite:
+                    return "Face Sprite";
+                case DrawType.FixSprite:
+                    return "Fix Sprite";
+                case DrawType.DoubleSprite:
+                    return "Double Sprite";
+                case DrawType.QuadraSprite:
+                    return "Quadra Sprite";
+                case DrawType.OnFloorSprite:
+                    return "On floor Sprite";
+                case DrawType.Montains:
+                    return "Mountain";
+                default:
+                    return "";
             }
         }
     }
