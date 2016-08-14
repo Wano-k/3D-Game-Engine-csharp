@@ -11,16 +11,16 @@ using System.Drawing.Drawing2D;
 
 namespace RPG_Paper_Maker
 {
-    public partial class ApparenceControl : UserControl
+    public partial class GraphicControl : UserControl
     {
-        public ApparencePanel panel = new ApparencePanel();
+        public GraphicPanel panel = new GraphicPanel();
         public SystemGraphic Graphic;
 
-        public class ApparencePanel : Panel
+        public class GraphicPanel : Panel
         {
             public Pen BorderPen = new Pen(Color.LightGray);
 
-            public ApparencePanel()
+            public GraphicPanel()
             {
                 BorderPen.DashStyle = DashStyle.Dash;
                 BorderPen.Width = 3;
@@ -38,7 +38,7 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
-        public ApparenceControl()
+        public GraphicControl()
         {
             InitializeComponent();
 

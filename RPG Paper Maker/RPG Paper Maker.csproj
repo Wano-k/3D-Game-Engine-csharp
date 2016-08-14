@@ -83,11 +83,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\CustomUserControls\ApparenceControl.cs">
+    <Compile Include="Engine\CustomUserControls\GraphicControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Engine\CustomUserControls\ApparenceControl.Designer.cs">
-      <DependentUpon>ApparenceControl.cs</DependentUpon>
+    <Compile Include="Engine\CustomUserControls\GraphicControl.Designer.cs">
+      <DependentUpon>GraphicControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\CustomUserControls\CollisionPicture.cs">
       <SubType>Component</SubType>
@@ -260,6 +260,7 @@
       <DependentUpon>DialogTileset.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Models\BattleSystemDatas.cs" />
+    <Compile Include="Engine\Models\Events.cs" />
     <Compile Include="Engine\Models\GameDatas.cs" />
     <Compile Include="Engine\Models\HeroesDatas.cs" />
     <Compile Include="Engine\Models\SystemElement.cs" />
@@ -340,6 +341,7 @@
       <DependentUpon>TextBoxLang.cs</DependentUpon>
     </Compile>
     <Compile Include="MapEditor\FrameCounter.cs" />
+    <Compile Include="MapEditor\EventsPortion.cs" />
     <Compile Include="MapEditor\MapEditorControls\GraphicsDeviceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -380,8 +382,8 @@
     </Compile>
     <Compile Include="MapEditor\SelectionRectangle.cs" />
     <Compile Include="Engine\TreeTag.cs" />
-    <EmbeddedResource Include="Engine\CustomUserControls\ApparenceControl.resx">
-      <DependentUpon>ApparenceControl.cs</DependentUpon>
+    <EmbeddedResource Include="Engine\CustomUserControls\GraphicControl.resx">
+      <DependentUpon>GraphicControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\CustomUserControls\CollisionSettings.resx">
       <DependentUpon>CollisionSettings.cs</DependentUpon>

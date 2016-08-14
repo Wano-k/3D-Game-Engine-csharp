@@ -90,7 +90,6 @@ namespace RPG_Paper_Maker
         {
             DisposeBuffers(device);
             CreatePortion(device, texture);
-
         }
 
         // -------------------------------------------------------------------

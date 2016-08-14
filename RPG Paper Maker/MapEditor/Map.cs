@@ -17,7 +17,9 @@ namespace RPG_Paper_Maker
         VertexPositionColor[] GridVerticesArray;
         VertexBuffer VBGrid;
         public MapInfos MapInfos { get; set; }
+        public Events Events { get; set; }
         public Dictionary<int[], GameMapPortion> Portions;
+        public Dictionary<int[], EventsPortion> EventsPortions;
         public bool DisplayGrid = true;
         public int[] GridHeight = new int[] { 0, 0 };
         private Square StartSquare = null;
@@ -46,6 +48,7 @@ namespace RPG_Paper_Maker
             }
             
             MapInfos = WANOK.LoadBinaryDatas<MapInfos>(Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp", "infos.map"));
+            Events = WANOK.LoadBinaryDatas<Events>(Path.Combine(WANOK.MapsDirectoryPath, mapName, "temp", "events.map"));
             Saved = !WANOK.ListMapToSave.Contains(mapName);
             if (newTemp) WANOK.CreateCancelMap(MapInfos.RealMapName);
 
@@ -90,6 +93,7 @@ namespace RPG_Paper_Maker
 
             // Map
             Portions = new Dictionary<int[], GameMapPortion>(new IntArrayComparer());
+            EventsPortions = new Dictionary<int[], EventsPortion>(new IntArrayComparer());
             int count = 0;
             double coef = (WANOK.PORTION_RADIUS + 1) * (WANOK.PORTION_RADIUS + 1) * 4;
             for (int i = -WANOK.PORTION_RADIUS - 1; i <= WANOK.PORTION_RADIUS + 1; i++)
@@ -125,10 +129,12 @@ namespace RPG_Paper_Maker
         {
             int[] portion = new int[] { i, j };
             Portions[portion] = WANOK.LoadPortionMap(MapInfos.RealMapName, real_i, real_j);
+            EventsPortions[portion] = new EventsPortion();
             if (Portions[portion] != null)
             {
-                GenTextures(Portions[portion]);
+                GenTextures(portion);
             }
+            GenEvent(portion);
         }
 
         // -------------------------------------------------------------------
@@ -197,6 +203,7 @@ namespace RPG_Paper_Maker
             Portions[portion].UpdateDictionaries(Device);
             if (Portions[portion].IsEmpty()) DisposeBuffers(portion);
             else GenTextures(portion);
+            GenEvent(portion);
         }
 
         // -------------------------------------------------------------------
@@ -207,16 +214,17 @@ namespace RPG_Paper_Maker
         {
             if (Portions[portion] != null)
             {
-                GenTextures(Portions[portion]);
+                Portions[portion].GenFloor(Device, MapEditor.TexTileset);
+                Portions[portion].GenAutotiles(Device);
+                Portions[portion].GenSprites(Device);
+                Portions[portion].GenMountains(Device);
             }
         }
 
-        public void GenTextures(GameMapPortion portion)
+        public void GenEvent(int[] portion)
         {
-            portion.GenFloor(Device, MapEditor.TexTileset);
-            portion.GenAutotiles(Device);
-            portion.GenSprites(Device);
-            portion.GenMountains(Device);
+            int[] globalPortion = MapEditor.Control.GetGlobalPortion(portion);
+            if (Events.Sprites.ContainsKey(globalPortion)) EventsPortions[portion].GenEvents(Device, Events.Sprites[globalPortion]);
         }
 
         // -------------------------------------------------------------------
@@ -239,16 +247,23 @@ namespace RPG_Paper_Maker
 
         public void Draw(GameTime gameTime, AlphaTestEffect effect, Camera camera)
         {
-            // Drawing Items
+            // Drawing map portion & events
             for(int i = -WANOK.PORTION_RADIUS; i <= WANOK.PORTION_RADIUS; i++)
             {
                 for (int j = -WANOK.PORTION_RADIUS; j <= WANOK.PORTION_RADIUS; j++)
                 {
-                    GameMapPortion gameMap = Portions[new int[] { i, j }];
+                    int[] portion = new int[] { i, j };
+
+                    // map portion
+                    GameMapPortion gameMap = Portions[portion];
                     if (gameMap != null) gameMap.Draw(Device, effect, MapEditor.TexTileset, camera);
+
+                    // events
+                    EventsPortions[portion].DrawSquares(Device, effect);
                 }
             }
-            
+
+
             // Drawing Start position
             if (StartSquare != null)
             {
@@ -294,6 +309,11 @@ namespace RPG_Paper_Maker
             foreach (KeyValuePair<int[], GameMapPortion> entry in Portions)
             {
                 if (entry.Value != null) DisposeBuffers(entry.Key);
+            }
+
+            foreach (KeyValuePair<int[], EventsPortion> entry in EventsPortions)
+            {
+                entry.Value.DisposeBuffers(Device);
             }
 
             if (StartSquare != null) StartSquare.DisposeBuffers(Device);

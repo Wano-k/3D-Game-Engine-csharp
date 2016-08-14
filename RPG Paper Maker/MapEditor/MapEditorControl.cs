@@ -631,8 +631,9 @@ namespace RPG_Paper_Maker
 
             if (IsInArea(coords))
             {
-                int[] portion = GetGlobalPortion(coords[0], coords[3]);
+                int[] globalPortion = GetGlobalPortion(coords[0], coords[3]);
                 bool test = false;
+                /*
                 if (Map.MapInfos.EventSprites.ContainsKey(portion))
                 {
                     foreach (Dictionary<int[], SystemEvent> entry in Map.MapInfos.EventSprites[portion].Values)
@@ -646,15 +647,17 @@ namespace RPG_Paper_Maker
                             }
                         }
                     }
-                }
+                }*/
                 if (!test)
                 {
                     WANOK.KeyboardManager.InitializeKeyboard();
                     WANOK.MapMouseManager.InitializeMouse();
-                    DialogEvent dialog = new DialogEvent();
+                    DialogEvent dialog = new DialogEvent(new SystemGraphic(GraphicKind.Character, new object[] { 4, 0 }), new SystemEvent());
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
-
+                        int[] portion = GetPortion(coords[0], coords[3]);
+                        Map.Events.AddSprite(globalPortion, new SystemGraphic(GraphicKind.Character, new object[] { 4, 0 }), coords, new SystemEvent());
+                        Map.GenEvent(portion);
                     }
                 }
             }

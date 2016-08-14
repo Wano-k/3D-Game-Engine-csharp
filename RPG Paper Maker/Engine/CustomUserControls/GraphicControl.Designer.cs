@@ -1,6 +1,6 @@
 ﻿namespace RPG_Paper_Maker
 {
-    partial class ApparenceControl
+    partial class GraphicControl
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.

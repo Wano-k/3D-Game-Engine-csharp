@@ -24,8 +24,8 @@ namespace RPG_Paper_Maker
         public int PreviousWidth, PreviousHeight;
         private FrameCounter FrameCounter = new FrameCounter();
 
-        // Content
-        public static Texture2D TexCursor, TexStartCursor, TexTileset, TexNone, TexGrid;
+        // Textures
+        public static Texture2D TexCursor, TexStartCursor, TexEventCursor, TexTileset, TexNone, TexGrid;
         public static Dictionary<int,Texture2D> TexAutotiles = new Dictionary<int, Texture2D>();
         public static Dictionary<int, Texture2D> TexReliefs = new Dictionary<int, Texture2D>();
 
@@ -48,6 +48,8 @@ namespace RPG_Paper_Maker
             TexCursor = Texture2D.FromStream(GraphicsDevice, fs);
             fs = new FileStream("Config/bmp/start_cursor.png", FileMode.Open);
             TexStartCursor = Texture2D.FromStream(GraphicsDevice, fs);
+            fs = new FileStream("Config/bmp/tileset_cursor.png", FileMode.Open);
+            TexEventCursor = Texture2D.FromStream(GraphicsDevice, fs);
             TexNone = new Texture2D(GraphicsDevice, 1, 1);
             TexGrid = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
             TexGrid.SetData(new Color[] { new Color(Color.White, 0.5f) });

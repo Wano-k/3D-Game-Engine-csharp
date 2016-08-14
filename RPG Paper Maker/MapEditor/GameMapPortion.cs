@@ -452,9 +452,8 @@ namespace RPG_Paper_Maker
                 mountains.Draw(device, effect);
             }
 
-            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
-
             // Drawing Floors
+            effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
             if (VBFloor != null)
             {
                 effect.Texture = texture;

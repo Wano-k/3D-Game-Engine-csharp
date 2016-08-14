@@ -15,14 +15,14 @@ namespace RPG_Paper_Maker
         protected DialogEventControl Control;
         protected BindingSource ViewModelBindingSource = new BindingSource();
 
-        public DialogEvent(SystemEvent ev = null)
+        public DialogEvent(SystemGraphic graphic, SystemEvent ev)
         {
             InitializeComponent();
 
-            Control = new DialogEventControl(ev == null ? new SystemEvent() : ev);
+            Control = new DialogEventControl(ev.CreateCopy());
             ViewModelBindingSource.DataSource = Control;
 
-            apparenceControl1.InitializeListParameters(Control.Model.GraphicApparence.CreateCopy());
+            graphicControl1.InitializeListParameters(graphic.CreateCopy());
 
             numericUpDownSpeed.DecimalPlaces = 1;
             numericUpDownSpeed.Minimum = (decimal)0.1;
@@ -35,6 +35,12 @@ namespace RPG_Paper_Maker
             numericUpDownFrequency.Maximum = (decimal)999.0;
             numericUpDownFrequency.Increment = (decimal)0.1;
             numericUpDownFrequency.Value = (decimal)1.0;
+        }
+
+        private void ok_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 }
