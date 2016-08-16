@@ -86,17 +86,17 @@ namespace RPG_Paper_Maker
         // GenSprites
         // -------------------------------------------------------------------
 
-        public void GenSprites(GraphicsDevice device, int[] texture)
+        public void GenSprites(GraphicsDevice device, Texture2D texture2D, int[] texture, bool isTileset = true)
         {
             DisposeBuffers(device);
-            CreatePortion(device, texture);
+            CreatePortion(device, texture2D, texture, isTileset);
         }
 
         // -------------------------------------------------------------------
         // CreatePortion
         // -------------------------------------------------------------------
 
-        public void CreatePortion(GraphicsDevice device, int[] texture)
+        public void CreatePortion(GraphicsDevice device, Texture2D texture2D, int[] texture, bool isTileset)
         {
             // Building vertex buffer indexed
             List<VertexPositionTexture> verticesList = new List<VertexPositionTexture>();
@@ -105,9 +105,9 @@ namespace RPG_Paper_Maker
             {
                 0, 1, 2, 0, 2, 3
             };
-            if (texture[2] * WANOK.SQUARE_SIZE <= MapEditor.TexTileset.Width && texture[3] * WANOK.SQUARE_SIZE <= MapEditor.TexTileset.Height)
+            if (!isTileset || (texture[2] * WANOK.SQUARE_SIZE <= MapEditor.TexTileset.Width && texture[3] * WANOK.SQUARE_SIZE <= MapEditor.TexTileset.Height))
             {
-                foreach (VertexPositionTexture vertex in CreateTex(MapEditor.TexTileset, texture))
+                foreach (VertexPositionTexture vertex in CreateTex(texture2D, texture, isTileset))
                 {
                     verticesList.Add(vertex);
                 }
@@ -129,14 +129,22 @@ namespace RPG_Paper_Maker
         // CreateTex
         // -------------------------------------------------------------------
 
-        protected VertexPositionTexture[] CreateTex(Texture2D texture, int[] coords)
+        protected VertexPositionTexture[] CreateTex(Texture2D texture, int[] coords, bool isTileset)
         {
-            // Texture coords
-            float left = ((float)coords[0] * WANOK.SQUARE_SIZE) / texture.Width;
-            float top = ((float)coords[1] * WANOK.SQUARE_SIZE) / texture.Height;
-            float bot = ((float)(coords[1] + coords[3]) * WANOK.SQUARE_SIZE) / texture.Height;
-            float right = ((float)(coords[0] + coords[2]) * WANOK.SQUARE_SIZE) / texture.Width;
+            float pixelX = coords[0], pixelY = coords[1], pixelWidth = coords[2], pixelHeight = coords[3];
+            if (isTileset)
+            {
+                pixelX *= WANOK.SQUARE_SIZE;
+                pixelY *= WANOK.SQUARE_SIZE;
+                pixelWidth *= WANOK.SQUARE_SIZE;
+                pixelHeight *= WANOK.SQUARE_SIZE;
+            }
 
+            // Texture coords
+            float left = pixelX / texture.Width;
+            float top = pixelY / texture.Height;
+            float bot = (pixelY + pixelHeight) / texture.Height;
+            float right = (pixelX + pixelWidth) / texture.Width;
 
             // Adjust in order to limit risk of textures flood
             float width = left + right;
@@ -149,9 +157,9 @@ namespace RPG_Paper_Maker
             // Vertex Position and Texture
             return new VertexPositionTexture[]
             {
-                new VertexPositionTexture(new Vector3(0, coords[3], 0), new Vector2(left, top)),
-                new VertexPositionTexture(new Vector3(coords[2], coords[3], 0), new Vector2(right, top)),
-                new VertexPositionTexture(new Vector3(coords[2], 0, 0), new Vector2(right, bot)),
+                new VertexPositionTexture(new Vector3(0, pixelHeight, 0), new Vector2(left, top)),
+                new VertexPositionTexture(new Vector3(pixelWidth, pixelHeight, 0), new Vector2(right, top)),
+                new VertexPositionTexture(new Vector3(pixelWidth, 0, 0), new Vector2(right, bot)),
                 new VertexPositionTexture(new Vector3(0, 0, 0), new Vector2(left, bot))
             };
         }

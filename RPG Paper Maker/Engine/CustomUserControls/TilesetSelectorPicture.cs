@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace RPG_Paper_Maker
 {
     
-    class TilesetSelectorPicture : SelectionPictureBox
+    public class TilesetSelectorPicture : SelectionPictureBox
     {
 
         // -------------------------------------------------------------------

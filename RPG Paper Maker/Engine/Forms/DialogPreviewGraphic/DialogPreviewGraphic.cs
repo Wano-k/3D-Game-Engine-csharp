@@ -19,15 +19,19 @@ namespace RPG_Paper_Maker
         public float Zoom = 1.0f;
         protected DialogPreviewGraphicControl Control;
         protected SelectionPictureBox PictureBox = new SelectionPictureBox();
-
+        protected TilesetSelectorPicture TilesetPictureBox = new TilesetSelectorPicture();
+        protected SystemGraphic GraphicTileset;
+        bool IsUsingCursorSelector = false;
 
         // -------------------------------------------------------------------
         // Constructor
         // -------------------------------------------------------------------
 
-        public DialogPreviewGraphic(SystemGraphic graphic, OptionsKind optionsKind)
+        public DialogPreviewGraphic(SystemGraphic graphic, OptionsKind optionsKind, SystemGraphic graphicTileset = null)
         {
             InitializeComponent();
+
+            GraphicTileset = graphicTileset;
 
             // Control
             Control = new DialogPreviewGraphicControl(graphic.CreateCopy());
@@ -60,8 +64,14 @@ namespace RPG_Paper_Maker
             // Picture
             PictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            PictureBox.BackColor = Color.FromArgb(210, 210, 210);
-            panelPicture.Controls.Add(PictureBox);
+            PictureBox.BackColor = WANOK.COLOR_BACKGROUND_PREVIEW_IMAGE;
+            //panelPicture.Controls.Add(PictureBox);
+            TilesetPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            TilesetPictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            TilesetPictureBox.LoadTexture(graphicTileset == null ? new SystemGraphic(GraphicKind.Tileset) : graphicTileset, WANOK.RELATION_SIZE);
+            TilesetPictureBox.BackColor = WANOK.COLOR_BACKGROUND_PREVIEW_IMAGE;
+            if (graphic.IsTileset()) TilesetPictureBox.SetCurrentTexture((int)graphic.Options[0] * WANOK.BASIC_SQUARE_SIZE, (int)graphic.Options[1] * WANOK.BASIC_SQUARE_SIZE, (int)graphic.Options[2], (int)graphic.Options[3]);
+            else TilesetPictureBox.SetCurrentTexture(0, 0, 1, 1);
 
             // Zoom
             trackBarZoom.Minimum = -ZoomTime;
@@ -82,6 +92,9 @@ namespace RPG_Paper_Maker
         {
             PictureBox.MouseEnter += PictureBox_MouseEnter;
             PictureBox.PreviewKeyDown += PictureBox_PreviewKeyDown;
+            TilesetPictureBox.MouseDown += new MouseEventHandler(TilesetSelectorPicture_MouseDown);
+            TilesetPictureBox.MouseMove += new MouseEventHandler(TilesetSelectorPicture_MouseMove);
+            TilesetPictureBox.MouseUp += new MouseEventHandler(TilesetSelectorPicture_MouseUp);
         }
 
         // -------------------------------------------------------------------
@@ -138,15 +151,37 @@ namespace RPG_Paper_Maker
             }
 
             // Set the image selected
-            if (listView1.SelectedItems.Count == 1 && listView1.SelectedItems[0].Text != WANOK.NONE_IMAGE_STRING)
+            if (listView1.SelectedItems.Count == 1 && listView1.SelectedItems[0].Text != WANOK.NONE_IMAGE_STRING && listView1.SelectedItems[0].Text != WANOK.TILESET_IMAGE_STRING)
             {
+                panelPicture.Controls.Clear();
+                panelPicture.Controls.Add(PictureBox);
                 PictureBox.LoadTexture(new SystemGraphic(listView1.SelectedItems[0].Text, listView1.SelectedItems[0].ImageIndex == 1, Control.Model.GraphicKind), 1.0f);
                 Control.SetImageDatas(listView1.SelectedItems[0].Text, listView1.SelectedItems[0].ImageIndex == 1);
+                groupBox1.Show();
+                tableLayoutPanel3.ColumnStyles[0] = new ColumnStyle(SizeType.Percent, 20);
+                tableLayoutPanel3.ColumnStyles[1] = new ColumnStyle(SizeType.Percent, 60);
+                tableLayoutPanel3.ColumnStyles[2] = new ColumnStyle(SizeType.Percent, 20);
             }
             else
             {
-                PictureBox.LoadTexture(new SystemGraphic(Control.Model.GraphicKind), 1.0f);
-                Control.SetImageDatas(WANOK.NONE_IMAGE_STRING, true);
+                if (listView1.SelectedItems[0].Text == WANOK.NONE_IMAGE_STRING)
+                {
+                    panelPicture.Controls.Clear();
+                    panelPicture.Controls.Add(PictureBox);
+                    PictureBox.LoadTexture(new SystemGraphic(Control.Model.GraphicKind), 1.0f);
+                    Control.SetImageDatas(WANOK.NONE_IMAGE_STRING, true);
+                }
+                else if (listView1.SelectedItems[0].Text == WANOK.TILESET_IMAGE_STRING)
+                {
+                    panelPicture.Controls.Clear();
+                    panelPicture.Controls.Add(TilesetPictureBox);
+                    Control.SetImageDatas(WANOK.TILESET_IMAGE_STRING, true);
+                    TilesetPictureBox.SetCurrentTexture((int)Control.Model.Options[(int)SystemGraphic.OptionsEnum.TilesetX] * WANOK.BASIC_SQUARE_SIZE, (int)Control.Model.Options[(int)SystemGraphic.OptionsEnum.TilesetY] * WANOK.BASIC_SQUARE_SIZE, (int)Control.Model.Options[(int)SystemGraphic.OptionsEnum.TilesetWidth], (int)Control.Model.Options[(int)SystemGraphic.OptionsEnum.TilesetHeight]);
+                }
+                groupBox1.Hide();
+                tableLayoutPanel3.ColumnStyles[0] = new ColumnStyle(SizeType.Percent, 20);
+                tableLayoutPanel3.ColumnStyles[1] = new ColumnStyle(SizeType.Percent, 80);
+                tableLayoutPanel3.ColumnStyles[2] = new ColumnStyle(SizeType.AutoSize);
             }
 
             // Set zoom value to normal value
@@ -187,6 +222,37 @@ namespace RPG_Paper_Maker
         {
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void TilesetSelectorPicture_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                IsUsingCursorSelector = true;
+                TilesetPictureBox.MakeFirstRectangleSelection(e.X, e.Y);
+                TilesetPictureBox.Refresh();
+            }
+        }
+
+        private void TilesetSelectorPicture_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (IsUsingCursorSelector)
+            {
+                TilesetPictureBox.MakeRectangleSelection(e.X, e.Y);
+                TilesetPictureBox.Refresh();
+            }
+        }
+
+        private void TilesetSelectorPicture_MouseUp(object sender, MouseEventArgs e)
+        {
+            TilesetPictureBox.SetCursorRealPosition();
+            IsUsingCursorSelector = false;
+            TilesetPictureBox.Refresh();
+            int[] texture = TilesetPictureBox.GetCurrentTexture();
+            Control.Model.Options[(int)SystemGraphic.OptionsEnum.TilesetX] = texture[(int)SystemGraphic.OptionsEnum.TilesetX];
+            Control.Model.Options[(int)SystemGraphic.OptionsEnum.TilesetY] = texture[(int)SystemGraphic.OptionsEnum.TilesetY];
+            Control.Model.Options[(int)SystemGraphic.OptionsEnum.TilesetWidth] = texture[(int)SystemGraphic.OptionsEnum.TilesetWidth];
+            Control.Model.Options[(int)SystemGraphic.OptionsEnum.TilesetHeight] = texture[(int)SystemGraphic.OptionsEnum.TilesetHeight];
         }
     }
 }

@@ -14,6 +14,7 @@ namespace RPG_Paper_Maker
     public partial class GraphicControl : UserControl
     {
         public GraphicPanel panel = new GraphicPanel();
+        public SystemGraphic GraphicTileset;
         public delegate void EventHandlerGraphic(SystemGraphic graphic);
         public event EventHandlerGraphic ClosingDialogEvent;
 
@@ -30,7 +31,7 @@ namespace RPG_Paper_Maker
             public Image Image = null;
             public Pen BorderPen = new Pen(Color.LightGray);
             public int Frame = 0;
-            public bool Animated = true;
+            public bool Animated = false;
 
 
             // -------------------------------------------------------------------
@@ -56,15 +57,31 @@ namespace RPG_Paper_Maker
 
                 if (Image != null)
                 {
-                    int frames = (int)Graphic.Options[0];
-                    int rows = (int)Graphic.Options[1] == 0 ? 4 : 8;
-                    Size size = new Size((int)((Image.Size.Width / frames) * WANOK.RELATION_SIZE), (int)((Image.Size.Height / rows) * WANOK.RELATION_SIZE));
-                    int offset = Frame % 2 == 0 ? 0 : 1;
-                    Point point = new Point((Size.Width - size.Width) / 2, ((Size.Height - size.Height) / 2) + offset);
-                    int index = (int)Graphic.Options[2];
-                    Size frameSize = new Size(Image.Size.Width / frames, Image.Size.Height / rows);
-                    Point framePoint = Animated ? new Point(Frame * frameSize.Width, (index / frames) * frameSize.Height) : new Point((index % frames) * frameSize.Width, (index / frames) * frameSize.Height);
-                    e.Graphics.DrawImage(Image, new Rectangle(point, size), new Rectangle(framePoint, frameSize), GraphicsUnit.Pixel);
+                    if (Graphic.IsTileset())
+                    {
+                        Size size = new Size((int)Graphic.Options[(int)SystemGraphic.OptionsEnum.TilesetWidth] * WANOK.BASIC_SQUARE_SIZE,
+                                             (int)Graphic.Options[(int)SystemGraphic.OptionsEnum.TilesetHeight] * WANOK.BASIC_SQUARE_SIZE);
+                        Point point = new Point((Size.Width - size.Width) / 2, (Size.Height - size.Height) / 2);
+                        e.Graphics.DrawImage(Image, 
+                            new Rectangle(point, size), 
+                            new Rectangle(new Point((int)Graphic.Options[(int)SystemGraphic.OptionsEnum.TilesetX] * WANOK.SQUARE_SIZE,
+                                                    (int)Graphic.Options[(int)SystemGraphic.OptionsEnum.TilesetY] * WANOK.SQUARE_SIZE),
+                                          new Size((int)Graphic.Options[(int)SystemGraphic.OptionsEnum.TilesetWidth] * WANOK.SQUARE_SIZE,
+                                                    (int)Graphic.Options[(int)SystemGraphic.OptionsEnum.TilesetHeight] * WANOK.SQUARE_SIZE))
+                        , GraphicsUnit.Pixel);
+                    }
+                    else
+                    {
+                        int frames = (int)Graphic.Options[(int)SystemGraphic.OptionsEnum.Frames];
+                        int rows = (int)Graphic.Options[(int)SystemGraphic.OptionsEnum.Diagonal] == 0 ? 4 : 8;
+                        Size size = new Size((int)((Image.Size.Width / frames) * WANOK.RELATION_SIZE), (int)((Image.Size.Height / rows) * WANOK.RELATION_SIZE));
+                        int offset = Frame % 2 == 0 ? 0 : 1;
+                        Point point = new Point((Size.Width - size.Width) / 2, ((Size.Height - size.Height) / 2) + offset);
+                        int index = (int)Graphic.Options[(int)SystemGraphic.OptionsEnum.Index];
+                        Size frameSize = new Size(Image.Size.Width / frames, Image.Size.Height / rows);
+                        Point framePoint = Animated ? new Point(Frame * frameSize.Width, (index / frames) * frameSize.Height) : new Point((index % frames) * frameSize.Width, (index / frames) * frameSize.Height);
+                        e.Graphics.DrawImage(Image, new Rectangle(point, size), new Rectangle(framePoint, frameSize), GraphicsUnit.Pixel);
+                    }
                 }
 
                 if (Focused) e.Graphics.DrawRectangle(BorderPen, new Rectangle(ClientRectangle.X + 5, ClientRectangle.Y + 5, ClientRectangle.Width - 11, ClientRectangle.Height - 11));
@@ -101,9 +118,21 @@ namespace RPG_Paper_Maker
         // InitializeListParameters
         // -------------------------------------------------------------------
 
-        public void InitializeListParameters(SystemGraphic graphic)
+        public void InitializeListParameters(SystemGraphic graphic, SystemGraphic graphicTileset = null)
         {
+            GraphicTileset = graphicTileset;
             panel.Graphic = graphic;
+            if (panel.Graphic.IsNone()) ResetGraphics();
+            else if (panel.Graphic.IsTileset())
+            {
+                panel.Image = GraphicTileset.LoadImage();
+                panel.Refresh();
+            }
+            else
+            {
+                panel.Image = panel.Graphic.LoadImage();
+                panel.Refresh();
+            }
         }
 
         // -------------------------------------------------------------------
@@ -133,7 +162,7 @@ namespace RPG_Paper_Maker
 
         public void OpenSpriteDialog()
         {
-            DialogPreviewGraphicSelectFrame dialog = new DialogPreviewGraphicSelectFrame(panel.Graphic.CreateCopy(), OptionsKind.CharacterSelection);
+            DialogPreviewGraphicSelectFrame dialog = new DialogPreviewGraphicSelectFrame(panel.Graphic.CreateCopy(), OptionsKind.CharacterSelection, GraphicTileset);
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 panel.Graphic = dialog.GetGraphic();
@@ -141,6 +170,11 @@ namespace RPG_Paper_Maker
                 {
                     comboBox1.SelectedIndex = (int)DrawType.None;
                     ResetGraphics();
+                }
+                else if (panel.Graphic.IsTileset())
+                {
+                    panel.Image = GraphicTileset.LoadImage();
+                    panel.Refresh();
                 }
                 else
                 {
@@ -199,6 +233,24 @@ namespace RPG_Paper_Maker
         private void Panel_LostFocus(object sender, EventArgs e)
         {
             panel.Refresh();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch ((DrawType)comboBox1.SelectedIndex)
+            {
+                case DrawType.Floors:
+                    comboBox1.SelectedIndex = 0;
+                    break;
+                case DrawType.Autotiles:
+                    comboBox1.SelectedIndex = 0;
+                    break;
+                case DrawType.Montains:
+                    comboBox1.SelectedIndex = 0;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

@@ -38,7 +38,7 @@ namespace RPG_Paper_Maker
         public static int SQUARE_SIZE { get { return Game.System.SquareSize; } }
         public static float RELATION_SIZE { get { return (float)(BASIC_SQUARE_SIZE) / SQUARE_SIZE; } }
         public static int PORTION_SIZE = 16;
-        public static int PORTION_RADIUS = 6;
+        public static int PORTION_RADIUS = 5;
         public static int COEF_BORDER_TEX = 10000;
         public static int MAX_CANCEL = 20;
         public static EngineSettings Settings = null;
@@ -56,6 +56,9 @@ namespace RPG_Paper_Maker
         public static string TILESET_IMAGE_STRING = "<Tileset>";
         public static DialogProgressBar DialogProgressBar = null;
         public static string CurrentMainLang { get { return Game.System.Langs[0]; } }
+
+        // COLORS
+        public static System.Drawing.Color COLOR_BACKGROUND_PREVIEW_IMAGE = System.Drawing.Color.FromArgb(220, 220, 220);
 
         // CANCEL
         public static Dictionary<string, List<Dictionary<int[], GameMapPortion>>> CancelRedo = new Dictionary<string, List<Dictionary<int[], GameMapPortion>>>();
@@ -677,6 +680,37 @@ namespace RPG_Paper_Maker
                     return "Mountain";
                 default:
                     return "";
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // GetGeneralDrawType
+        // -------------------------------------------------------------------
+
+        public static GeneralDrawtype GetGeneralDrawType(DrawType type)
+        {
+            switch (type)
+            {
+                case DrawType.None:
+                    return GeneralDrawtype.None;
+                case DrawType.Floors:
+                    return GeneralDrawtype.Floor;
+                case DrawType.Autotiles:
+                    return GeneralDrawtype.Autotile;
+                case DrawType.FaceSprite:
+                    return GeneralDrawtype.Sprite;
+                case DrawType.FixSprite:
+                    return GeneralDrawtype.Sprite;
+                case DrawType.DoubleSprite:
+                    return GeneralDrawtype.Sprite;
+                case DrawType.QuadraSprite:
+                    return GeneralDrawtype.Sprite;
+                case DrawType.OnFloorSprite:
+                    return GeneralDrawtype.Sprite;
+                case DrawType.Montains:
+                    return GeneralDrawtype.Relief;
+                default:
+                    return GeneralDrawtype.None;
             }
         }
     }

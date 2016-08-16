@@ -43,11 +43,22 @@ namespace RPG_Paper_Maker
             if (!Sprites.ContainsKey(ev.Pages[0].Graphic)) Sprites[ev.Pages[0].Graphic] = new Dictionary<int[], Sprites>(new IntArrayComparer());
             if (ev.Pages[0].Graphic.IsTileset())
             {
+                int[] texture = new int[] { (int)ev.Pages[0].Graphic.Options[(int)SystemGraphic.OptionsEnum.TilesetX],
+                                            (int)ev.Pages[0].Graphic.Options[(int)SystemGraphic.OptionsEnum.TilesetY],
+                                            (int)ev.Pages[0].Graphic.Options[(int)SystemGraphic.OptionsEnum.TilesetWidth],
+                                            (int)ev.Pages[0].Graphic.Options[(int)SystemGraphic.OptionsEnum.TilesetHeight] };
 
+                if (!Sprites[ev.Pages[0].Graphic].ContainsKey(texture)) Sprites[ev.Pages[0].Graphic][texture] = new Sprites();
+                Sprites[ev.Pages[0].Graphic][texture].Add(coords, new Sprite(ev.Pages[0].GraphicDrawType, new int[] { 0, 0 }, 0));
             }
             else
             {
-                int[] texture = new int[] { 0, 0, 2, 2 };
+                int frames = (int)ev.Pages[0].Graphic.Options[(int)SystemGraphic.OptionsEnum.Frames];
+                int index = (int)ev.Pages[0].Graphic.Options[(int)SystemGraphic.OptionsEnum.Index];
+                int width = MapEditor.TexCharacters[ev.Pages[0].Graphic].Width / frames;
+                int height = MapEditor.TexCharacters[ev.Pages[0].Graphic].Height / frames;
+                int[] texture = new int[] { (index % frames) * width, (index / frames) * height, width, height };
+
                 if (!Sprites[ev.Pages[0].Graphic].ContainsKey(texture)) Sprites[ev.Pages[0].Graphic][texture] = new Sprites();
                 Sprites[ev.Pages[0].Graphic][texture].Add(coords, new Sprite(ev.Pages[0].GraphicDrawType, new int[] { 0, 0 }, 0));
             }
@@ -89,7 +100,7 @@ namespace RPG_Paper_Maker
                 {
                     foreach (KeyValuePair<int[], Sprites> entry2 in entry.Value)
                     {
-                        entry2.Value.GenSprites(device, entry2.Key);
+                        entry2.Value.GenSprites(device, entry.Key.IsTileset() ? MapEditor.TexTileset : MapEditor.TexCharacters[entry.Key], entry2.Key, entry.Key.IsTileset());
                     }
                 }
             }
@@ -194,7 +205,7 @@ namespace RPG_Paper_Maker
                 SystemGraphic graphic = entry.Key.IsTileset() ? null : entry.Key;
                 foreach (KeyValuePair<int[], Sprites> entry2 in entry.Value)
                 {
-                    entry2.Value.Draw(device, effect, camera, entry2.Key[2], entry2.Key[3], graphic);
+                    entry2.Value.Draw(device, effect, camera, graphic == null ? entry2.Key[2] * WANOK.SQUARE_SIZE : entry2.Key[2], graphic == null ? entry2.Key[3] * WANOK.SQUARE_SIZE : entry2.Key[3], graphic);
                 }
             }
         }

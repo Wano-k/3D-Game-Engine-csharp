@@ -24,7 +24,7 @@ namespace RPG_Paper_Maker
         // Constructor
         // -------------------------------------------------------------------
 
-        public DialogPreviewGraphicSelectRectangle(SystemGraphic graphic, OptionsKind optionsKind) : base(graphic, optionsKind) 
+        public DialogPreviewGraphicSelectRectangle(SystemGraphic graphic, OptionsKind optionsKind, SystemGraphic graphicTileset = null) : base(graphic, optionsKind, graphicTileset)
         {
             OptionsKind = optionsKind;
 
@@ -32,7 +32,7 @@ namespace RPG_Paper_Maker
             PictureBox = new PixelSelectPictureBox();
             PictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            PictureBox.BackColor = Color.FromArgb(210, 210, 210);
+            PictureBox.BackColor = WANOK.COLOR_BACKGROUND_PREVIEW_IMAGE;
             panelPicture.Controls.Clear();
             panelPicture.Controls.Add(PictureBox);
 

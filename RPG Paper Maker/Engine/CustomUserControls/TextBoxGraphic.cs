@@ -15,6 +15,7 @@ namespace RPG_Paper_Maker.Engine.CustomUserControls
         public SystemGraphic Graphic;
         public Type DialogKind;
         public OptionsKind OptionsKind;
+        public SystemGraphic GraphicTileset;
 
 
         // -------------------------------------------------------------------
@@ -31,10 +32,11 @@ namespace RPG_Paper_Maker.Engine.CustomUserControls
         // InitializeParameters
         // -------------------------------------------------------------------
 
-        public void InitializeParameters(SystemGraphic graphic, Type type = null, OptionsKind optionsKind = OptionsKind.None)
+        public void InitializeParameters(SystemGraphic graphic, Type type = null, OptionsKind optionsKind = OptionsKind.None, SystemGraphic graphicTileset = null)
         {
             Graphic = graphic;
             OptionsKind = optionsKind;
+            GraphicTileset = graphicTileset;
             DialogKind = type == null ? typeof(DialogPreviewGraphic) : type;
             listBox1.Items[0] = graphic.GraphicName;
         }
@@ -55,7 +57,7 @@ namespace RPG_Paper_Maker.Engine.CustomUserControls
         public void OpenDialog()
         {
             listBox1.SelectedIndex = 0;
-            DialogPreviewGraphic dialog = (DialogPreviewGraphic)Activator.CreateInstance(DialogKind, Graphic, OptionsKind);
+            DialogPreviewGraphic dialog = (DialogPreviewGraphic)Activator.CreateInstance(DialogKind, Graphic, OptionsKind, GraphicTileset);
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 Graphic = dialog.GetGraphic();

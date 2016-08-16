@@ -210,7 +210,7 @@ namespace RPG_Paper_Maker
                             {
                                 foreach (KeyValuePair<int[], Sprite> entry2 in entry1.Value.ListSprites)
                                 {
-                                    newDistance = entry2.Value.GetCompleteDistanceIntersection(ray, camera, entry2.Key, entry1.Key[2], entry1.Key[3]);
+                                    newDistance = entry2.Value.GetCompleteDistanceIntersection(ray, camera, entry2.Key, entry1.Key[2] * WANOK.SQUARE_SIZE, entry1.Key[3] * WANOK.SQUARE_SIZE);
 
                                     if (newDistance != null)
                                     {
@@ -656,8 +656,12 @@ namespace RPG_Paper_Maker
                     int[] portion = GetPortion(coords[0], coords[3]);
                     Map.Events.Add(globalPortion, coords, dialog.GetEvent());
                     Map.EventsPortions[portion].RemoveSprite(coords);
-                    Map.EventsPortions[portion].AddSprite(coords, dialog.GetEvent());
-                    Map.LoadSpriteTexture(dialog.GetEvent().Pages[0].Graphic);
+                    if (dialog.GetEvent().Pages[0].GraphicDrawType != DrawType.None)
+                    {
+                        Map.LoadSpriteTexture(dialog.GetEvent().Pages[0].Graphic);
+                        Map.EventsPortions[portion].AddSprite(coords, dialog.GetEvent());
+                    }
+
                     Map.GenEvent(portion);
                 }
             }

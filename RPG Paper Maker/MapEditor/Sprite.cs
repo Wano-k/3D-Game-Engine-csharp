@@ -51,17 +51,17 @@ namespace RPG_Paper_Maker
             switch (Type)
             {
                 case DrawType.FaceSprite:
-                    return Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(-widthSprite * WANOK.SQUARE_SIZE / 2, 0, 0) * Matrix.CreateRotationY((float)((-camera.HorizontalAngle - 90) * Math.PI / 180.0)) * Matrix.CreateTranslation(coords[0] * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2), height, coords[3] * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2));
+                    return Matrix.Identity * Matrix.CreateScale(1, 1, 1) * Matrix.CreateTranslation(-widthSprite / 2, 0, 0) * Matrix.CreateRotationY((float)((-camera.HorizontalAngle - 90) * Math.PI / 180.0)) * Matrix.CreateTranslation(coords[0] * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2), height, coords[3] * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2));
                 case DrawType.OnFloorSprite:
-                    return Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(0, 0, 0) * Matrix.CreateRotationX((float)(90 * Math.PI / 180)) * Matrix.CreateTranslation((-widthSprite * WANOK.SQUARE_SIZE / 2) + (coords[0] * WANOK.SQUARE_SIZE) + (WANOK.SQUARE_SIZE / 2), height + 0.1f, (-heightSprite * WANOK.SQUARE_SIZE / 2) + (coords[3] * WANOK.SQUARE_SIZE) + (WANOK.SQUARE_SIZE / 2));
+                    return Matrix.Identity * Matrix.CreateScale(1, 1, 1) * Matrix.CreateTranslation(0, 0, 0) * Matrix.CreateRotationX((float)(-90 * Math.PI / 180)) * Matrix.CreateTranslation(coords[0] * WANOK.SQUARE_SIZE, height + 0.1f, ((coords[3] + 1) * WANOK.SQUARE_SIZE) + (heightSprite - WANOK.SQUARE_SIZE));
                 default:
-                    return Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation((-widthSprite * WANOK.SQUARE_SIZE / 2) + (coords[0] * WANOK.SQUARE_SIZE) + (WANOK.SQUARE_SIZE / 2), height, coords[3] * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2));
+                    return Matrix.Identity * Matrix.CreateScale(1, 1, 1) * Matrix.CreateTranslation((-widthSprite / 2) + (coords[0] * WANOK.SQUARE_SIZE) + (WANOK.SQUARE_SIZE / 2), height, coords[3] * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2));
             }
         }
 
         public Matrix GetOtherQuadWorldEffect(int[] coords, int width, float height, int rotation)
         {
-            return Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(-width * WANOK.SQUARE_SIZE / 2, 0, 0) * Matrix.CreateRotationY((float)((rotation) * Math.PI / 180.0)) * Matrix.CreateTranslation(coords[0] * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2), height, coords[3] * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2));
+            return Matrix.Identity * Matrix.CreateScale(1, 1, 1) * Matrix.CreateTranslation(-width / 2, 0, 0) * Matrix.CreateRotationY((float)((rotation) * Math.PI / 180.0)) * Matrix.CreateTranslation(coords[0] * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2), height, coords[3] * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2));
         }
 
         // -------------------------------------------------------------------

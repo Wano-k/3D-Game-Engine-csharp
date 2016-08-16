@@ -1058,35 +1058,41 @@ namespace RPG_Paper_Maker
 
         public void UpdateTreeMapKeyUp()
         {
-            TreeNode movingNode = TreeMap.SelectedNode;
-            TreeNode parentNode = movingNode.Parent;
-            if (parentNode != null)
+            if (TreeMap.Visible)
             {
-                int index = movingNode.Index;
-
-                if (index > 0)
+                TreeNode movingNode = TreeMap.SelectedNode;
+                TreeNode parentNode = movingNode.Parent;
+                if (parentNode != null)
                 {
-                    movingNode.Remove();
-                    parentNode.Nodes.Insert(index - 1, movingNode);
-                    TreeMap.SelectedNode = movingNode;
+                    int index = movingNode.Index;
+
+                    if (index > 0)
+                    {
+                        movingNode.Remove();
+                        parentNode.Nodes.Insert(index - 1, movingNode);
+                        TreeMap.SelectedNode = movingNode;
+                    }
                 }
             }
         }
 
         public void UpdateTreeMapKeyDown()
         {
-            TreeNode movingNode = TreeMap.SelectedNode;
-            TreeNode parentNode = movingNode.Parent;
-
-            if (parentNode != null)
+            if (TreeMap.Visible)
             {
-                int index = movingNode.Index;
+                TreeNode movingNode = TreeMap.SelectedNode;
+                TreeNode parentNode = movingNode.Parent;
 
-                if (index < movingNode.Parent.Nodes.Count - 1)
+                if (parentNode != null)
                 {
-                    movingNode.Remove();
-                    parentNode.Nodes.Insert(index + 1, movingNode);
-                    TreeMap.SelectedNode = movingNode;
+                    int index = movingNode.Index;
+
+                    if (index < movingNode.Parent.Nodes.Count - 1)
+                    {
+                        movingNode.Remove();
+                        parentNode.Nodes.Insert(index + 1, movingNode);
+                        TreeMap.SelectedNode = movingNode;
+                    }
                 }
             }
         }

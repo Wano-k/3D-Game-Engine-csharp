@@ -3,16 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
-    public enum GeneralDrawtype
+    public class RadioButtonWithGroup : RadioButton
     {
-        None,
-        Floor,
-        Autotile,
-        Sprite,
-        Object,
-        Relief
+        public string GroupName { get; set; }
     }
 }

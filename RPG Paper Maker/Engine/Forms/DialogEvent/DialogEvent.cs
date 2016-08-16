@@ -15,6 +15,7 @@ namespace RPG_Paper_Maker
         protected DialogEventControl Control;
         protected BindingSource ViewModelBindingSource = new BindingSource();
         System.Timers.Timer GraphicFrameTimer = new System.Timers.Timer();
+        protected Dictionary<EventTrigger, RadioButtonWithGroup> RadiosTrigger = new Dictionary<EventTrigger, RadioButtonWithGroup>();
 
         protected override CreateParams CreateParams
         {
@@ -39,6 +40,14 @@ namespace RPG_Paper_Maker
 
             GraphicFrameTimer.Interval = 150;
             GraphicFrameTimer.Start();
+
+            // Radios trigger
+            RadiosTrigger[EventTrigger.ActionButton] = radioButtonActionButton;
+            RadiosTrigger[EventTrigger.PlayerTouch] = radioButtonPlayerTouch;
+            RadiosTrigger[EventTrigger.EventTouch] = radioButtonEventTouch;
+            RadiosTrigger[EventTrigger.Detection] = radioButtonDetection;
+            RadiosTrigger[EventTrigger.Autorun] = radioButtonAutorun;
+            RadiosTrigger[EventTrigger.ParallelProcess] = radioButtonParallelProcess;
 
             // Update pages
             UpdatePage(0);
@@ -73,9 +82,16 @@ namespace RPG_Paper_Maker
             GraphicFrameTimer.Elapsed += graphicFrameTimer_Elapsed;
             graphicControl1.GetComboBox().SelectedIndexChanged += DialogEvent_SelectedIndexChanged;
 
+
+            foreach (EventTrigger trigger in Enum.GetValues(typeof(EventTrigger)))
+            {
+                RadiosTrigger[trigger].GroupName = "trigger";
+                RadiosTrigger[trigger].AutoCheck = false;
+                RadiosTrigger[trigger].Click += radioTrigger_Clicked;
+            }
+
             InitializeDataBindings();
         }
-        
 
         // -------------------------------------------------------------------
         // InitializeDataBindings
@@ -84,6 +100,12 @@ namespace RPG_Paper_Maker
         private void InitializeDataBindings()
         {
             textBoxEventName.DataBindings.Add("Text", ViewModelBindingSource, "Name", true);
+            tabControl1.DataBindings.Add("SelectedIndex", ViewModelBindingSource, "CurrentPage", true);
+            checkBoxMoveAnimation.DataBindings.Add("Checked", ViewModelBindingSource, "MoveAnimation", true);
+            checkBoxStopAnimation.DataBindings.Add("Checked", ViewModelBindingSource, "StopAnimation", true);
+            checkBoxDirectionFix.DataBindings.Add("Checked", ViewModelBindingSource, "DirectionFix", true);
+            checkBoxThrough.DataBindings.Add("Checked", ViewModelBindingSource, "Through", true);
+            checkBoxSetWithCamera.DataBindings.Add("Checked", ViewModelBindingSource, "SetWithCamera", true);
         }
 
         // -------------------------------------------------------------------
@@ -101,12 +123,22 @@ namespace RPG_Paper_Maker
 
         public void UpdatePage(int i)
         {
-            graphicControl1.InitializeListParameters(Control.Model.Pages[i].Graphic);
+            graphicControl1.InitializeListParameters(Control.Model.Pages[i].Graphic, MapEditor.GetMapTileset().Graphic);
             graphicControl1.GetComboBox().SelectedIndex = (int)Control.Model.Pages[i].GraphicDrawType;
+            RadiosTrigger[Control.Model.Pages[i].Trigger].Checked = true;
 
             // Move page
             tabControl1.TabPages[i].Controls.Clear();
             tabControl1.TabPages[i].Controls.Add(tableLayoutMainPage);
+        }
+
+        // -------------------------------------------------------------------
+        // UpdateTrigger
+        // -------------------------------------------------------------------
+
+        public void UpdateTrigger(EventTrigger trigger)
+        {
+            Control.Model.Pages[Control.Model.CurrentPage].Trigger = trigger;
         }
 
         // -------------------------------------------------------------------
@@ -134,7 +166,7 @@ namespace RPG_Paper_Maker
         {
             if (checkBoxMoveAnimation.Checked)
             {
-                int maxFrames = (int)graphicControl1.panel.Graphic.Options[0];
+                int maxFrames = (int)graphicControl1.panel.Graphic.Options[(int)SystemGraphic.OptionsEnum.Frames];
                 graphicControl1.panel.Frame++;
                 graphicControl1.panel.Frame = WANOK.Mod(graphicControl1.panel.Frame, maxFrames);
                 graphicControl1.panel.Invalidate();
@@ -143,6 +175,7 @@ namespace RPG_Paper_Maker
 
         private void checkBoxMoveAnimation_CheckedChanged(object sender, EventArgs e)
         {
+            graphicControl1.panel.Frame = 0;
             graphicControl1.panel.Animated = checkBoxMoveAnimation.Checked;
             graphicControl1.panel.Invalidate();
         }
@@ -161,8 +194,30 @@ namespace RPG_Paper_Maker
 
         private void DialogEvent_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (WANOK.GetGeneralDrawType(Control.Model.Pages[tabControl1.SelectedIndex].GraphicDrawType) != WANOK.GetGeneralDrawType((DrawType)graphicControl1.GetComboBox().SelectedIndex))
+            {
+                graphicControl1.ResetGraphics();
+            }
             Control.Model.Pages[tabControl1.SelectedIndex].GraphicDrawType = (DrawType)graphicControl1.GetComboBox().SelectedIndex;
-            graphicControl1.ResetGraphics();
+        }
+
+        private void radioTrigger_Clicked(object sender, EventArgs e)
+        {
+            RadioButtonWithGroup rb = (sender as RadioButtonWithGroup);
+
+            if (!rb.Checked)
+            {
+                foreach (EventTrigger trigger in Enum.GetValues(typeof(EventTrigger)))
+                {
+                    if (RadiosTrigger[trigger].GroupName == rb.GroupName)
+                    {
+                        RadiosTrigger[trigger].Checked = false;
+                    }
+                }
+                rb.Checked = true;
+            }
+
+            UpdateTrigger(RadiosTrigger.FirstOrDefault(x => x.Value == (RadioButton)sender).Key);
         }
     }
 }

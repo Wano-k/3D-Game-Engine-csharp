@@ -18,6 +18,16 @@ namespace RPG_Paper_Maker
         public GraphicKind GraphicKind;
         public object[] Options;
 
+        public enum OptionsEnum
+        {
+            TilesetX,
+            TilesetY,
+            TilesetWidth,
+            TilesetHeight,
+            Frames,
+            Diagonal,
+            Index,
+        }
 
         // -------------------------------------------------------------------
         // Constructor
@@ -56,10 +66,14 @@ namespace RPG_Paper_Maker
 
         public SystemGraphic CreateCopy()
         {
-            object[] options = new object[Options.Length];
-            for (int i = 0; i < Options.Length; i++)
-            {
-                options[i] = Options[i];
+            object[] options = null;
+            if (Options != null)
+            { 
+                options = new object[Options.Length];
+                for (int i = 0; i < Options.Length; i++)
+                {
+                    options[i] = Options[i];
+                }
             }
 
             return new SystemGraphic(GraphicName, IsRTP, GraphicKind, options);
@@ -199,7 +213,7 @@ namespace RPG_Paper_Maker
 
         public static SystemGraphic GetDefaultEventGraphic()
         {
-            return new SystemGraphic(GraphicKind.Character, new object[] { 4, 0, 0 });
+            return new SystemGraphic(GraphicKind.Character, new object[] { 0, 0, 1, 1, 4, 0, 0 });
         }
     }
 }

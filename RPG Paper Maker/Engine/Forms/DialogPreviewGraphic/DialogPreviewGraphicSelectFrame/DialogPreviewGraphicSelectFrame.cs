@@ -17,12 +17,11 @@ namespace RPG_Paper_Maker
         public NumericUpDown NumericFrames = new NumericUpDown();
         public ComboBox ComboBoxDialog = new ComboBox();
 
-
         // -------------------------------------------------------------------
         // Constructor
         // -------------------------------------------------------------------
 
-        public DialogPreviewGraphicSelectFrame(SystemGraphic graphic, OptionsKind optionsKind) : base(graphic, optionsKind) 
+        public DialogPreviewGraphicSelectFrame(SystemGraphic graphic, OptionsKind optionsKind, SystemGraphic graphicTileset = null) : base(graphic, optionsKind, graphicTileset) 
         {
             OptionsKind = optionsKind;
 
@@ -30,7 +29,7 @@ namespace RPG_Paper_Maker
             PictureBox = new TilesetSelectorPicture();
             PictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            PictureBox.BackColor = Color.FromArgb(210, 210, 210);
+            PictureBox.BackColor = WANOK.COLOR_BACKGROUND_PREVIEW_IMAGE;
 
             panelPicture.Controls.Clear();
             panelPicture.Controls.Add(PictureBox);
@@ -63,12 +62,12 @@ namespace RPG_Paper_Maker
 
             NumericFrames.Minimum = 1;
             NumericFrames.Maximum = 999;
-            NumericFrames.Value = (int)graphic.Options[0];
+            NumericFrames.Value = (int)graphic.Options[(int)SystemGraphic.OptionsEnum.Frames];
             panelRectangle.Controls.Add(NumericFrames, 1, 0);
             ComboBoxDialog.DropDownStyle = ComboBoxStyle.DropDownList;
             ComboBoxDialog.Items.Add("No");
             ComboBoxDialog.Items.Add("Yes");
-            ComboBoxDialog.SelectedIndex = (int)graphic.Options[1];
+            ComboBoxDialog.SelectedIndex = (int)graphic.Options[(int)SystemGraphic.OptionsEnum.Diagonal];
             panelRectangle.Controls.Add(ComboBoxDialog, 1, 1);
 
             panelRectangle.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 63));
@@ -78,7 +77,7 @@ namespace RPG_Paper_Maker
             panelRectangle.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
 
 
-            // Actualize list (delete _act)
+            // Actualize list (delete _act) and adding tileset
             List<ListViewItem> list = new List<ListViewItem>();
             for (int i = 0; i < listView1.Items.Count; i++)
             {
@@ -93,6 +92,7 @@ namespace RPG_Paper_Maker
                     if (path.Substring(path.Length - 4, 4) == "_act") listView1.Items.Remove(list[i]);
                 }
             }
+            listView1.Items.Insert(1, WANOK.TILESET_IMAGE_STRING);
 
             // Events
             PictureBox.MouseEnter += PictureBox_MouseEnter;
@@ -113,8 +113,8 @@ namespace RPG_Paper_Maker
             PictureBox.SelectionRectangle.SquareWidth = PictureBox.Image.Size.Width / (int)NumericFrames.Value;
             int rows = ComboBoxDialog.SelectedIndex == 0 ? 4 : 8;
             PictureBox.SelectionRectangle.SquareHeight = PictureBox.Image.Size.Height / rows;
-            int index = (int)Control.Model.Options[2];
-            int columns = (int)Control.Model.Options[0];
+            int index = (int)Control.Model.Options[(int)SystemGraphic.OptionsEnum.Index];
+            int columns = (int)Control.Model.Options[(int)SystemGraphic.OptionsEnum.Frames];
             int x = index % columns;
             int y = index / columns;
             if (y >= rows)
@@ -144,7 +144,7 @@ namespace RPG_Paper_Maker
             PictureBox.SetCursorRealPosition();
             PictureBox.Refresh();
             int[] texture = PictureBox.GetCurrentTexture();
-            Control.Model.Options[2] = texture[0] + ((int)Control.Model.Options[0] * texture[1]);
+            Control.Model.Options[(int)SystemGraphic.OptionsEnum.Index] = texture[0] + ((int)Control.Model.Options[(int)SystemGraphic.OptionsEnum.Frames] * texture[1]);
         }
 
         private void PictureBox_MouseEnter(object sender, EventArgs e)
@@ -159,15 +159,15 @@ namespace RPG_Paper_Maker
 
         private void ComboBoxDialog_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Control.Model.Options[1] = ComboBoxDialog.SelectedIndex;
-            Control.Model.Options[2] = 0;
+            Control.Model.Options[(int)SystemGraphic.OptionsEnum.Diagonal] = ComboBoxDialog.SelectedIndex;
+            Control.Model.Options[(int)SystemGraphic.OptionsEnum.Index] = 0;
             UpdateSquareSize();
         }
 
         private void NumericFrames_ValueChanged(object sender, EventArgs e)
         {
-            Control.Model.Options[0] = (int)NumericFrames.Value;
-            Control.Model.Options[2] = 0;
+            Control.Model.Options[(int)SystemGraphic.OptionsEnum.Frames] = (int)NumericFrames.Value;
+            Control.Model.Options[(int)SystemGraphic.OptionsEnum.Index] = 0;
             UpdateSquareSize();
         }
     }

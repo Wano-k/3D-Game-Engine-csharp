@@ -15,7 +15,6 @@ namespace RPG_Paper_Maker
         [NonSerialized()]
         public int CurrentPage = 0;
 
-
         // -------------------------------------------------------------------
         // SYSTEM EVENT PAGE
         // -------------------------------------------------------------------
@@ -26,21 +25,54 @@ namespace RPG_Paper_Maker
         {
             public SystemGraphic Graphic;
             public DrawType GraphicDrawType;
+            public EventTrigger Trigger;
+            
+            public class PageOptions
+            {
+                public bool MoveAnimation;
+                public bool StopAnimation;
+                public bool DirectionFix;
+                public bool Through;
+                public bool SetWithCamera;
+
+                public PageOptions() : this(false, false, false, false, false)
+                {
+
+                }
+
+                public PageOptions(bool moveAnimation, bool stopAnimation, bool directionFix, bool through, bool setWithCamera)
+                {
+                    MoveAnimation = moveAnimation;
+                    StopAnimation = stopAnimation;
+                    DirectionFix = directionFix;
+                    Through = through;
+                    SetWithCamera = setWithCamera;
+                }
+
+                public PageOptions CreateCopy()
+                {
+                    return new PageOptions(MoveAnimation, StopAnimation, DirectionFix, Through, SetWithCamera);
+                }
+            }
+
+            public PageOptions Options;
 
 
             // -------------------------------------------------------------------
             // Constructors
             // -------------------------------------------------------------------
 
-            public SystemEventPage() : this(SystemGraphic.GetDefaultEventGraphic(), DrawType.None)
+            public SystemEventPage() : this(SystemGraphic.GetDefaultEventGraphic(), DrawType.None, new PageOptions(), EventTrigger.ActionButton)
             {
 
             }
 
-            public SystemEventPage(SystemGraphic graphic, DrawType graphicDrawType)
+            public SystemEventPage(SystemGraphic graphic, DrawType graphicDrawType, PageOptions options, EventTrigger trigger)
             {
                 Graphic = graphic;
                 GraphicDrawType = graphicDrawType;
+                Options = options;
+                Trigger = trigger;
             }
 
             // -------------------------------------------------------------------
@@ -49,7 +81,7 @@ namespace RPG_Paper_Maker
 
             public SystemEventPage CreateCopy()
             {
-                return new SystemEventPage(Graphic.CreateCopy(), GraphicDrawType);
+                return new SystemEventPage(Graphic.CreateCopy(), GraphicDrawType, Options.CreateCopy(), Trigger);
             }
         }
 
