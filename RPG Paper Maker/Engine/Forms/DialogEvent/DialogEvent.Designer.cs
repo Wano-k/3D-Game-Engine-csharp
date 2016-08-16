@@ -74,10 +74,10 @@
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBoxMoveAnimation = new System.Windows.Forms.CheckBox();
+            this.checkBoxStopAnimation = new System.Windows.Forms.CheckBox();
+            this.checkBoxDirectionFix = new System.Windows.Forms.CheckBox();
+            this.checkBoxThrough = new System.Windows.Forms.CheckBox();
             this.graphicControl1 = new RPG_Paper_Maker.GraphicControl();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -511,6 +511,7 @@
             this.numericUpDownFrequency.Name = "numericUpDownFrequency";
             this.numericUpDownFrequency.Size = new System.Drawing.Size(54, 20);
             this.numericUpDownFrequency.TabIndex = 8;
+            this.numericUpDownFrequency.ValueChanged += new System.EventHandler(this.numericUpDownFrequency_ValueChanged);
             // 
             // label5
             // 
@@ -547,6 +548,7 @@
             this.numericUpDownSpeed.Name = "numericUpDownSpeed";
             this.numericUpDownSpeed.Size = new System.Drawing.Size(54, 20);
             this.numericUpDownSpeed.TabIndex = 8;
+            this.numericUpDownSpeed.ValueChanged += new System.EventHandler(this.numericUpDownSpeed_ValueChanged);
             // 
             // label6
             // 
@@ -678,10 +680,10 @@
             // 
             this.tableLayoutPanel12.ColumnCount = 1;
             this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel12.Controls.Add(this.checkBox1, 0, 0);
-            this.tableLayoutPanel12.Controls.Add(this.checkBox2, 0, 1);
-            this.tableLayoutPanel12.Controls.Add(this.checkBox3, 0, 2);
-            this.tableLayoutPanel12.Controls.Add(this.checkBox4, 0, 3);
+            this.tableLayoutPanel12.Controls.Add(this.checkBoxMoveAnimation, 0, 0);
+            this.tableLayoutPanel12.Controls.Add(this.checkBoxStopAnimation, 0, 1);
+            this.tableLayoutPanel12.Controls.Add(this.checkBoxDirectionFix, 0, 2);
+            this.tableLayoutPanel12.Controls.Add(this.checkBoxThrough, 0, 3);
             this.tableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel12.Location = new System.Drawing.Point(8, 21);
             this.tableLayoutPanel12.Name = "tableLayoutPanel12";
@@ -693,45 +695,46 @@
             this.tableLayoutPanel12.Size = new System.Drawing.Size(112, 95);
             this.tableLayoutPanel12.TabIndex = 0;
             // 
-            // checkBox1
+            // checkBoxMoveAnimation
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(3, 3);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(101, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Move animation";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBoxMoveAnimation.AutoSize = true;
+            this.checkBoxMoveAnimation.Location = new System.Drawing.Point(3, 3);
+            this.checkBoxMoveAnimation.Name = "checkBoxMoveAnimation";
+            this.checkBoxMoveAnimation.Size = new System.Drawing.Size(101, 17);
+            this.checkBoxMoveAnimation.TabIndex = 0;
+            this.checkBoxMoveAnimation.Text = "Move animation";
+            this.checkBoxMoveAnimation.UseVisualStyleBackColor = true;
+            this.checkBoxMoveAnimation.CheckedChanged += new System.EventHandler(this.checkBoxMoveAnimation_CheckedChanged);
             // 
-            // checkBox2
+            // checkBoxStopAnimation
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(3, 26);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(96, 17);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Stop animation";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBoxStopAnimation.AutoSize = true;
+            this.checkBoxStopAnimation.Location = new System.Drawing.Point(3, 26);
+            this.checkBoxStopAnimation.Name = "checkBoxStopAnimation";
+            this.checkBoxStopAnimation.Size = new System.Drawing.Size(96, 17);
+            this.checkBoxStopAnimation.TabIndex = 1;
+            this.checkBoxStopAnimation.Text = "Stop animation";
+            this.checkBoxStopAnimation.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // checkBoxDirectionFix
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(3, 49);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(81, 17);
-            this.checkBox3.TabIndex = 2;
-            this.checkBox3.Text = "Direction fix";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBoxDirectionFix.AutoSize = true;
+            this.checkBoxDirectionFix.Location = new System.Drawing.Point(3, 49);
+            this.checkBoxDirectionFix.Name = "checkBoxDirectionFix";
+            this.checkBoxDirectionFix.Size = new System.Drawing.Size(81, 17);
+            this.checkBoxDirectionFix.TabIndex = 2;
+            this.checkBoxDirectionFix.Text = "Direction fix";
+            this.checkBoxDirectionFix.UseVisualStyleBackColor = true;
             // 
-            // checkBox4
+            // checkBoxThrough
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(3, 72);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(66, 17);
-            this.checkBox4.TabIndex = 3;
-            this.checkBox4.Text = "Through";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBoxThrough.AutoSize = true;
+            this.checkBoxThrough.Location = new System.Drawing.Point(3, 72);
+            this.checkBoxThrough.Name = "checkBoxThrough";
+            this.checkBoxThrough.Size = new System.Drawing.Size(66, 17);
+            this.checkBoxThrough.TabIndex = 3;
+            this.checkBoxThrough.Text = "Through";
+            this.checkBoxThrough.UseVisualStyleBackColor = true;
             // 
             // graphicControl1
             // 
@@ -823,10 +826,10 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel12;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBoxMoveAnimation;
+        private System.Windows.Forms.CheckBox checkBoxStopAnimation;
+        private System.Windows.Forms.CheckBox checkBoxDirectionFix;
+        private System.Windows.Forms.CheckBox checkBoxThrough;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel13;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;

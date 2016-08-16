@@ -8,17 +8,72 @@ using System.Threading.Tasks;
 
 namespace RPG_Paper_Maker
 {
-    public class EventsPortion
+    class EventsPortion
     {
-        [NonSerialized()]
+        public Dictionary<SystemGraphic, Dictionary<int[], Sprites>> Sprites = new Dictionary<SystemGraphic, Dictionary<int[], Sprites>>();
+
+
         private VertexBuffer SquaresVB;
-        [NonSerialized()]
         private VertexPositionTexture[] SquaresVertices;
-        [NonSerialized()]
         private IndexBuffer SquaresIB;
-        [NonSerialized()]
         private int[] SquaresIndexes;
 
+
+        // -------------------------------------------------------------------
+        // Constructor
+        // -------------------------------------------------------------------
+
+        public EventsPortion(Dictionary<int[], SystemEvent> dictionary)
+        {
+            if (dictionary != null)
+            {
+                foreach (KeyValuePair<int[], SystemEvent> entry in dictionary)
+                {
+                    AddSprite(entry.Key, entry.Value);
+                }
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // AddSprite
+        // -------------------------------------------------------------------
+
+        public void AddSprite(int[] coords, SystemEvent ev)
+        {
+            if (!Sprites.ContainsKey(ev.Pages[0].Graphic)) Sprites[ev.Pages[0].Graphic] = new Dictionary<int[], Sprites>(new IntArrayComparer());
+            if (ev.Pages[0].Graphic.IsTileset())
+            {
+
+            }
+            else
+            {
+                int[] texture = new int[] { 0, 0, 2, 2 };
+                if (!Sprites[ev.Pages[0].Graphic].ContainsKey(texture)) Sprites[ev.Pages[0].Graphic][texture] = new Sprites();
+                Sprites[ev.Pages[0].Graphic][texture].Add(coords, new Sprite(ev.Pages[0].GraphicDrawType, new int[] { 0, 0 }, 0));
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // RemoveSprite
+        // -------------------------------------------------------------------
+
+        public void RemoveSprite(int[] coords)
+        {
+            foreach (KeyValuePair<SystemGraphic, Dictionary<int[], Sprites>> entry in Sprites)
+            {
+                foreach (KeyValuePair<int[], Sprites> entry2 in entry.Value)
+                {
+                    foreach (int[] coords2 in entry2.Value.ListSprites.Keys)
+                    {
+                        if (coords.SequenceEqual(coords2))
+                        {
+                            entry2.Value.Remove(coords);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
 
         // -------------------------------------------------------------------
         // GenEvents
@@ -28,6 +83,16 @@ namespace RPG_Paper_Maker
         {
             DisposeBuffers(device);
             if (dictionary.Count > 0) CreatePortion(device, dictionary);
+            if (Sprites.Count > 0)
+            {
+                foreach (KeyValuePair<SystemGraphic, Dictionary<int[], Sprites>> entry in Sprites)
+                {
+                    foreach (KeyValuePair<int[], Sprites> entry2 in entry.Value)
+                    {
+                        entry2.Value.GenSprites(device, entry2.Key);
+                    }
+                }
+            }
         }
 
         // -------------------------------------------------------------------
@@ -114,6 +179,22 @@ namespace RPG_Paper_Maker
                 {
                     pass.Apply();
                     device.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, SquaresVertices, 0, SquaresVertices.Length, SquaresIndexes, 0, SquaresVertices.Length / 2);
+                }
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // DrawSprites
+        // -------------------------------------------------------------------
+
+        public void DrawSprites(GraphicsDevice device, AlphaTestEffect effect, Camera camera)
+        {
+            foreach (KeyValuePair<SystemGraphic, Dictionary<int[], Sprites>> entry in Sprites)
+            {
+                SystemGraphic graphic = entry.Key.IsTileset() ? null : entry.Key;
+                foreach (KeyValuePair<int[], Sprites> entry2 in entry.Value)
+                {
+                    entry2.Value.Draw(device, effect, camera, entry2.Key[2], entry2.Key[3], graphic);
                 }
             }
         }

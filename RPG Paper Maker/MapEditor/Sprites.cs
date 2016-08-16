@@ -160,11 +160,12 @@ namespace RPG_Paper_Maker
         // Draw
         // -------------------------------------------------------------------
 
-        public void Draw(GraphicsDevice device, AlphaTestEffect effect, Camera camera, int width, int height)
+        public void Draw(GraphicsDevice device, AlphaTestEffect effect, Camera camera, int width, int height, SystemGraphic characterGraphic = null)
         {
             if (VB != null)
             {
-                effect.Texture = MapEditor.TexTileset;
+                if (characterGraphic == null) effect.Texture = MapEditor.TexTileset;
+                else effect.Texture = MapEditor.TexCharacters[characterGraphic];
                 device.SetVertexBuffer(VB);
                 device.Indices = IB;
                 foreach (int[] coords in ListSprites.Keys)

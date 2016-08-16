@@ -65,7 +65,7 @@ namespace RPG_Paper_Maker
 
             if (message != null)
             {
-                MessageBox.Show(message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                WANOK.ShowWarningMessage(message);
             }
             else
             {

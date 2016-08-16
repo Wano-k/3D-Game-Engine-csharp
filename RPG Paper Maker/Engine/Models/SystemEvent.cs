@@ -12,6 +12,10 @@ namespace RPG_Paper_Maker
         public string Name;
         public List<SystemEventPage> Pages;
 
+        [NonSerialized()]
+        public int CurrentPage = 0;
+
+
         // -------------------------------------------------------------------
         // SYSTEM EVENT PAGE
         // -------------------------------------------------------------------
@@ -21,20 +25,22 @@ namespace RPG_Paper_Maker
         public class SystemEventPage
         {
             public SystemGraphic Graphic;
+            public DrawType GraphicDrawType;
 
 
             // -------------------------------------------------------------------
             // Constructors
             // -------------------------------------------------------------------
 
-            public SystemEventPage() : this(new SystemGraphic(GraphicKind.Character, new object[] { 4, 0, 0 }))
+            public SystemEventPage() : this(SystemGraphic.GetDefaultEventGraphic(), DrawType.None)
             {
 
             }
 
-            public SystemEventPage(SystemGraphic graphic)
+            public SystemEventPage(SystemGraphic graphic, DrawType graphicDrawType)
             {
                 Graphic = graphic;
+                GraphicDrawType = graphicDrawType;
             }
 
             // -------------------------------------------------------------------
@@ -43,7 +49,7 @@ namespace RPG_Paper_Maker
 
             public SystemEventPage CreateCopy()
             {
-                return new SystemEventPage(Graphic.CreateCopy());
+                return new SystemEventPage(Graphic.CreateCopy(), GraphicDrawType);
             }
         }
 

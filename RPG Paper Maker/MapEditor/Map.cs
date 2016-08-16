@@ -75,6 +75,11 @@ namespace RPG_Paper_Maker
                 MapEditor.TexReliefs[i].Dispose();
             }
             MapEditor.TexReliefs.Clear();
+            foreach (Texture2D texture in MapEditor.TexCharacters.Values)
+            {
+                texture.Dispose();
+            }
+            MapEditor.TexCharacters.Clear();
 
             // Loading textures
             SystemTileset tileset = WANOK.Game.Tilesets.GetTilesetById(MapInfos.Tileset);
@@ -87,6 +92,7 @@ namespace RPG_Paper_Maker
             {
                 MapEditor.TexReliefs[tileset.Reliefs[i]] = WANOK.Game.Tilesets.GetReliefById(tileset.Reliefs[i]).Graphic.LoadTexture(Device);
             }
+            LoadEventTextures();
 
             // Grid
             CreateGrid(MapInfos.Width, MapInfos.Height);
@@ -122,14 +128,72 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // LoadEventSpriteTexture
+        // -------------------------------------------------------------------
+
+        public void LoadSpriteTexture(SystemGraphic graphic)
+        {
+            if (!graphic.IsTileset())
+            {
+                MapEditor.LoadSystemGraphic(graphic, Device);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // LoadEventTextures
+        // -------------------------------------------------------------------
+
+        public void LoadEventTextures()
+        {
+            foreach (Dictionary<int[], SystemEvent> entry in Events.CompleteList.Values)
+            {
+                foreach (SystemEvent ev in entry.Values)
+                {
+                    for (int i = 0; i < ev.Pages.Count; i++)
+                    {
+                        switch (ev.Pages[i].GraphicDrawType)
+                        {
+                            case DrawType.None:
+                                break;
+                            case DrawType.Floors:
+                                break;
+                            case DrawType.Autotiles:
+                                break;
+                            case DrawType.FaceSprite:
+                                LoadSpriteTexture(ev.Pages[i].Graphic);
+                                break;
+                            case DrawType.FixSprite:
+                                LoadSpriteTexture(ev.Pages[i].Graphic);
+                                break;
+                            case DrawType.DoubleSprite:
+                                LoadSpriteTexture(ev.Pages[i].Graphic);
+                                break;
+                            case DrawType.QuadraSprite:
+                                LoadSpriteTexture(ev.Pages[i].Graphic);
+                                break;
+                            case DrawType.OnFloorSprite:
+                                LoadSpriteTexture(ev.Pages[i].Graphic);
+                                break;
+                            case DrawType.Montains:
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // -------------------------------------------------------------------
         // LoadPortion
         // -------------------------------------------------------------------
 
         public void LoadPortion(int real_i, int real_j, int i, int j)
         {
             int[] portion = new int[] { i, j };
+            int[] globalPortion = new int[] { real_i, real_j };
             Portions[portion] = WANOK.LoadPortionMap(MapInfos.RealMapName, real_i, real_j);
-            EventsPortions[portion] = new EventsPortion();
+            EventsPortions[portion] = new EventsPortion(Events.CompleteList.ContainsKey(globalPortion) ? Events.CompleteList[globalPortion] : null);
             if (Portions[portion] != null)
             {
                 GenTextures(portion);
@@ -260,6 +324,7 @@ namespace RPG_Paper_Maker
 
                     // events
                     EventsPortions[portion].DrawSquares(Device, effect);
+                    EventsPortions[portion].DrawSprites(Device, effect, camera);
                 }
             }
 

@@ -18,11 +18,24 @@ namespace RPG_Paper_Maker
         public event EventHandlerGraphic ClosingDialogEvent;
 
 
+        // -------------------------------------------------------------------
+        // GRAPHIC PANEL CLASS
+        // -------------------------------------------------------------------
+
+        #region class GraphicPanel
+
         public class GraphicPanel : Panel
         {
             public SystemGraphic Graphic;
             public Image Image = null;
             public Pen BorderPen = new Pen(Color.LightGray);
+            public int Frame = 0;
+            public bool Animated = true;
+
+
+            // -------------------------------------------------------------------
+            // Constructor
+            // -------------------------------------------------------------------
 
             public GraphicPanel()
             {
@@ -30,9 +43,14 @@ namespace RPG_Paper_Maker
                 BorderPen.Width = 3;
             }
 
+            // -------------------------------------------------------------------
+            // OnPaint
+            // -------------------------------------------------------------------
+
             protected override void OnPaint(PaintEventArgs e)
             {
                 e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+                e.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
 
                 base.OnPaint(e);
 
@@ -41,16 +59,19 @@ namespace RPG_Paper_Maker
                     int frames = (int)Graphic.Options[0];
                     int rows = (int)Graphic.Options[1] == 0 ? 4 : 8;
                     Size size = new Size((int)((Image.Size.Width / frames) * WANOK.RELATION_SIZE), (int)((Image.Size.Height / rows) * WANOK.RELATION_SIZE));
-                    Point point = new Point((Size.Width - size.Width) / 2, (Size.Height - size.Height) / 2);
+                    int offset = Frame % 2 == 0 ? 0 : 1;
+                    Point point = new Point((Size.Width - size.Width) / 2, ((Size.Height - size.Height) / 2) + offset);
                     int index = (int)Graphic.Options[2];
                     Size frameSize = new Size(Image.Size.Width / frames, Image.Size.Height / rows);
-                    Point framePoint = new Point((index % frames) * frameSize.Width, (index / frames) * frameSize.Height);
+                    Point framePoint = Animated ? new Point(Frame * frameSize.Width, (index / frames) * frameSize.Height) : new Point((index % frames) * frameSize.Width, (index / frames) * frameSize.Height);
                     e.Graphics.DrawImage(Image, new Rectangle(point, size), new Rectangle(framePoint, frameSize), GraphicsUnit.Pixel);
                 }
 
                 if (Focused) e.Graphics.DrawRectangle(BorderPen, new Rectangle(ClientRectangle.X + 5, ClientRectangle.Y + 5, ClientRectangle.Width - 11, ClientRectangle.Height - 11));
             }
         }
+
+        #endregion
 
         // -------------------------------------------------------------------
         // Constructor
@@ -86,6 +107,52 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // GetComboBox
+        // -------------------------------------------------------------------
+
+        public ComboBox GetComboBox()
+        {
+            return comboBox1;
+        }
+
+        // -------------------------------------------------------------------
+        // ResetGraphics
+        // -------------------------------------------------------------------
+
+        public void ResetGraphics()
+        {
+            panel.Image = null;
+            panel.Frame = 0;
+            panel.Graphic = SystemGraphic.GetDefaultEventGraphic();
+            panel.Invalidate();
+        }
+
+        // -------------------------------------------------------------------
+        // OpenSpriteDialog
+        // -------------------------------------------------------------------
+
+        public void OpenSpriteDialog()
+        {
+            DialogPreviewGraphicSelectFrame dialog = new DialogPreviewGraphicSelectFrame(panel.Graphic.CreateCopy(), OptionsKind.CharacterSelection);
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                panel.Graphic = dialog.GetGraphic();
+                if (panel.Graphic.IsNone())
+                {
+                    comboBox1.SelectedIndex = (int)DrawType.None;
+                    ResetGraphics();
+                }
+                else
+                {
+                    panel.Image = panel.Graphic.LoadImage();
+                    panel.Refresh();
+                }
+                var eventSubscribers = ClosingDialogEvent;
+                if (eventSubscribers != null) eventSubscribers(panel.Graphic);
+            }
+        }
+
+        // -------------------------------------------------------------------
         // EVENTS
         // -------------------------------------------------------------------
 
@@ -97,14 +164,35 @@ namespace RPG_Paper_Maker
 
         private void Panel_DoubleClick(object sender, EventArgs e)
         {
-            DialogPreviewGraphicSelectFrame dialog = new DialogPreviewGraphicSelectFrame(panel.Graphic.CreateCopy(), OptionsKind.CharacterSelection);
-            if (dialog.ShowDialog() == DialogResult.OK)
+            switch ((DrawType)comboBox1.SelectedIndex)
             {
-                panel.Graphic = dialog.GetGraphic();
-                panel.Image = panel.Graphic.LoadImage();
-                panel.Refresh();
-                var eventSubscribers = ClosingDialogEvent;
-                if (eventSubscribers != null) eventSubscribers(panel.Graphic);
+                case DrawType.None:
+                    comboBox1.SelectedIndex = (int)DrawType.FaceSprite;
+                    OpenSpriteDialog();
+                    break;
+                case DrawType.Floors:
+                    break;
+                case DrawType.Autotiles:
+                    break;
+                case DrawType.FaceSprite:
+                    OpenSpriteDialog();
+                    break;
+                case DrawType.FixSprite:
+                    OpenSpriteDialog();
+                    break;
+                case DrawType.DoubleSprite:
+                    OpenSpriteDialog();
+                    break;
+                case DrawType.QuadraSprite:
+                    OpenSpriteDialog();
+                    break;
+                case DrawType.OnFloorSprite:
+                    OpenSpriteDialog();
+                    break;
+                case DrawType.Montains:
+                    break;
+                default:
+                    break;
             }
         }
 

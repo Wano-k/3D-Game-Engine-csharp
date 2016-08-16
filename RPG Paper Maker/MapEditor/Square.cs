@@ -10,9 +10,9 @@ namespace RPG_Paper_Maker
 {
     class Square
     {
-        private VertexBuffer VB;
+        private DynamicVertexBuffer VB;
         private VertexPositionTexture[] Vertices;
-        private IndexBuffer IB;
+        private DynamicIndexBuffer IB;
         private int[] Indexes;
 
         // -------------------------------------------------------------------
@@ -22,8 +22,8 @@ namespace RPG_Paper_Maker
         public Square(GraphicsDevice device, Texture2D texture, int[] coordsTexture)
         {
             // Init buffers
-            VB = new VertexBuffer(device, typeof(VertexPositionTexture), 4, BufferUsage.WriteOnly);
-            IB = new IndexBuffer(device, IndexElementSize.ThirtyTwoBits, 6, BufferUsage.WriteOnly);
+            VB = new DynamicVertexBuffer(device, typeof(VertexPositionTexture), 4, BufferUsage.WriteOnly);
+            IB = new DynamicIndexBuffer(device, IndexElementSize.ThirtyTwoBits, 6, BufferUsage.WriteOnly);
 
             // Create texture
             CreateTex(coordsTexture, texture);

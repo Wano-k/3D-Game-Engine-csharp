@@ -37,6 +37,20 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // Equals
+        // -------------------------------------------------------------------
+
+        public override bool Equals(object obj)
+        {
+            return IsRTP == ((SystemGraphic)obj).IsRTP && GraphicKind == ((SystemGraphic)obj).GraphicKind && GraphicName == ((SystemGraphic)obj).GraphicName;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        // -------------------------------------------------------------------
         // CreateCopy
         // -------------------------------------------------------------------
 
@@ -58,6 +72,15 @@ namespace RPG_Paper_Maker
         public bool IsNone()
         {
             return GraphicName == WANOK.NONE_IMAGE_STRING;
+        }
+
+        // -------------------------------------------------------------------
+        // IsTileset
+        // -------------------------------------------------------------------
+
+        public bool IsTileset()
+        {
+            return GraphicName == WANOK.TILESET_IMAGE_STRING;
         }
 
         // -------------------------------------------------------------------
@@ -168,6 +191,15 @@ namespace RPG_Paper_Maker
                 MessageBox.Show("Could not load " + path, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return MapEditor.TexNone;
             }
+        }
+
+        // -------------------------------------------------------------------
+        // GetDefaultEventGraphic
+        // -------------------------------------------------------------------
+
+        public static SystemGraphic GetDefaultEventGraphic()
+        {
+            return new SystemGraphic(GraphicKind.Character, new object[] { 4, 0, 0 });
         }
     }
 }

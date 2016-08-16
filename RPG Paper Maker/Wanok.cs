@@ -53,6 +53,7 @@ namespace RPG_Paper_Maker
         public static HashSet<string> ListMapToSave = new HashSet<string>();
         public static TreeNode SelectedNode = null;
         public static string NONE_IMAGE_STRING = "<None>";
+        public static string TILESET_IMAGE_STRING = "<Tileset>";
         public static DialogProgressBar DialogProgressBar = null;
         public static string CurrentMainLang { get { return Game.System.Langs[0]; } }
 
@@ -292,6 +293,11 @@ namespace RPG_Paper_Maker
         public static void PathErrorMessage(Exception e)
         {
             MessageBox.Show("You get a path error. You can send a report to Wanok.rpm@gmail.com.\n" + e.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        public static void ShowWarningMessage(string m)
+        {
+            MessageBox.Show(m, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         // -------------------------------------------------------------------

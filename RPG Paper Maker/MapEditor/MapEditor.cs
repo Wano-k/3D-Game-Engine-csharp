@@ -28,6 +28,7 @@ namespace RPG_Paper_Maker
         public static Texture2D TexCursor, TexStartCursor, TexEventCursor, TexTileset, TexNone, TexGrid;
         public static Dictionary<int,Texture2D> TexAutotiles = new Dictionary<int, Texture2D>();
         public static Dictionary<int, Texture2D> TexReliefs = new Dictionary<int, Texture2D>();
+        public static Dictionary<SystemGraphic, Texture2D> TexCharacters = new Dictionary<SystemGraphic, Texture2D>();
 
         public static int Debug = 0;
 
@@ -150,6 +151,15 @@ namespace RPG_Paper_Maker
         public void ReCalculateCameraProjection()
         {
             if (Control.Camera != null) Control.Camera.CalculateCameraProjection(GraphicsDevice);
+        }
+
+        // -------------------------------------------------------------------
+        // LoadSystemGraphic
+        // -------------------------------------------------------------------
+
+        public static void LoadSystemGraphic(SystemGraphic graphic, GraphicsDevice device)
+        {
+            if (!TexCharacters.ContainsKey(graphic)) TexCharacters[graphic] = graphic.LoadTexture(device);
         }
 
         // -------------------------------------------------------------------

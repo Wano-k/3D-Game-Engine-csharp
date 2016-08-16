@@ -193,7 +193,7 @@ namespace RPG_Paper_Maker
                 }
             }
             IsGridOnTop = (PointOnPlane == null || PointOnFloor == null || !IsInArea(PointOnPlane)) ? false : PlaneDistance < FloorDistance;
-
+            
             // Raycasting sprites
             PointOnSprites = null;
             SpriteDistance = 0;
@@ -633,33 +633,32 @@ namespace RPG_Paper_Maker
             if (IsInArea(coords))
             {
                 int[] globalPortion = GetGlobalPortion(coords[0], coords[3]);
-                bool test = false;
-                /*
-                if (Map.MapInfos.EventSprites.ContainsKey(portion))
+                int[] evCoords = null;
+                
+                if (Map.Events.CompleteList.ContainsKey(globalPortion))
                 {
-                    foreach (Dictionary<int[], SystemEvent> entry in Map.MapInfos.EventSprites[portion].Values)
+                    foreach (int[] coords2 in Map.Events.CompleteList[globalPortion].Keys)
                     {
-                        foreach (int[] coords2 in entry.Keys)
+                        if (coords.SequenceEqual(coords2))
                         {
-                            if (coords.SequenceEqual(coords2))
-                            {
-                                test = true;
-                                break;
-                            }
+                            evCoords = coords2;
+                            break;
                         }
                     }
-                }*/
-                if (!test)
+                }
+
+                SystemEvent ev = evCoords == null ? new SystemEvent(WANOK.GetStringEvent(Map.Events.Count() + 1)) : Map.Events.CompleteList[globalPortion][evCoords];
+                WANOK.KeyboardManager.InitializeKeyboard();
+                WANOK.MapMouseManager.InitializeMouse();
+                DialogEvent dialog = new DialogEvent(ev);
+                if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    WANOK.KeyboardManager.InitializeKeyboard();
-                    WANOK.MapMouseManager.InitializeMouse();
-                    DialogEvent dialog = new DialogEvent(new SystemEvent(WANOK.GetStringEvent(Map.Events.Count() + 1)));
-                    if (dialog.ShowDialog() == DialogResult.OK)
-                    {
-                        int[] portion = GetPortion(coords[0], coords[3]);
-                        Map.Events.Add(globalPortion, coords, new SystemEvent(""));
-                        Map.GenEvent(portion);
-                    }
+                    int[] portion = GetPortion(coords[0], coords[3]);
+                    Map.Events.Add(globalPortion, coords, dialog.GetEvent());
+                    Map.EventsPortions[portion].RemoveSprite(coords);
+                    Map.EventsPortions[portion].AddSprite(coords, dialog.GetEvent());
+                    Map.LoadSpriteTexture(dialog.GetEvent().Pages[0].Graphic);
+                    Map.GenEvent(portion);
                 }
             }
         }
