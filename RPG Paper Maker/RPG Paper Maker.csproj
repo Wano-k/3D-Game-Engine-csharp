@@ -83,6 +83,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\CustomUserControls\ConstantVariable.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Engine\CustomUserControls\ConstantVariable.Designer.cs">
+      <DependentUpon>ConstantVariable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Engine\CustomUserControls\FlatButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -402,6 +408,9 @@
     </Compile>
     <Compile Include="MapEditor\SelectionRectangle.cs" />
     <Compile Include="Engine\TreeTag.cs" />
+    <EmbeddedResource Include="Engine\CustomUserControls\ConstantVariable.resx">
+      <DependentUpon>ConstantVariable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Engine\CustomUserControls\GraphicControl.resx">
       <DependentUpon>GraphicControl.cs</DependentUpon>
     </EmbeddedResource>
