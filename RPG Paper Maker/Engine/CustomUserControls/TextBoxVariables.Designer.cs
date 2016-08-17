@@ -80,7 +80,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(0);
+            this.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
             this.Name = "TextBoxVariables";
             this.Size = new System.Drawing.Size(210, 36);
             this.tableLayoutPanel1.ResumeLayout(false);
