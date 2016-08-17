@@ -112,6 +112,7 @@ namespace RPG_Paper_Maker
             panel.Click += panel_Click;
             panel.DoubleClick += Panel_DoubleClick;
             panel.LostFocus += Panel_LostFocus;
+            
         }
 
         // -------------------------------------------------------------------

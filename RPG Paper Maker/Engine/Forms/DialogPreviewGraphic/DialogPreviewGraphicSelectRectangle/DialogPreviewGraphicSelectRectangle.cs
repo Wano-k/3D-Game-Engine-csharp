@@ -108,10 +108,11 @@ namespace RPG_Paper_Maker
             PictureBox.MouseDown += PictureBox_MouseDown;
             PictureBox.MouseUp += PictureBox_MouseUp;
             PictureBox.MouseMove += PictureBox_MouseMove;
-            numericButtonX.ValueChanged += NumericButtonX_ValueChanged;
-            numericButtonY.ValueChanged += NumericButtonY_ValueChanged;
-            numericButtonWidth.ValueChanged += NumericButtonWidth_ValueChanged;
-            numericButtonHeight.ValueChanged += NumericButtonHeight_ValueChanged;
+            numericButtonX.ValueChanged += UpdateRectangle;
+            numericButtonY.ValueChanged += UpdateRectangle;
+            numericButtonWidth.ValueChanged += UpdateRectangle;
+            numericButtonHeight.ValueChanged += UpdateRectangle;
+            listView1.SelectedIndexChanged += UpdateRectangle;
         }
 
         // -------------------------------------------------------------------
@@ -196,22 +197,7 @@ namespace RPG_Paper_Maker
             PictureBox.Focus();
         }
 
-        private void NumericButtonX_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateRectangle();
-        }
-
-        private void NumericButtonY_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateRectangle();
-        }
-
-        private void NumericButtonWidth_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateRectangle();
-        }
-
-        private void NumericButtonHeight_ValueChanged(object sender, EventArgs e)
+        private void UpdateRectangle(object sender, EventArgs e)
         {
             UpdateRectangle();
         }

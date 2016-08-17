@@ -83,6 +83,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\CustomUserControls\FlatButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Engine\CustomUserControls\GraphicControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -164,6 +167,19 @@
     <Compile Include="Engine\Forms\DialogAddingSpecialList\DialogAddingSpecialList.Designer.cs">
       <DependentUpon>DialogAddingSpecialList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\Forms\DialogConditions\DialogConditions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogConditions\DialogConditions.Designer.cs">
+      <DependentUpon>DialogConditions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogCondition\DialogCondition.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogCondition\DialogCondition.Designer.cs">
+      <DependentUpon>DialogCondition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogCondition\DialogConditionControl.cs" />
     <Compile Include="Engine\Forms\DialogDataBase\DialogDataBase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -415,6 +431,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogAddingSpecialList\DialogAddingSpecialList.resx">
       <DependentUpon>DialogAddingSpecialList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogConditions\DialogConditions.resx">
+      <DependentUpon>DialogConditions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogCondition\DialogCondition.resx">
+      <DependentUpon>DialogCondition.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogDataBase\DialogDataBase.resx">
       <DependentUpon>DialogDataBase.cs</DependentUpon>

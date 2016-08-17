@@ -188,6 +188,7 @@ namespace RPG_Paper_Maker
             CurrentValue = 0;
             trackBarZoom.Value = 0;
             Zoom = 1.0f;
+            PictureBox.Zoom(Zoom);
         }
 
         private void trackBarZoom_Scroll(object sender, EventArgs e)
