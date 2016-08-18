@@ -639,16 +639,38 @@ namespace RPG_Paper_Maker
 
         public static void CheckControls(List<Control[]> list, int index)
         {
+            UnCheckAllControls(list);
+
+            for (int i = 0; i < list[index].Length; i++)
+            {
+                list[index][i].Enabled = true;
+            }
+        }
+
+        public static void UnCheckAllControls(List<Control[]> list, bool enable = false)
+        {
             for (int i = 0; i < list.Count; i++)
             {
                 for (int j = 0; j < list[i].Length; j++)
                 {
-                    list[i][j].Enabled = false;
+                    list[i][j].Enabled = enable;
                 }
             }
-            for (int i = 0; i < list[index].Length; i++)
+        }
+
+        public static void UnCheckRadios(List<RadioButton> radioButtons, bool enable = false)
+        {
+            for (int i = 0; i < radioButtons.Count; i++)
             {
-                list[index][i].Enabled = true;
+                radioButtons[i].Checked = enable;
+            }
+        }
+
+        public static void UnableRadios(List<RadioButton> radioButtons, bool enable = false)
+        {
+            for (int i = 0; i < radioButtons.Count; i++)
+            {
+                radioButtons[i].Enabled = enable;
             }
         }
 

@@ -38,22 +38,25 @@
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox8 = new System.Windows.Forms.ComboBox();
+            this.comboBoxSwitchOnOff = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox9 = new System.Windows.Forms.ComboBox();
-            this.comboBox10 = new System.Windows.Forms.ComboBox();
+            this.comboBoxSelfSwitch = new System.Windows.Forms.ComboBox();
+            this.comboBoxSelfSwitchOnOff = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPageHeroes = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
+            this.comboBoxHeroesIn = new System.Windows.Forms.ComboBox();
+            this.textBoxHeroesNamed = new System.Windows.Forms.TextBox();
+            this.comboBoxHeroesSkill = new System.Windows.Forms.ComboBox();
+            this.comboBoxHeroesEquiped = new System.Windows.Forms.ComboBox();
+            this.comboBoxHeroesEffect = new System.Windows.Forms.ComboBox();
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.comboBoxHeroesStat = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.listViewHeroes = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -62,48 +65,44 @@
             this.tabPageEnemies = new System.Windows.Forms.TabPage();
             this.tabPageEvents = new System.Windows.Forms.TabPage();
             this.tabPagePossessions = new System.Windows.Forms.TabPage();
-            this.tabPageOthers = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel18 = new System.Windows.Forms.TableLayoutPanel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.comboBox11 = new System.Windows.Forms.ComboBox();
-            this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
-            this.comboBox12 = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
-            this.label6 = new System.Windows.Forms.Label();
-            this.comboBox13 = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel19 = new System.Windows.Forms.TableLayoutPanel();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel20 = new System.Windows.Forms.TableLayoutPanel();
             this.label7 = new System.Windows.Forms.Label();
             this.comboBox14 = new System.Windows.Forms.ComboBox();
-            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
-            this.comboBox7 = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.radioButtonWithGroup10 = new RPG_Paper_Maker.RadioButtonWithGroup();
-            this.radioButtonWithGroup11 = new RPG_Paper_Maker.RadioButtonWithGroup();
-            this.radioButtonWithGroup12 = new RPG_Paper_Maker.RadioButtonWithGroup();
-            this.textBoxVariables1 = new RPG_Paper_Maker.Engine.CustomUserControls.TextBoxVariables();
-            this.textBoxVariables2 = new RPG_Paper_Maker.Engine.CustomUserControls.TextBoxVariables();
-            this.comboBoxComparaison2 = new RPG_Paper_Maker.ComboBoxComparaison();
-            this.constantVariable2 = new RPG_Paper_Maker.Engine.CustomUserControls.ConstantVariable();
-            this.radioButtonWithGroup9 = new RPG_Paper_Maker.RadioButtonWithGroup();
-            this.radioButtonWithGroup6 = new RPG_Paper_Maker.RadioButtonWithGroup();
-            this.radioButtonWithGroup2 = new RPG_Paper_Maker.RadioButtonWithGroup();
-            this.radioButtonWithGroup4 = new RPG_Paper_Maker.RadioButtonWithGroup();
-            this.radioButtonWithGroup7 = new RPG_Paper_Maker.RadioButtonWithGroup();
-            this.radioButtonWithGroup8 = new RPG_Paper_Maker.RadioButtonWithGroup();
-            this.comboBoxMeasure1 = new RPG_Paper_Maker.ComboBoxMeasure();
-            this.comboBoxComparaison1 = new RPG_Paper_Maker.ComboBoxComparaison();
-            this.constantVariable1 = new RPG_Paper_Maker.Engine.CustomUserControls.ConstantVariable();
-            this.radioButtonWithGroup1 = new RPG_Paper_Maker.RadioButtonWithGroup();
-            this.radioButtonWithGroup3 = new RPG_Paper_Maker.RadioButtonWithGroup();
-            this.radioButtonWithGroup5 = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.comboBox13 = new System.Windows.Forms.ComboBox();
+            this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.comboBox12 = new System.Windows.Forms.ComboBox();
+            this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel18 = new System.Windows.Forms.TableLayoutPanel();
+            this.comboBox11 = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tabPageOthers = new System.Windows.Forms.TabPage();
+            this.radioButtonSwitch = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.radioButtonSelfSwitch = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.radioButtonVariable = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.textBoxVariablesSwitch = new RPG_Paper_Maker.Engine.CustomUserControls.TextBoxVariables();
+            this.textBoxVariablesVariable = new RPG_Paper_Maker.Engine.CustomUserControls.TextBoxVariables();
+            this.comboBoxComparaisonVariable = new RPG_Paper_Maker.ComboBoxComparaison();
+            this.constantVariableVariable = new RPG_Paper_Maker.Engine.CustomUserControls.ConstantVariable();
+            this.radioButtonHeroesStat = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.radioButtonHeroesSkill = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.radioButtonHeroesNamed = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.radioButtonHeroesIn = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.radioButtonHeroesEquiped = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.radioButtonHeroesEffect = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.comboBoxMeasureHeroes = new RPG_Paper_Maker.ComboBoxMeasure();
+            this.comboBoxComparaisonHeroesStat = new RPG_Paper_Maker.ComboBoxComparaison();
+            this.constantVariableHeroes = new RPG_Paper_Maker.Engine.CustomUserControls.ConstantVariable();
+            this.radioButtonHeroesAll = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.radioButtonHeroesAtLeast = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.radioButtonHeroes = new RPG_Paper_Maker.RadioButtonWithGroup();
             this.radioButtonWithGroup16 = new RPG_Paper_Maker.RadioButtonWithGroup();
             this.comboBoxComparaison4 = new RPG_Paper_Maker.ComboBoxComparaison();
             this.constantVariable4 = new RPG_Paper_Maker.Engine.CustomUserControls.ConstantVariable();
@@ -123,18 +122,18 @@
             this.tabPageHeroes.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
+            this.tableLayoutPanel7.SuspendLayout();
+            this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.tabPagePossessions.SuspendLayout();
             this.tableLayoutPanel13.SuspendLayout();
-            this.tableLayoutPanel14.SuspendLayout();
-            this.tableLayoutPanel18.SuspendLayout();
-            this.tableLayoutPanel16.SuspendLayout();
-            this.tableLayoutPanel15.SuspendLayout();
-            this.tableLayoutPanel17.SuspendLayout();
             this.tableLayoutPanel19.SuspendLayout();
             this.tableLayoutPanel20.SuspendLayout();
-            this.tableLayoutPanel7.SuspendLayout();
-            this.tableLayoutPanel8.SuspendLayout();
+            this.tableLayoutPanel17.SuspendLayout();
+            this.tableLayoutPanel16.SuspendLayout();
+            this.tableLayoutPanel15.SuspendLayout();
+            this.tableLayoutPanel14.SuspendLayout();
+            this.tableLayoutPanel18.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -150,7 +149,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(486, 552);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(493, 552);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -166,13 +165,13 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(470, 29);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(477, 29);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // cancel
             // 
             this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancel.Location = new System.Drawing.Point(392, 3);
+            this.cancel.Location = new System.Drawing.Point(399, 3);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(75, 23);
             this.cancel.TabIndex = 1;
@@ -181,7 +180,7 @@
             // 
             // ok
             // 
-            this.ok.Location = new System.Drawing.Point(311, 3);
+            this.ok.Location = new System.Drawing.Point(318, 3);
             this.ok.Name = "ok";
             this.ok.Size = new System.Drawing.Size(75, 23);
             this.ok.TabIndex = 0;
@@ -196,7 +195,7 @@
             this.panel1.Location = new System.Drawing.Point(8, 8);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(5);
-            this.panel1.Size = new System.Drawing.Size(470, 501);
+            this.panel1.Size = new System.Drawing.Size(477, 501);
             this.panel1.TabIndex = 1;
             // 
             // tabControl1
@@ -211,7 +210,7 @@
             this.tabControl1.Location = new System.Drawing.Point(5, 5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(460, 491);
+            this.tabControl1.Size = new System.Drawing.Size(467, 491);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPageSwitchesVariables
@@ -221,7 +220,7 @@
             this.tabPageSwitchesVariables.Margin = new System.Windows.Forms.Padding(5);
             this.tabPageSwitchesVariables.Name = "tabPageSwitchesVariables";
             this.tabPageSwitchesVariables.Padding = new System.Windows.Forms.Padding(10, 25, 10, 10);
-            this.tabPageSwitchesVariables.Size = new System.Drawing.Size(452, 465);
+            this.tabPageSwitchesVariables.Size = new System.Drawing.Size(459, 465);
             this.tabPageSwitchesVariables.TabIndex = 0;
             this.tabPageSwitchesVariables.Text = "Switches and variables";
             this.tabPageSwitchesVariables.UseVisualStyleBackColor = true;
@@ -231,9 +230,9 @@
             this.tableLayoutPanel4.ColumnCount = 2;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Controls.Add(this.radioButtonWithGroup10, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.radioButtonWithGroup11, 0, 1);
-            this.tableLayoutPanel4.Controls.Add(this.radioButtonWithGroup12, 0, 2);
+            this.tableLayoutPanel4.Controls.Add(this.radioButtonSwitch, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.radioButtonSelfSwitch, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.radioButtonVariable, 0, 2);
             this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel9, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel10, 1, 1);
             this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel11, 1, 2);
@@ -246,7 +245,7 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(432, 430);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(439, 430);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // tableLayoutPanel9
@@ -256,16 +255,16 @@
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel9.Controls.Add(this.textBoxVariables1, 0, 0);
+            this.tableLayoutPanel9.Controls.Add(this.textBoxVariablesSwitch, 0, 0);
             this.tableLayoutPanel9.Controls.Add(this.label1, 1, 0);
-            this.tableLayoutPanel9.Controls.Add(this.comboBox8, 2, 0);
+            this.tableLayoutPanel9.Controls.Add(this.comboBoxSwitchOnOff, 2, 0);
             this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel9.Location = new System.Drawing.Point(82, 0);
             this.tableLayoutPanel9.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel9.Name = "tableLayoutPanel9";
             this.tableLayoutPanel9.RowCount = 1;
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(350, 28);
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(357, 28);
             this.tableLayoutPanel9.TabIndex = 3;
             // 
             // label1
@@ -278,14 +277,17 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "is";
             // 
-            // comboBox8
+            // comboBoxSwitchOnOff
             // 
-            this.comboBox8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox8.FormattingEnabled = true;
-            this.comboBox8.Location = new System.Drawing.Point(199, 3);
-            this.comboBox8.Name = "comboBox8";
-            this.comboBox8.Size = new System.Drawing.Size(50, 21);
-            this.comboBox8.TabIndex = 2;
+            this.comboBoxSwitchOnOff.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSwitchOnOff.FormattingEnabled = true;
+            this.comboBoxSwitchOnOff.Items.AddRange(new object[] {
+            "ON",
+            "OFF"});
+            this.comboBoxSwitchOnOff.Location = new System.Drawing.Point(199, 3);
+            this.comboBoxSwitchOnOff.Name = "comboBoxSwitchOnOff";
+            this.comboBoxSwitchOnOff.Size = new System.Drawing.Size(50, 21);
+            this.comboBoxSwitchOnOff.TabIndex = 2;
             // 
             // tableLayoutPanel10
             // 
@@ -295,15 +297,15 @@
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel10.Controls.Add(this.label2, 1, 0);
-            this.tableLayoutPanel10.Controls.Add(this.comboBox9, 0, 0);
-            this.tableLayoutPanel10.Controls.Add(this.comboBox10, 2, 0);
+            this.tableLayoutPanel10.Controls.Add(this.comboBoxSelfSwitch, 0, 0);
+            this.tableLayoutPanel10.Controls.Add(this.comboBoxSelfSwitchOnOff, 2, 0);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel10.Location = new System.Drawing.Point(82, 28);
             this.tableLayoutPanel10.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
             this.tableLayoutPanel10.RowCount = 1;
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(350, 27);
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(357, 27);
             this.tableLayoutPanel10.TabIndex = 4;
             // 
             // label2
@@ -316,23 +318,26 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "is";
             // 
-            // comboBox9
+            // comboBoxSelfSwitch
             // 
-            this.comboBox9.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox9.FormattingEnabled = true;
-            this.comboBox9.Location = new System.Drawing.Point(3, 3);
-            this.comboBox9.Name = "comboBox9";
-            this.comboBox9.Size = new System.Drawing.Size(50, 21);
-            this.comboBox9.TabIndex = 2;
+            this.comboBoxSelfSwitch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSelfSwitch.FormattingEnabled = true;
+            this.comboBoxSelfSwitch.Location = new System.Drawing.Point(3, 3);
+            this.comboBoxSelfSwitch.Name = "comboBoxSelfSwitch";
+            this.comboBoxSelfSwitch.Size = new System.Drawing.Size(50, 21);
+            this.comboBoxSelfSwitch.TabIndex = 2;
             // 
-            // comboBox10
+            // comboBoxSelfSwitchOnOff
             // 
-            this.comboBox10.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox10.FormattingEnabled = true;
-            this.comboBox10.Location = new System.Drawing.Point(79, 3);
-            this.comboBox10.Name = "comboBox10";
-            this.comboBox10.Size = new System.Drawing.Size(50, 21);
-            this.comboBox10.TabIndex = 3;
+            this.comboBoxSelfSwitchOnOff.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSelfSwitchOnOff.FormattingEnabled = true;
+            this.comboBoxSelfSwitchOnOff.Items.AddRange(new object[] {
+            "ON",
+            "OFF"});
+            this.comboBoxSelfSwitchOnOff.Location = new System.Drawing.Point(79, 3);
+            this.comboBoxSelfSwitchOnOff.Name = "comboBoxSelfSwitchOnOff";
+            this.comboBoxSelfSwitchOnOff.Size = new System.Drawing.Size(50, 21);
+            this.comboBoxSelfSwitchOnOff.TabIndex = 3;
             // 
             // tableLayoutPanel11
             // 
@@ -340,8 +345,8 @@
             this.tableLayoutPanel11.ColumnCount = 1;
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel11.Controls.Add(this.tableLayoutPanel12, 0, 0);
-            this.tableLayoutPanel11.Controls.Add(this.comboBoxComparaison2, 0, 1);
-            this.tableLayoutPanel11.Controls.Add(this.constantVariable2, 0, 2);
+            this.tableLayoutPanel11.Controls.Add(this.comboBoxComparaisonVariable, 0, 1);
+            this.tableLayoutPanel11.Controls.Add(this.constantVariableVariable, 0, 2);
             this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel11.Location = new System.Drawing.Point(82, 55);
             this.tableLayoutPanel11.Margin = new System.Windows.Forms.Padding(0);
@@ -350,7 +355,7 @@
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(350, 129);
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(357, 129);
             this.tableLayoutPanel11.TabIndex = 5;
             // 
             // tableLayoutPanel12
@@ -360,7 +365,7 @@
             this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel12.Controls.Add(this.textBoxVariables2, 0, 0);
+            this.tableLayoutPanel12.Controls.Add(this.textBoxVariablesVariable, 0, 0);
             this.tableLayoutPanel12.Controls.Add(this.label3, 1, 0);
             this.tableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel12.Location = new System.Drawing.Point(0, 0);
@@ -368,7 +373,7 @@
             this.tableLayoutPanel12.Name = "tableLayoutPanel12";
             this.tableLayoutPanel12.RowCount = 1;
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel12.Size = new System.Drawing.Size(350, 28);
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(357, 28);
             this.tableLayoutPanel12.TabIndex = 4;
             // 
             // label3
@@ -388,7 +393,7 @@
             this.tabPageHeroes.Margin = new System.Windows.Forms.Padding(5);
             this.tabPageHeroes.Name = "tabPageHeroes";
             this.tabPageHeroes.Padding = new System.Windows.Forms.Padding(10, 25, 10, 10);
-            this.tabPageHeroes.Size = new System.Drawing.Size(452, 465);
+            this.tabPageHeroes.Size = new System.Drawing.Size(459, 465);
             this.tabPageHeroes.TabIndex = 1;
             this.tabPageHeroes.Text = "Heroes";
             this.tabPageHeroes.UseVisualStyleBackColor = true;
@@ -405,7 +410,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(432, 430);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(439, 430);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // tableLayoutPanel6
@@ -414,17 +419,17 @@
             this.tableLayoutPanel6.ColumnCount = 2;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Controls.Add(this.radioButtonWithGroup9, 0, 5);
-            this.tableLayoutPanel6.Controls.Add(this.radioButtonWithGroup6, 0, 2);
-            this.tableLayoutPanel6.Controls.Add(this.comboBox3, 1, 1);
-            this.tableLayoutPanel6.Controls.Add(this.radioButtonWithGroup2, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.radioButtonWithGroup4, 0, 1);
-            this.tableLayoutPanel6.Controls.Add(this.textBox1, 1, 0);
-            this.tableLayoutPanel6.Controls.Add(this.radioButtonWithGroup7, 0, 3);
-            this.tableLayoutPanel6.Controls.Add(this.radioButtonWithGroup8, 0, 4);
-            this.tableLayoutPanel6.Controls.Add(this.comboBox4, 1, 2);
-            this.tableLayoutPanel6.Controls.Add(this.comboBox5, 1, 3);
-            this.tableLayoutPanel6.Controls.Add(this.comboBox6, 1, 4);
+            this.tableLayoutPanel6.Controls.Add(this.radioButtonHeroesStat, 0, 5);
+            this.tableLayoutPanel6.Controls.Add(this.radioButtonHeroesSkill, 0, 2);
+            this.tableLayoutPanel6.Controls.Add(this.comboBoxHeroesIn, 1, 1);
+            this.tableLayoutPanel6.Controls.Add(this.radioButtonHeroesNamed, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.radioButtonHeroesIn, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.textBoxHeroesNamed, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.radioButtonHeroesEquiped, 0, 3);
+            this.tableLayoutPanel6.Controls.Add(this.radioButtonHeroesEffect, 0, 4);
+            this.tableLayoutPanel6.Controls.Add(this.comboBoxHeroesSkill, 1, 2);
+            this.tableLayoutPanel6.Controls.Add(this.comboBoxHeroesEquiped, 1, 3);
+            this.tableLayoutPanel6.Controls.Add(this.comboBoxHeroesEffect, 1, 4);
             this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel7, 1, 5);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(50, 142);
@@ -438,54 +443,100 @@
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(382, 349);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(389, 349);
             this.tableLayoutPanel6.TabIndex = 5;
             // 
-            // comboBox3
+            // comboBoxHeroesIn
             // 
-            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
+            this.comboBoxHeroesIn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxHeroesIn.FormattingEnabled = true;
+            this.comboBoxHeroesIn.Items.AddRange(new object[] {
             "the team",
             "the battle party"});
-            this.comboBox3.Location = new System.Drawing.Point(135, 29);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(150, 21);
-            this.comboBox3.TabIndex = 4;
+            this.comboBoxHeroesIn.Location = new System.Drawing.Point(143, 29);
+            this.comboBoxHeroesIn.Name = "comboBoxHeroesIn";
+            this.comboBoxHeroesIn.Size = new System.Drawing.Size(150, 21);
+            this.comboBoxHeroesIn.TabIndex = 4;
             // 
-            // textBox1
+            // textBoxHeroesNamed
             // 
-            this.textBox1.Location = new System.Drawing.Point(135, 3);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(150, 20);
-            this.textBox1.TabIndex = 5;
+            this.textBoxHeroesNamed.Location = new System.Drawing.Point(143, 3);
+            this.textBoxHeroesNamed.Name = "textBoxHeroesNamed";
+            this.textBoxHeroesNamed.Size = new System.Drawing.Size(150, 20);
+            this.textBoxHeroesNamed.TabIndex = 5;
             // 
-            // comboBox4
+            // comboBoxHeroesSkill
             // 
-            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(135, 56);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(150, 21);
-            this.comboBox4.TabIndex = 9;
+            this.comboBoxHeroesSkill.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxHeroesSkill.FormattingEnabled = true;
+            this.comboBoxHeroesSkill.Location = new System.Drawing.Point(143, 56);
+            this.comboBoxHeroesSkill.Name = "comboBoxHeroesSkill";
+            this.comboBoxHeroesSkill.Size = new System.Drawing.Size(150, 21);
+            this.comboBoxHeroesSkill.TabIndex = 9;
             // 
-            // comboBox5
+            // comboBoxHeroesEquiped
             // 
-            this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(135, 83);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(150, 21);
-            this.comboBox5.TabIndex = 10;
+            this.comboBoxHeroesEquiped.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxHeroesEquiped.FormattingEnabled = true;
+            this.comboBoxHeroesEquiped.Location = new System.Drawing.Point(143, 83);
+            this.comboBoxHeroesEquiped.Name = "comboBoxHeroesEquiped";
+            this.comboBoxHeroesEquiped.Size = new System.Drawing.Size(150, 21);
+            this.comboBoxHeroesEquiped.TabIndex = 10;
             // 
-            // comboBox6
+            // comboBoxHeroesEffect
             // 
-            this.comboBox6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(135, 110);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(150, 21);
-            this.comboBox6.TabIndex = 11;
+            this.comboBoxHeroesEffect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxHeroesEffect.FormattingEnabled = true;
+            this.comboBoxHeroesEffect.Location = new System.Drawing.Point(143, 110);
+            this.comboBoxHeroesEffect.Name = "comboBoxHeroesEffect";
+            this.comboBoxHeroesEffect.Size = new System.Drawing.Size(150, 21);
+            this.comboBoxHeroesEffect.TabIndex = 11;
+            // 
+            // tableLayoutPanel7
+            // 
+            this.tableLayoutPanel7.AutoSize = true;
+            this.tableLayoutPanel7.ColumnCount = 1;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel7.Controls.Add(this.tableLayoutPanel8, 0, 0);
+            this.tableLayoutPanel7.Controls.Add(this.comboBoxMeasureHeroes, 0, 3);
+            this.tableLayoutPanel7.Controls.Add(this.comboBoxComparaisonHeroesStat, 0, 1);
+            this.tableLayoutPanel7.Controls.Add(this.constantVariableHeroes, 0, 2);
+            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(140, 134);
+            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 4;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(249, 155);
+            this.tableLayoutPanel7.TabIndex = 13;
+            // 
+            // tableLayoutPanel8
+            // 
+            this.tableLayoutPanel8.AutoSize = true;
+            this.tableLayoutPanel8.ColumnCount = 2;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel8.Controls.Add(this.comboBoxHeroesStat, 0, 0);
+            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
+            this.tableLayoutPanel8.RowCount = 1;
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(249, 27);
+            this.tableLayoutPanel8.TabIndex = 4;
+            // 
+            // comboBoxHeroesStat
+            // 
+            this.comboBoxHeroesStat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxHeroesStat.FormattingEnabled = true;
+            this.comboBoxHeroesStat.Location = new System.Drawing.Point(3, 3);
+            this.comboBoxHeroesStat.Name = "comboBoxHeroesStat";
+            this.comboBoxHeroesStat.Size = new System.Drawing.Size(150, 21);
+            this.comboBoxHeroesStat.TabIndex = 5;
             // 
             // tableLayoutPanel5
             // 
@@ -497,10 +548,10 @@
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.Controls.Add(this.listViewHeroes, 1, 2);
             this.tableLayoutPanel5.Controls.Add(this.comboBoxAtLeastHero, 1, 1);
-            this.tableLayoutPanel5.Controls.Add(this.radioButtonWithGroup1, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.radioButtonHeroesAll, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.comboBoxAllHeroes, 1, 0);
-            this.tableLayoutPanel5.Controls.Add(this.radioButtonWithGroup3, 0, 1);
-            this.tableLayoutPanel5.Controls.Add(this.radioButtonWithGroup5, 0, 2);
+            this.tableLayoutPanel5.Controls.Add(this.radioButtonHeroesAtLeast, 0, 1);
+            this.tableLayoutPanel5.Controls.Add(this.radioButtonHeroes, 0, 2);
             this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
@@ -508,7 +559,7 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(432, 132);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(439, 132);
             this.tableLayoutPanel5.TabIndex = 4;
             // 
             // listViewHeroes
@@ -555,7 +606,7 @@
             this.tabPageEnemies.Margin = new System.Windows.Forms.Padding(5);
             this.tabPageEnemies.Name = "tabPageEnemies";
             this.tabPageEnemies.Padding = new System.Windows.Forms.Padding(10, 25, 10, 10);
-            this.tabPageEnemies.Size = new System.Drawing.Size(452, 465);
+            this.tabPageEnemies.Size = new System.Drawing.Size(459, 465);
             this.tabPageEnemies.TabIndex = 2;
             this.tabPageEnemies.Text = "Enemies";
             this.tabPageEnemies.UseVisualStyleBackColor = true;
@@ -566,7 +617,7 @@
             this.tabPageEvents.Margin = new System.Windows.Forms.Padding(5);
             this.tabPageEvents.Name = "tabPageEvents";
             this.tabPageEvents.Padding = new System.Windows.Forms.Padding(10, 25, 10, 10);
-            this.tabPageEvents.Size = new System.Drawing.Size(452, 465);
+            this.tabPageEvents.Size = new System.Drawing.Size(459, 465);
             this.tabPageEvents.TabIndex = 3;
             this.tabPageEvents.Text = "Events";
             this.tabPageEvents.UseVisualStyleBackColor = true;
@@ -578,21 +629,10 @@
             this.tabPagePossessions.Margin = new System.Windows.Forms.Padding(5);
             this.tabPagePossessions.Name = "tabPagePossessions";
             this.tabPagePossessions.Padding = new System.Windows.Forms.Padding(10, 25, 10, 10);
-            this.tabPagePossessions.Size = new System.Drawing.Size(452, 465);
+            this.tabPagePossessions.Size = new System.Drawing.Size(459, 465);
             this.tabPagePossessions.TabIndex = 4;
             this.tabPagePossessions.Text = "Possessions";
             this.tabPagePossessions.UseVisualStyleBackColor = true;
-            // 
-            // tabPageOthers
-            // 
-            this.tabPageOthers.Location = new System.Drawing.Point(4, 22);
-            this.tabPageOthers.Margin = new System.Windows.Forms.Padding(5);
-            this.tabPageOthers.Name = "tabPageOthers";
-            this.tabPageOthers.Padding = new System.Windows.Forms.Padding(10, 25, 10, 10);
-            this.tabPageOthers.Size = new System.Drawing.Size(452, 465);
-            this.tabPageOthers.TabIndex = 5;
-            this.tabPageOthers.Text = "Others";
-            this.tabPageOthers.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel13
             // 
@@ -617,173 +657,8 @@
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(432, 430);
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(439, 430);
             this.tableLayoutPanel13.TabIndex = 1;
-            // 
-            // tableLayoutPanel14
-            // 
-            this.tableLayoutPanel14.AutoSize = true;
-            this.tableLayoutPanel14.ColumnCount = 1;
-            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel14.Controls.Add(this.tableLayoutPanel18, 0, 0);
-            this.tableLayoutPanel14.Controls.Add(this.comboBoxComparaison4, 0, 1);
-            this.tableLayoutPanel14.Controls.Add(this.constantVariable4, 0, 2);
-            this.tableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel14.Location = new System.Drawing.Point(72, 0);
-            this.tableLayoutPanel14.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel14.Name = "tableLayoutPanel14";
-            this.tableLayoutPanel14.RowCount = 3;
-            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel14.Size = new System.Drawing.Size(360, 128);
-            this.tableLayoutPanel14.TabIndex = 6;
-            // 
-            // tableLayoutPanel18
-            // 
-            this.tableLayoutPanel18.AutoSize = true;
-            this.tableLayoutPanel18.ColumnCount = 3;
-            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel18.Controls.Add(this.comboBox11, 0, 0);
-            this.tableLayoutPanel18.Controls.Add(this.label4, 1, 0);
-            this.tableLayoutPanel18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel18.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel18.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel18.Name = "tableLayoutPanel18";
-            this.tableLayoutPanel18.RowCount = 1;
-            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel18.Size = new System.Drawing.Size(360, 27);
-            this.tableLayoutPanel18.TabIndex = 4;
-            // 
-            // label4
-            // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(159, 7);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(14, 13);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "is";
-            // 
-            // comboBox11
-            // 
-            this.comboBox11.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox11.FormattingEnabled = true;
-            this.comboBox11.Items.AddRange(new object[] {
-            "the team",
-            "the battle party"});
-            this.comboBox11.Location = new System.Drawing.Point(3, 3);
-            this.comboBox11.Name = "comboBox11";
-            this.comboBox11.Size = new System.Drawing.Size(150, 21);
-            this.comboBox11.TabIndex = 5;
-            // 
-            // tableLayoutPanel16
-            // 
-            this.tableLayoutPanel16.AutoSize = true;
-            this.tableLayoutPanel16.ColumnCount = 1;
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel16.Controls.Add(this.checkBox2, 0, 1);
-            this.tableLayoutPanel16.Controls.Add(this.tableLayoutPanel15, 0, 0);
-            this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel16.Location = new System.Drawing.Point(72, 155);
-            this.tableLayoutPanel16.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel16.Name = "tableLayoutPanel16";
-            this.tableLayoutPanel16.RowCount = 2;
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel16.Size = new System.Drawing.Size(360, 54);
-            this.tableLayoutPanel16.TabIndex = 8;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(3, 32);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(162, 17);
-            this.checkBox2.TabIndex = 0;
-            this.checkBox2.Text = "Check weapons equiped too";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel15
-            // 
-            this.tableLayoutPanel15.AutoSize = true;
-            this.tableLayoutPanel15.ColumnCount = 2;
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel15.Controls.Add(this.label5, 0, 0);
-            this.tableLayoutPanel15.Controls.Add(this.comboBox12, 0, 0);
-            this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel15.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel15.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
-            this.tableLayoutPanel15.RowCount = 1;
-            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel15.Size = new System.Drawing.Size(360, 27);
-            this.tableLayoutPanel15.TabIndex = 1;
-            // 
-            // comboBox12
-            // 
-            this.comboBox12.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox12.FormattingEnabled = true;
-            this.comboBox12.Items.AddRange(new object[] {
-            "the team",
-            "the battle party"});
-            this.comboBox12.Location = new System.Drawing.Point(3, 3);
-            this.comboBox12.Name = "comboBox12";
-            this.comboBox12.Size = new System.Drawing.Size(150, 21);
-            this.comboBox12.TabIndex = 6;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(159, 7);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(71, 13);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "is in inventory";
-            // 
-            // tableLayoutPanel17
-            // 
-            this.tableLayoutPanel17.AutoSize = true;
-            this.tableLayoutPanel17.ColumnCount = 2;
-            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel17.Controls.Add(this.label6, 0, 0);
-            this.tableLayoutPanel17.Controls.Add(this.comboBox13, 0, 0);
-            this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel17.Location = new System.Drawing.Point(72, 128);
-            this.tableLayoutPanel17.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel17.Name = "tableLayoutPanel17";
-            this.tableLayoutPanel17.RowCount = 1;
-            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel17.Size = new System.Drawing.Size(360, 27);
-            this.tableLayoutPanel17.TabIndex = 9;
-            // 
-            // label6
-            // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(159, 7);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(71, 13);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "is in inventory";
-            // 
-            // comboBox13
-            // 
-            this.comboBox13.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox13.FormattingEnabled = true;
-            this.comboBox13.Items.AddRange(new object[] {
-            "the team",
-            "the battle party"});
-            this.comboBox13.Location = new System.Drawing.Point(3, 3);
-            this.comboBox13.Name = "comboBox13";
-            this.comboBox13.Size = new System.Drawing.Size(150, 21);
-            this.comboBox13.TabIndex = 6;
             // 
             // tableLayoutPanel19
             // 
@@ -799,7 +674,7 @@
             this.tableLayoutPanel19.RowCount = 2;
             this.tableLayoutPanel19.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel19.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel19.Size = new System.Drawing.Size(360, 54);
+            this.tableLayoutPanel19.Size = new System.Drawing.Size(367, 54);
             this.tableLayoutPanel19.TabIndex = 11;
             // 
             // checkBox1
@@ -827,7 +702,7 @@
             this.tableLayoutPanel20.Name = "tableLayoutPanel20";
             this.tableLayoutPanel20.RowCount = 1;
             this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel20.Size = new System.Drawing.Size(360, 27);
+            this.tableLayoutPanel20.Size = new System.Drawing.Size(367, 27);
             this.tableLayoutPanel20.TabIndex = 1;
             // 
             // label7
@@ -852,287 +727,415 @@
             this.comboBox14.Size = new System.Drawing.Size(150, 21);
             this.comboBox14.TabIndex = 6;
             // 
-            // tableLayoutPanel7
+            // tableLayoutPanel17
             // 
-            this.tableLayoutPanel7.AutoSize = true;
-            this.tableLayoutPanel7.ColumnCount = 1;
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel7.Controls.Add(this.tableLayoutPanel8, 0, 0);
-            this.tableLayoutPanel7.Controls.Add(this.comboBoxMeasure1, 0, 3);
-            this.tableLayoutPanel7.Controls.Add(this.comboBoxComparaison1, 0, 1);
-            this.tableLayoutPanel7.Controls.Add(this.constantVariable1, 0, 2);
-            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(132, 134);
-            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
-            this.tableLayoutPanel7.RowCount = 4;
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(250, 155);
-            this.tableLayoutPanel7.TabIndex = 13;
+            this.tableLayoutPanel17.AutoSize = true;
+            this.tableLayoutPanel17.ColumnCount = 2;
+            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel17.Controls.Add(this.label6, 0, 0);
+            this.tableLayoutPanel17.Controls.Add(this.comboBox13, 0, 0);
+            this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel17.Location = new System.Drawing.Point(72, 128);
+            this.tableLayoutPanel17.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel17.Name = "tableLayoutPanel17";
+            this.tableLayoutPanel17.RowCount = 1;
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel17.Size = new System.Drawing.Size(367, 27);
+            this.tableLayoutPanel17.TabIndex = 9;
             // 
-            // tableLayoutPanel8
+            // label6
             // 
-            this.tableLayoutPanel8.AutoSize = true;
-            this.tableLayoutPanel8.ColumnCount = 3;
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.Controls.Add(this.comboBox7, 0, 0);
-            this.tableLayoutPanel8.Controls.Add(this.label8, 1, 0);
-            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
-            this.tableLayoutPanel8.RowCount = 1;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(250, 27);
-            this.tableLayoutPanel8.TabIndex = 4;
+            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(159, 7);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(71, 13);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "is in inventory";
             // 
-            // comboBox7
+            // comboBox13
             // 
-            this.comboBox7.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Items.AddRange(new object[] {
+            this.comboBox13.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox13.FormattingEnabled = true;
+            this.comboBox13.Items.AddRange(new object[] {
             "the team",
             "the battle party"});
-            this.comboBox7.Location = new System.Drawing.Point(3, 3);
-            this.comboBox7.Name = "comboBox7";
-            this.comboBox7.Size = new System.Drawing.Size(150, 21);
-            this.comboBox7.TabIndex = 5;
+            this.comboBox13.Location = new System.Drawing.Point(3, 3);
+            this.comboBox13.Name = "comboBox13";
+            this.comboBox13.Size = new System.Drawing.Size(150, 21);
+            this.comboBox13.TabIndex = 6;
             // 
-            // label8
+            // tableLayoutPanel16
             // 
-            this.label8.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(159, 7);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(14, 13);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "is";
+            this.tableLayoutPanel16.AutoSize = true;
+            this.tableLayoutPanel16.ColumnCount = 1;
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel16.Controls.Add(this.checkBox2, 0, 1);
+            this.tableLayoutPanel16.Controls.Add(this.tableLayoutPanel15, 0, 0);
+            this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel16.Location = new System.Drawing.Point(72, 155);
+            this.tableLayoutPanel16.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel16.Name = "tableLayoutPanel16";
+            this.tableLayoutPanel16.RowCount = 2;
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel16.Size = new System.Drawing.Size(367, 54);
+            this.tableLayoutPanel16.TabIndex = 8;
             // 
-            // radioButtonWithGroup10
+            // checkBox2
             // 
-            this.radioButtonWithGroup10.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioButtonWithGroup10.AutoSize = true;
-            this.radioButtonWithGroup10.GroupName = null;
-            this.radioButtonWithGroup10.Location = new System.Drawing.Point(3, 5);
-            this.radioButtonWithGroup10.Name = "radioButtonWithGroup10";
-            this.radioButtonWithGroup10.Size = new System.Drawing.Size(57, 17);
-            this.radioButtonWithGroup10.TabIndex = 0;
-            this.radioButtonWithGroup10.TabStop = true;
-            this.radioButtonWithGroup10.Text = "Switch";
-            this.radioButtonWithGroup10.UseVisualStyleBackColor = true;
+            this.checkBox2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(3, 32);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(162, 17);
+            this.checkBox2.TabIndex = 0;
+            this.checkBox2.Text = "Check weapons equiped too";
+            this.checkBox2.UseVisualStyleBackColor = true;
             // 
-            // radioButtonWithGroup11
+            // tableLayoutPanel15
             // 
-            this.radioButtonWithGroup11.AutoSize = true;
-            this.radioButtonWithGroup11.GroupName = null;
-            this.radioButtonWithGroup11.Location = new System.Drawing.Point(3, 31);
-            this.radioButtonWithGroup11.Name = "radioButtonWithGroup11";
-            this.radioButtonWithGroup11.Size = new System.Drawing.Size(76, 17);
-            this.radioButtonWithGroup11.TabIndex = 1;
-            this.radioButtonWithGroup11.TabStop = true;
-            this.radioButtonWithGroup11.Text = "Self switch";
-            this.radioButtonWithGroup11.UseVisualStyleBackColor = true;
+            this.tableLayoutPanel15.AutoSize = true;
+            this.tableLayoutPanel15.ColumnCount = 2;
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel15.Controls.Add(this.label5, 0, 0);
+            this.tableLayoutPanel15.Controls.Add(this.comboBox12, 0, 0);
+            this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel15.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel15.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
+            this.tableLayoutPanel15.RowCount = 1;
+            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel15.Size = new System.Drawing.Size(367, 27);
+            this.tableLayoutPanel15.TabIndex = 1;
             // 
-            // radioButtonWithGroup12
+            // label5
             // 
-            this.radioButtonWithGroup12.AutoSize = true;
-            this.radioButtonWithGroup12.GroupName = null;
-            this.radioButtonWithGroup12.Location = new System.Drawing.Point(3, 60);
-            this.radioButtonWithGroup12.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.radioButtonWithGroup12.Name = "radioButtonWithGroup12";
-            this.radioButtonWithGroup12.Size = new System.Drawing.Size(63, 17);
-            this.radioButtonWithGroup12.TabIndex = 2;
-            this.radioButtonWithGroup12.TabStop = true;
-            this.radioButtonWithGroup12.Text = "Variable";
-            this.radioButtonWithGroup12.UseVisualStyleBackColor = true;
+            this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(159, 7);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(71, 13);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "is in inventory";
             // 
-            // textBoxVariables1
+            // comboBox12
             // 
-            this.textBoxVariables1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.comboBox12.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox12.FormattingEnabled = true;
+            this.comboBox12.Items.AddRange(new object[] {
+            "the team",
+            "the battle party"});
+            this.comboBox12.Location = new System.Drawing.Point(3, 3);
+            this.comboBox12.Name = "comboBox12";
+            this.comboBox12.Size = new System.Drawing.Size(150, 21);
+            this.comboBox12.TabIndex = 6;
+            // 
+            // tableLayoutPanel14
+            // 
+            this.tableLayoutPanel14.AutoSize = true;
+            this.tableLayoutPanel14.ColumnCount = 1;
+            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel14.Controls.Add(this.tableLayoutPanel18, 0, 0);
+            this.tableLayoutPanel14.Controls.Add(this.comboBoxComparaison4, 0, 1);
+            this.tableLayoutPanel14.Controls.Add(this.constantVariable4, 0, 2);
+            this.tableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel14.Location = new System.Drawing.Point(72, 0);
+            this.tableLayoutPanel14.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel14.Name = "tableLayoutPanel14";
+            this.tableLayoutPanel14.RowCount = 3;
+            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel14.Size = new System.Drawing.Size(367, 128);
+            this.tableLayoutPanel14.TabIndex = 6;
+            // 
+            // tableLayoutPanel18
+            // 
+            this.tableLayoutPanel18.AutoSize = true;
+            this.tableLayoutPanel18.ColumnCount = 3;
+            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel18.Controls.Add(this.comboBox11, 0, 0);
+            this.tableLayoutPanel18.Controls.Add(this.label4, 1, 0);
+            this.tableLayoutPanel18.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel18.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel18.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel18.Name = "tableLayoutPanel18";
+            this.tableLayoutPanel18.RowCount = 1;
+            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel18.Size = new System.Drawing.Size(367, 27);
+            this.tableLayoutPanel18.TabIndex = 4;
+            // 
+            // comboBox11
+            // 
+            this.comboBox11.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox11.FormattingEnabled = true;
+            this.comboBox11.Items.AddRange(new object[] {
+            "the team",
+            "the battle party"});
+            this.comboBox11.Location = new System.Drawing.Point(3, 3);
+            this.comboBox11.Name = "comboBox11";
+            this.comboBox11.Size = new System.Drawing.Size(150, 21);
+            this.comboBox11.TabIndex = 5;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(159, 7);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(14, 13);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "is";
+            // 
+            // tabPageOthers
+            // 
+            this.tabPageOthers.Location = new System.Drawing.Point(4, 22);
+            this.tabPageOthers.Margin = new System.Windows.Forms.Padding(5);
+            this.tabPageOthers.Name = "tabPageOthers";
+            this.tabPageOthers.Padding = new System.Windows.Forms.Padding(10, 25, 10, 10);
+            this.tabPageOthers.Size = new System.Drawing.Size(459, 465);
+            this.tabPageOthers.TabIndex = 5;
+            this.tabPageOthers.Text = "Others";
+            this.tabPageOthers.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonSwitch
+            // 
+            this.radioButtonSwitch.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioButtonSwitch.AutoSize = true;
+            this.radioButtonSwitch.GroupName = null;
+            this.radioButtonSwitch.Location = new System.Drawing.Point(3, 5);
+            this.radioButtonSwitch.Name = "radioButtonSwitch";
+            this.radioButtonSwitch.Size = new System.Drawing.Size(57, 17);
+            this.radioButtonSwitch.TabIndex = 0;
+            this.radioButtonSwitch.TabStop = true;
+            this.radioButtonSwitch.Text = "Switch";
+            this.radioButtonSwitch.UseVisualStyleBackColor = true;
+            this.radioButtonSwitch.CheckedChanged += new System.EventHandler(this.radioButtonSwitch_CheckedChanged);
+            // 
+            // radioButtonSelfSwitch
+            // 
+            this.radioButtonSelfSwitch.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioButtonSelfSwitch.AutoSize = true;
+            this.radioButtonSelfSwitch.GroupName = null;
+            this.radioButtonSelfSwitch.Location = new System.Drawing.Point(3, 33);
+            this.radioButtonSelfSwitch.Name = "radioButtonSelfSwitch";
+            this.radioButtonSelfSwitch.Size = new System.Drawing.Size(76, 17);
+            this.radioButtonSelfSwitch.TabIndex = 1;
+            this.radioButtonSelfSwitch.TabStop = true;
+            this.radioButtonSelfSwitch.Text = "Self switch";
+            this.radioButtonSelfSwitch.UseVisualStyleBackColor = true;
+            this.radioButtonSelfSwitch.CheckedChanged += new System.EventHandler(this.radioButtonSelfSwitch_CheckedChanged);
+            // 
+            // radioButtonVariable
+            // 
+            this.radioButtonVariable.AutoSize = true;
+            this.radioButtonVariable.GroupName = null;
+            this.radioButtonVariable.Location = new System.Drawing.Point(3, 60);
+            this.radioButtonVariable.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.radioButtonVariable.Name = "radioButtonVariable";
+            this.radioButtonVariable.Size = new System.Drawing.Size(63, 17);
+            this.radioButtonVariable.TabIndex = 2;
+            this.radioButtonVariable.TabStop = true;
+            this.radioButtonVariable.Text = "Variable";
+            this.radioButtonVariable.UseVisualStyleBackColor = true;
+            this.radioButtonVariable.CheckedChanged += new System.EventHandler(this.radioButtonVariable_CheckedChanged);
+            // 
+            // textBoxVariablesSwitch
+            // 
+            this.textBoxVariablesSwitch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxVariables1.Location = new System.Drawing.Point(3, 3);
-            this.textBoxVariables1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
-            this.textBoxVariables1.Name = "textBoxVariables1";
-            this.textBoxVariables1.Size = new System.Drawing.Size(170, 25);
-            this.textBoxVariables1.TabIndex = 0;
+            this.textBoxVariablesSwitch.Location = new System.Drawing.Point(3, 3);
+            this.textBoxVariablesSwitch.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
+            this.textBoxVariablesSwitch.Name = "textBoxVariablesSwitch";
+            this.textBoxVariablesSwitch.Size = new System.Drawing.Size(170, 25);
+            this.textBoxVariablesSwitch.TabIndex = 0;
             // 
-            // textBoxVariables2
+            // textBoxVariablesVariable
             // 
-            this.textBoxVariables2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxVariablesVariable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxVariables2.Location = new System.Drawing.Point(3, 3);
-            this.textBoxVariables2.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
-            this.textBoxVariables2.Name = "textBoxVariables2";
-            this.textBoxVariables2.Size = new System.Drawing.Size(170, 25);
-            this.textBoxVariables2.TabIndex = 0;
+            this.textBoxVariablesVariable.Location = new System.Drawing.Point(3, 3);
+            this.textBoxVariablesVariable.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
+            this.textBoxVariablesVariable.Name = "textBoxVariablesVariable";
+            this.textBoxVariablesVariable.Size = new System.Drawing.Size(170, 25);
+            this.textBoxVariablesVariable.TabIndex = 0;
             // 
-            // comboBoxComparaison2
+            // comboBoxComparaisonVariable
             // 
-            this.comboBoxComparaison2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxComparaison2.FormattingEnabled = true;
-            this.comboBoxComparaison2.Location = new System.Drawing.Point(3, 33);
-            this.comboBoxComparaison2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.comboBoxComparaison2.Name = "comboBoxComparaison2";
-            this.comboBoxComparaison2.Size = new System.Drawing.Size(150, 21);
-            this.comboBoxComparaison2.TabIndex = 5;
+            this.comboBoxComparaisonVariable.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxComparaisonVariable.FormattingEnabled = true;
+            this.comboBoxComparaisonVariable.Location = new System.Drawing.Point(3, 33);
+            this.comboBoxComparaisonVariable.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.comboBoxComparaisonVariable.Name = "comboBoxComparaisonVariable";
+            this.comboBoxComparaisonVariable.Size = new System.Drawing.Size(150, 21);
+            this.comboBoxComparaisonVariable.TabIndex = 5;
             // 
-            // constantVariable2
+            // constantVariableVariable
             // 
-            this.constantVariable2.Location = new System.Drawing.Point(3, 72);
-            this.constantVariable2.Margin = new System.Windows.Forms.Padding(3, 15, 3, 3);
-            this.constantVariable2.Name = "constantVariable2";
-            this.constantVariable2.Size = new System.Drawing.Size(240, 54);
-            this.constantVariable2.TabIndex = 6;
+            this.constantVariableVariable.Location = new System.Drawing.Point(3, 72);
+            this.constantVariableVariable.Margin = new System.Windows.Forms.Padding(3, 15, 3, 3);
+            this.constantVariableVariable.Name = "constantVariableVariable";
+            this.constantVariableVariable.Size = new System.Drawing.Size(240, 54);
+            this.constantVariableVariable.TabIndex = 6;
             // 
-            // radioButtonWithGroup9
+            // radioButtonHeroesStat
             // 
-            this.radioButtonWithGroup9.AutoSize = true;
-            this.radioButtonWithGroup9.GroupName = null;
-            this.radioButtonWithGroup9.Location = new System.Drawing.Point(3, 139);
-            this.radioButtonWithGroup9.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.radioButtonWithGroup9.Name = "radioButtonWithGroup9";
-            this.radioButtonWithGroup9.Size = new System.Drawing.Size(100, 17);
-            this.radioButtonWithGroup9.TabIndex = 12;
-            this.radioButtonWithGroup9.TabStop = true;
-            this.radioButtonWithGroup9.Text = "Has the statistic";
-            this.radioButtonWithGroup9.UseVisualStyleBackColor = true;
+            this.radioButtonHeroesStat.AutoSize = true;
+            this.radioButtonHeroesStat.GroupName = null;
+            this.radioButtonHeroesStat.Location = new System.Drawing.Point(3, 139);
+            this.radioButtonHeroesStat.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.radioButtonHeroesStat.Name = "radioButtonHeroesStat";
+            this.radioButtonHeroesStat.Size = new System.Drawing.Size(107, 17);
+            this.radioButtonHeroesStat.TabIndex = 12;
+            this.radioButtonHeroesStat.TabStop = true;
+            this.radioButtonHeroesStat.Text = "Have the statistic";
+            this.radioButtonHeroesStat.UseVisualStyleBackColor = true;
+            this.radioButtonHeroesStat.CheckedChanged += new System.EventHandler(this.radioButtonHeroesStat_CheckedChanged);
             // 
-            // radioButtonWithGroup6
+            // radioButtonHeroesSkill
             // 
-            this.radioButtonWithGroup6.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioButtonWithGroup6.AutoSize = true;
-            this.radioButtonWithGroup6.GroupName = null;
-            this.radioButtonWithGroup6.Location = new System.Drawing.Point(3, 58);
-            this.radioButtonWithGroup6.Name = "radioButtonWithGroup6";
-            this.radioButtonWithGroup6.Size = new System.Drawing.Size(126, 17);
-            this.radioButtonWithGroup6.TabIndex = 6;
-            this.radioButtonWithGroup6.TabStop = true;
-            this.radioButtonWithGroup6.Text = "Is able to use the skill";
-            this.radioButtonWithGroup6.UseVisualStyleBackColor = true;
+            this.radioButtonHeroesSkill.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioButtonHeroesSkill.AutoSize = true;
+            this.radioButtonHeroesSkill.GroupName = null;
+            this.radioButtonHeroesSkill.Location = new System.Drawing.Point(3, 58);
+            this.radioButtonHeroesSkill.Name = "radioButtonHeroesSkill";
+            this.radioButtonHeroesSkill.Size = new System.Drawing.Size(134, 17);
+            this.radioButtonHeroesSkill.TabIndex = 6;
+            this.radioButtonHeroesSkill.TabStop = true;
+            this.radioButtonHeroesSkill.Text = "Are able to use the skill";
+            this.radioButtonHeroesSkill.UseVisualStyleBackColor = true;
+            this.radioButtonHeroesSkill.CheckedChanged += new System.EventHandler(this.radioButtonHeroesSkill_CheckedChanged);
             // 
-            // radioButtonWithGroup2
+            // radioButtonHeroesNamed
             // 
-            this.radioButtonWithGroup2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioButtonWithGroup2.AutoSize = true;
-            this.radioButtonWithGroup2.GroupName = null;
-            this.radioButtonWithGroup2.Location = new System.Drawing.Point(3, 4);
-            this.radioButtonWithGroup2.Name = "radioButtonWithGroup2";
-            this.radioButtonWithGroup2.Size = new System.Drawing.Size(68, 17);
-            this.radioButtonWithGroup2.TabIndex = 0;
-            this.radioButtonWithGroup2.TabStop = true;
-            this.radioButtonWithGroup2.Text = "Is named";
-            this.radioButtonWithGroup2.UseVisualStyleBackColor = true;
+            this.radioButtonHeroesNamed.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioButtonHeroesNamed.AutoSize = true;
+            this.radioButtonHeroesNamed.GroupName = null;
+            this.radioButtonHeroesNamed.Location = new System.Drawing.Point(3, 4);
+            this.radioButtonHeroesNamed.Name = "radioButtonHeroesNamed";
+            this.radioButtonHeroesNamed.Size = new System.Drawing.Size(76, 17);
+            this.radioButtonHeroesNamed.TabIndex = 0;
+            this.radioButtonHeroesNamed.TabStop = true;
+            this.radioButtonHeroesNamed.Text = "Are named";
+            this.radioButtonHeroesNamed.UseVisualStyleBackColor = true;
+            this.radioButtonHeroesNamed.CheckedChanged += new System.EventHandler(this.radioButtonHeroesNamed_CheckedChanged);
             // 
-            // radioButtonWithGroup4
+            // radioButtonHeroesIn
             // 
-            this.radioButtonWithGroup4.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioButtonWithGroup4.AutoSize = true;
-            this.radioButtonWithGroup4.GroupName = null;
-            this.radioButtonWithGroup4.Location = new System.Drawing.Point(3, 31);
-            this.radioButtonWithGroup4.Name = "radioButtonWithGroup4";
-            this.radioButtonWithGroup4.Size = new System.Drawing.Size(44, 17);
-            this.radioButtonWithGroup4.TabIndex = 3;
-            this.radioButtonWithGroup4.TabStop = true;
-            this.radioButtonWithGroup4.Text = "Is in";
-            this.radioButtonWithGroup4.UseVisualStyleBackColor = true;
+            this.radioButtonHeroesIn.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioButtonHeroesIn.AutoSize = true;
+            this.radioButtonHeroesIn.GroupName = null;
+            this.radioButtonHeroesIn.Location = new System.Drawing.Point(3, 31);
+            this.radioButtonHeroesIn.Name = "radioButtonHeroesIn";
+            this.radioButtonHeroesIn.Size = new System.Drawing.Size(52, 17);
+            this.radioButtonHeroesIn.TabIndex = 3;
+            this.radioButtonHeroesIn.TabStop = true;
+            this.radioButtonHeroesIn.Text = "Are in";
+            this.radioButtonHeroesIn.UseVisualStyleBackColor = true;
+            this.radioButtonHeroesIn.CheckedChanged += new System.EventHandler(this.radioButtonHeroesIn_CheckedChanged);
             // 
-            // radioButtonWithGroup7
+            // radioButtonHeroesEquiped
             // 
-            this.radioButtonWithGroup7.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioButtonWithGroup7.AutoSize = true;
-            this.radioButtonWithGroup7.GroupName = null;
-            this.radioButtonWithGroup7.Location = new System.Drawing.Point(3, 85);
-            this.radioButtonWithGroup7.Name = "radioButtonWithGroup7";
-            this.radioButtonWithGroup7.Size = new System.Drawing.Size(96, 17);
-            this.radioButtonWithGroup7.TabIndex = 7;
-            this.radioButtonWithGroup7.TabStop = true;
-            this.radioButtonWithGroup7.Text = "Is equiped with";
-            this.radioButtonWithGroup7.UseVisualStyleBackColor = true;
+            this.radioButtonHeroesEquiped.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioButtonHeroesEquiped.AutoSize = true;
+            this.radioButtonHeroesEquiped.GroupName = null;
+            this.radioButtonHeroesEquiped.Location = new System.Drawing.Point(3, 85);
+            this.radioButtonHeroesEquiped.Name = "radioButtonHeroesEquiped";
+            this.radioButtonHeroesEquiped.Size = new System.Drawing.Size(104, 17);
+            this.radioButtonHeroesEquiped.TabIndex = 7;
+            this.radioButtonHeroesEquiped.TabStop = true;
+            this.radioButtonHeroesEquiped.Text = "Are equiped with";
+            this.radioButtonHeroesEquiped.UseVisualStyleBackColor = true;
+            this.radioButtonHeroesEquiped.CheckedChanged += new System.EventHandler(this.radioButtonHeroesEquiped_CheckedChanged);
             // 
-            // radioButtonWithGroup8
+            // radioButtonHeroesEffect
             // 
-            this.radioButtonWithGroup8.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioButtonWithGroup8.AutoSize = true;
-            this.radioButtonWithGroup8.GroupName = null;
-            this.radioButtonWithGroup8.Location = new System.Drawing.Point(3, 112);
-            this.radioButtonWithGroup8.Name = "radioButtonWithGroup8";
-            this.radioButtonWithGroup8.Size = new System.Drawing.Size(105, 17);
-            this.radioButtonWithGroup8.TabIndex = 8;
-            this.radioButtonWithGroup8.TabStop = true;
-            this.radioButtonWithGroup8.Text = "Is under effect of";
-            this.radioButtonWithGroup8.UseVisualStyleBackColor = true;
+            this.radioButtonHeroesEffect.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioButtonHeroesEffect.AutoSize = true;
+            this.radioButtonHeroesEffect.GroupName = null;
+            this.radioButtonHeroesEffect.Location = new System.Drawing.Point(3, 112);
+            this.radioButtonHeroesEffect.Name = "radioButtonHeroesEffect";
+            this.radioButtonHeroesEffect.Size = new System.Drawing.Size(113, 17);
+            this.radioButtonHeroesEffect.TabIndex = 8;
+            this.radioButtonHeroesEffect.TabStop = true;
+            this.radioButtonHeroesEffect.Text = "Are under effect of";
+            this.radioButtonHeroesEffect.UseVisualStyleBackColor = true;
+            this.radioButtonHeroesEffect.CheckedChanged += new System.EventHandler(this.radioButtonHeroesEffect_CheckedChanged);
             // 
-            // comboBoxMeasure1
+            // comboBoxMeasureHeroes
             // 
-            this.comboBoxMeasure1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.comboBoxMeasure1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxMeasure1.FormattingEnabled = true;
-            this.comboBoxMeasure1.Location = new System.Drawing.Point(95, 131);
-            this.comboBoxMeasure1.Name = "comboBoxMeasure1";
-            this.comboBoxMeasure1.Size = new System.Drawing.Size(60, 21);
-            this.comboBoxMeasure1.TabIndex = 1;
+            this.comboBoxMeasureHeroes.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.comboBoxMeasureHeroes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxMeasureHeroes.FormattingEnabled = true;
+            this.comboBoxMeasureHeroes.Location = new System.Drawing.Point(94, 131);
+            this.comboBoxMeasureHeroes.Name = "comboBoxMeasureHeroes";
+            this.comboBoxMeasureHeroes.Size = new System.Drawing.Size(60, 21);
+            this.comboBoxMeasureHeroes.TabIndex = 1;
             // 
-            // comboBoxComparaison1
+            // comboBoxComparaisonHeroesStat
             // 
-            this.comboBoxComparaison1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxComparaison1.FormattingEnabled = true;
-            this.comboBoxComparaison1.Location = new System.Drawing.Point(3, 32);
-            this.comboBoxComparaison1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.comboBoxComparaison1.Name = "comboBoxComparaison1";
-            this.comboBoxComparaison1.Size = new System.Drawing.Size(150, 21);
-            this.comboBoxComparaison1.TabIndex = 5;
+            this.comboBoxComparaisonHeroesStat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxComparaisonHeroesStat.FormattingEnabled = true;
+            this.comboBoxComparaisonHeroesStat.Location = new System.Drawing.Point(3, 32);
+            this.comboBoxComparaisonHeroesStat.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.comboBoxComparaisonHeroesStat.Name = "comboBoxComparaisonHeroesStat";
+            this.comboBoxComparaisonHeroesStat.Size = new System.Drawing.Size(150, 21);
+            this.comboBoxComparaisonHeroesStat.TabIndex = 5;
             // 
-            // constantVariable1
+            // constantVariableHeroes
             // 
-            this.constantVariable1.Location = new System.Drawing.Point(3, 71);
-            this.constantVariable1.Margin = new System.Windows.Forms.Padding(3, 15, 3, 3);
-            this.constantVariable1.Name = "constantVariable1";
-            this.constantVariable1.Size = new System.Drawing.Size(240, 54);
-            this.constantVariable1.TabIndex = 6;
+            this.constantVariableHeroes.Location = new System.Drawing.Point(3, 71);
+            this.constantVariableHeroes.Margin = new System.Windows.Forms.Padding(3, 15, 3, 3);
+            this.constantVariableHeroes.Name = "constantVariableHeroes";
+            this.constantVariableHeroes.Size = new System.Drawing.Size(240, 54);
+            this.constantVariableHeroes.TabIndex = 6;
             // 
-            // radioButtonWithGroup1
+            // radioButtonHeroesAll
             // 
-            this.radioButtonWithGroup1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioButtonWithGroup1.AutoSize = true;
-            this.radioButtonWithGroup1.GroupName = null;
-            this.radioButtonWithGroup1.Location = new System.Drawing.Point(3, 5);
-            this.radioButtonWithGroup1.Name = "radioButtonWithGroup1";
-            this.radioButtonWithGroup1.Size = new System.Drawing.Size(103, 17);
-            this.radioButtonWithGroup1.TabIndex = 0;
-            this.radioButtonWithGroup1.TabStop = true;
-            this.radioButtonWithGroup1.Text = "All the heroes in ";
-            this.radioButtonWithGroup1.UseVisualStyleBackColor = true;
+            this.radioButtonHeroesAll.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioButtonHeroesAll.AutoSize = true;
+            this.radioButtonHeroesAll.GroupName = null;
+            this.radioButtonHeroesAll.Location = new System.Drawing.Point(3, 5);
+            this.radioButtonHeroesAll.Name = "radioButtonHeroesAll";
+            this.radioButtonHeroesAll.Size = new System.Drawing.Size(103, 17);
+            this.radioButtonHeroesAll.TabIndex = 0;
+            this.radioButtonHeroesAll.TabStop = true;
+            this.radioButtonHeroesAll.Text = "All the heroes in ";
+            this.radioButtonHeroesAll.UseVisualStyleBackColor = true;
+            this.radioButtonHeroesAll.CheckedChanged += new System.EventHandler(this.radioButtonHeroesAll_CheckedChanged);
             // 
-            // radioButtonWithGroup3
+            // radioButtonHeroesAtLeast
             // 
-            this.radioButtonWithGroup3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioButtonWithGroup3.AutoSize = true;
-            this.radioButtonWithGroup3.GroupName = null;
-            this.radioButtonWithGroup3.Location = new System.Drawing.Point(3, 32);
-            this.radioButtonWithGroup3.Name = "radioButtonWithGroup3";
-            this.radioButtonWithGroup3.Size = new System.Drawing.Size(116, 17);
-            this.radioButtonWithGroup3.TabIndex = 3;
-            this.radioButtonWithGroup3.TabStop = true;
-            this.radioButtonWithGroup3.Text = "At least one hero in";
-            this.radioButtonWithGroup3.UseVisualStyleBackColor = true;
+            this.radioButtonHeroesAtLeast.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioButtonHeroesAtLeast.AutoSize = true;
+            this.radioButtonHeroesAtLeast.GroupName = null;
+            this.radioButtonHeroesAtLeast.Location = new System.Drawing.Point(3, 32);
+            this.radioButtonHeroesAtLeast.Name = "radioButtonHeroesAtLeast";
+            this.radioButtonHeroesAtLeast.Size = new System.Drawing.Size(116, 17);
+            this.radioButtonHeroesAtLeast.TabIndex = 3;
+            this.radioButtonHeroesAtLeast.TabStop = true;
+            this.radioButtonHeroesAtLeast.Text = "At least one hero in";
+            this.radioButtonHeroesAtLeast.UseVisualStyleBackColor = true;
+            this.radioButtonHeroesAtLeast.CheckedChanged += new System.EventHandler(this.radioButtonHeroesAtLeast_CheckedChanged);
             // 
-            // radioButtonWithGroup5
+            // radioButtonHeroes
             // 
-            this.radioButtonWithGroup5.AutoSize = true;
-            this.radioButtonWithGroup5.GroupName = null;
-            this.radioButtonWithGroup5.Location = new System.Drawing.Point(3, 59);
-            this.radioButtonWithGroup5.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.radioButtonWithGroup5.Name = "radioButtonWithGroup5";
-            this.radioButtonWithGroup5.Size = new System.Drawing.Size(79, 17);
-            this.radioButtonWithGroup5.TabIndex = 7;
-            this.radioButtonWithGroup5.TabStop = true;
-            this.radioButtonWithGroup5.Text = "The heroes";
-            this.radioButtonWithGroup5.UseVisualStyleBackColor = true;
+            this.radioButtonHeroes.AutoSize = true;
+            this.radioButtonHeroes.GroupName = null;
+            this.radioButtonHeroes.Location = new System.Drawing.Point(3, 59);
+            this.radioButtonHeroes.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.radioButtonHeroes.Name = "radioButtonHeroes";
+            this.radioButtonHeroes.Size = new System.Drawing.Size(79, 17);
+            this.radioButtonHeroes.TabIndex = 7;
+            this.radioButtonHeroes.TabStop = true;
+            this.radioButtonHeroes.Text = "The heroes";
+            this.radioButtonHeroes.UseVisualStyleBackColor = true;
+            this.radioButtonHeroes.CheckedChanged += new System.EventHandler(this.radioButtonHeroes_CheckedChanged);
             // 
             // radioButtonWithGroup16
             // 
@@ -1209,7 +1212,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancel;
-            this.ClientSize = new System.Drawing.Size(486, 552);
+            this.ClientSize = new System.Drawing.Size(493, 552);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "DialogCondition";
             this.ShowIcon = false;
@@ -1235,29 +1238,28 @@
             this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
+            this.tableLayoutPanel7.ResumeLayout(false);
+            this.tableLayoutPanel7.PerformLayout();
+            this.tableLayoutPanel8.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
             this.tabPagePossessions.ResumeLayout(false);
             this.tableLayoutPanel13.ResumeLayout(false);
             this.tableLayoutPanel13.PerformLayout();
-            this.tableLayoutPanel14.ResumeLayout(false);
-            this.tableLayoutPanel14.PerformLayout();
-            this.tableLayoutPanel18.ResumeLayout(false);
-            this.tableLayoutPanel18.PerformLayout();
-            this.tableLayoutPanel16.ResumeLayout(false);
-            this.tableLayoutPanel16.PerformLayout();
-            this.tableLayoutPanel15.ResumeLayout(false);
-            this.tableLayoutPanel15.PerformLayout();
-            this.tableLayoutPanel17.ResumeLayout(false);
-            this.tableLayoutPanel17.PerformLayout();
             this.tableLayoutPanel19.ResumeLayout(false);
             this.tableLayoutPanel19.PerformLayout();
             this.tableLayoutPanel20.ResumeLayout(false);
             this.tableLayoutPanel20.PerformLayout();
-            this.tableLayoutPanel7.ResumeLayout(false);
-            this.tableLayoutPanel7.PerformLayout();
-            this.tableLayoutPanel8.ResumeLayout(false);
-            this.tableLayoutPanel8.PerformLayout();
+            this.tableLayoutPanel17.ResumeLayout(false);
+            this.tableLayoutPanel17.PerformLayout();
+            this.tableLayoutPanel16.ResumeLayout(false);
+            this.tableLayoutPanel16.PerformLayout();
+            this.tableLayoutPanel15.ResumeLayout(false);
+            this.tableLayoutPanel15.PerformLayout();
+            this.tableLayoutPanel14.ResumeLayout(false);
+            this.tableLayoutPanel14.PerformLayout();
+            this.tableLayoutPanel18.ResumeLayout(false);
+            this.tableLayoutPanel18.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1277,45 +1279,45 @@
         private System.Windows.Forms.TabPage tabPagePossessions;
         private System.Windows.Forms.TabPage tabPageOthers;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private RadioButtonWithGroup radioButtonWithGroup1;
-        private RadioButtonWithGroup radioButtonWithGroup3;
+        private RadioButtonWithGroup radioButtonHeroesAll;
+        private RadioButtonWithGroup radioButtonHeroesAtLeast;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.ComboBox comboBoxAllHeroes;
         private System.Windows.Forms.ComboBox comboBoxAtLeastHero;
         private System.Windows.Forms.ListView listViewHeroes;
         private System.Windows.Forms.ColumnHeader columnHeader1;
-        private RadioButtonWithGroup radioButtonWithGroup5;
+        private RadioButtonWithGroup radioButtonHeroes;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
-        private RadioButtonWithGroup radioButtonWithGroup6;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private RadioButtonWithGroup radioButtonWithGroup2;
-        private RadioButtonWithGroup radioButtonWithGroup4;
-        private System.Windows.Forms.TextBox textBox1;
-        private RadioButtonWithGroup radioButtonWithGroup7;
-        private RadioButtonWithGroup radioButtonWithGroup8;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.ComboBox comboBox5;
-        private System.Windows.Forms.ComboBox comboBox6;
-        private RadioButtonWithGroup radioButtonWithGroup9;
-        private ComboBoxMeasure comboBoxMeasure1;
+        private RadioButtonWithGroup radioButtonHeroesSkill;
+        private System.Windows.Forms.ComboBox comboBoxHeroesIn;
+        private RadioButtonWithGroup radioButtonHeroesNamed;
+        private RadioButtonWithGroup radioButtonHeroesIn;
+        private System.Windows.Forms.TextBox textBoxHeroesNamed;
+        private RadioButtonWithGroup radioButtonHeroesEquiped;
+        private RadioButtonWithGroup radioButtonHeroesEffect;
+        private System.Windows.Forms.ComboBox comboBoxHeroesSkill;
+        private System.Windows.Forms.ComboBox comboBoxHeroesEquiped;
+        private System.Windows.Forms.ComboBox comboBoxHeroesEffect;
+        private RadioButtonWithGroup radioButtonHeroesStat;
+        private ComboBoxMeasure comboBoxMeasureHeroes;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private RadioButtonWithGroup radioButtonWithGroup10;
-        private RadioButtonWithGroup radioButtonWithGroup11;
-        private RadioButtonWithGroup radioButtonWithGroup12;
+        private RadioButtonWithGroup radioButtonSwitch;
+        private RadioButtonWithGroup radioButtonSelfSwitch;
+        private RadioButtonWithGroup radioButtonVariable;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
-        private Engine.CustomUserControls.TextBoxVariables textBoxVariables1;
+        private Engine.CustomUserControls.TextBoxVariables textBoxVariablesSwitch;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox8;
+        private System.Windows.Forms.ComboBox comboBoxSwitchOnOff;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox9;
-        private System.Windows.Forms.ComboBox comboBox10;
+        private System.Windows.Forms.ComboBox comboBoxSelfSwitch;
+        private System.Windows.Forms.ComboBox comboBoxSelfSwitchOnOff;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel12;
-        private Engine.CustomUserControls.TextBoxVariables textBoxVariables2;
+        private Engine.CustomUserControls.TextBoxVariables textBoxVariablesVariable;
         private System.Windows.Forms.Label label3;
-        private ComboBoxComparaison comboBoxComparaison2;
-        private Engine.CustomUserControls.ConstantVariable constantVariable2;
+        private ComboBoxComparaison comboBoxComparaisonVariable;
+        private Engine.CustomUserControls.ConstantVariable constantVariableVariable;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel13;
         private RadioButtonWithGroup radioButtonWithGroup13;
         private RadioButtonWithGroup radioButtonWithGroup14;
@@ -1342,9 +1344,8 @@
         private System.Windows.Forms.ComboBox comboBox13;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
-        private System.Windows.Forms.ComboBox comboBox7;
-        private System.Windows.Forms.Label label8;
-        private ComboBoxComparaison comboBoxComparaison1;
-        private Engine.CustomUserControls.ConstantVariable constantVariable1;
+        private System.Windows.Forms.ComboBox comboBoxHeroesStat;
+        private ComboBoxComparaison comboBoxComparaisonHeroesStat;
+        private Engine.CustomUserControls.ConstantVariable constantVariableHeroes;
     }
 }

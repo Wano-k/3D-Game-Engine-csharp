@@ -40,7 +40,7 @@ namespace RPG_Paper_Maker
 
         private void FlatButton1_Click(object sender, EventArgs e)
         {
-            DialogCondition dialog = new DialogCondition();
+            DialogCondition dialog = new DialogCondition(Condition.DefaultObjects());
             if (dialog.ShowDialog() == DialogResult.OK)
             {
 

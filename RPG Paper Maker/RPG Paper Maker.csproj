@@ -185,7 +185,6 @@
     <Compile Include="Engine\Forms\DialogCondition\DialogCondition.Designer.cs">
       <DependentUpon>DialogCondition.cs</DependentUpon>
     </Compile>
-    <Compile Include="Engine\Forms\DialogCondition\DialogConditionControl.cs" />
     <Compile Include="Engine\Forms\DialogDataBase\DialogDataBase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -286,6 +285,7 @@
       <DependentUpon>DialogTileset.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Models\BattleSystemDatas.cs" />
+    <Compile Include="Engine\Models\Condition.cs" />
     <Compile Include="Engine\Models\Events.cs" />
     <Compile Include="Engine\Models\GameDatas.cs" />
     <Compile Include="Engine\Models\HeroesDatas.cs" />
