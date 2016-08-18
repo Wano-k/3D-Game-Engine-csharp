@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
-    class FlatButton : Button
+    public class FlatButton : Button
     {
         public FlatButton()
         {

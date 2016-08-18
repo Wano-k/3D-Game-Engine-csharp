@@ -82,6 +82,7 @@ namespace RPG_Paper_Maker
             // Default Selection
             comboBoxSwitchOnOff.SelectedIndex = 0;
             comboBoxSelfSwitchOnOff.SelectedIndex = 0;
+            comboBoxComparaisonVariable.InitValues();
             comboBoxComparaisonVariable.SelectedIndex = 0;
             radioButtonHeroesNamed.Checked = true;
             comboBoxAllHeroes.SelectedIndex = 0;

@@ -344,7 +344,7 @@
             this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 2;
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 96F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel7.Size = new System.Drawing.Size(314, 423);
             this.tableLayoutPanel7.TabIndex = 1;
@@ -357,7 +357,7 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(10);
-            this.groupBox2.Size = new System.Drawing.Size(302, 78);
+            this.groupBox2.Size = new System.Drawing.Size(302, 84);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Page conditions";
@@ -367,7 +367,7 @@
             this.conditionsPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.conditionsPanel1.Location = new System.Drawing.Point(10, 23);
             this.conditionsPanel1.Name = "conditionsPanel1";
-            this.conditionsPanel1.Size = new System.Drawing.Size(282, 45);
+            this.conditionsPanel1.Size = new System.Drawing.Size(282, 51);
             this.conditionsPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel8
@@ -378,12 +378,12 @@
             this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel10, 1, 0);
             this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel11, 0, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 90);
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 96);
             this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 1;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(314, 333);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(314, 327);
             this.tableLayoutPanel8.TabIndex = 1;
             // 
             // tableLayoutPanel10
@@ -398,7 +398,7 @@
             this.tableLayoutPanel10.RowCount = 2;
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 46F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 54F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(177, 327);
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(177, 321);
             this.tableLayoutPanel10.TabIndex = 0;
             // 
             // groupBox3
@@ -408,7 +408,7 @@
             this.groupBox3.Location = new System.Drawing.Point(3, 3);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(5);
-            this.groupBox3.Size = new System.Drawing.Size(171, 144);
+            this.groupBox3.Size = new System.Drawing.Size(171, 141);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Moving";
@@ -434,7 +434,7 @@
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(161, 121);
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(161, 118);
             this.tableLayoutPanel9.TabIndex = 0;
             // 
             // label2
@@ -570,10 +570,10 @@
             // 
             this.groupBox4.Controls.Add(this.tableLayoutPanel13);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox4.Location = new System.Drawing.Point(3, 153);
+            this.groupBox4.Location = new System.Drawing.Point(3, 150);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(5);
-            this.groupBox4.Size = new System.Drawing.Size(171, 171);
+            this.groupBox4.Size = new System.Drawing.Size(171, 168);
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Trigger";
@@ -598,7 +598,7 @@
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(161, 148);
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(161, 145);
             this.tableLayoutPanel13.TabIndex = 0;
             // 
             // tableLayoutPanel6
@@ -715,17 +715,17 @@
             this.tableLayoutPanel11.RowCount = 2;
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(125, 327);
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(125, 321);
             this.tableLayoutPanel11.TabIndex = 1;
             // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.tableLayoutPanel12);
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox5.Location = new System.Drawing.Point(3, 182);
+            this.groupBox5.Location = new System.Drawing.Point(3, 179);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Padding = new System.Windows.Forms.Padding(5);
-            this.groupBox5.Size = new System.Drawing.Size(119, 142);
+            this.groupBox5.Size = new System.Drawing.Size(119, 139);
             this.groupBox5.TabIndex = 2;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Options";
@@ -749,7 +749,7 @@
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel12.Size = new System.Drawing.Size(109, 119);
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(109, 116);
             this.tableLayoutPanel12.TabIndex = 0;
             // 
             // checkBoxMoveAnimation
@@ -808,7 +808,7 @@
             this.graphicControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.graphicControl1.Location = new System.Drawing.Point(3, 3);
             this.graphicControl1.Name = "graphicControl1";
-            this.graphicControl1.Size = new System.Drawing.Size(119, 173);
+            this.graphicControl1.Size = new System.Drawing.Size(119, 170);
             this.graphicControl1.TabIndex = 3;
             // 
             // DialogEvent

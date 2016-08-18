@@ -125,6 +125,7 @@
     <Compile Include="Engine\CustomUserControls\InterpolationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Engine\CustomUserControls\NTree.cs" />
     <Compile Include="Engine\CustomUserControls\PassagePicture.cs">
       <SubType>Component</SubType>
     </Compile>

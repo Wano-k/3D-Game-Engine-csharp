@@ -123,6 +123,7 @@ namespace RPG_Paper_Maker
 
         public void UpdatePage(int i)
         {
+            conditionsPanel1.InitializeListParameters();
             graphicControl1.InitializeListParameters(Control.Model.Pages[i].Graphic, MapEditor.GetMapTileset().Graphic);
             graphicControl1.GetComboBox().SelectedIndex = (int)Control.Model.Pages[i].GraphicDrawType;
             RadiosTrigger[Control.Model.Pages[i].Trigger].Checked = true;
