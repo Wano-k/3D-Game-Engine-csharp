@@ -8,7 +8,7 @@ namespace RPG_Paper_Maker
 {
     delegate void TreeVisitor<T>(T nodeData);
 
-    class NTree<T>
+    public class NTree<T>
     {
         public T Data;
         private LinkedList<NTree<T>> children;
@@ -21,7 +21,12 @@ namespace RPG_Paper_Maker
 
         public void AddChild(T data)
         {
-            children.AddFirst(new NTree<T>(data));
+            children.AddLast(new NTree<T>(data));
+        }
+
+        public bool IsLastChild(NTree<T> d)
+        {
+            return (d == children.Last.Value);
         }
 
         public NTree<T> GetChild(int i)

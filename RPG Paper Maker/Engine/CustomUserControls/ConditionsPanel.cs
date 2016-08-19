@@ -14,15 +14,30 @@ namespace RPG_Paper_Maker
     {
         public class FlatButtonCondition : FlatButton
         {
-            public List<object> Condition;
+            public NTree<List<object>> Node;
+            public NTree<List<object>> ParentNode;
 
-            public FlatButtonCondition(List<object> condition)
+            public FlatButtonCondition(NTree<List<object>> node, NTree<List<object>> parentNode)
             {
-                Condition = condition;
+                Node = node;
+                ParentNode = parentNode;
             }
         }
 
-        NTree<List<object>> Tree;
+        public class ComboBoxCondition : ComboBox
+        {
+            public NTree<List<object>> Node;
+            public NTree<List<object>> ParentNode;
+
+            public ComboBoxCondition(NTree<List<object>> node, NTree<List<object>> parentNode)
+            {
+                Node = node;
+                ParentNode = parentNode;
+            }
+        }
+
+        public NTree<List<object>> Tree;
+
 
         // -------------------------------------------------------------------
         // Constructor
@@ -52,24 +67,32 @@ namespace RPG_Paper_Maker
             mainTableLayout.Controls.Clear();
             mainTableLayout.ColumnStyles.Clear();
             AddLabel("If");
-            BrowseNode(Tree);
+            AddLabel("(");
+            BrowseNode(Tree, new NTree<List<object>>(null));
+            AddLabel(")");
             mainTableLayout.ColumnCount = mainTableLayout.ColumnStyles.Count;
         }
 
-        private void BrowseNode(NTree<List<object>> node)
+        private void BrowseNode(NTree<List<object>> node, NTree<List<object>> parent)
         {
-            AddLabel("(");
-
-            foreach (NTree<List<object>> child in node.GetChildren())
-            {
-                BrowseNode(child);
-            }
             if (node.GetChildren().Count == 0)
             {
-                AddButton(node.Data);
-            }
+                AddButton(node, parent);
 
-            AddLabel(")");
+                if (parent.Data != null && (!parent.IsLastChild(node) || (int)parent.Data[0] == 0))
+                {
+                    AddCombobox(node, parent);
+                }
+            }
+            else
+            {
+                AddLabel("(");
+                foreach (NTree<List<object>> child in node.GetChildren())
+                {
+                    BrowseNode(child, node);
+                }
+                AddLabel(")");
+            }
         }
 
         // -------------------------------------------------------------------
@@ -82,6 +105,8 @@ namespace RPG_Paper_Maker
             label.Anchor = AnchorStyles.Left;
             label.Text = s;
             label.AutoSize = true;
+            label.Margin = new Padding(0);
+            label.Padding = new Padding(0);
             mainTableLayout.Controls.Add(label, mainTableLayout.ColumnStyles.Count, 0);
             mainTableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         }
@@ -90,14 +115,51 @@ namespace RPG_Paper_Maker
         // AddButton
         // -------------------------------------------------------------------
 
-        public void AddButton(List<object> condition)
+        public void AddButton(NTree<List<object>> node, NTree<List<object>> parentNode)
         {
-            FlatButtonCondition button = new FlatButtonCondition(condition);
+            FlatButtonCondition button = new FlatButtonCondition(node, parentNode);
             button.AutoSize = true;
-            button.Text = condition == null ? "New condition" : Condition.ToString(condition);
+            button.Text = node.Data == null ? "New condition" : Condition.ToString(node.Data);
             button.MouseDown += Button_MouseDown;
             mainTableLayout.Controls.Add(button, mainTableLayout.ColumnStyles.Count, 0);
             mainTableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        }
+
+        // -------------------------------------------------------------------
+        // AddCombobox
+        // -------------------------------------------------------------------
+
+        public void AddCombobox(NTree<List<object>> node, NTree<List<object>> parentNode)
+        {
+            ComboBoxCondition comboBox = new ComboBoxCondition(node, parentNode);
+            comboBox.Items.Add("");
+            comboBox.Items.Add("And");
+            comboBox.Items.Add("Or");
+            comboBox.AutoSize = true;
+            comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox.Size = new Size(45, 20);
+            comboBox.Anchor = AnchorStyles.Left;
+            comboBox.SelectedIndex = (int)parentNode.Data[0];
+            comboBox.SelectedIndexChanged += ComboBox_SelectedIndexChanged;
+            mainTableLayout.Controls.Add(comboBox, mainTableLayout.ColumnStyles.Count, 0);
+            mainTableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        }
+
+        // -------------------------------------------------------------------
+        // TreeContainsBool
+        // -------------------------------------------------------------------
+
+        public NTree<List<object>> TreeContainsBool(NTree<List<object>> node, int boo)
+        {
+            NTree<List<object>> res = null;
+
+            foreach (NTree<List<object>> child in node.GetChildren())
+            {
+                if (node.Data != null && node.Data.Count == 1 && (int)node.Data[0] == boo) return node;
+                res = TreeContainsBool(child, boo);
+            }
+
+            return res;
         }
 
         // -------------------------------------------------------------------
@@ -106,19 +168,49 @@ namespace RPG_Paper_Maker
 
         private void Button_MouseDown(object sender, MouseEventArgs e)
         {
-            List<object> condition = ((FlatButtonCondition)sender).Condition;
+            List<object> condition = ((FlatButtonCondition)sender).Node.Data;
             DialogCondition dialog = new DialogCondition(condition == null ? Condition.DefaultObjects() : condition);
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 // if adding a new condition
                 if (condition == null)
                 {
-                    ((FlatButtonCondition)sender).Condition = dialog.Result;
+                    ((FlatButtonCondition)sender).Node.Data = new List<object>(new object[] { 0 });
+                    ((FlatButtonCondition)sender).Node.AddChild(dialog.Result);
                 }
                 // if only editing
                 else
                 {
-                    ((FlatButtonCondition)sender).Condition = dialog.Result;
+                    ((FlatButtonCondition)sender).Node.Data = dialog.Result;
+                }
+
+                GeneratePanel();
+            }
+        }
+
+        private void ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int previousSelecteIndex = (int)((ComboBoxCondition)sender).ParentNode.Data[0];
+            int newSelecteIndex = ((ComboBox)sender).SelectedIndex;
+            if (previousSelecteIndex != newSelecteIndex)
+            {
+                //((ComboBoxCondition)sender).ParentNode.Data = new List<object>(new object[] { newSelecteIndex });
+                // Adding new button
+                if (previousSelecteIndex == 0)
+                {
+                    NTree<List<object>> node = TreeContainsBool(Tree, newSelecteIndex);
+                    if (node != null)
+                    {
+                        ((ComboBoxCondition)sender).ParentNode.Data = null;
+                        ((ComboBoxCondition)sender).ParentNode = node;
+                        node.AddChild(null);
+                    }
+                    else
+                    {
+                        ((ComboBoxCondition)sender).ParentNode.Data = new List<object>(new object[] { newSelecteIndex });
+                        ((ComboBoxCondition)sender).ParentNode.AddChild(null);
+
+                    }
                 }
 
                 GeneratePanel();

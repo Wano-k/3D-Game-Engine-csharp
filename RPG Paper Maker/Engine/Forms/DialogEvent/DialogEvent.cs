@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,7 +17,7 @@ namespace RPG_Paper_Maker
         protected BindingSource ViewModelBindingSource = new BindingSource();
         System.Timers.Timer GraphicFrameTimer = new System.Timers.Timer();
         protected Dictionary<EventTrigger, RadioButtonWithGroup> RadiosTrigger = new Dictionary<EventTrigger, RadioButtonWithGroup>();
-
+        
         protected override CreateParams CreateParams
         {
             get
@@ -59,8 +60,7 @@ namespace RPG_Paper_Maker
                 tabPage.BackColor = Color.White;
                 tabControl1.TabPages.Add(tabPage);
             }
-            tabControl1.TabPages[0].Controls.Clear();
-            tabControl1.TabPages[0].Controls.Add(tableLayoutMainPage);
+
 
             // Speed & frequency
             numericUpDownSpeed.DecimalPlaces = 2;
@@ -126,11 +126,17 @@ namespace RPG_Paper_Maker
             conditionsPanel1.InitializeListParameters();
             graphicControl1.InitializeListParameters(Control.Model.Pages[i].Graphic, MapEditor.GetMapTileset().Graphic);
             graphicControl1.GetComboBox().SelectedIndex = (int)Control.Model.Pages[i].GraphicDrawType;
+            foreach (EventTrigger trigger in Enum.GetValues(typeof(EventTrigger)))
+            {
+                RadiosTrigger[trigger].Checked = false;
+            }
             RadiosTrigger[Control.Model.Pages[i].Trigger].Checked = true;
 
             // Move page
             tabControl1.TabPages[i].Controls.Clear();
-            tabControl1.TabPages[i].Controls.Add(tableLayoutMainPage);
+            tabControl1.TabPages[i].Controls.Add(panel1);
+            panel1.Controls.Clear();
+            panel1.Controls.Add(tableLayoutMainPage);
         }
 
         // -------------------------------------------------------------------
@@ -140,6 +146,21 @@ namespace RPG_Paper_Maker
         public void UpdateTrigger(EventTrigger trigger)
         {
             Control.Model.Pages[Control.Model.CurrentPage].Trigger = trigger;
+        }
+
+        // -------------------------------------------------------------------
+        // AddPage
+        // -------------------------------------------------------------------
+
+        public void AddPage()
+        {
+            tabControl1.TabPages.Insert(Control.Model.CurrentPage, (Control.Model.CurrentPage + 1).ToString());
+            for (int i = Control.Model.CurrentPage + 1; i < tabControl1.TabPages.Count; i++)
+            {
+                tabControl1.TabPages[i].Text = (i + 1).ToString();
+            }
+            tabControl1.TabPages[Control.Model.CurrentPage].Padding = new Padding(3);
+            tabControl1.TabPages[Control.Model.CurrentPage].BackColor = Color.White;
         }
 
         // -------------------------------------------------------------------
@@ -154,6 +175,7 @@ namespace RPG_Paper_Maker
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Control.Model.CurrentPage = tabControl1.SelectedIndex;
             UpdatePage(tabControl1.SelectedIndex);
         }
 
@@ -219,6 +241,29 @@ namespace RPG_Paper_Maker
             }
 
             UpdateTrigger(RadiosTrigger.FirstOrDefault(x => x.Value == (RadioButton)sender).Key);
+        }
+
+        private void buttonNewPage_Click(object sender, EventArgs e)
+        {
+            Control.Model.CreateNewPage();
+            AddPage();
+            tabControl1.SelectedIndex = Control.Model.CurrentPage;
+            //tabControl1.Refresh();
+        }
+
+        private void buttonCopyPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonPastPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonDeletePage_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

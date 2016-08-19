@@ -117,5 +117,14 @@ namespace RPG_Paper_Maker
 
             return new SystemEvent(Name, pages);
         }
+
+        // -------------------------------------------------------------------
+        // CreateNewPage
+        // -------------------------------------------------------------------
+
+        public void CreateNewPage()
+        {
+            Pages.Insert(++CurrentPage, new SystemEventPage());
+        }
     }
 }
