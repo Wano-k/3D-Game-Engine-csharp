@@ -19,9 +19,12 @@ namespace RPG_Paper_Maker
             children = new LinkedList<NTree<T>>();
         }
 
-        public void AddChild(T data)
+        public NTree<T> AddChild(T data)
         {
-            children.AddLast(new NTree<T>(data));
+            NTree<T> child = new NTree<T>(data);
+            children.AddLast(child);
+
+            return child;
         }
 
         public bool IsLastChild(NTree<T> d)

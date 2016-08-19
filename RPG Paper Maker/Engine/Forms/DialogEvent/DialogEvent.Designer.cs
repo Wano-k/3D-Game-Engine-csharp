@@ -46,7 +46,6 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutMainPage = new System.Windows.Forms.TableLayoutPanel();
-            this.treeView1 = new System.Windows.Forms.TreeView();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
@@ -77,13 +76,14 @@
             this.checkBoxThrough = new System.Windows.Forms.CheckBox();
             this.checkBoxSetWithCamera = new System.Windows.Forms.CheckBox();
             this.conditionsPanel1 = new RPG_Paper_Maker.ConditionsPanel();
-            this.radioButtonDetection = new RPG_Paper_Maker.RadioButtonWithGroup();
             this.radioButtonActionButton = new RPG_Paper_Maker.RadioButtonWithGroup();
             this.radioButtonPlayerTouch = new RPG_Paper_Maker.RadioButtonWithGroup();
             this.radioButtonEventTouch = new RPG_Paper_Maker.RadioButtonWithGroup();
             this.radioButtonAutorun = new RPG_Paper_Maker.RadioButtonWithGroup();
             this.radioButtonParallelProcess = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.radioButtonDetection = new RPG_Paper_Maker.RadioButtonWithGroup();
             this.graphicControl1 = new RPG_Paper_Maker.GraphicControl();
+            this.CommandsView = new System.Windows.Forms.TreeView();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -334,23 +334,14 @@
             this.tableLayoutMainPage.ColumnCount = 2;
             this.tableLayoutMainPage.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutMainPage.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tableLayoutMainPage.Controls.Add(this.treeView1, 1, 0);
             this.tableLayoutMainPage.Controls.Add(this.tableLayoutPanel7, 0, 0);
+            this.tableLayoutMainPage.Controls.Add(this.CommandsView, 1, 0);
             this.tableLayoutMainPage.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutMainPage.Name = "tableLayoutMainPage";
             this.tableLayoutMainPage.RowCount = 1;
             this.tableLayoutMainPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutMainPage.Size = new System.Drawing.Size(801, 429);
             this.tableLayoutMainPage.TabIndex = 0;
-            // 
-            // treeView1
-            // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Location = new System.Drawing.Point(336, 15);
-            this.treeView1.Margin = new System.Windows.Forms.Padding(16, 15, 16, 10);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(449, 404);
-            this.treeView1.TabIndex = 0;
             // 
             // tableLayoutPanel7
             // 
@@ -746,20 +737,6 @@
             this.conditionsPanel1.Size = new System.Drawing.Size(282, 52);
             this.conditionsPanel1.TabIndex = 0;
             // 
-            // radioButtonDetection
-            // 
-            this.radioButtonDetection.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioButtonDetection.AutoSize = true;
-            this.radioButtonDetection.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.radioButtonDetection.GroupName = null;
-            this.radioButtonDetection.Location = new System.Drawing.Point(3, 5);
-            this.radioButtonDetection.Name = "radioButtonDetection";
-            this.radioButtonDetection.Size = new System.Drawing.Size(57, 17);
-            this.radioButtonDetection.TabIndex = 7;
-            this.radioButtonDetection.TabStop = true;
-            this.radioButtonDetection.Text = "Detect";
-            this.radioButtonDetection.UseVisualStyleBackColor = false;
-            // 
             // radioButtonActionButton
             // 
             this.radioButtonActionButton.AutoSize = true;
@@ -820,6 +797,20 @@
             this.radioButtonParallelProcess.Text = "Parallel Process";
             this.radioButtonParallelProcess.UseVisualStyleBackColor = true;
             // 
+            // radioButtonDetection
+            // 
+            this.radioButtonDetection.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioButtonDetection.AutoSize = true;
+            this.radioButtonDetection.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.radioButtonDetection.GroupName = null;
+            this.radioButtonDetection.Location = new System.Drawing.Point(3, 5);
+            this.radioButtonDetection.Name = "radioButtonDetection";
+            this.radioButtonDetection.Size = new System.Drawing.Size(57, 17);
+            this.radioButtonDetection.TabIndex = 7;
+            this.radioButtonDetection.TabStop = true;
+            this.radioButtonDetection.Text = "Detect";
+            this.radioButtonDetection.UseVisualStyleBackColor = false;
+            // 
             // graphicControl1
             // 
             this.graphicControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -827,6 +818,22 @@
             this.graphicControl1.Name = "graphicControl1";
             this.graphicControl1.Size = new System.Drawing.Size(119, 170);
             this.graphicControl1.TabIndex = 3;
+            // 
+            // CommandsView
+            // 
+            this.CommandsView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CommandsView.FullRowSelect = true;
+            this.CommandsView.Indent = 25;
+            this.CommandsView.Location = new System.Drawing.Point(336, 15);
+            this.CommandsView.Margin = new System.Windows.Forms.Padding(16, 15, 16, 10);
+            this.CommandsView.Name = "CommandsView";
+            this.CommandsView.ShowLines = false;
+            this.CommandsView.ShowPlusMinus = false;
+            this.CommandsView.ShowRootLines = false;
+            this.CommandsView.Size = new System.Drawing.Size(449, 404);
+            this.CommandsView.TabIndex = 2;
+            this.CommandsView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.CommandsView_AfterSelect);
+            this.CommandsView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CommandsView_KeyDown);
             // 
             // DialogEvent
             // 
@@ -896,7 +903,6 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutMainPage;
-        private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.GroupBox groupBox2;
         private ConditionsPanel conditionsPanel1;
@@ -935,5 +941,6 @@
         private RadioButtonWithGroup radioButtonAutorun;
         private RadioButtonWithGroup radioButtonParallelProcess;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TreeView CommandsView;
     }
 }

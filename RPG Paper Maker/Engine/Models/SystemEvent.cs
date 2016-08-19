@@ -26,6 +26,8 @@ namespace RPG_Paper_Maker
             public SystemGraphic Graphic;
             public DrawType GraphicDrawType;
             public EventTrigger Trigger;
+            public NTree<EventCommand> CommandsTree;
+
             
             public class PageOptions
             {
@@ -62,17 +64,18 @@ namespace RPG_Paper_Maker
             // Constructors
             // -------------------------------------------------------------------
 
-            public SystemEventPage() : this(SystemGraphic.GetDefaultEventGraphic(), DrawType.None, new PageOptions(), EventTrigger.ActionButton)
+            public SystemEventPage() : this(SystemGraphic.GetDefaultEventGraphic(), DrawType.None, new PageOptions(), EventTrigger.ActionButton, GetDefaultTreeCommands())
             {
 
             }
 
-            public SystemEventPage(SystemGraphic graphic, DrawType graphicDrawType, PageOptions options, EventTrigger trigger)
+            public SystemEventPage(SystemGraphic graphic, DrawType graphicDrawType, PageOptions options, EventTrigger trigger, NTree<EventCommand> commandsTree)
             {
                 Graphic = graphic;
                 GraphicDrawType = graphicDrawType;
                 Options = options;
                 Trigger = trigger;
+                CommandsTree = commandsTree;
             }
 
             // -------------------------------------------------------------------
@@ -81,7 +84,34 @@ namespace RPG_Paper_Maker
 
             public SystemEventPage CreateCopy()
             {
-                return new SystemEventPage(Graphic.CreateCopy(), GraphicDrawType, Options.CreateCopy(), Trigger);
+                NTree<EventCommand> tree = new NTree<EventCommand>(null);
+                CopyTreeNode(tree, CommandsTree);
+
+                return new SystemEventPage(Graphic.CreateCopy(), GraphicDrawType, Options.CreateCopy(), Trigger, tree);
+            }
+
+            // -------------------------------------------------------------------
+            // CopyTreeNode
+            // -------------------------------------------------------------------
+
+            public void CopyTreeNode(NTree<EventCommand> tree, NTree<EventCommand> treeToCopy)
+            {
+                foreach (NTree<EventCommand> childToCopy in treeToCopy.GetChildren())
+                {
+                    CopyTreeNode(tree.AddChild(childToCopy.Data.CreateCopy()), childToCopy);
+                }
+            }
+
+            // -------------------------------------------------------------------
+            // GetDefaultTreeCommands
+            // -------------------------------------------------------------------
+
+            public static NTree<EventCommand> GetDefaultTreeCommands()
+            {
+                NTree<EventCommand> tree = new NTree<EventCommand>(null);
+                tree.AddChild(new EventCommand());
+
+                return tree;
             }
         }
 
@@ -122,9 +152,9 @@ namespace RPG_Paper_Maker
         // CreateNewPage
         // -------------------------------------------------------------------
 
-        public void CreateNewPage()
+        public void CreateNewPage(SystemEventPage page = null)
         {
-            Pages.Insert(++CurrentPage, new SystemEventPage());
+            Pages.Insert(++CurrentPage, page == null ? new SystemEventPage() : page);
         }
     }
 }

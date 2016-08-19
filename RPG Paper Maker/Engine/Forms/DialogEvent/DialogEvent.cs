@@ -15,9 +15,15 @@ namespace RPG_Paper_Maker
     {
         protected DialogEventControl Control;
         protected BindingSource ViewModelBindingSource = new BindingSource();
-        System.Timers.Timer GraphicFrameTimer = new System.Timers.Timer();
+        private System.Timers.Timer GraphicFrameTimer = new System.Timers.Timer();
         protected Dictionary<EventTrigger, RadioButtonWithGroup> RadiosTrigger = new Dictionary<EventTrigger, RadioButtonWithGroup>();
-        
+        protected SystemEvent.SystemEventPage CopiedPage = null;
+        protected List<EventCommand> CommandsSelected = null;
+        private Timer CommandUnderscoreTimer = new Timer();
+        private bool IsUnderScoreDisplayed = false;
+        private string CurrentMethodString = "";
+
+
         protected override CreateParams CreateParams
         {
             get
@@ -39,8 +45,10 @@ namespace RPG_Paper_Maker
             Control = new DialogEventControl(ev.CreateCopy());
             ViewModelBindingSource.DataSource = Control;
 
+            // Timers
             GraphicFrameTimer.Interval = 150;
             GraphicFrameTimer.Start();
+            CommandUnderscoreTimer.Interval = 250;
 
             // Radios trigger
             RadiosTrigger[EventTrigger.ActionButton] = radioButtonActionButton;
@@ -60,6 +68,7 @@ namespace RPG_Paper_Maker
                 tabPage.BackColor = Color.White;
                 tabControl1.TabPages.Add(tabPage);
             }
+            buttonDeletePage.Enabled = tabControl1.TabPages.Count > 1;
 
 
             // Speed & frequency
@@ -74,6 +83,9 @@ namespace RPG_Paper_Maker
             numericUpDownFrequency.Increment = (decimal)0.5;
             numericUpDownFrequency.Value = (decimal)1.0;
 
+            // CommandsView
+            CommandsView.ExpandAll();
+
             textBoxEventName.Select();
             textBoxEventName.Focus();
 
@@ -81,6 +93,8 @@ namespace RPG_Paper_Maker
             graphicControl1.ClosingDialogEvent += graphicControl1_ClosingDialogEvent;
             GraphicFrameTimer.Elapsed += graphicFrameTimer_Elapsed;
             graphicControl1.GetComboBox().SelectedIndexChanged += DialogEvent_SelectedIndexChanged;
+            CommandsView.LostFocus += CommandsView_LostFocus;
+            CommandUnderscoreTimer.Tick += CommandUnderscoreTimer_Tick;
 
 
             foreach (EventTrigger trigger in Enum.GetValues(typeof(EventTrigger)))
@@ -131,6 +145,8 @@ namespace RPG_Paper_Maker
                 RadiosTrigger[trigger].Checked = false;
             }
             RadiosTrigger[Control.Model.Pages[i].Trigger].Checked = true;
+            CommandsView.Nodes.Clear();
+            AddCommandNodes(Control.Model.Pages[i].CommandsTree, CommandsView.Nodes);
 
             // Move page
             tabControl1.TabPages[i].Controls.Clear();
@@ -161,6 +177,71 @@ namespace RPG_Paper_Maker
             }
             tabControl1.TabPages[Control.Model.CurrentPage].Padding = new Padding(3);
             tabControl1.TabPages[Control.Model.CurrentPage].BackColor = Color.White;
+        }
+
+        // -------------------------------------------------------------------
+        // CreatePage
+        // -------------------------------------------------------------------
+
+        public void CreatePage(bool newPage)
+        {
+            Control.Model.CreateNewPage(newPage ? null : CopiedPage.CreateCopy());
+            AddPage();
+            tabControl1.SelectedIndex = Control.Model.CurrentPage;
+            tabControl1.Refresh();
+            buttonDeletePage.Enabled = true;
+        }
+
+        // -------------------------------------------------------------------
+        // HightlightAllChildren
+        // -------------------------------------------------------------------
+
+        public void HightlightAllChildren(TreeNode node, Color backColor, Color foreColor)
+        {
+            node.BackColor = backColor;
+            node.ForeColor = foreColor;
+
+            foreach (TreeNode child in node.Nodes)
+            {
+                HightlightAllChildren(child, backColor, foreColor);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // UnLightAllChildren
+        // -------------------------------------------------------------------
+
+        public void UnLightAll()
+        {
+            foreach (TreeNode node in CommandsView.Nodes)
+            {
+                HightlightAllChildren(node, SystemColors.Window, SystemColors.WindowText);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // AddCommandNodes
+        // -------------------------------------------------------------------
+
+        public void AddCommandNodes(NTree<EventCommand> node, TreeNodeCollection commandNode)
+        {
+            foreach (NTree<EventCommand> child in node.GetChildren())
+            {
+                TreeNode commandChild = commandNode.Add(WANOK.ListBeginning + child.Data.ToString());
+                commandChild.Tag = child;
+                AddCommandNodes(child, commandChild.Nodes);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // StopUnderscoreTimer
+        // -------------------------------------------------------------------
+
+        public void StopUnderscoreTimer()
+        {
+            CommandUnderscoreTimer.Stop();
+            if (IsUnderScoreDisplayed) CommandsView.SelectedNode.Text = CommandsView.SelectedNode.Text.Substring(0, CommandsView.SelectedNode.Text.Length - 1);
+            IsUnderScoreDisplayed = false;
         }
 
         // -------------------------------------------------------------------
@@ -245,25 +326,81 @@ namespace RPG_Paper_Maker
 
         private void buttonNewPage_Click(object sender, EventArgs e)
         {
-            Control.Model.CreateNewPage();
-            AddPage();
-            tabControl1.SelectedIndex = Control.Model.CurrentPage;
-            //tabControl1.Refresh();
+            CreatePage(true);
         }
 
         private void buttonCopyPage_Click(object sender, EventArgs e)
         {
-
+            CopiedPage = Control.Model.Pages[Control.Model.CurrentPage].CreateCopy();
+            buttonPastPage.Enabled = true;
         }
 
         private void buttonPastPage_Click(object sender, EventArgs e)
         {
-
+            CreatePage(false);
         }
 
         private void buttonDeletePage_Click(object sender, EventArgs e)
         {
+            for (int i = Control.Model.CurrentPage + 1; i < tabControl1.TabPages.Count; i++)
+            {
+                tabControl1.TabPages[i].Text = i.ToString();
+            }
+            Control.Model.Pages.RemoveAt(Control.Model.CurrentPage);
+            tabControl1.TabPages.RemoveAt(Control.Model.CurrentPage);
+            Control.Model.CurrentPage = 0;
 
+            tabControl1.Refresh();
+            buttonDeletePage.Enabled = tabControl1.TabPages.Count > 1;
+        }
+
+        private void CommandsView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            UnLightAll();
+            HightlightAllChildren(CommandsView.SelectedNode, SystemColors.Highlight, SystemColors.HighlightText);
+
+            CurrentMethodString = ((NTree<EventCommand>)CommandsView.SelectedNode.Tag).Data.ToString();
+            if (((NTree<EventCommand>)CommandsView.SelectedNode.Tag).Data.Id == EventCommandKind.None)
+            {
+                CommandUnderscoreTimer.Start();
+            }
+            else
+            {
+                CommandUnderscoreTimer.Stop();
+            }
+        }
+
+        private void CommandsView_LostFocus(object sender, EventArgs e)
+        {
+            UnLightAll();
+        }
+
+        private void CommandsView_KeyDown(object sender, KeyEventArgs e)
+        {
+            //StopUnderscoreTimer();
+            if (((NTree<EventCommand>)CommandsView.SelectedNode.Tag).Data.Id == EventCommandKind.None)
+            {
+                int k = (int)e.KeyCode;
+                if (k >= 65 && k <= 90) CurrentMethodString += e.KeyCode.ToString();
+                else if (k == 32) CurrentMethodString += " ";
+                else if (k == 8 && CurrentMethodString.Length > 0) CurrentMethodString = CurrentMethodString.Substring(0, CurrentMethodString.Length - 1);
+                if (CurrentMethodString.Length > 0)
+                {
+                    CurrentMethodString = CurrentMethodString.ToLower();
+                    CurrentMethodString = CurrentMethodString.First().ToString().ToUpper() + CurrentMethodString.Substring(1);
+                }
+
+                CommandsView.SelectedNode.Text = WANOK.ListBeginning + CurrentMethodString + (IsUnderScoreDisplayed ? "_" : "");
+                e.SuppressKeyPress = true;
+            }
+            //CommandUnderscoreTimer.Start();
+        }
+
+        private void CommandUnderscoreTimer_Tick(object sender, EventArgs e)
+        {
+            if (!IsUnderScoreDisplayed) CommandsView.SelectedNode.Text = WANOK.ListBeginning + CurrentMethodString + "_";
+            else CommandsView.SelectedNode.Text = CommandsView.SelectedNode.Text = WANOK.ListBeginning + CurrentMethodString;
+            IsUnderScoreDisplayed = !IsUnderScoreDisplayed;
         }
     }
 }
