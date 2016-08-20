@@ -22,6 +22,8 @@ namespace RPG_Paper_Maker
         private Timer CommandUnderscoreTimer = new Timer();
         private bool IsUnderScoreDisplayed = false;
         private string CurrentMethodString = "";
+        protected TableLayoutPanel TableLayoutListCommandsPanel = new TableLayoutPanel();
+        private Label ListCommandsSelectedLabel = null;
 
 
         protected override CreateParams CreateParams
@@ -85,7 +87,11 @@ namespace RPG_Paper_Maker
 
             // CommandsView
             CommandsView.ExpandAll();
-
+            TableLayoutListCommandsPanel.AutoSize = true;
+            TableLayoutListCommandsPanel.Hide();
+            CommandsView.Controls.Add(TableLayoutListCommandsPanel);
+            
+            // Event name
             textBoxEventName.Select();
             textBoxEventName.Focus();
 
@@ -95,8 +101,9 @@ namespace RPG_Paper_Maker
             graphicControl1.GetComboBox().SelectedIndexChanged += DialogEvent_SelectedIndexChanged;
             CommandsView.LostFocus += CommandsView_LostFocus;
             CommandUnderscoreTimer.Tick += CommandUnderscoreTimer_Tick;
+            TableLayoutListCommandsPanel.CellPaint += TableLayoutListCommandsPanel_CellPaint;
 
-
+            // Trigger
             foreach (EventTrigger trigger in Enum.GetValues(typeof(EventTrigger)))
             {
                 RadiosTrigger[trigger].GroupName = "trigger";
@@ -240,8 +247,97 @@ namespace RPG_Paper_Maker
         public void StopUnderscoreTimer()
         {
             CommandUnderscoreTimer.Stop();
-            if (IsUnderScoreDisplayed) CommandsView.SelectedNode.Text = CommandsView.SelectedNode.Text.Substring(0, CommandsView.SelectedNode.Text.Length - 1);
+            if (IsUnderScoreDisplayed) CommandsView.SelectedNode.Text = WANOK.ListBeginning + CurrentMethodString;
             IsUnderScoreDisplayed = false;
+        }
+
+        // -------------------------------------------------------------------
+        // GenerateListCommandsPanel
+        // -------------------------------------------------------------------
+
+        public void GenerateListCommandsPanel()
+        {
+            // IA sorting list
+            List<EventCommandKind> list = EventCommandKind.GetValues();
+            list.Sort((a, b) => string.Compare(a.ToString(), b.ToString(), true));
+            List<EventCommandKind> sortedList = new List<EventCommandKind>();
+            foreach (EventCommandKind ev in list)
+            {
+                string command = ev.ToString().ToLower();
+                string currentCommand = CurrentMethodString.ToLower();
+                string[] split1 = command.Split(' ');
+                string[] split2 = currentCommand.Split(' ');
+                if (currentCommand == "") split2 = new string[] { "" };
+                List<string> grp1 = split1.ToList();
+                List<string> grp2 = split2.ToList();
+
+                foreach (string w1 in split1)
+                {
+                    foreach (string w2 in split2)
+                    {
+                        if (w1.Contains(w2)) grp2.Remove(w2);
+                    }
+                }
+
+                if (grp2.Count == 0) sortedList.Add(ev);
+            }
+
+            // Generating panel
+            TableLayoutListCommandsPanel.Controls.Clear();
+            TableLayoutListCommandsPanel.ColumnStyles.Clear();
+            TableLayoutListCommandsPanel.RowStyles.Clear();
+            TableLayoutListCommandsPanel.ColumnCount = 1;
+            TableLayoutListCommandsPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+
+            foreach (EventCommandKind value in sortedList)
+            {
+                if (value != EventCommandKind.None)
+                {
+                    Label label = new Label();
+                    label.Dock = DockStyle.Fill;
+                    label.Text = value.ToString();
+                    label.AutoSize = true;
+                    label.Margin = new Padding(0);
+                    label.Padding = new Padding(0);
+                    label.BackColor = Color.Transparent;
+                    label.Tag = value;
+                    label.MouseEnter += TableLayoutListCommandsPanel_MouseEnter;
+                    label.MouseClick += TableLayoutListCommandsPanel_MouseDown;
+                    TableLayoutListCommandsPanel.Controls.Add(label, TableLayoutListCommandsPanel.RowStyles.Count, 0);
+                    TableLayoutListCommandsPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 16));
+                }
+            }
+            if (TableLayoutListCommandsPanel.Controls.Count > 0)
+            {
+                ListCommandsSelectedLabel = (Label)TableLayoutListCommandsPanel.Controls[0];
+                ListCommandsSelectedLabel.Font = new Font(ListCommandsSelectedLabel.Font, FontStyle.Bold);
+            }
+            else
+            {
+                ListCommandsSelectedLabel = null;
+            }
+            TableLayoutListCommandsPanel.RowCount = TableLayoutListCommandsPanel.RowStyles.Count;
+            TableLayoutListCommandsPanel.Size = new Size(0, 0);
+        }
+
+        // -------------------------------------------------------------------
+        // OpenLabelDialogCommand
+        // -------------------------------------------------------------------
+
+        public void OpenLabelDialogCommand()
+        {
+            if (ListCommandsSelectedLabel != null)
+            {
+                Form dialog = ((EventCommandKind)ListCommandsSelectedLabel.Tag).GetDialog();
+                if (dialog == null) WANOK.ShowActionMessage();
+                else
+                {
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+
+                    }
+                }
+            }
         }
 
         // -------------------------------------------------------------------
@@ -360,40 +456,52 @@ namespace RPG_Paper_Maker
             HightlightAllChildren(CommandsView.SelectedNode, SystemColors.Highlight, SystemColors.HighlightText);
 
             CurrentMethodString = ((NTree<EventCommand>)CommandsView.SelectedNode.Tag).Data.ToString();
-            if (((NTree<EventCommand>)CommandsView.SelectedNode.Tag).Data.Id == EventCommandKind.None)
+            if (((NTree<EventCommand>)CommandsView.SelectedNode.Tag).Data.EventCommandKind == EventCommandKind.None)
             {
                 CommandUnderscoreTimer.Start();
+                GenerateListCommandsPanel();
+                TableLayoutListCommandsPanel.Location = new Point(CommandsView.SelectedNode.Bounds.X, CommandsView.SelectedNode.Bounds.Y + CommandsView.SelectedNode.Bounds.Height);
+                TableLayoutListCommandsPanel.Show();
             }
             else
             {
-                CommandUnderscoreTimer.Stop();
+                StopUnderscoreTimer();
+                TableLayoutListCommandsPanel.Hide();
             }
         }
 
         private void CommandsView_LostFocus(object sender, EventArgs e)
         {
+            StopUnderscoreTimer();
+            TableLayoutListCommandsPanel.Hide();
             UnLightAll();
+            CommandsView.SelectedNode = null;
         }
 
         private void CommandsView_KeyDown(object sender, KeyEventArgs e)
         {
-            //StopUnderscoreTimer();
-            if (((NTree<EventCommand>)CommandsView.SelectedNode.Tag).Data.Id == EventCommandKind.None)
+            if (((NTree<EventCommand>)CommandsView.SelectedNode.Tag).Data.EventCommandKind == EventCommandKind.None)
             {
+                // Setting the text written
                 int k = (int)e.KeyCode;
-                if (k >= 65 && k <= 90) CurrentMethodString += e.KeyCode.ToString();
-                else if (k == 32) CurrentMethodString += " ";
-                else if (k == 8 && CurrentMethodString.Length > 0) CurrentMethodString = CurrentMethodString.Substring(0, CurrentMethodString.Length - 1);
-                if (CurrentMethodString.Length > 0)
+                if (k == 13) OpenLabelDialogCommand();
+                else
                 {
-                    CurrentMethodString = CurrentMethodString.ToLower();
-                    CurrentMethodString = CurrentMethodString.First().ToString().ToUpper() + CurrentMethodString.Substring(1);
-                }
+                    if (k >= 65 && k <= 90) CurrentMethodString += e.KeyCode.ToString();
+                    else if (k == 32) CurrentMethodString += " ";
+                    else if (k == 8 && CurrentMethodString.Length > 0) CurrentMethodString = CurrentMethodString.Substring(0, CurrentMethodString.Length - 1);
+                    if (CurrentMethodString.Length > 0)
+                    {
+                        CurrentMethodString = CurrentMethodString.ToLower();
+                        CurrentMethodString = CurrentMethodString.First().ToString().ToUpper() + CurrentMethodString.Substring(1);
+                    }
+                    CommandsView.SelectedNode.Text = WANOK.ListBeginning + CurrentMethodString + (IsUnderScoreDisplayed ? "_" : "");
 
-                CommandsView.SelectedNode.Text = WANOK.ListBeginning + CurrentMethodString + (IsUnderScoreDisplayed ? "_" : "");
+                    // Displaying IA research 
+                    GenerateListCommandsPanel();
+                }
                 e.SuppressKeyPress = true;
             }
-            //CommandUnderscoreTimer.Start();
         }
 
         private void CommandUnderscoreTimer_Tick(object sender, EventArgs e)
@@ -401,6 +509,24 @@ namespace RPG_Paper_Maker
             if (!IsUnderScoreDisplayed) CommandsView.SelectedNode.Text = WANOK.ListBeginning + CurrentMethodString + "_";
             else CommandsView.SelectedNode.Text = CommandsView.SelectedNode.Text = WANOK.ListBeginning + CurrentMethodString;
             IsUnderScoreDisplayed = !IsUnderScoreDisplayed;
+        }
+
+        private void TableLayoutListCommandsPanel_CellPaint(object sender, TableLayoutCellPaintEventArgs e)
+        {
+            if ((e.Column + e.Row) % 2 == 0) e.Graphics.FillRectangle(Brushes.LightGray, e.CellBounds);
+            else e.Graphics.FillRectangle(Brushes.WhiteSmoke, e.CellBounds);
+        }
+
+        private void TableLayoutListCommandsPanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            OpenLabelDialogCommand();
+        }
+
+        private void TableLayoutListCommandsPanel_MouseEnter(object sender, EventArgs e)
+        {
+            ListCommandsSelectedLabel.Font = new Font(ListCommandsSelectedLabel.Font, FontStyle.Regular);
+            ListCommandsSelectedLabel = (Label)sender;
+            ListCommandsSelectedLabel.Font = new Font(ListCommandsSelectedLabel.Font, FontStyle.Bold);
         }
     }
 }

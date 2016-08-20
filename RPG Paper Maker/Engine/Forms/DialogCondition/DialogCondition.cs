@@ -38,6 +38,11 @@ namespace RPG_Paper_Maker
         // Constructors
         // -------------------------------------------------------------------
 
+        public DialogCondition() : this(Condition.DefaultObjects())
+        {
+
+        }
+
         public DialogCondition(List<object> condition)
         {
             InitializeComponent();

@@ -156,9 +156,6 @@
     <Compile Include="Engine\CustomUserControls\TextBoxGraphic.Designer.cs">
       <DependentUpon>TextBoxGraphic.cs</DependentUpon>
     </Compile>
-    <Compile Include="Engine\CustomUserControls\TreeViewCommands.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Engine\Enums\Comparaison.cs" />
     <Compile Include="Engine\Enums\EventCommandKind.cs" />
     <Compile Include="Engine\Enums\EventTrigger.cs" />
@@ -699,6 +696,7 @@
     <None Include="Resources\open_file.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Engine\Forms\DialogCommands\" />
     <Folder Include="RTP\Content\Pictures\UI\Others\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

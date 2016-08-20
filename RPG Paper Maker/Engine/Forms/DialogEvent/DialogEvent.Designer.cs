@@ -75,6 +75,7 @@
             this.checkBoxDirectionFix = new System.Windows.Forms.CheckBox();
             this.checkBoxThrough = new System.Windows.Forms.CheckBox();
             this.checkBoxSetWithCamera = new System.Windows.Forms.CheckBox();
+            this.CommandsView = new System.Windows.Forms.TreeView();
             this.conditionsPanel1 = new RPG_Paper_Maker.ConditionsPanel();
             this.radioButtonActionButton = new RPG_Paper_Maker.RadioButtonWithGroup();
             this.radioButtonPlayerTouch = new RPG_Paper_Maker.RadioButtonWithGroup();
@@ -83,7 +84,6 @@
             this.radioButtonParallelProcess = new RPG_Paper_Maker.RadioButtonWithGroup();
             this.radioButtonDetection = new RPG_Paper_Maker.RadioButtonWithGroup();
             this.graphicControl1 = new RPG_Paper_Maker.GraphicControl();
-            this.CommandsView = new System.Windows.Forms.TreeView();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -729,6 +729,22 @@
             this.checkBoxSetWithCamera.Text = "Set with camera";
             this.checkBoxSetWithCamera.UseVisualStyleBackColor = true;
             // 
+            // CommandsView
+            // 
+            this.CommandsView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CommandsView.FullRowSelect = true;
+            this.CommandsView.Indent = 25;
+            this.CommandsView.Location = new System.Drawing.Point(336, 15);
+            this.CommandsView.Margin = new System.Windows.Forms.Padding(16, 15, 16, 10);
+            this.CommandsView.Name = "CommandsView";
+            this.CommandsView.ShowLines = false;
+            this.CommandsView.ShowPlusMinus = false;
+            this.CommandsView.ShowRootLines = false;
+            this.CommandsView.Size = new System.Drawing.Size(449, 404);
+            this.CommandsView.TabIndex = 2;
+            this.CommandsView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.CommandsView_AfterSelect);
+            this.CommandsView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CommandsView_KeyDown);
+            // 
             // conditionsPanel1
             // 
             this.conditionsPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -819,25 +835,8 @@
             this.graphicControl1.Size = new System.Drawing.Size(119, 170);
             this.graphicControl1.TabIndex = 3;
             // 
-            // CommandsView
-            // 
-            this.CommandsView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CommandsView.FullRowSelect = true;
-            this.CommandsView.Indent = 25;
-            this.CommandsView.Location = new System.Drawing.Point(336, 15);
-            this.CommandsView.Margin = new System.Windows.Forms.Padding(16, 15, 16, 10);
-            this.CommandsView.Name = "CommandsView";
-            this.CommandsView.ShowLines = false;
-            this.CommandsView.ShowPlusMinus = false;
-            this.CommandsView.ShowRootLines = false;
-            this.CommandsView.Size = new System.Drawing.Size(449, 404);
-            this.CommandsView.TabIndex = 2;
-            this.CommandsView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.CommandsView_AfterSelect);
-            this.CommandsView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CommandsView_KeyDown);
-            // 
             // DialogEvent
             // 
-            this.AcceptButton = this.ok;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancel;

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
     public class EventCommand
     {
-        public EventCommandKind Id;
+        public EventCommandKind EventCommandKind;
         public List<object> Command;
 
 
@@ -21,9 +22,9 @@ namespace RPG_Paper_Maker
 
         }
 
-        public EventCommand(EventCommandKind id, List<object> command)
+        public EventCommand(EventCommandKind eventCommandKind, List<object> command)
         {
-            Id = id;
+            EventCommandKind = eventCommandKind;
             Command = command;
         }
 
@@ -43,7 +44,7 @@ namespace RPG_Paper_Maker
                 }
             }
 
-            return new EventCommand(Id, command);
+            return new EventCommand(EventCommandKind, command);
         }
 
         // -------------------------------------------------------------------
@@ -52,13 +53,8 @@ namespace RPG_Paper_Maker
 
         public override string ToString()
         {
-            switch (Id)
-            {
-                case EventCommandKind.None:
-                    return "";
-                default:
-                    return "Error: couldn't not convert to string. Please report it to Wanok.rpm@gmail.com";
-            }
+            if (EventCommandKind == EventCommandKind.None) return "";
+            else return "Error: couldn't not convert to string. Please report it to Wanok.rpm@gmail.com";
         }
     }
 }
