@@ -301,10 +301,11 @@ namespace RPG_Paper_Maker
                     label.Padding = new Padding(0);
                     label.BackColor = Color.Transparent;
                     label.Tag = value;
+                    label.TextAlign = ContentAlignment.MiddleLeft;
                     label.MouseEnter += TableLayoutListCommandsPanel_MouseEnter;
                     label.MouseClick += TableLayoutListCommandsPanel_MouseDown;
                     TableLayoutListCommandsPanel.Controls.Add(label, TableLayoutListCommandsPanel.RowStyles.Count, 0);
-                    TableLayoutListCommandsPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 16));
+                    TableLayoutListCommandsPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
                 }
             }
             if (TableLayoutListCommandsPanel.Controls.Count > 0)
@@ -460,7 +461,7 @@ namespace RPG_Paper_Maker
             {
                 CommandUnderscoreTimer.Start();
                 GenerateListCommandsPanel();
-                TableLayoutListCommandsPanel.Location = new Point(CommandsView.SelectedNode.Bounds.X, CommandsView.SelectedNode.Bounds.Y + CommandsView.SelectedNode.Bounds.Height);
+                TableLayoutListCommandsPanel.Location = new Point(CommandsView.SelectedNode.Bounds.X + 30, CommandsView.SelectedNode.Bounds.Y + CommandsView.SelectedNode.Bounds.Height);
                 TableLayoutListCommandsPanel.Show();
             }
             else
@@ -527,6 +528,15 @@ namespace RPG_Paper_Maker
             ListCommandsSelectedLabel.Font = new Font(ListCommandsSelectedLabel.Font, FontStyle.Regular);
             ListCommandsSelectedLabel = (Label)sender;
             ListCommandsSelectedLabel.Font = new Font(ListCommandsSelectedLabel.Font, FontStyle.Bold);
+        }
+
+        private void CommandsView_DoubleClick(object sender, EventArgs e)
+        {
+            DialogCommands dialog = new DialogCommands();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+
+            }
         }
     }
 }

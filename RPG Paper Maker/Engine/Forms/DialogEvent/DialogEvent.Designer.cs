@@ -743,6 +743,7 @@
             this.CommandsView.Size = new System.Drawing.Size(449, 404);
             this.CommandsView.TabIndex = 2;
             this.CommandsView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.CommandsView_AfterSelect);
+            this.CommandsView.DoubleClick += new System.EventHandler(this.CommandsView_DoubleClick);
             this.CommandsView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CommandsView_KeyDown);
             // 
             // conditionsPanel1

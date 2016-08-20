@@ -175,6 +175,12 @@
     <Compile Include="Engine\Forms\DialogAddingSpecialList\DialogAddingSpecialList.Designer.cs">
       <DependentUpon>DialogAddingSpecialList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\Forms\DialogCommands\DialogCommands.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogCommands\DialogCommands.Designer.cs">
+      <DependentUpon>DialogCommands.cs</DependentUpon>
+    </Compile>
     <Compile Include="Engine\Forms\DialogConditions\DialogConditions.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -444,6 +450,9 @@
     <EmbeddedResource Include="Engine\Forms\DialogAddingSpecialList\DialogAddingSpecialList.resx">
       <DependentUpon>DialogAddingSpecialList.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogCommands\DialogCommands.resx">
+      <DependentUpon>DialogCommands.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogConditions\DialogConditions.resx">
       <DependentUpon>DialogConditions.cs</DependentUpon>
     </EmbeddedResource>
@@ -696,7 +705,6 @@
     <None Include="Resources\open_file.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Engine\Forms\DialogCommands\" />
     <Folder Include="RTP\Content\Pictures\UI\Others\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
