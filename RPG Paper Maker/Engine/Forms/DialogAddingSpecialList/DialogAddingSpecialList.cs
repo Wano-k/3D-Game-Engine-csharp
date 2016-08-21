@@ -13,12 +13,18 @@ namespace RPG_Paper_Maker
     public partial class DialogAddingSpecialList : Form
     {
         public Type Type;
-        public List<ListBox> ListBoxesCanceling, ListBoxes;
-        public System.Timers.Timer DragTimer = new System.Timers.Timer(20);
-        public bool CanDrag = false;
         protected int SelectedItemTileset = -1;
         protected int OldIndex = -1;
-        protected int NewIndex = -1;
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
+                return cp;
+            }
+        }
 
 
         // -------------------------------------------------------------------
@@ -31,27 +37,16 @@ namespace RPG_Paper_Maker
 
             Text = text;
             Type = type;
-            ListBoxesCanceling = new List<ListBox>(new ListBox[] { textBoxGraphic.GetTextBox(), listBoxTileset });
-            ListBoxes = new List<ListBox>(new ListBox[] { listBoxComplete.GetListBox() });
 
             // Paint groupBox
             groupBox1.Paint += MainForm.PaintBorderGroupBox;
             groupBox2.Paint += MainForm.PaintBorderGroupBox;
 
-            // list event handlers
-            for (int i = 0; i < ListBoxesCanceling.Count; i++)
-            {
-                ListBoxesCanceling[i].MouseClick += listBox_MouseClick;
-            }
-            for (int i = 0; i < ListBoxes.Count; i++)
-            {
-                ListBoxes[i].MouseClick += listBox_MouseClick;
-            }
+            listBoxTileset.GetButton().Hide();
 
             MouseWheel += new MouseEventHandler(form_MouseWheel);
             listBoxComplete.GetListBox().DoubleClick += listBoxComplete_DoubleClick;
-
-            DragTimer.Elapsed += new System.Timers.ElapsedEventHandler(DoDrag);
+            listBoxTileset.GetListBox().MouseDown += listBoxTileset_MouseDown;
         }
 
 
@@ -62,34 +57,9 @@ namespace RPG_Paper_Maker
         public List<int> GetListTileset()
         {
             List<int> list = new List<int>();
-            for (int i = 0; i < listBoxTileset.Items.Count; i++) list.Add(((SuperListItem)listBoxTileset.Items[i]).Id);
+            for (int i = 0; i < listBoxTileset.GetListBox().Items.Count; i++) list.Add(((SuperListItem)listBoxTileset.GetListBox().Items[i]).Id);
 
             return list;
-        }
-
-        // -------------------------------------------------------------------
-        // UnselectAllCancelingLists
-        // -------------------------------------------------------------------
-
-        public void UnselectAllCancelingLists()
-        {
-            for (int i = 0; i < ListBoxesCanceling.Count; i++)
-            {
-                ListBoxesCanceling[i].ClearSelected();
-            }
-        }
-
-        // -------------------------------------------------------------------
-        // UnselectAllLists
-        // -------------------------------------------------------------------
-
-        public void UnselectAllLists()
-        {
-            UnselectAllCancelingLists();
-            for (int i = 0; i < ListBoxes.Count; i++)
-            {
-                ListBoxes[i].SelectedIndex = 0;
-            }
         }
 
         // -------------------------------------------------------------------
@@ -101,16 +71,20 @@ namespace RPG_Paper_Maker
             SuperListItem item = (SuperListItem)listBoxComplete.GetListBox().SelectedItem;
             bool test = true;
 
-            for (int i = 0; i < listBoxTileset.Items.Count; i++)
+            for (int i = 0; i < listBoxTileset.GetListBox().Items.Count; i++)
             {
-                if (item.Id == ((SuperListItem)listBoxTileset.Items[i]).Id)
+                if (item.Id == ((SuperListItem)listBoxTileset.GetListBox().Items[i]).Id)
                 {
                     test = false;
                     break;
                 }
             }
 
-            if (test) listBoxTileset.Items.Add(item);
+            if (test)
+            {
+                listBoxTileset.GetListBox().Items.Add(item);
+                if (listBoxTileset.GetListBox().Items.Count == 1) listBoxTileset.GetListBox().SelectedIndex = 0;
+            }
         }
 
         // -------------------------------------------------------------------
@@ -119,23 +93,13 @@ namespace RPG_Paper_Maker
 
         public void DeleteItem()
         {
-            SuperListItem item = (SuperListItem)listBoxTileset.SelectedItem;
-            if (item != null)
+            SelectedItemTileset = listBoxTileset.GetListBox().SelectedIndex;
+            if (SelectedItemTileset != -1)
             {
-                SelectedItemTileset = listBoxTileset.SelectedIndex;
-                listBoxTileset.Items.Remove(item);
+                listBoxTileset.GetListBox().Items.RemoveAt(SelectedItemTileset);
+                if (SelectedItemTileset > 0) listBoxTileset.GetListBox().SelectedIndex = SelectedItemTileset - 1;
+                else if (listBoxTileset.GetListBox().Items.Count > 0) listBoxTileset.GetListBox().SelectedIndex = 0;
             }
-        }
-
-        // -------------------------------------------------------------------
-        // listBox_MouseClick
-        // -------------------------------------------------------------------
-
-        public void listBox_MouseClick(object sender, MouseEventArgs e)
-        {
-            int index = ((ListBox)sender).IndexFromPoint(e.X, e.Y); ;
-            UnselectAllCancelingLists();
-            ((ListBox)sender).SelectedIndex = index;
         }
 
         // -------------------------------------------------------------------
@@ -156,9 +120,9 @@ namespace RPG_Paper_Maker
             listBoxComplete.SetName(textBoxName.Text);
             SuperListItem item = (SuperListItem)listBoxComplete.GetListBox().SelectedItem;
 
-            for (int i = 0; i < listBoxTileset.Items.Count; i++)
+            for (int i = 0; i < listBoxTileset.GetListBox().Items.Count; i++)
             {
-                if (item.Id == ((SuperListItem)listBoxTileset.Items[i]).Id) listBoxTileset.Items[i] = item;
+                if (item.Id == ((SuperListItem)listBoxTileset.GetListBox().Items[i]).Id) listBoxTileset.GetListBox().Items[i] = item;
             }
         }
 
@@ -189,77 +153,15 @@ namespace RPG_Paper_Maker
             DeleteItem();
         }
 
-        // -------------------------------------------------------------------
-        // listBoxTileset_KeyDown
-        // -------------------------------------------------------------------
-
-        private void listBoxTileset_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (listBoxTileset.SelectedIndex != -1)
-            {
-                if (e.KeyCode == Keys.Delete) DeleteItem();
-            }
-        }
-
-        // -------------------------------------------------------------------
-        // Drag & drop
-        // -------------------------------------------------------------------
-
         private void listBoxTileset_MouseDown(object sender, MouseEventArgs e)
         {
             // If left clic, can drag and drop
             if (e.Button == MouseButtons.Left)
             {
-                if (listBoxTileset.SelectedItem == null) return;
-                if (!DragTimer.Enabled)
-                {
-                    OldIndex = listBoxTileset.SelectedIndex;
-                    DragTimer.Start();
-                }
+                if (listBoxTileset.GetListBox().SelectedItem == null) return;
+                OldIndex = listBoxTileset.GetListBox().SelectedIndex;
             }
         }
-
-        private void DoDrag(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            CanDrag = true;
-            DragTimer.Stop();
-        }
-
-        private void listBoxTileset_DragDrop(object sender, DragEventArgs e)
-        {
-            Point point = listBoxTileset.PointToClient(new Point(e.X, e.Y));
-            int newIndex = listBoxTileset.IndexFromPoint(point);
-            if (newIndex < 0) newIndex = listBoxTileset.Items.Count - 1;
-            object data = e.Data.GetData(Type);
-            
-            listBoxTileset.Items.Remove(data);
-            listBoxTileset.Items.Insert(newIndex, data);
-            listBoxTileset.SelectedIndex = newIndex;
-            NewIndex = newIndex;
-        }
-
-        private void listBoxTileset_DragOver(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.Move;
-        }
-
-        private void listBoxTileset_MouseUp(object sender, MouseEventArgs e)
-        {
-            CanDrag = false;
-        }
-
-        private void listBoxTileset_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (CanDrag)
-            {
-                listBoxTileset.DoDragDrop(listBoxTileset.SelectedItem, DragDropEffects.Move);
-                CanDrag = false;
-            }
-        }
-
-        // -------------------------------------------------------------------
-        // ok_Click
-        // -------------------------------------------------------------------
 
         private void ok_Click(object sender, EventArgs e)
         {

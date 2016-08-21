@@ -18,9 +18,9 @@ namespace RPG_Paper_Maker
         public List<SuperListItem> ModelListComplete;
         public Type DialogKind;
         public Type TypeItem;
-        public ListBox[] ListBoxes;
         public TilesetsDatas Model;
         public int Min, Max;
+        public bool IsSelectedItemWhenLosingFocus = false;
 
 
         // -------------------------------------------------------------------
@@ -32,15 +32,16 @@ namespace RPG_Paper_Maker
             InitializeComponent();
 
             listBox.FormattingEnabled = false;
+            listBox.LostFocus += ListBox_LostFocus;
         }
 
         // -------------------------------------------------------------------
         // InitializeListParameters
         // -------------------------------------------------------------------
 
-        public void InitializeListParameters(TilesetsDatas model, ListBox[] list, List<SuperListItem> modelListComplete, List<int> modelListTileset, Type type, Type typeItem, int min, int max, MethodGetSuperItemById getById)
+        public void InitializeListParameters(bool select, TilesetsDatas model, List<SuperListItem> modelListComplete, List<int> modelListTileset, Type type, Type typeItem, int min, int max, MethodGetSuperItemById getById)
         {
-            ListBoxes = list;
+            IsSelectedItemWhenLosingFocus = select;
             ModelListComplete = modelListComplete;
             ModelListTileset = modelListTileset;
             DialogKind = type;
@@ -75,18 +76,6 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // UnselectAllLists
-        // -------------------------------------------------------------------
-
-        public void UnselectAllLists()
-        {
-            for (int i = 0; i < ListBoxes.Length; i++)
-            {
-                ListBoxes[i].ClearSelected();
-            }
-        }
-
-        // -------------------------------------------------------------------
         // SetName
         // -------------------------------------------------------------------
 
@@ -94,6 +83,11 @@ namespace RPG_Paper_Maker
         {
             ((SuperListItem)listBox.Items[listBox.SelectedIndex]).Name = name;
             listBox.Items[listBox.SelectedIndex] = listBox.SelectedItem;
+        }
+
+        private void ListBox_LostFocus(object sender, EventArgs e)
+        {
+            if (!IsSelectedItemWhenLosingFocus) listBox.SelectedIndex = -1;
         }
     }
 }

@@ -26,6 +26,7 @@ namespace RPG_Paper_Maker.Engine.CustomUserControls
         {
             InitializeComponent();
             listBox1.Items.Add("");
+            listBox1.LostFocus += ListBox1_LostFocus;
         }
 
         // -------------------------------------------------------------------
@@ -81,6 +82,11 @@ namespace RPG_Paper_Maker.Engine.CustomUserControls
         private void listBox1_DoubleClick(object sender, EventArgs e)
         {
             OpenDialog();
+        }
+
+        private void ListBox1_LostFocus(object sender, EventArgs e)
+        {
+            listBox1.SelectedIndex = -1;
         }
     }
 }

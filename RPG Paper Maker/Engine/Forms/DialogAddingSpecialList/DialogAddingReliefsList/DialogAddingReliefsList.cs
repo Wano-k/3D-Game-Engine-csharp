@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RPG_Paper_Maker.Engine.CustomUserControls;
+using System.Drawing;
 
 namespace RPG_Paper_Maker
 {
@@ -21,7 +22,6 @@ namespace RPG_Paper_Maker
         ImageComboBox ComboBoxAutotile = new ImageComboBox();
         SystemTileset Tileset;
         TilesetsDatas Model;
-        bool UpdatePanel = false;
         List<object[]> ReliefsTop = new List<object[]>();
 
 
@@ -37,22 +37,25 @@ namespace RPG_Paper_Maker
             TextBoxVariable.InitializeParameters(new object[] { 0, 0, 1, 1 }, new object[] { Tileset.Graphic }, typeof(DialogTileset), WANOK.GetStringTileset);
             ComboBoxAutotile.Dock = DockStyle.Fill;
             ComboBoxAutotile.FillComboBox(Tileset.Autotiles, Model.GetAutotileById, Model.GetAutotileIndexById, 0);
-            ListBoxesCanceling.Add(TextBoxVariable.GetTextBox());
-            for (int i = 0; i < ListBoxesCanceling.Count; i++)
-            {
-                ListBoxesCanceling[i].MouseClick += listBox_MouseClick;
-            }
-            for (int i = 0; i < ListBoxes.Count; i++)
-            {
-                ListBoxes[i].MouseClick += listBox_MouseClick;
-            }
+
+            // Radios 
+            Radios[DrawType.None] = new RadioButton();
+            Radios[DrawType.None].Text = "None";
+            Radios[DrawType.Floors] = new RadioButton();
+            Radios[DrawType.Floors].Text = "Floor";
+            Radios[DrawType.Autotiles] = new RadioButton();
+            Radios[DrawType.Autotiles].Text = "Autotile";
 
             // Fill boxes
-            listBoxComplete.InitializeListParameters(new ListBox[] { }, WANOK.GetSuperListItem(model.Reliefs.Cast<SuperListItem>().ToList()), null, Type, 1, SystemRelief.MAX_RELIEFS);
+            listBoxComplete.GetListBox().SelectedIndexChanged += listBoxComplete_SelectedIndexChanged;
+            listBoxComplete.InitializeListParameters(true, WANOK.GetSuperListItem(model.Reliefs.Cast<SuperListItem>().ToList()), null, Type, 1, SystemRelief.MAX_RELIEFS);
+            List<SuperListItem> modelTileset = new List<SuperListItem>();
             for (int i = 0; i < tileset.Reliefs.Count; i++)
             {
-                listBoxTileset.Items.Add(model.GetReliefById(tileset.Reliefs[i]));
+                modelTileset.Add(model.GetReliefById(tileset.Reliefs[i]));
             }
+            listBoxTileset.GetListBox().SelectedIndexChanged += ListBoxTileset_SelectedIndexChanged;
+            listBoxTileset.InitializeListParameters(true, modelTileset, null, Type, 0, 0, false, false);
 
             // PictureRelief
             PictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -66,20 +69,14 @@ namespace RPG_Paper_Maker
             RadioPanel.Dock = DockStyle.Fill;
             RadioPanel.RowCount = 3;
             RadioPanel.ColumnCount = 2;
-            Radios[DrawType.None] = new RadioButton();
-            Radios[DrawType.None].Text = "None";
             RadioPanel.Controls.Add(Radios[DrawType.None], 0, 0);
-            Radios[DrawType.Floors] = new RadioButton();
-            Radios[DrawType.Floors].Text = "Floor";
             RadioPanel.Controls.Add(Radios[DrawType.Floors], 0, 1);
-            Radios[DrawType.Autotiles] = new RadioButton();
-            Radios[DrawType.Autotiles].Text = "Autotile";
             RadioPanel.Controls.Add(Radios[DrawType.Autotiles], 0, 2);
             RadioPanel.Controls.Add(new Panel(), 1, 0);
             RadioPanel.Controls.Add(TextBoxVariable, 1, 1);
             RadioPanel.Controls.Add(ComboBoxAutotile, 1, 2);
             RadioPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25));
-            RadioPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25));
+            RadioPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 29));
             RadioPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25));
             RadioPanel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
             RadioPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
@@ -104,27 +101,22 @@ namespace RPG_Paper_Maker
             tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 50));
             tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 50));
             tableLayoutPanel8.Controls.Add(FloorPanel, 0, 1);
-            FloorPanel.Hide();
+            FloorPanel.Visible = listBoxTileset.GetListBox().Items.Count > 0;
 
             // Events
             textBoxGraphic.GetTextBox().SelectedValueChanged += textBoxGraphic_SelectedValueChanged;
-            listBoxComplete.GetListBox().SelectedIndexChanged += listBoxComplete_SelectedIndexChanged;
             listBoxComplete.GetListBox().MouseDown += listBoxComplete_SelectedIndexChanged;
             listBoxComplete.GetButton().Click += listBoxComplete_Click;
-            listBoxTileset.SelectedIndexChanged += ListBoxTileset_SelectedIndexChanged;
-            listBoxTileset.MouseUp += ListBoxMouseUp;
-            listBoxComplete.GetListBox().MouseUp += ListBoxMouseUp;
+            buttonDelete.Click += ButtonDelete_Click;
             Radios[DrawType.None].CheckedChanged += RadioCheckedNone;
             Radios[DrawType.Floors].CheckedChanged += RadioCheckedFloor;
             Radios[DrawType.Autotiles].CheckedChanged += RadioCheckedAutotile;
             ComboBoxAutotile.SelectedIndexChanged += ComboBoxAutotileSelectedIndexChanged;
             buttonAdd.Click += ButtonAdd_Click;
             listBoxComplete.GetListBox().DoubleClick += ListBoxComplete_DoubleClick;
-            buttonDelete.Click += ButtonDelete_Click;
             TextBoxVariable.GetTextBox().SelectedValueChanged += TextVariable_SelectedValueChanged;
-            listBoxTileset.DragDrop += ListBoxTileset_DragDrop;
-
-            UnselectAllLists();
+            listBoxTileset.GetListBox().DragDrop += ListBoxTileset_DragDrop;
+            listBoxTileset.GetListBox().MouseDown += ListBoxTileset_SelectedIndexChanged;
         }
 
 
@@ -158,14 +150,14 @@ namespace RPG_Paper_Maker
             if (drawType == DrawType.Floors) TextBoxVariable.Enabled = true;
             if (drawType == DrawType.Autotiles) ComboBoxAutotile.Enabled = true;
 
-            if (drawType == DrawType.None) ReliefsTop[listBoxTileset.SelectedIndex][1] = null;
-            if (drawType == DrawType.Floors) ReliefsTop[listBoxTileset.SelectedIndex][1] = new int[] { (int)TextBoxVariable.Value[0], (int)TextBoxVariable.Value[1], (int)TextBoxVariable.Value[2], (int)TextBoxVariable.Value[3] };
+            if (drawType == DrawType.None) ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][1] = null;
+            if (drawType == DrawType.Floors) ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][1] = new int[] { (int)TextBoxVariable.Value[0], (int)TextBoxVariable.Value[1], (int)TextBoxVariable.Value[2], (int)TextBoxVariable.Value[3] };
             if (drawType == DrawType.Autotiles)
             {
-                if (ComboBoxAutotile.SelectedIndex == -1) ReliefsTop[listBoxTileset.SelectedIndex][1] = new int[] { 0 };
-                else ReliefsTop[listBoxTileset.SelectedIndex][1] = new int[] { Tileset.Autotiles[ComboBoxAutotile.SelectedIndex] };
+                if (ComboBoxAutotile.SelectedIndex == -1) ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][1] = new int[] { 0 };
+                else ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][1] = new int[] { Tileset.Autotiles[ComboBoxAutotile.SelectedIndex] };
             }
-            ReliefsTop[listBoxTileset.SelectedIndex][0] = drawType;
+            ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][0] = drawType;
         }
 
         // -------------------------------------------------------------------
@@ -175,6 +167,8 @@ namespace RPG_Paper_Maker
         public void AddReliefTop()
         {
             ReliefsTop.Add(new object[] { DrawType.None, null });
+            if (listBoxTileset.GetListBox().Items.Count == 1) FloorPanel.Visible = true;
+            UpdateRelief();
         }
 
         // -------------------------------------------------------------------
@@ -183,7 +177,12 @@ namespace RPG_Paper_Maker
 
         public void DeleteReliefTop()
         {
-            ReliefsTop.RemoveAt(SelectedItemTileset);
+            if (SelectedItemTileset != -1)
+            {
+                ReliefsTop.RemoveAt(SelectedItemTileset);
+            }
+            if (listBoxTileset.GetListBox().Items.Count == 0) FloorPanel.Visible = false;
+            UpdateRelief();
         }
 
         // -------------------------------------------------------------------
@@ -192,25 +191,25 @@ namespace RPG_Paper_Maker
 
         public void UpdateRelief()
         {
-            if (listBoxTileset.SelectedIndex != -1 && listBoxTileset.Items.Count == ReliefsTop.Count)
+            if (listBoxTileset.GetListBox().SelectedIndex != -1 && listBoxTileset.GetListBox().Items.Count == ReliefsTop.Count)
             {
-                if ((DrawType)ReliefsTop[listBoxTileset.SelectedIndex][0] == DrawType.Floors) TextBoxVariable.InitializeParameters(
+                if ((DrawType)ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][0] == DrawType.Floors) TextBoxVariable.InitializeParameters(
                     new object[] {
-                        ((int[])ReliefsTop[listBoxTileset.SelectedIndex][1])[0],
-                        ((int[])ReliefsTop[listBoxTileset.SelectedIndex][1])[1],
-                        ((int[])ReliefsTop[listBoxTileset.SelectedIndex][1])[2],
-                        ((int[])ReliefsTop[listBoxTileset.SelectedIndex][1])[3],
+                        ((int[])ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][1])[0],
+                        ((int[])ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][1])[1],
+                        ((int[])ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][1])[2],
+                        ((int[])ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][1])[3],
                     },
                     new object[] { Tileset.Graphic }, typeof(DialogTileset), WANOK.GetStringTileset);
                 else TextBoxVariable.InitializeParameters(new object[] { 0, 0, 1, 1 }, new object[] { Tileset.Graphic }, typeof(DialogTileset), WANOK.GetStringTileset);
-                if ((DrawType)ReliefsTop[listBoxTileset.SelectedIndex][0] == DrawType.Autotiles)
+                if ((DrawType)ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][0] == DrawType.Autotiles)
                 {
-                    int id = ((int[])ReliefsTop[listBoxTileset.SelectedIndex][1])[0];
-                    if (id > 0 && id <= Tileset.Autotiles.Count) ComboBoxAutotile.SelectedIndex = Tileset.Autotiles.IndexOf(((int[])ReliefsTop[listBoxTileset.SelectedIndex][1])[0]);
+                    int id = ((int[])ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][1])[0];
+                    if (id > 0 && id <= Tileset.Autotiles.Count) ComboBoxAutotile.SelectedIndex = Tileset.Autotiles.IndexOf(((int[])ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][1])[0]);
                 }
                 else if (ComboBoxAutotile.Items.Count > 0) ComboBoxAutotile.SelectedIndex = 0;
 
-                Radios[(DrawType)ReliefsTop[listBoxTileset.SelectedIndex][0]].Checked = true;
+                Radios[(DrawType)ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][0]].Checked = true;
             }
         }
 
@@ -227,7 +226,6 @@ namespace RPG_Paper_Maker
                 textBoxGraphic.InitializeParameters(relief.Graphic);
                 PictureBox.LoadTexture(relief.Graphic);
             }
-            UpdatePanel = false;
         }
 
         public void textBoxGraphic_SelectedValueChanged(object sender, EventArgs e)
@@ -262,34 +260,19 @@ namespace RPG_Paper_Maker
 
         private void ComboBoxAutotileSelectedIndexChanged(object sender, EventArgs e)
         {
-            ReliefsTop[listBoxTileset.SelectedIndex][1] = new int[] { Tileset.Autotiles[ComboBoxAutotile.SelectedIndex] };
+            ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][1] = new int[] { Tileset.Autotiles[ComboBoxAutotile.SelectedIndex] };
         }
 
         private void ListBoxTileset_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateRelief();
-
-            if (listBoxTileset.SelectedItem != null)
-            {
-                UpdatePanel = true;
-            }
-            else
-            {
-                UpdatePanel = false;
-            }
-        }
-
-        private void ListBoxMouseUp(object sender, MouseEventArgs e)
-        {
-            FloorPanel.Visible = UpdatePanel;
-            UpdatePanel = false;
         }
 
         private void TextVariable_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (listBoxTileset.SelectedIndex != -1)
+            if (listBoxTileset.GetListBox().SelectedIndex != -1)
             {
-                ReliefsTop[listBoxTileset.SelectedIndex][1] = new int[] {
+                ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][1] = new int[] {
                     (int)TextBoxVariable.Value[0],
                     (int)TextBoxVariable.Value[1],
                     (int)TextBoxVariable.Value[2],
@@ -308,19 +291,20 @@ namespace RPG_Paper_Maker
             AddReliefTop();
         }
 
-        private void ButtonDelete_Click(object sender, EventArgs e)
-        {
-            DeleteReliefTop();
-        }
-
         private void ListBoxTileset_DragDrop(object sender, DragEventArgs e)
         {
             object[] obj = ReliefsTop[OldIndex];
+            Point point = listBoxTileset.GetListBox().PointToClient(new Point(e.X, e.Y));
+            int newIndex = listBoxTileset.GetListBox().IndexFromPoint(point);
+            if (newIndex < 0) newIndex = listBoxTileset.GetListBox().Items.Count - 1;
             ReliefsTop.RemoveAt(OldIndex);
-            ReliefsTop.Insert(NewIndex, obj);
+            ReliefsTop.Insert(newIndex, obj);
             UpdateRelief();
-            FloorPanel.Visible = UpdatePanel;
-            UpdatePanel = false;
+        }
+
+        private void ButtonDelete_Click(object sender, EventArgs e)
+        {
+            DeleteReliefTop();
         }
     }
 }

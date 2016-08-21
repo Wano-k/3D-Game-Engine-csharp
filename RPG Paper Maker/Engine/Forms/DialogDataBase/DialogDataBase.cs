@@ -14,7 +14,6 @@ namespace RPG_Paper_Maker
     {
         protected DialogDataBaseControl Control;
         protected BindingSource ViewModelBindingSource = new BindingSource();
-        public ListBox[] ListBoxesCanceling, ListBoxes;
 
         protected override CreateParams CreateParams
         {
@@ -36,15 +35,13 @@ namespace RPG_Paper_Maker
             InitializeComponent();
             Control = new DialogDataBaseControl();
             ViewModelBindingSource.DataSource = Control;
-            ListBoxesCanceling = new ListBox[] { listBoxColors.GetListBox(), listBoxElements.GetListBox(), listBoxCommonStats.GetListBox(), textBoxGraphic.GetTextBox(), listBoxAutotiles.GetListBox(), listBoxRelief.GetListBox() };
-            ListBoxes = new ListBox[] { listBoxHeroes.GetListBox(), listBoxTilesets.GetListBox() };
 
             // Heroes
-            listBoxHeroes.InitializeListParameters(ListBoxesCanceling, Control.Model.Heroes.HeroesList.Cast<SuperListItem>().ToList(), null, typeof(SystemHero), 1, SystemHero.MAX_HEROES);
+            listBoxHeroes.InitializeListParameters(true, Control.Model.Heroes.HeroesList.Cast<SuperListItem>().ToList(), null, typeof(SystemHero), 1, SystemHero.MAX_HEROES);
 
             // Tilesets
-            listBoxTilesets.InitializeListParameters(ListBoxesCanceling, Control.Model.Tilesets.TilesetsList.Cast<SuperListItem>().ToList(), null, typeof(SystemTileset), 1, SystemTileset.MAX_TILESETS);
             listBoxTilesets.GetListBox().SelectedIndexChanged += listBoxTilesets_SelectedIndexChanged;
+            listBoxTilesets.InitializeListParameters(true, Control.Model.Tilesets.TilesetsList.Cast<SuperListItem>().ToList(), null, typeof(SystemTileset), 1, SystemTileset.MAX_TILESETS);
             listBoxTilesets.GetListBox().MouseDown += listBoxTilesets_SelectedIndexChanged;
             textBoxGraphic.GetTextBox().SelectedValueChanged += textBoxGraphic_SelectedValueChanged;
             collisionSettings.LoadTextures();
@@ -57,28 +54,17 @@ namespace RPG_Paper_Maker
             ComboBoxResolution.SelectedIndex = Control.GetFullScreenIndex();
             toolTipSquareSize.SetToolTip(buttonSquareSize, "This option set the maps displaying, it is recommended to put multiple 8 numbers.\nNote that the pixel height addings are not modified.");
             textBoxLangGameName.InitializeParameters(Control.GameName);
-            listBoxColors.InitializeListParameters(ListBoxesCanceling, Control.Model.System.Colors.Cast<SuperListItem>().ToList(), typeof(DialogSystemColors), typeof(SystemColor), 1, SystemColor.MAX_COLORS);
+            listBoxColors.InitializeListParameters(false, Control.Model.System.Colors.Cast<SuperListItem>().ToList(), typeof(DialogSystemColors), typeof(SystemColor), 1, SystemColor.MAX_COLORS);
 
             // Battle System
-            listBoxElements.InitializeListParameters(ListBoxesCanceling, Control.Model.BattleSystem.Elements.Cast<SuperListItem>().ToList(), typeof(DialogElement), typeof(SystemElement), 1, SystemElement.MAX_ELEMENTS);
-            listBoxCommonStats.InitializeListParameters(ListBoxesCanceling, Control.Model.BattleSystem.Statistics.Cast<SuperListItem>().ToList(), typeof(DialogStatistics), typeof(SystemStatistics), 1, SystemStatistics.MAX_STATISTICS);
-            listBoxWeaponsKind.InitializeListParameters(ListBoxesCanceling, Control.Model.BattleSystem.WeaponsKind.Cast<SuperListItem>().ToList(), null, typeof(SuperListItemName), 1, BattleSystemDatas.MAX_WEAPONS_KIND, true);
-            listBoxArmorsKind.InitializeListParameters(ListBoxesCanceling, Control.Model.BattleSystem.ArmorsKind.Cast<SuperListItem>().ToList(), null, typeof(SuperListItemName), 1, BattleSystemDatas.MAX_ARMORS_KIND, true);
-
-            // list event handlers
-            for (int i = 0; i < ListBoxesCanceling.Length; i++)
-            {
-                ListBoxesCanceling[i].MouseClick += listBox_MouseClick;
-            }
-            for (int i = 0; i < ListBoxes.Length; i++)
-            {
-                ListBoxes[i].MouseClick += listBox_MouseClick;
-            }
+            listBoxElements.InitializeListParameters(false, Control.Model.BattleSystem.Elements.Cast<SuperListItem>().ToList(), typeof(DialogElement), typeof(SystemElement), 1, SystemElement.MAX_ELEMENTS);
+            listBoxCommonStats.InitializeListParameters(false, Control.Model.BattleSystem.Statistics.Cast<SuperListItem>().ToList(), typeof(DialogStatistics), typeof(SystemStatistics), 1, SystemStatistics.MAX_STATISTICS);
+            listBoxWeaponsKind.InitializeListParameters(true, Control.Model.BattleSystem.WeaponsKind.Cast<SuperListItem>().ToList(), null, typeof(SuperListItemName), 1, BattleSystemDatas.MAX_WEAPONS_KIND, true);
+            listBoxArmorsKind.InitializeListParameters(true, Control.Model.BattleSystem.ArmorsKind.Cast<SuperListItem>().ToList(), null, typeof(SuperListItemName), 1, BattleSystemDatas.MAX_ARMORS_KIND, true);
 
             MouseWheel += new MouseEventHandler(form_MouseWheel);
             tabControl1.KeyDown += new KeyEventHandler(form_KeyDown);
 
-            UnselectAllLists();
             InitializeDataBindings();
         }
 
@@ -92,31 +78,7 @@ namespace RPG_Paper_Maker
             numericHeight.DataBindings.Add("Value", ViewModelBindingSource, "ScreenHeight", true);
             numericSquareSize.DataBindings.Add("Value", ViewModelBindingSource, "SquareSize", true);
         }
-
-        // -------------------------------------------------------------------
-        // UnselectAllCancelingLists
-        // -------------------------------------------------------------------
-
-        public void UnselectAllCancelingLists()
-        {
-            for (int i = 0; i < ListBoxesCanceling.Length; i++)
-            {
-                ListBoxesCanceling[i].ClearSelected();
-            }
-        }
-
-        // -------------------------------------------------------------------
-        // UnselectAllLists
-        // -------------------------------------------------------------------
-
-        public void UnselectAllLists()
-        {
-            UnselectAllCancelingLists();
-            for (int i = 0; i < ListBoxes.Length; i++)
-            {
-                ListBoxes[i].SelectedIndex = 0;
-            }
-        }
+        
 
         // -------------------------------------------------------------------
         // HEROES
@@ -140,8 +102,8 @@ namespace RPG_Paper_Maker
 
         public void SetCommonTilesetList(SystemTileset tileset)
         {
-            listBoxAutotiles.InitializeListParameters(Control.Model.Tilesets, ListBoxesCanceling, Control.Model.Tilesets.Autotiles.Cast<SuperListItem>().ToList(), tileset.Autotiles, typeof(DialogAddingAutotilesList), typeof(SystemAutotile), 1, SystemAutotile.MAX_AUTOTILES, Control.Model.Tilesets.GetAutotileById);
-            listBoxRelief.InitializeListParameters(Control.Model.Tilesets, ListBoxesCanceling, Control.Model.Tilesets.Reliefs.Cast<SuperListItem>().ToList(), tileset.Reliefs, typeof(DialogAddingReliefsList), typeof(SystemRelief), 1, SystemRelief.MAX_RELIEFS, Control.Model.Tilesets.GetReliefById);
+            listBoxAutotiles.InitializeListParameters(false, Control.Model.Tilesets, Control.Model.Tilesets.Autotiles.Cast<SuperListItem>().ToList(), tileset.Autotiles, typeof(DialogAddingAutotilesList), typeof(SystemAutotile), 1, SystemAutotile.MAX_AUTOTILES, Control.Model.Tilesets.GetAutotileById);
+            listBoxRelief.InitializeListParameters(false, Control.Model.Tilesets, Control.Model.Tilesets.Reliefs.Cast<SuperListItem>().ToList(), tileset.Reliefs, typeof(DialogAddingReliefsList), typeof(SystemRelief), 1, SystemRelief.MAX_RELIEFS, Control.Model.Tilesets.GetReliefById);
         }
 
         // -------------------------------------------------------------------
@@ -259,23 +221,11 @@ namespace RPG_Paper_Maker
         #endregion
 
         // -------------------------------------------------------------------
-        // listBox_MouseClick
-        // -------------------------------------------------------------------
-
-        public void listBox_MouseClick(object sender, MouseEventArgs e)
-        {
-            int index = ((ListBox)sender).IndexFromPoint(e.X, e.Y); ;
-            UnselectAllCancelingLists();
-            ((ListBox)sender).SelectedIndex = index;
-        }
-
-        // -------------------------------------------------------------------
         // tabControl1_SelectedIndexChanged
         // -------------------------------------------------------------------
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UnselectAllLists();
             if (tabControl1.SelectedTab == tabPageTilesets)
             {
                 listBoxTilesets.GetListBox().Focus();

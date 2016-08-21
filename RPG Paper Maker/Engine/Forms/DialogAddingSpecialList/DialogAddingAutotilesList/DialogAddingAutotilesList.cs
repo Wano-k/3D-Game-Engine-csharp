@@ -18,25 +18,25 @@ namespace RPG_Paper_Maker
 
         public DialogAddingAutotilesList(string text, TilesetsDatas model, List<int> superListTileset) : base(text, model, superListTileset, typeof(SystemAutotile))
         {
-            listBoxComplete.InitializeListParameters(new ListBox[] { }, WANOK.GetSuperListItem(model.Autotiles.Cast<SuperListItem>().ToList()), null, Type, 1, SystemAutotile.MAX_AUTOTILES);
-
-            for (int i = 0; i < superListTileset.Count; i++)
-            {
-                listBoxTileset.Items.Add(model.GetAutotileById(superListTileset[i]));
-            }
-
             // Collision settings
             collisionSettings = new CollisionSettings();
             collisionSettings.Dock = DockStyle.Fill;
             PanelOther.Controls.Add(collisionSettings);
             collisionSettings.LoadTextures();
 
-            textBoxGraphic.GetTextBox().SelectedValueChanged += textBoxGraphic_SelectedValueChanged;
             listBoxComplete.GetListBox().SelectedIndexChanged += listBoxComplete_SelectedIndexChanged;
+            listBoxComplete.InitializeListParameters(true, WANOK.GetSuperListItem(model.Autotiles.Cast<SuperListItem>().ToList()), null, Type, 1, SystemAutotile.MAX_AUTOTILES);
+            List<SuperListItem> modelTileset = new List<SuperListItem>();
+            for (int i = 0; i < superListTileset.Count; i++)
+            {
+                modelTileset.Add(model.GetAutotileById(superListTileset[i]));
+            }
+
+            listBoxTileset.InitializeListParameters(true, modelTileset, null, Type, 0, 0, false, false);
+
+            textBoxGraphic.GetTextBox().SelectedValueChanged += textBoxGraphic_SelectedValueChanged;
             listBoxComplete.GetListBox().MouseDown += listBoxComplete_SelectedIndexChanged;
             listBoxComplete.GetButton().Click += listBoxComplete_Click;
-
-            UnselectAllLists();
         }
 
         // -------------------------------------------------------------------

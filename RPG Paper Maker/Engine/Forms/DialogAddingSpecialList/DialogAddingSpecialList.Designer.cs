@@ -35,10 +35,9 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.listBoxTileset = new System.Windows.Forms.ListBox();
+            this.listBoxTileset = new RPG_Paper_Maker.SuperListBox();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonAdd = new System.Windows.Forms.Button();
-            this.buttonDelete = new System.Windows.Forms.Button();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -50,6 +49,7 @@
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.PanelOther = new System.Windows.Forms.Panel();
+            this.buttonDelete = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -149,28 +149,19 @@
             this.panel1.Controls.Add(this.listBoxTileset);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(5, 18);
-            this.panel1.Margin = new System.Windows.Forms.Padding(5);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(5);
             this.panel1.Size = new System.Drawing.Size(103, 301);
             this.panel1.TabIndex = 0;
             // 
             // listBoxTileset
             // 
-            this.listBoxTileset.AllowDrop = true;
-            this.listBoxTileset.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listBoxTileset.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxTileset.FormattingEnabled = true;
-            this.listBoxTileset.Location = new System.Drawing.Point(5, 5);
+            this.listBoxTileset.Location = new System.Drawing.Point(0, 0);
+            this.listBoxTileset.Margin = new System.Windows.Forms.Padding(0);
             this.listBoxTileset.Name = "listBoxTileset";
-            this.listBoxTileset.Size = new System.Drawing.Size(93, 291);
+            this.listBoxTileset.Size = new System.Drawing.Size(103, 301);
             this.listBoxTileset.TabIndex = 0;
-            this.listBoxTileset.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBoxTileset_DragDrop);
-            this.listBoxTileset.DragOver += new System.Windows.Forms.DragEventHandler(this.listBoxTileset_DragOver);
-            this.listBoxTileset.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBoxTileset_KeyDown);
-            this.listBoxTileset.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxTileset_MouseDown);
-            this.listBoxTileset.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBoxTileset_MouseMove);
-            this.listBoxTileset.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBoxTileset_MouseUp);
             // 
             // tableLayoutPanel7
             // 
@@ -198,16 +189,6 @@
             this.buttonAdd.TabIndex = 0;
             this.buttonAdd.UseVisualStyleBackColor = true;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
-            // 
-            // buttonDelete
-            // 
-            this.buttonDelete.Image = global::RPG_Paper_Maker.Properties.Resources.delete;
-            this.buttonDelete.Location = new System.Drawing.Point(3, 167);
-            this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(28, 23);
-            this.buttonDelete.TabIndex = 1;
-            this.buttonDelete.UseVisualStyleBackColor = true;
-            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // tableLayoutPanel8
             // 
@@ -339,6 +320,16 @@
             this.PanelOther.Size = new System.Drawing.Size(320, 259);
             this.PanelOther.TabIndex = 1;
             // 
+            // buttonDelete
+            // 
+            this.buttonDelete.Image = global::RPG_Paper_Maker.Properties.Resources.delete;
+            this.buttonDelete.Location = new System.Drawing.Point(3, 167);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(28, 23);
+            this.buttonDelete.TabIndex = 1;
+            this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
+            // 
             // DialogAddingSpecialList
             // 
             this.AcceptButton = this.ok;
@@ -387,9 +378,9 @@
         protected Engine.CustomUserControls.TextBoxGraphic textBoxGraphic;
         protected System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.Panel panel1;
-        protected System.Windows.Forms.ListBox listBoxTileset;
         protected System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
         protected System.Windows.Forms.Button buttonAdd;
+        protected SuperListBox listBoxTileset;
         protected System.Windows.Forms.Button buttonDelete;
     }
 }

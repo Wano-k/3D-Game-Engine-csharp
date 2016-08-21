@@ -17,14 +17,15 @@ namespace RPG_Paper_Maker
         public List<SuperListItem> ModelList { get { return listBox.Items.Cast<SuperListItem>().ToList(); } }
         public Type DialogKind;
         public Type TypeItem;
-        public ListBox[] ListBoxes;
         public SuperListItem CopiedItem = null;
         public int Min, Max;
         public System.Timers.Timer DragTimer = new System.Timers.Timer(20);
-        public bool CanDrag = false, SelectLast = false;
+        public bool CanDrag = false;
         public Engine.TextBoxLang TextBoxLang;
         public bool NameDisplay = false;
         public int IndexDrag = -1;
+        public bool IsSelectedItemWhenLosingFocus = false;
+        public bool DisplayMenuContext = true;
 
 
         // -------------------------------------------------------------------
@@ -37,16 +38,18 @@ namespace RPG_Paper_Maker
 
             listBox.FormattingEnabled = false;
             DragTimer.Elapsed += new System.Timers.ElapsedEventHandler(DoDrag);
+            listBox.LostFocus += ListBox_LostFocus;
         }
 
         // -------------------------------------------------------------------
         // InitializeListParameters
         // -------------------------------------------------------------------
 
-        public void InitializeListParameters(ListBox[] list, List<SuperListItem> modelList, Type type, Type typeItem, int min, int max, bool name = false)
+        public void InitializeListParameters(bool select, List<SuperListItem> modelList, Type type, Type typeItem, int min, int max, bool name = false, bool displayMenuContext = true)
         {
-            ListBoxes = list;
+            IsSelectedItemWhenLosingFocus = select;
             DialogKind = type;
+            DisplayMenuContext = displayMenuContext;
             TypeItem = typeItem;
             Min = min;
             Max = max;
@@ -61,9 +64,10 @@ namespace RPG_Paper_Maker
                 NameDisplay = true;
                 TextBoxLang = new Engine.TextBoxLang();
                 tableLayoutPanel1.Controls.Add(TextBoxLang, 0, 1);
-                listBox.SelectedIndex = 0;
                 TextBoxLang.GetTextBox().TextChanged += SuperListBox_TextChanged;
             }
+
+            if (IsSelectedItemWhenLosingFocus && listBox.Items.Count > 0) listBox.SelectedIndex = 0;
         }
 
 
@@ -83,18 +87,6 @@ namespace RPG_Paper_Maker
         public Button GetButton()
         {
             return button;
-        }
-
-        // -------------------------------------------------------------------
-        // UnselectAllLists
-        // -------------------------------------------------------------------
-
-        public void UnselectAllLists()
-        {
-            for (int i = 0; i < ListBoxes.Length; i++)
-            {
-                ListBoxes[i].ClearSelected();
-            }
         }
 
         // -------------------------------------------------------------------
@@ -164,12 +156,17 @@ namespace RPG_Paper_Maker
         // listBox_MouseDown
         // -------------------------------------------------------------------
 
+        private void listBox_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
         private void listBox_MouseDown(object sender, MouseEventArgs e)
         {
+            listBox.Focus();
             IndexDrag = listBox.IndexFromPoint(e.X, e.Y);
-            UnselectAllLists();
             listBox.SelectedIndex = IndexDrag;
-            if (listBox.SelectedIndex == -1) SelectLast = true;
+            if (listBox.SelectedIndex == -1) listBox.SelectedIndex = listBox.Items.Count - 1;
 
             // If left clic, can drag and drop
             if (e.Button == MouseButtons.Left)
@@ -184,9 +181,11 @@ namespace RPG_Paper_Maker
                 {
                     ItemEdit.Enabled = DialogKind != null;
                     ItemPaste.Enabled = CopiedItem != null;
-                    contextMenuStrip.Show(listBox, e.Location);
+                    if (DisplayMenuContext) contextMenuStrip.Show(listBox, e.Location);
                 }
             }
+
+            SelectedIndexChanged();
         }
 
         // -------------------------------------------------------------------
@@ -242,12 +241,21 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // SelectedIndexChanged
+        // -------------------------------------------------------------------
+
+        private void SelectedIndexChanged()
+        {
+            if (NameDisplay && listBox.SelectedItem != null) TextBoxLang.InitializeParameters(((SuperListItemName)listBox.SelectedItem).Names);
+        }
+
+        // -------------------------------------------------------------------
         // listBox_KeyDown
         // -------------------------------------------------------------------
 
         private void listBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (listBox.SelectedIndex != -1)
+            if (listBox.SelectedIndex != -1 && DisplayMenuContext)
             {
                 if (e.KeyCode == Keys.Delete) DeleteItem();
                 if (e.Control && e.KeyCode == Keys.C) CopyItem();
@@ -287,7 +295,8 @@ namespace RPG_Paper_Maker
 
         private void listBox_DragOver(object sender, DragEventArgs e)
         {
-            e.Effect = DragDropEffects.Move;
+            if (CanDrag && listBox.SelectedItem != null) e.Effect = DragDropEffects.Move;
+            else e.Effect = DragDropEffects.None;
         }
 
         // -------------------------------------------------------------------
@@ -318,13 +327,7 @@ namespace RPG_Paper_Maker
 
         private void listBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (SelectLast)
-            {
-                listBox.SelectedIndex = listBox.Items.Count - 1;
-                SelectLast = false;
-            }
-
-            if (NameDisplay && listBox.SelectedItem != null) TextBoxLang.InitializeParameters(((SuperListItemName)listBox.SelectedItem).Names);
+            SelectedIndexChanged();
         }
 
         // -------------------------------------------------------------------
@@ -358,6 +361,11 @@ namespace RPG_Paper_Maker
         {
             ((SuperListItemName)listBox.SelectedItem).SetName();
             SetName(((SuperListItemName)listBox.SelectedItem).Name);
+        }
+
+        private void ListBox_LostFocus(object sender, EventArgs e)
+        {
+            if (!IsSelectedItemWhenLosingFocus) listBox.SelectedIndex = -1;
         }
     }
 }

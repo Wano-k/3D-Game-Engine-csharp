@@ -54,6 +54,7 @@
             this.listBox.Name = "listBox";
             this.listBox.Size = new System.Drawing.Size(144, 114);
             this.listBox.TabIndex = 0;
+            this.listBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseClick);
             this.listBox.SelectedIndexChanged += new System.EventHandler(this.listBox_SelectedIndexChanged);
             this.listBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox_DragDrop);
             this.listBox.DragOver += new System.Windows.Forms.DragEventHandler(this.listBox_DragOver);
@@ -125,7 +126,7 @@
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(150, 150);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
