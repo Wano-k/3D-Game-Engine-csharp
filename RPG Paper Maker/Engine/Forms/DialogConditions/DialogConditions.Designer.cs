@@ -34,8 +34,8 @@
             this.ok = new System.Windows.Forms.Button();
             this.checkBoxElse = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.conditionsPanel1 = new RPG_Paper_Maker.ConditionsPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -126,6 +126,15 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(638, 112);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
+            // label2
+            // 
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Location = new System.Drawing.Point(3, 30);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(632, 2);
+            this.label2.TabIndex = 1;
+            // 
             // label1
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -135,15 +144,6 @@
             this.label1.Size = new System.Drawing.Size(109, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Select the conditions:";
-            // 
-            // label2
-            // 
-            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(3, 30);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(632, 2);
-            this.label2.TabIndex = 1;
             // 
             // conditionsPanel1
             // 
@@ -184,8 +184,8 @@
         private System.Windows.Forms.Button cancel;
         private System.Windows.Forms.CheckBox checkBoxElse;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
         private ConditionsPanel conditionsPanel1;
     }
 }

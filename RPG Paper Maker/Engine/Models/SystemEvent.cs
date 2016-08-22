@@ -98,7 +98,7 @@ namespace RPG_Paper_Maker
             {
                 foreach (NTree<EventCommand> childToCopy in treeToCopy.GetChildren())
                 {
-                    CopyTreeNode(tree.AddChild(childToCopy.Data.CreateCopy()), childToCopy);
+                    CopyTreeNode(tree.AddChildData(childToCopy.Data.CreateCopy()), childToCopy);
                 }
             }
 
@@ -109,7 +109,7 @@ namespace RPG_Paper_Maker
             public static NTree<EventCommand> GetDefaultTreeCommands()
             {
                 NTree<EventCommand> tree = new NTree<EventCommand>(null);
-                tree.AddChild(new EventCommand());
+                tree.AddChildData(new EventCommand());
 
                 return tree;
             }

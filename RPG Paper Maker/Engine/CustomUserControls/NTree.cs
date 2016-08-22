@@ -13,15 +13,23 @@ namespace RPG_Paper_Maker
         public T Data;
         private LinkedList<NTree<T>> children;
 
+
         public NTree(T data)
         {
             Data = data;
             children = new LinkedList<NTree<T>>();
         }
 
-        public NTree<T> AddChild(T data)
+        public NTree<T> AddChildData(T data)
         {
             NTree<T> child = new NTree<T>(data);
+            children.AddLast(child);
+
+            return child;
+        }
+
+        public NTree<T> AddChild(NTree<T> child)
+        {
             children.AddLast(child);
 
             return child;
@@ -43,6 +51,27 @@ namespace RPG_Paper_Maker
         public LinkedList<NTree<T>> GetChildren()
         {
             return children;
+        }
+
+        private NTree<T> GetLastNode(NTree<T> node)
+        {
+            NTree<T> lastNode = null;
+            if (node.GetChildren().Count > 0)
+            {
+                foreach (NTree<T> child in node.GetChildren())
+                {
+                    NTree<T> lastNodeChild = GetLastNode(child);
+                    if (lastNodeChild != null) lastNode = lastNodeChild;
+                }
+            }
+            else return node;
+
+            return lastNode;
+        }
+
+        public NTree<T> GetLastNode()
+        {
+            return GetLastNode(this);
         }
     }
 }
