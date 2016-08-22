@@ -144,7 +144,7 @@ namespace RPG_Paper_Maker
 
         public void UpdatePage(int i)
         {
-            conditionsPanel1.InitializeListParameters();
+            conditionsPanel1.InitializeListParameters(Control.Model.Pages[i].ConditionsTree.Tree);
             graphicControl1.InitializeListParameters(Control.Model.Pages[i].Graphic, MapEditor.GetMapTileset().Graphic);
             graphicControl1.GetComboBox().SelectedIndex = (int)Control.Model.Pages[i].GraphicDrawType;
             foreach (EventTrigger trigger in Enum.GetValues(typeof(EventTrigger)))
@@ -232,7 +232,7 @@ namespace RPG_Paper_Maker
 
         public void AddCommandNodes(NTree<EventCommand> node, TreeNodeCollection commandNode)
         {
-            foreach (NTree<EventCommand> child in node.GetChildren())
+            foreach (NTree<EventCommand> child in node.Children)
             {
                 TreeNode commandChild = commandNode.Add(WANOK.ListBeginning + child.Data.ToString());
                 commandChild.Tag = child;

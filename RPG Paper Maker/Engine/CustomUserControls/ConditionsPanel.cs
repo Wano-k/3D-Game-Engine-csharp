@@ -14,7 +14,7 @@ namespace RPG_Paper_Maker
     {
         public class FlatButtonCondition : FlatButton
         {
-            public static Color NoneColor = Color.FromArgb(250, 175, 160);
+            public static Color NoneColor = Color.FromArgb(245, 215, 210);
             public static Color FullColor = Color.FromArgb(205, 215, 245);
 
             public NTree<List<object>> Node;
@@ -57,10 +57,9 @@ namespace RPG_Paper_Maker
         // InitializeListParameters
         // -------------------------------------------------------------------
 
-        public void InitializeListParameters()
+        public void InitializeListParameters(NTree<List<object>> tree)
         {
-            Tree = new NTree<List<object>>(new List<object>(new object[] { "" }));
-            Tree.AddChildData(null);
+            Tree = tree;
             GeneratePanel();
         }
 
@@ -81,14 +80,14 @@ namespace RPG_Paper_Maker
 
         private void BrowseNode(NTree<List<object>> node, NTree<List<object>> parent, NTree<List<object>> lastNode)
         {
-            if (node.GetChildren().Count > 1) AddLabel("(");
-            foreach (NTree<List<object>> child in node.GetChildren())
+            if (node.Children.Count > 1) AddLabel("(");
+            foreach (NTree<List<object>> child in node.Children)
             {
                 BrowseNode(child, node, lastNode);
             }
-            if (node.GetChildren().Count > 1) AddLabel(")");
+            if (node.Children.Count > 1) AddLabel(")");
 
-            if (node.GetChildren().Count == 0)
+            if (node.Children.Count == 0)
             {
                 // Button
                 AddButton(node, parent);
@@ -173,7 +172,7 @@ namespace RPG_Paper_Maker
 
         public bool TreeContainsAndOr(NTree<List<object>> node, string i)
         {
-            foreach (NTree<List<object>> child in node.GetChildren())
+            foreach (NTree<List<object>> child in node.Children)
             {
                 if (node.Data != null && node.Data.Count == 1 && (string)node.Data[0] == i) return true;
                 if (TreeContainsAndOr(child, i)) return true;
@@ -183,19 +182,67 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // CleanTree
+        // -------------------------------------------------------------------
+
+        public void CleanTree()
+        {
+            CleanTree(Tree);
+            if (Tree.Data.Count == 1 && Tree.Children.Count == 1)
+            {
+                if (Tree.Children.First.Value.Children.Count == 0) Tree.Data = new List<object>(new object[] { "" });
+                else Tree = Tree.Children.First.Value;
+            }
+        }
+
+        public void CleanTree(NTree<List<object>> node)
+        {
+            foreach (NTree<List<object>> child in node.Children)
+            {
+                CleanTree(child);
+                if (child.Data != null && child.Data.Count == 1 && child.Children.Count == 1)
+                {
+                    node.DeleteChild(child);
+                    node.AddChild(child.Children.First.Value);
+                    break;
+                }
+            }
+        }
+
+        // -------------------------------------------------------------------
         // EVENTS
         // -------------------------------------------------------------------
 
         private void Button_MouseDown(object sender, MouseEventArgs e)
         {
-            List<object> condition = ((FlatButtonCondition)sender).Node.Data;
-            DialogCondition dialog = new DialogCondition(condition == null ? Condition.DefaultObjects() : condition);
-            if (dialog.ShowDialog() == DialogResult.OK)
+            // If left clic, can drag and drop
+            if (e.Button == MouseButtons.Left)
             {
-                ((FlatButtonCondition)sender).Node.Data = dialog.Result;
+                List<object> condition = ((FlatButtonCondition)sender).Node.Data;
+                DialogCondition dialog = new DialogCondition(condition == null ? Condition.DefaultObjects() : condition);
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    ((FlatButtonCondition)sender).Node.Data = dialog.Result;
+
+                    GeneratePanel();
+                }
+            }
+            // If right clic, open ContextMenu
+            else if (e.Button == MouseButtons.Right)
+            {
+                if (Tree.GetNodesCount() > 1)
+                {
+                    ((FlatButtonCondition)sender).ParentNode.DeleteChild(((FlatButtonCondition)sender).Node);
+                    CleanTree();
+                }
+                else
+                {
+                    ((FlatButtonCondition)sender).Node.Data = null;
+                }
 
                 GeneratePanel();
             }
+
         }
 
         private void ComboBox_SelectedIndexChanged(object sender, EventArgs e)

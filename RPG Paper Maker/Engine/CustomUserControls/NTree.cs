@@ -11,54 +11,54 @@ namespace RPG_Paper_Maker
     public class NTree<T>
     {
         public T Data;
-        private LinkedList<NTree<T>> children;
+        public LinkedList<NTree<T>> Children;
 
 
         public NTree(T data)
         {
             Data = data;
-            children = new LinkedList<NTree<T>>();
+            Children = new LinkedList<NTree<T>>();
         }
 
         public NTree<T> AddChildData(T data)
         {
             NTree<T> child = new NTree<T>(data);
-            children.AddLast(child);
+            Children.AddLast(child);
 
             return child;
         }
 
         public NTree<T> AddChild(NTree<T> child)
         {
-            children.AddLast(child);
+            Children.AddLast(child);
 
             return child;
         }
 
         public bool IsLastChild(NTree<T> d)
         {
-            return (d == children.Last.Value);
+            return (d == Children.Last.Value);
         }
 
         public NTree<T> GetChild(int i)
         {
-            foreach (NTree<T> n in children)
+            foreach (NTree<T> n in Children)
                 if (--i == 0)
                     return n;
             return null;
         }
 
-        public LinkedList<NTree<T>> GetChildren()
+        public void DeleteChild(NTree<T> child)
         {
-            return children;
+            Children.Remove(child);
         }
 
         private NTree<T> GetLastNode(NTree<T> node)
         {
             NTree<T> lastNode = null;
-            if (node.GetChildren().Count > 0)
+            if (node.Children.Count > 0)
             {
-                foreach (NTree<T> child in node.GetChildren())
+                foreach (NTree<T> child in node.Children)
                 {
                     NTree<T> lastNodeChild = GetLastNode(child);
                     if (lastNodeChild != null) lastNode = lastNodeChild;
@@ -72,6 +72,26 @@ namespace RPG_Paper_Maker
         public NTree<T> GetLastNode()
         {
             return GetLastNode(this);
+        }
+
+        private int GetNodesCount(NTree<T> node)
+        {
+            int count = 0;
+            if (node.Children.Count == 0) count++;
+            else
+            {
+                foreach (NTree<T> child in node.Children)
+                {
+                    count += GetNodesCount(child);
+                }
+            }
+
+            return count;
+        }
+
+        public int GetNodesCount()
+        {
+            return GetNodesCount(this);
         }
     }
 }

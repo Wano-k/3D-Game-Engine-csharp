@@ -12,15 +12,30 @@ namespace RPG_Paper_Maker
 {
     public partial class DialogConditions : Form
     {
+        public EventCommandConditions Model;
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
+                return cp;
+            }
+        }
 
 
         // -------------------------------------------------------------------
         // Constructors
         // -------------------------------------------------------------------
 
-        public DialogConditions()
+        public DialogConditions(EventCommandConditions conditions)
         {
             InitializeComponent();
+
+            Model = (EventCommandConditions)conditions.CreateCopy();
+
+            conditionsPanel.InitializeListParameters(Model.Tree);
         }
 
         // -------------------------------------------------------------------

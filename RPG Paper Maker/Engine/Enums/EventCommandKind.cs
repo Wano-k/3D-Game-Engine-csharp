@@ -41,9 +41,9 @@ namespace RPG_Paper_Maker
             return list;
         }
 
-        public Form GetDialog()
+        public Form GetDialog(EventCommand eventCommand = null)
         {
-            if (this == Conditions) return new DialogCondition();
+            if (this == Conditions) return new DialogConditions(eventCommand == null ? new EventCommandConditions() : (EventCommandConditions)eventCommand);
 
             return null;
         }

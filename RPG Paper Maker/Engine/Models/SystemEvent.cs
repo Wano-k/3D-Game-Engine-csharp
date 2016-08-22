@@ -26,6 +26,7 @@ namespace RPG_Paper_Maker
             public SystemGraphic Graphic;
             public DrawType GraphicDrawType;
             public EventTrigger Trigger;
+            public EventCommandConditions ConditionsTree;
             public NTree<EventCommand> CommandsTree;
 
             
@@ -64,17 +65,18 @@ namespace RPG_Paper_Maker
             // Constructors
             // -------------------------------------------------------------------
 
-            public SystemEventPage() : this(SystemGraphic.GetDefaultEventGraphic(), DrawType.None, new PageOptions(), EventTrigger.ActionButton, GetDefaultTreeCommands())
+            public SystemEventPage() : this(SystemGraphic.GetDefaultEventGraphic(), DrawType.None, new PageOptions(), EventTrigger.ActionButton, new EventCommandConditions(), GetDefaultTreeCommands())
             {
 
             }
 
-            public SystemEventPage(SystemGraphic graphic, DrawType graphicDrawType, PageOptions options, EventTrigger trigger, NTree<EventCommand> commandsTree)
+            public SystemEventPage(SystemGraphic graphic, DrawType graphicDrawType, PageOptions options, EventTrigger trigger, EventCommandConditions conditionsTree, NTree<EventCommand> commandsTree)
             {
                 Graphic = graphic;
                 GraphicDrawType = graphicDrawType;
                 Options = options;
                 Trigger = trigger;
+                ConditionsTree = conditionsTree;
                 CommandsTree = commandsTree;
             }
 
@@ -84,10 +86,10 @@ namespace RPG_Paper_Maker
 
             public SystemEventPage CreateCopy()
             {
-                NTree<EventCommand> tree = new NTree<EventCommand>(null);
-                CopyTreeNode(tree, CommandsTree);
+                NTree<EventCommand> treeCommandsCopy = new NTree<EventCommand>(null);
+                CopyTreeNode(treeCommandsCopy, CommandsTree);
 
-                return new SystemEventPage(Graphic.CreateCopy(), GraphicDrawType, Options.CreateCopy(), Trigger, tree);
+                return new SystemEventPage(Graphic.CreateCopy(), GraphicDrawType, Options.CreateCopy(), Trigger, (EventCommandConditions)ConditionsTree.CreateCopy(), treeCommandsCopy);
             }
 
             // -------------------------------------------------------------------
@@ -96,7 +98,7 @@ namespace RPG_Paper_Maker
 
             public void CopyTreeNode(NTree<EventCommand> tree, NTree<EventCommand> treeToCopy)
             {
-                foreach (NTree<EventCommand> childToCopy in treeToCopy.GetChildren())
+                foreach (NTree<EventCommand> childToCopy in treeToCopy.Children)
                 {
                     CopyTreeNode(tree.AddChildData(childToCopy.Data.CreateCopy()), childToCopy);
                 }
@@ -109,7 +111,7 @@ namespace RPG_Paper_Maker
             public static NTree<EventCommand> GetDefaultTreeCommands()
             {
                 NTree<EventCommand> tree = new NTree<EventCommand>(null);
-                tree.AddChildData(new EventCommand());
+                tree.AddChildData(new EventCommandOther());
 
                 return tree;
             }
