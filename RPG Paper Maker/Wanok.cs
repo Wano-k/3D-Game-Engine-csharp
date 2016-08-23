@@ -428,6 +428,11 @@ namespace RPG_Paper_Maker
             return string.Format("EV{0:D4}", num);
         }
 
+        public static string GetStringSwitch(object[] args)
+        {
+            return GetStringComboBox((int)args[0], Game.System.GetSwitchById((int)args[0]).Name);
+        }
+
         // -------------------------------------------------------------------
         // Mod
         // -------------------------------------------------------------------

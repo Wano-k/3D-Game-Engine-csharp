@@ -59,8 +59,8 @@ namespace RPG_Paper_Maker
             // Battle System
             listBoxElements.InitializeListParameters(false, Control.Model.BattleSystem.Elements.Cast<SuperListItem>().ToList(), typeof(DialogElement), typeof(SystemElement), 1, SystemElement.MAX_ELEMENTS);
             listBoxCommonStats.InitializeListParameters(false, Control.Model.BattleSystem.Statistics.Cast<SuperListItem>().ToList(), typeof(DialogStatistics), typeof(SystemStatistics), 1, SystemStatistics.MAX_STATISTICS);
-            listBoxWeaponsKind.InitializeListParameters(true, Control.Model.BattleSystem.WeaponsKind.Cast<SuperListItem>().ToList(), null, typeof(SuperListItemName), 1, BattleSystemDatas.MAX_WEAPONS_KIND, true);
-            listBoxArmorsKind.InitializeListParameters(true, Control.Model.BattleSystem.ArmorsKind.Cast<SuperListItem>().ToList(), null, typeof(SuperListItemName), 1, BattleSystemDatas.MAX_ARMORS_KIND, true);
+            listBoxWeaponsKind.InitializeListParameters(true, Control.Model.BattleSystem.WeaponsKind.Cast<SuperListItem>().ToList(), null, typeof(SuperListItemName), 1, BattleSystemDatas.MAX_WEAPONS_KIND);
+            listBoxArmorsKind.InitializeListParameters(true, Control.Model.BattleSystem.ArmorsKind.Cast<SuperListItem>().ToList(), null, typeof(SuperListItemName), 1, BattleSystemDatas.MAX_ARMORS_KIND);
 
             MouseWheel += new MouseEventHandler(form_MouseWheel);
             tabControl1.KeyDown += new KeyEventHandler(form_KeyDown);

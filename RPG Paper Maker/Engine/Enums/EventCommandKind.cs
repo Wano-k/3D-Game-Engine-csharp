@@ -16,6 +16,7 @@ namespace RPG_Paper_Maker
         public static EventCommandKind DisplayChoice = new EventCommandKind("Display a choice...");
         public static EventCommandKind EnterNumber = new EventCommandKind("Enter a number...");
         public static EventCommandKind DisplayOptions = new EventCommandKind("Display options...");
+        public static EventCommandKind ChangeSwitches = new EventCommandKind("Change switches...");
         public static EventCommandKind Conditions = new EventCommandKind("Conditions...");
 
         private EventCommandKind(string name)
@@ -44,6 +45,7 @@ namespace RPG_Paper_Maker
         public Form GetDialog(EventCommand eventCommand = null)
         {
             if (this == Conditions) return new DialogConditions(eventCommand == null ? new EventCommandConditions() : (EventCommandConditions)eventCommand);
+            else if (this == ChangeSwitches) return new DialogChangeSwitches(eventCommand == null ? new EventCommandOther(ChangeSwitches, new List<object>(new object[] { 0, 1, 0 })) : (EventCommandOther)eventCommand);
 
             return null;
         }

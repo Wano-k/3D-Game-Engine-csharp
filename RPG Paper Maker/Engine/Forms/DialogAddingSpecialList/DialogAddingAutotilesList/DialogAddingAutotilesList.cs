@@ -32,7 +32,7 @@ namespace RPG_Paper_Maker
                 modelTileset.Add(model.GetAutotileById(superListTileset[i]));
             }
 
-            listBoxTileset.InitializeListParameters(true, modelTileset, null, Type, 0, 0, false, false);
+            listBoxTileset.InitializeListParameters(true, modelTileset, null, Type, 0, 0, false);
 
             textBoxGraphic.GetTextBox().SelectedValueChanged += textBoxGraphic_SelectedValueChanged;
             listBoxComplete.GetListBox().MouseDown += listBoxComplete_SelectedIndexChanged;

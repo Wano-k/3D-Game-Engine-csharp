@@ -23,6 +23,9 @@ namespace RPG_Paper_Maker
         // ListBoxes
         public List<SystemColor> Colors = new List<SystemColor>();
 
+        // Switches & variables
+        public List<SuperListItemNameWithoutLang> Switches = new List<SuperListItemNameWithoutLang>();
+
 
         // -------------------------------------------------------------------
         // Constructor
@@ -43,6 +46,12 @@ namespace RPG_Paper_Maker
 
             // Get defaults lists
             Colors = SystemColor.GetDefaultColors();
+
+            // Switches
+            for (int i = 1; i < 500; i++)
+            {
+                Switches.Add(new SuperListItemNameWithoutLang(i));
+            }
         }
 
         // -------------------------------------------------------------------
@@ -62,6 +71,16 @@ namespace RPG_Paper_Maker
         public int GetColorIndexById(int id)
         {
             return Colors.IndexOf(GetColorById(id));
+        }
+
+        // -------------------------------------------------------------------
+        // GetSwitchById
+        // -------------------------------------------------------------------
+
+        public SuperListItemNameWithoutLang GetSwitchById(int id)
+        {
+            if (id > Switches.Count) return new SuperListItemNameWithoutLang(-1);
+            return Switches.Find(i => i.Id == id);
         }
 
         // -------------------------------------------------------------------

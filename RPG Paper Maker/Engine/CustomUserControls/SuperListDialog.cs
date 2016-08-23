@@ -15,7 +15,7 @@ namespace RPG_Paper_Maker
     public abstract class DialogVariable : Form
     {
         public abstract object[] GetObject();
-        public abstract void InitializeParameters(object[] value, object[] others);
+        public abstract void InitializeParameters(object[] value, List<object> others);
     }
 
     [Serializable]
@@ -58,6 +58,27 @@ namespace RPG_Paper_Maker
         public override SuperListItem CreateCopy()
         {
             return new SuperListItemName(Id, new Dictionary<string, string>(Names));
+        }
+    }
+
+    [Serializable]
+    public class SuperListItemNameWithoutLang : SuperListItem
+    {
+
+        public SuperListItemNameWithoutLang(int id) : this(id, "")
+        {
+
+        }
+
+        public SuperListItemNameWithoutLang(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
+        public override SuperListItem CreateCopy()
+        {
+            return new SuperListItemNameWithoutLang(Id, Name);
         }
     }
 

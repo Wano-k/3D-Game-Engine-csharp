@@ -80,17 +80,12 @@
             this.button4 = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
+            this.button44 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
+            this.button43 = new System.Windows.Forms.Button();
             this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel18 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonTeleport = new System.Windows.Forms.Button();
-            this.button19 = new System.Windows.Forms.Button();
-            this.button20 = new System.Windows.Forms.Button();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
             this.button11 = new System.Windows.Forms.Button();
@@ -100,29 +95,31 @@
             this.button15 = new System.Windows.Forms.Button();
             this.button16 = new System.Windows.Forms.Button();
             this.button42 = new System.Windows.Forms.Button();
-            this.button43 = new System.Windows.Forms.Button();
-            this.button44 = new System.Windows.Forms.Button();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel18 = new System.Windows.Forms.TableLayoutPanel();
             this.button7 = new System.Windows.Forms.Button();
-            this.tableLayoutPanel22 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox13 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel24 = new System.Windows.Forms.TableLayoutPanel();
-            this.button37 = new System.Windows.Forms.Button();
-            this.button38 = new System.Windows.Forms.Button();
-            this.button39 = new System.Windows.Forms.Button();
-            this.button40 = new System.Windows.Forms.Button();
+            this.buttonTeleport = new System.Windows.Forms.Button();
+            this.button19 = new System.Windows.Forms.Button();
+            this.button20 = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel19 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel20 = new System.Windows.Forms.TableLayoutPanel();
-            this.button22 = new System.Windows.Forms.Button();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel21 = new System.Windows.Forms.TableLayoutPanel();
+            this.button17 = new System.Windows.Forms.Button();
             this.button26 = new System.Windows.Forms.Button();
             this.button27 = new System.Windows.Forms.Button();
             this.button28 = new System.Windows.Forms.Button();
             this.button29 = new System.Windows.Forms.Button();
-            this.button17 = new System.Windows.Forms.Button();
-            this.button30 = new System.Windows.Forms.Button();
+            this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel24 = new System.Windows.Forms.TableLayoutPanel();
             this.button31 = new System.Windows.Forms.Button();
+            this.button30 = new System.Windows.Forms.Button();
+            this.button37 = new System.Windows.Forms.Button();
+            this.button38 = new System.Windows.Forms.Button();
+            this.button39 = new System.Windows.Forms.Button();
+            this.button40 = new System.Windows.Forms.Button();
+            this.tableLayoutPanel22 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel23 = new System.Windows.Forms.TableLayoutPanel();
             this.button32 = new System.Windows.Forms.Button();
@@ -131,6 +128,9 @@
             this.button35 = new System.Windows.Forms.Button();
             this.button36 = new System.Windows.Forms.Button();
             this.button41 = new System.Windows.Forms.Button();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel20 = new System.Windows.Forms.TableLayoutPanel();
+            this.button22 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -156,22 +156,22 @@
             this.groupBox7.SuspendLayout();
             this.tableLayoutPanel14.SuspendLayout();
             this.tableLayoutPanel15.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.tableLayoutPanel17.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.tableLayoutPanel18.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tableLayoutPanel16.SuspendLayout();
-            this.groupBox9.SuspendLayout();
-            this.tableLayoutPanel17.SuspendLayout();
-            this.tableLayoutPanel22.SuspendLayout();
-            this.groupBox13.SuspendLayout();
-            this.tableLayoutPanel24.SuspendLayout();
             this.tableLayoutPanel19.SuspendLayout();
-            this.groupBox8.SuspendLayout();
-            this.tableLayoutPanel20.SuspendLayout();
             this.groupBox11.SuspendLayout();
             this.tableLayoutPanel21.SuspendLayout();
+            this.groupBox13.SuspendLayout();
+            this.tableLayoutPanel24.SuspendLayout();
+            this.tableLayoutPanel22.SuspendLayout();
             this.groupBox12.SuspendLayout();
             this.tableLayoutPanel23.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.tableLayoutPanel20.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -261,7 +261,7 @@
             this.tableLayoutPanel3.Padding = new System.Windows.Forms.Padding(5);
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 366F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 362F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(485, 372);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
@@ -460,7 +460,7 @@
             this.buttonSwitch.Name = "buttonSwitch";
             this.buttonSwitch.Size = new System.Drawing.Size(208, 23);
             this.buttonSwitch.TabIndex = 0;
-            this.buttonSwitch.Text = "Change switch...";
+            this.buttonSwitch.Text = "Change switches...";
             this.buttonSwitch.UseVisualStyleBackColor = true;
             // 
             // buttonVariable
@@ -472,7 +472,7 @@
             this.buttonVariable.Name = "buttonVariable";
             this.buttonVariable.Size = new System.Drawing.Size(208, 23);
             this.buttonVariable.TabIndex = 5;
-            this.buttonVariable.Text = "Change variable...";
+            this.buttonVariable.Text = "Change variables...";
             this.buttonVariable.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel4
@@ -740,7 +740,7 @@
             this.tableLayoutPanel11.Padding = new System.Windows.Forms.Padding(5);
             this.tableLayoutPanel11.RowCount = 1;
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 366F));
+            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 362F));
             this.tableLayoutPanel11.Size = new System.Drawing.Size(485, 372);
             this.tableLayoutPanel11.TabIndex = 1;
             // 
@@ -905,6 +905,18 @@
             this.tableLayoutPanel14.Size = new System.Drawing.Size(220, 135);
             this.tableLayoutPanel14.TabIndex = 0;
             // 
+            // button44
+            // 
+            this.button44.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button44.Location = new System.Drawing.Point(6, 106);
+            this.button44.Margin = new System.Windows.Forms.Padding(1);
+            this.button44.Name = "button44";
+            this.button44.Size = new System.Drawing.Size(208, 23);
+            this.button44.TabIndex = 7;
+            this.button44.Text = "Change team...";
+            this.button44.UseVisualStyleBackColor = true;
+            // 
             // button8
             // 
             this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -941,6 +953,18 @@
             this.button10.Text = "Change weapons...";
             this.button10.UseVisualStyleBackColor = true;
             // 
+            // button43
+            // 
+            this.button43.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button43.Location = new System.Drawing.Point(6, 81);
+            this.button43.Margin = new System.Windows.Forms.Padding(1);
+            this.button43.Name = "button43";
+            this.button43.Size = new System.Drawing.Size(208, 23);
+            this.button43.TabIndex = 6;
+            this.button43.Text = "Change armors...";
+            this.button43.UseVisualStyleBackColor = true;
+            // 
             // tableLayoutPanel15
             // 
             this.tableLayoutPanel15.ColumnCount = 1;
@@ -956,103 +980,6 @@
             this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel15.Size = new System.Drawing.Size(231, 356);
             this.tableLayoutPanel15.TabIndex = 0;
-            // 
-            // groupBox10
-            // 
-            this.groupBox10.AutoSize = true;
-            this.groupBox10.Controls.Add(this.tableLayoutPanel18);
-            this.groupBox10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox10.Location = new System.Drawing.Point(3, 3);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(225, 129);
-            this.groupBox10.TabIndex = 0;
-            this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "Move/Animation";
-            // 
-            // tableLayoutPanel18
-            // 
-            this.tableLayoutPanel18.AutoSize = true;
-            this.tableLayoutPanel18.ColumnCount = 1;
-            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel18.Controls.Add(this.button7, 0, 1);
-            this.tableLayoutPanel18.Controls.Add(this.buttonTeleport, 0, 0);
-            this.tableLayoutPanel18.Controls.Add(this.button19, 0, 2);
-            this.tableLayoutPanel18.Controls.Add(this.button20, 0, 3);
-            this.tableLayoutPanel18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel18.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel18.Name = "tableLayoutPanel18";
-            this.tableLayoutPanel18.Padding = new System.Windows.Forms.Padding(5);
-            this.tableLayoutPanel18.RowCount = 4;
-            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel18.Size = new System.Drawing.Size(219, 110);
-            this.tableLayoutPanel18.TabIndex = 0;
-            // 
-            // buttonTeleport
-            // 
-            this.buttonTeleport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonTeleport.Location = new System.Drawing.Point(6, 6);
-            this.buttonTeleport.Margin = new System.Windows.Forms.Padding(1);
-            this.buttonTeleport.Name = "buttonTeleport";
-            this.buttonTeleport.Size = new System.Drawing.Size(207, 23);
-            this.buttonTeleport.TabIndex = 0;
-            this.buttonTeleport.Text = "Teleport player...";
-            this.buttonTeleport.UseVisualStyleBackColor = true;
-            // 
-            // button19
-            // 
-            this.button19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button19.Location = new System.Drawing.Point(6, 56);
-            this.button19.Margin = new System.Windows.Forms.Padding(1);
-            this.button19.Name = "button19";
-            this.button19.Size = new System.Drawing.Size(207, 23);
-            this.button19.TabIndex = 5;
-            this.button19.Text = "Set move route...";
-            this.button19.UseVisualStyleBackColor = true;
-            // 
-            // button20
-            // 
-            this.button20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button20.Location = new System.Drawing.Point(6, 81);
-            this.button20.Margin = new System.Windows.Forms.Padding(1);
-            this.button20.Name = "button20";
-            this.button20.Size = new System.Drawing.Size(207, 23);
-            this.button20.TabIndex = 4;
-            this.button20.Text = "Show an animation...";
-            this.button20.UseVisualStyleBackColor = true;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.tableLayoutPanel16);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(491, 378);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "3";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel16
-            // 
-            this.tableLayoutPanel16.ColumnCount = 2;
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel16.Controls.Add(this.tableLayoutPanel19, 0, 0);
-            this.tableLayoutPanel16.Controls.Add(this.tableLayoutPanel22, 1, 0);
-            this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel16.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel16.Name = "tableLayoutPanel16";
-            this.tableLayoutPanel16.Padding = new System.Windows.Forms.Padding(5);
-            this.tableLayoutPanel16.RowCount = 1;
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel16.Size = new System.Drawing.Size(485, 372);
-            this.tableLayoutPanel16.TabIndex = 2;
             // 
             // groupBox9
             // 
@@ -1177,29 +1104,38 @@
             this.button42.Text = "Move camera...";
             this.button42.UseVisualStyleBackColor = true;
             // 
-            // button43
+            // groupBox10
             // 
-            this.button43.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button43.Location = new System.Drawing.Point(6, 81);
-            this.button43.Margin = new System.Windows.Forms.Padding(1);
-            this.button43.Name = "button43";
-            this.button43.Size = new System.Drawing.Size(208, 23);
-            this.button43.TabIndex = 6;
-            this.button43.Text = "Change armors...";
-            this.button43.UseVisualStyleBackColor = true;
+            this.groupBox10.AutoSize = true;
+            this.groupBox10.Controls.Add(this.tableLayoutPanel18);
+            this.groupBox10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox10.Location = new System.Drawing.Point(3, 3);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(225, 129);
+            this.groupBox10.TabIndex = 0;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Move/Animation";
             // 
-            // button44
+            // tableLayoutPanel18
             // 
-            this.button44.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button44.Location = new System.Drawing.Point(6, 106);
-            this.button44.Margin = new System.Windows.Forms.Padding(1);
-            this.button44.Name = "button44";
-            this.button44.Size = new System.Drawing.Size(208, 23);
-            this.button44.TabIndex = 7;
-            this.button44.Text = "Change team...";
-            this.button44.UseVisualStyleBackColor = true;
+            this.tableLayoutPanel18.AutoSize = true;
+            this.tableLayoutPanel18.ColumnCount = 1;
+            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel18.Controls.Add(this.button7, 0, 1);
+            this.tableLayoutPanel18.Controls.Add(this.buttonTeleport, 0, 0);
+            this.tableLayoutPanel18.Controls.Add(this.button19, 0, 2);
+            this.tableLayoutPanel18.Controls.Add(this.button20, 0, 3);
+            this.tableLayoutPanel18.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel18.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel18.Name = "tableLayoutPanel18";
+            this.tableLayoutPanel18.Padding = new System.Windows.Forms.Padding(5);
+            this.tableLayoutPanel18.RowCount = 4;
+            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel18.Size = new System.Drawing.Size(219, 110);
+            this.tableLayoutPanel18.TabIndex = 0;
             // 
             // button7
             // 
@@ -1213,105 +1149,69 @@
             this.button7.Text = "Set event location...";
             this.button7.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel22
+            // buttonTeleport
             // 
-            this.tableLayoutPanel22.ColumnCount = 1;
-            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel22.Controls.Add(this.groupBox12, 0, 0);
-            this.tableLayoutPanel22.Controls.Add(this.groupBox8, 0, 2);
-            this.tableLayoutPanel22.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel22.Location = new System.Drawing.Point(245, 8);
-            this.tableLayoutPanel22.Name = "tableLayoutPanel22";
-            this.tableLayoutPanel22.RowCount = 3;
-            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel22.Size = new System.Drawing.Size(232, 356);
-            this.tableLayoutPanel22.TabIndex = 1;
-            // 
-            // groupBox13
-            // 
-            this.groupBox13.AutoSize = true;
-            this.groupBox13.Controls.Add(this.tableLayoutPanel24);
-            this.groupBox13.Location = new System.Drawing.Point(3, 174);
-            this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(225, 179);
-            this.groupBox13.TabIndex = 0;
-            this.groupBox13.TabStop = false;
-            this.groupBox13.Text = "System settings";
-            // 
-            // tableLayoutPanel24
-            // 
-            this.tableLayoutPanel24.AutoSize = true;
-            this.tableLayoutPanel24.ColumnCount = 1;
-            this.tableLayoutPanel24.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel24.Controls.Add(this.button31, 0, 4);
-            this.tableLayoutPanel24.Controls.Add(this.button30, 0, 5);
-            this.tableLayoutPanel24.Controls.Add(this.button37, 0, 1);
-            this.tableLayoutPanel24.Controls.Add(this.button38, 0, 0);
-            this.tableLayoutPanel24.Controls.Add(this.button39, 0, 2);
-            this.tableLayoutPanel24.Controls.Add(this.button40, 0, 3);
-            this.tableLayoutPanel24.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel24.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel24.Name = "tableLayoutPanel24";
-            this.tableLayoutPanel24.Padding = new System.Windows.Forms.Padding(5);
-            this.tableLayoutPanel24.RowCount = 6;
-            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel24.Size = new System.Drawing.Size(219, 160);
-            this.tableLayoutPanel24.TabIndex = 0;
-            // 
-            // button37
-            // 
-            this.button37.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.buttonTeleport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button37.Location = new System.Drawing.Point(6, 31);
-            this.button37.Margin = new System.Windows.Forms.Padding(1);
-            this.button37.Name = "button37";
-            this.button37.Size = new System.Drawing.Size(207, 23);
-            this.button37.TabIndex = 1;
-            this.button37.Text = "Set victory battle music...";
-            this.button37.UseVisualStyleBackColor = true;
+            this.buttonTeleport.Location = new System.Drawing.Point(6, 6);
+            this.buttonTeleport.Margin = new System.Windows.Forms.Padding(1);
+            this.buttonTeleport.Name = "buttonTeleport";
+            this.buttonTeleport.Size = new System.Drawing.Size(207, 23);
+            this.buttonTeleport.TabIndex = 0;
+            this.buttonTeleport.Text = "Teleport player...";
+            this.buttonTeleport.UseVisualStyleBackColor = true;
             // 
-            // button38
+            // button19
             // 
-            this.button38.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.button19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button38.Location = new System.Drawing.Point(6, 6);
-            this.button38.Margin = new System.Windows.Forms.Padding(1);
-            this.button38.Name = "button38";
-            this.button38.Size = new System.Drawing.Size(207, 23);
-            this.button38.TabIndex = 0;
-            this.button38.Text = "Set battle music...";
-            this.button38.UseVisualStyleBackColor = true;
+            this.button19.Location = new System.Drawing.Point(6, 56);
+            this.button19.Margin = new System.Windows.Forms.Padding(1);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(207, 23);
+            this.button19.TabIndex = 5;
+            this.button19.Text = "Set move route...";
+            this.button19.UseVisualStyleBackColor = true;
             // 
-            // button39
+            // button20
             // 
-            this.button39.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.button20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button39.Location = new System.Drawing.Point(6, 56);
-            this.button39.Margin = new System.Windows.Forms.Padding(1);
-            this.button39.Name = "button39";
-            this.button39.Size = new System.Drawing.Size(207, 23);
-            this.button39.TabIndex = 5;
-            this.button39.Text = "Change graphic hero...";
-            this.button39.UseVisualStyleBackColor = true;
+            this.button20.Location = new System.Drawing.Point(6, 81);
+            this.button20.Margin = new System.Windows.Forms.Padding(1);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(207, 23);
+            this.button20.TabIndex = 4;
+            this.button20.Text = "Show an animation...";
+            this.button20.UseVisualStyleBackColor = true;
             // 
-            // button40
+            // tabPage3
             // 
-            this.button40.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button40.Location = new System.Drawing.Point(6, 81);
-            this.button40.Margin = new System.Windows.Forms.Padding(1);
-            this.button40.Name = "button40";
-            this.button40.Size = new System.Drawing.Size(207, 23);
-            this.button40.TabIndex = 4;
-            this.button40.Text = "Change window skin...";
-            this.button40.UseVisualStyleBackColor = true;
+            this.tabPage3.Controls.Add(this.tableLayoutPanel16);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(491, 378);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "3";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel16
+            // 
+            this.tableLayoutPanel16.ColumnCount = 2;
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel16.Controls.Add(this.tableLayoutPanel19, 0, 0);
+            this.tableLayoutPanel16.Controls.Add(this.tableLayoutPanel22, 1, 0);
+            this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel16.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel16.Name = "tableLayoutPanel16";
+            this.tableLayoutPanel16.Padding = new System.Windows.Forms.Padding(5);
+            this.tableLayoutPanel16.RowCount = 1;
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel16.Size = new System.Drawing.Size(485, 372);
+            this.tableLayoutPanel16.TabIndex = 2;
             // 
             // tableLayoutPanel19
             // 
@@ -1328,49 +1228,6 @@
             this.tableLayoutPanel19.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel19.Size = new System.Drawing.Size(231, 356);
             this.tableLayoutPanel19.TabIndex = 2;
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.AutoSize = true;
-            this.groupBox8.Controls.Add(this.tableLayoutPanel20);
-            this.groupBox8.Location = new System.Drawing.Point(3, 299);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(226, 54);
-            this.groupBox8.TabIndex = 1;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Advanced";
-            // 
-            // tableLayoutPanel20
-            // 
-            this.tableLayoutPanel20.AutoSize = true;
-            this.tableLayoutPanel20.ColumnCount = 1;
-            this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel20.Controls.Add(this.button22, 0, 0);
-            this.tableLayoutPanel20.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel20.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel20.Name = "tableLayoutPanel20";
-            this.tableLayoutPanel20.Padding = new System.Windows.Forms.Padding(5);
-            this.tableLayoutPanel20.RowCount = 1;
-            this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel20.Size = new System.Drawing.Size(220, 35);
-            this.tableLayoutPanel20.TabIndex = 0;
-            // 
-            // button22
-            // 
-            this.button22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button22.Location = new System.Drawing.Point(6, 6);
-            this.button22.Margin = new System.Windows.Forms.Padding(1);
-            this.button22.Name = "button22";
-            this.button22.Size = new System.Drawing.Size(208, 23);
-            this.button22.TabIndex = 0;
-            this.button22.Text = "Script...";
-            this.button22.UseVisualStyleBackColor = true;
             // 
             // groupBox11
             // 
@@ -1406,6 +1263,18 @@
             this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel21.Size = new System.Drawing.Size(219, 140);
             this.tableLayoutPanel21.TabIndex = 0;
+            // 
+            // button17
+            // 
+            this.button17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button17.Location = new System.Drawing.Point(6, 106);
+            this.button17.Margin = new System.Windows.Forms.Padding(1);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(207, 23);
+            this.button17.TabIndex = 5;
+            this.button17.Text = "End the battle";
+            this.button17.UseVisualStyleBackColor = true;
             // 
             // button26
             // 
@@ -1455,17 +1324,53 @@
             this.button29.Text = "Force an action...";
             this.button29.UseVisualStyleBackColor = true;
             // 
-            // button17
+            // groupBox13
             // 
-            this.button17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupBox13.AutoSize = true;
+            this.groupBox13.Controls.Add(this.tableLayoutPanel24);
+            this.groupBox13.Location = new System.Drawing.Point(3, 174);
+            this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Size = new System.Drawing.Size(225, 179);
+            this.groupBox13.TabIndex = 0;
+            this.groupBox13.TabStop = false;
+            this.groupBox13.Text = "System settings";
+            // 
+            // tableLayoutPanel24
+            // 
+            this.tableLayoutPanel24.AutoSize = true;
+            this.tableLayoutPanel24.ColumnCount = 1;
+            this.tableLayoutPanel24.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel24.Controls.Add(this.button31, 0, 4);
+            this.tableLayoutPanel24.Controls.Add(this.button30, 0, 5);
+            this.tableLayoutPanel24.Controls.Add(this.button37, 0, 1);
+            this.tableLayoutPanel24.Controls.Add(this.button38, 0, 0);
+            this.tableLayoutPanel24.Controls.Add(this.button39, 0, 2);
+            this.tableLayoutPanel24.Controls.Add(this.button40, 0, 3);
+            this.tableLayoutPanel24.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel24.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel24.Name = "tableLayoutPanel24";
+            this.tableLayoutPanel24.Padding = new System.Windows.Forms.Padding(5);
+            this.tableLayoutPanel24.RowCount = 6;
+            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel24.Size = new System.Drawing.Size(219, 160);
+            this.tableLayoutPanel24.TabIndex = 0;
+            // 
+            // button31
+            // 
+            this.button31.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button17.Location = new System.Drawing.Point(6, 106);
-            this.button17.Margin = new System.Windows.Forms.Padding(1);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(207, 23);
-            this.button17.TabIndex = 5;
-            this.button17.Text = "End the battle";
-            this.button17.UseVisualStyleBackColor = true;
+            this.button31.Location = new System.Drawing.Point(6, 106);
+            this.button31.Margin = new System.Windows.Forms.Padding(1);
+            this.button31.Name = "button31";
+            this.button31.Size = new System.Drawing.Size(207, 23);
+            this.button31.TabIndex = 5;
+            this.button31.Text = "Allow/Forbid saves...";
+            this.button31.UseVisualStyleBackColor = true;
             // 
             // button30
             // 
@@ -1479,17 +1384,69 @@
             this.button30.Text = "Allow/Forbid menu...";
             this.button30.UseVisualStyleBackColor = true;
             // 
-            // button31
+            // button37
             // 
-            this.button31.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.button37.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button31.Location = new System.Drawing.Point(6, 106);
-            this.button31.Margin = new System.Windows.Forms.Padding(1);
-            this.button31.Name = "button31";
-            this.button31.Size = new System.Drawing.Size(207, 23);
-            this.button31.TabIndex = 5;
-            this.button31.Text = "Allow/Forbid saves...";
-            this.button31.UseVisualStyleBackColor = true;
+            this.button37.Location = new System.Drawing.Point(6, 31);
+            this.button37.Margin = new System.Windows.Forms.Padding(1);
+            this.button37.Name = "button37";
+            this.button37.Size = new System.Drawing.Size(207, 23);
+            this.button37.TabIndex = 1;
+            this.button37.Text = "Set victory battle music...";
+            this.button37.UseVisualStyleBackColor = true;
+            // 
+            // button38
+            // 
+            this.button38.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button38.Location = new System.Drawing.Point(6, 6);
+            this.button38.Margin = new System.Windows.Forms.Padding(1);
+            this.button38.Name = "button38";
+            this.button38.Size = new System.Drawing.Size(207, 23);
+            this.button38.TabIndex = 0;
+            this.button38.Text = "Set battle music...";
+            this.button38.UseVisualStyleBackColor = true;
+            // 
+            // button39
+            // 
+            this.button39.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button39.Location = new System.Drawing.Point(6, 56);
+            this.button39.Margin = new System.Windows.Forms.Padding(1);
+            this.button39.Name = "button39";
+            this.button39.Size = new System.Drawing.Size(207, 23);
+            this.button39.TabIndex = 5;
+            this.button39.Text = "Change graphic hero...";
+            this.button39.UseVisualStyleBackColor = true;
+            // 
+            // button40
+            // 
+            this.button40.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button40.Location = new System.Drawing.Point(6, 81);
+            this.button40.Margin = new System.Windows.Forms.Padding(1);
+            this.button40.Name = "button40";
+            this.button40.Size = new System.Drawing.Size(207, 23);
+            this.button40.TabIndex = 4;
+            this.button40.Text = "Change window skin...";
+            this.button40.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel22
+            // 
+            this.tableLayoutPanel22.ColumnCount = 1;
+            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel22.Controls.Add(this.groupBox12, 0, 0);
+            this.tableLayoutPanel22.Controls.Add(this.groupBox8, 0, 2);
+            this.tableLayoutPanel22.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel22.Location = new System.Drawing.Point(245, 8);
+            this.tableLayoutPanel22.Name = "tableLayoutPanel22";
+            this.tableLayoutPanel22.RowCount = 3;
+            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel22.Size = new System.Drawing.Size(232, 356);
+            this.tableLayoutPanel22.TabIndex = 1;
             // 
             // groupBox12
             // 
@@ -1600,6 +1557,49 @@
             this.button41.Text = "Title screen";
             this.button41.UseVisualStyleBackColor = true;
             // 
+            // groupBox8
+            // 
+            this.groupBox8.AutoSize = true;
+            this.groupBox8.Controls.Add(this.tableLayoutPanel20);
+            this.groupBox8.Location = new System.Drawing.Point(3, 299);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(226, 54);
+            this.groupBox8.TabIndex = 1;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Advanced";
+            // 
+            // tableLayoutPanel20
+            // 
+            this.tableLayoutPanel20.AutoSize = true;
+            this.tableLayoutPanel20.ColumnCount = 1;
+            this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel20.Controls.Add(this.button22, 0, 0);
+            this.tableLayoutPanel20.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel20.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel20.Name = "tableLayoutPanel20";
+            this.tableLayoutPanel20.Padding = new System.Windows.Forms.Padding(5);
+            this.tableLayoutPanel20.RowCount = 1;
+            this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel20.Size = new System.Drawing.Size(220, 35);
+            this.tableLayoutPanel20.TabIndex = 0;
+            // 
+            // button22
+            // 
+            this.button22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button22.Location = new System.Drawing.Point(6, 6);
+            this.button22.Margin = new System.Windows.Forms.Padding(1);
+            this.button22.Name = "button22";
+            this.button22.Size = new System.Drawing.Size(208, 23);
+            this.button22.TabIndex = 0;
+            this.button22.Text = "Script...";
+            this.button22.UseVisualStyleBackColor = true;
+            // 
             // DialogCommands
             // 
             this.AcceptButton = this.ok;
@@ -1608,6 +1608,7 @@
             this.CancelButton = this.cancel;
             this.ClientSize = new System.Drawing.Size(515, 455);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "DialogCommands";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -1648,30 +1649,30 @@
             this.tableLayoutPanel14.ResumeLayout(false);
             this.tableLayoutPanel15.ResumeLayout(false);
             this.tableLayoutPanel15.PerformLayout();
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
+            this.tableLayoutPanel17.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
             this.tableLayoutPanel18.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tableLayoutPanel16.ResumeLayout(false);
-            this.groupBox9.ResumeLayout(false);
-            this.groupBox9.PerformLayout();
-            this.tableLayoutPanel17.ResumeLayout(false);
-            this.tableLayoutPanel22.ResumeLayout(false);
-            this.tableLayoutPanel22.PerformLayout();
-            this.groupBox13.ResumeLayout(false);
-            this.groupBox13.PerformLayout();
-            this.tableLayoutPanel24.ResumeLayout(false);
             this.tableLayoutPanel19.ResumeLayout(false);
             this.tableLayoutPanel19.PerformLayout();
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
-            this.tableLayoutPanel20.ResumeLayout(false);
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
             this.tableLayoutPanel21.ResumeLayout(false);
+            this.groupBox13.ResumeLayout(false);
+            this.groupBox13.PerformLayout();
+            this.tableLayoutPanel24.ResumeLayout(false);
+            this.tableLayoutPanel22.ResumeLayout(false);
+            this.tableLayoutPanel22.PerformLayout();
             this.groupBox12.ResumeLayout(false);
             this.groupBox12.PerformLayout();
             this.tableLayoutPanel23.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            this.tableLayoutPanel20.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

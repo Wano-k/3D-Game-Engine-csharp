@@ -286,6 +286,18 @@
     <Compile Include="Engine\Forms\DialogProgressBar\DialogProgressBar.Designer.cs">
       <DependentUpon>DialogProgressBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\Forms\DialogSwitches\DialogChangeSwitches.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogSwitches\DialogChangeSwitches.Designer.cs">
+      <DependentUpon>DialogChangeSwitches.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogSwitches\DialogSwitches.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Engine\Forms\DialogSwitches\DialogSwitches.Designer.cs">
+      <DependentUpon>DialogSwitches.cs</DependentUpon>
+    </Compile>
     <Compile Include="Engine\Forms\DialogTileset\DialogTileset.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -503,6 +515,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogProgressBar\DialogProgressBar.resx">
       <DependentUpon>DialogProgressBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogSwitches\DialogChangeSwitches.resx">
+      <DependentUpon>DialogChangeSwitches.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Forms\DialogSwitches\DialogSwitches.resx">
+      <DependentUpon>DialogSwitches.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Forms\DialogTileset\DialogTileset.resx">
       <DependentUpon>DialogTileset.cs</DependentUpon>

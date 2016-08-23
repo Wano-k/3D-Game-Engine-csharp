@@ -34,7 +34,7 @@ namespace RPG_Paper_Maker
             Tileset = tileset;
             ReliefsTop = tileset.CreateReliefTopCopy();
             Model = model;
-            TextBoxVariable.InitializeParameters(new object[] { 0, 0, 1, 1 }, new object[] { Tileset.Graphic }, typeof(DialogTileset), WANOK.GetStringTileset);
+            TextBoxVariable.InitializeParameters(new object[] { 0, 0, 1, 1 }, new List<object>(new object[] { Tileset.Graphic }), typeof(DialogTileset), WANOK.GetStringTileset);
             ComboBoxAutotile.Dock = DockStyle.Fill;
             ComboBoxAutotile.FillComboBox(Tileset.Autotiles, Model.GetAutotileById, Model.GetAutotileIndexById, 0);
 
@@ -55,7 +55,7 @@ namespace RPG_Paper_Maker
                 modelTileset.Add(model.GetReliefById(tileset.Reliefs[i]));
             }
             listBoxTileset.GetListBox().SelectedIndexChanged += ListBoxTileset_SelectedIndexChanged;
-            listBoxTileset.InitializeListParameters(true, modelTileset, null, Type, 0, 0, false, false);
+            listBoxTileset.InitializeListParameters(true, modelTileset, null, Type, 0, 0, false);
 
             // PictureRelief
             PictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -200,8 +200,8 @@ namespace RPG_Paper_Maker
                         ((int[])ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][1])[2],
                         ((int[])ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][1])[3],
                     },
-                    new object[] { Tileset.Graphic }, typeof(DialogTileset), WANOK.GetStringTileset);
-                else TextBoxVariable.InitializeParameters(new object[] { 0, 0, 1, 1 }, new object[] { Tileset.Graphic }, typeof(DialogTileset), WANOK.GetStringTileset);
+                    new List<object>(new object[] { Tileset.Graphic }), typeof(DialogTileset), WANOK.GetStringTileset);
+                else TextBoxVariable.InitializeParameters(new object[] { 0, 0, 1, 1 }, new List<object>(new object[] { Tileset.Graphic }), typeof(DialogTileset), WANOK.GetStringTileset);
                 if ((DrawType)ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][0] == DrawType.Autotiles)
                 {
                     int id = ((int[])ReliefsTop[listBoxTileset.GetListBox().SelectedIndex][1])[0];

@@ -22,7 +22,7 @@ namespace RPG_Paper_Maker
         public System.Timers.Timer DragTimer = new System.Timers.Timer(20);
         public bool CanDrag = false;
         public Engine.TextBoxLang TextBoxLang;
-        public bool NameDisplay = false;
+        public TextBox TextBox;
         public int IndexDrag = -1;
         public bool IsSelectedItemWhenLosingFocus = false;
         public bool DisplayMenuContext = true;
@@ -45,7 +45,7 @@ namespace RPG_Paper_Maker
         // InitializeListParameters
         // -------------------------------------------------------------------
 
-        public void InitializeListParameters(bool select, List<SuperListItem> modelList, Type type, Type typeItem, int min, int max, bool name = false, bool displayMenuContext = true)
+        public void InitializeListParameters(bool select, List<SuperListItem> modelList, Type type, Type typeItem, int min, int max, bool displayMenuContext = true)
         {
             IsSelectedItemWhenLosingFocus = select;
             DialogKind = type;
@@ -59,12 +59,17 @@ namespace RPG_Paper_Maker
                 listBox.Items.Add(modelList[i]);
             }
 
-            if (name)
+            if (typeItem == typeof(SuperListItemName))
             {
-                NameDisplay = true;
                 TextBoxLang = new Engine.TextBoxLang();
                 tableLayoutPanel1.Controls.Add(TextBoxLang, 0, 1);
                 TextBoxLang.GetTextBox().TextChanged += SuperListBox_TextChanged;
+            }
+            else if (typeItem == typeof(SuperListItemNameWithoutLang))
+            {
+                TextBox = new TextBox();
+                tableLayoutPanel1.Controls.Add(TextBox, 0, 1);
+                TextBox.TextChanged += SuperListBoxWithoutLang_TextChanged;
             }
 
             if (IsSelectedItemWhenLosingFocus && listBox.Items.Count > 0) listBox.SelectedIndex = 0;
@@ -246,7 +251,8 @@ namespace RPG_Paper_Maker
 
         private void SelectedIndexChanged()
         {
-            if (NameDisplay && listBox.SelectedItem != null) TextBoxLang.InitializeParameters(((SuperListItemName)listBox.SelectedItem).Names);
+            if (TypeItem == typeof(SuperListItemName) && listBox.SelectedItem != null) TextBoxLang.InitializeParameters(((SuperListItemName)listBox.SelectedItem).Names);
+            else if (TypeItem == typeof(SuperListItemNameWithoutLang) && listBox.SelectedItem != null) TextBox.Name = ((SuperListItemName)listBox.SelectedItem).Name;
         }
 
         // -------------------------------------------------------------------
@@ -361,6 +367,11 @@ namespace RPG_Paper_Maker
         {
             ((SuperListItemName)listBox.SelectedItem).SetName();
             SetName(((SuperListItemName)listBox.SelectedItem).Name);
+        }
+
+        private void SuperListBoxWithoutLang_TextChanged(object sender, EventArgs e)
+        {
+            SetName(((SuperListItemNameWithoutLang)listBox.SelectedItem).Name);
         }
 
         private void ListBox_LostFocus(object sender, EventArgs e)

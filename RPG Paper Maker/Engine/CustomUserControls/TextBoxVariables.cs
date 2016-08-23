@@ -13,7 +13,7 @@ namespace RPG_Paper_Maker.Engine.CustomUserControls
     public partial class TextBoxVariables : UserControl
     {
         public object[] Value;
-        public object[] Others;
+        public List<object> Others;
         public Type DialogKind;
         public delegate string GetString(object[] args);
         public GetString MethodString;
@@ -34,7 +34,7 @@ namespace RPG_Paper_Maker.Engine.CustomUserControls
         // InitializeParameters
         // -------------------------------------------------------------------
 
-        public void InitializeParameters(object[] value, object[] others, Type type, GetString getString)
+        public void InitializeParameters(object[] value, List<object> others, Type type, GetString getString)
         {
             Value = value;
             Others = others;
@@ -42,6 +42,11 @@ namespace RPG_Paper_Maker.Engine.CustomUserControls
             MethodString = getString;
 
             listBox1.Items[0] = MethodString(Value);
+        }
+
+        public void InitializeSwitch(int id)
+        {
+            InitializeParameters(new object[] { id }, null, typeof(DialogSwitches), WANOK.GetStringSwitch);
         }
 
         // -------------------------------------------------------------------
@@ -71,7 +76,7 @@ namespace RPG_Paper_Maker.Engine.CustomUserControls
                 }
                 listBox1.Items[0] = MethodString(Value);
             }
-
+            listBox1.Focus();
         }
 
         // -------------------------------------------------------------------

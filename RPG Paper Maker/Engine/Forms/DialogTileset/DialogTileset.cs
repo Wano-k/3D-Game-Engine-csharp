@@ -30,7 +30,7 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // Constructor
+        // GetObject
         // -------------------------------------------------------------------
 
         public override object[] GetObject()
@@ -42,7 +42,7 @@ namespace RPG_Paper_Maker
         // InitializeParameters
         // -------------------------------------------------------------------
 
-        public override void InitializeParameters(object[] value, object[] others)
+        public override void InitializeParameters(object[] value, List<object> others)
         {
             Texture = value;
             tilesetSelectorPicture1.SizeMode = PictureBoxSizeMode.StretchImage;
