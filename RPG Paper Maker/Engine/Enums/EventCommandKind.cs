@@ -7,15 +7,16 @@ using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
+    [Serializable]
     public class EventCommandKind
     {
         private string Name;
     
         public static EventCommandKind None = new EventCommandKind("");
-        public static EventCommandKind DisplayMessage = new EventCommandKind("Display a message...");
-        public static EventCommandKind DisplayChoice = new EventCommandKind("Display a choice...");
-        public static EventCommandKind EnterNumber = new EventCommandKind("Enter a number...");
-        public static EventCommandKind DisplayOptions = new EventCommandKind("Display options...");
+        public static EventCommandKind DisplayMessage = new EventCommandKind("Show message...");
+        public static EventCommandKind DisplayChoice = new EventCommandKind("Show choices...");
+        public static EventCommandKind EnterNumber = new EventCommandKind("Input number...");
+        public static EventCommandKind DisplayOptions = new EventCommandKind("Change window options...");
         public static EventCommandKind ChangeSwitches = new EventCommandKind("Change switches...");
         public static EventCommandKind Conditions = new EventCommandKind("Conditions...");
 

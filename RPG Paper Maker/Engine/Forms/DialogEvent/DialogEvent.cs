@@ -361,6 +361,7 @@ namespace RPG_Paper_Maker
         {
             graphicControl1.panel.Frame = 0;
             Control.Model.Pages[tabControl1.SelectedIndex].Graphic = graphic;
+            if (Control.Model.Pages[tabControl1.SelectedIndex].Options.StopAnimation != null) Control.Model.Pages[tabControl1.SelectedIndex].Options.StopAnimation = graphic.GetCharacterAct();
         }
 
         private void graphicFrameTimer_Elapsed(object sender, EventArgs e)
@@ -462,7 +463,6 @@ namespace RPG_Paper_Maker
                 CommandUnderscoreTimer.Start();
                 GenerateListCommandsPanel();
                 TableLayoutListCommandsPanel.Location = new Point(CommandsView.SelectedNode.Bounds.X + 30, CommandsView.SelectedNode.Bounds.Y + CommandsView.SelectedNode.Bounds.Height);
-                TableLayoutListCommandsPanel.Show();
             }
             else
             {
@@ -500,6 +500,7 @@ namespace RPG_Paper_Maker
 
                     // Displaying IA research 
                     GenerateListCommandsPanel();
+                    TableLayoutListCommandsPanel.Show();
                 }
                 e.SuppressKeyPress = true;
             }

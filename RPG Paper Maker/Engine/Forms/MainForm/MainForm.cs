@@ -42,6 +42,8 @@ namespace RPG_Paper_Maker
         public bool IsInItemHeightSquareMountain = false;
         public bool IsInItemHeightPixelMountain = false;
 
+
+
         // -------------------------------------------------------------------
         // Constructor
         // -------------------------------------------------------------------
@@ -78,6 +80,7 @@ namespace RPG_Paper_Maker
             KeyPreview = true;
             OpenProjectDialog.RestoreDirectory = true;
             OpenProjectDialog.Filter = "RPG Paper Maker Files|*.rpm;";
+            WANOK.MapEditor = MapEditor;
 
             TilesetSelectorPicture.SizeMode = PictureBoxSizeMode.StretchImage;
             TilesetSelectorPicture.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;

@@ -41,7 +41,7 @@ namespace RPG_Paper_Maker
                 case 0:
                     if (selection == 0)
                     {
-                        return "Switch " + "--TODO--" + " is " + ((int)condition[3] == 0 ? "ON" : "OFF");  
+                        return "Switch " + WANOK.GetStringSwitch((int)condition[2]) + " is " + ((int)condition[3] == 0 ? "ON" : "OFF");  
                     }
                     else if (selection == 1)
                     {

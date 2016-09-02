@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
+    [Serializable]
     public abstract class EventCommand
     {
         public EventCommandKind EventCommandKind;
@@ -14,6 +15,7 @@ namespace RPG_Paper_Maker
         public abstract EventCommand CreateCopy();
     }
 
+    [Serializable]
     public class EventCommandConditions : EventCommand
     {
         public NTree<List<object>> Tree;
@@ -89,6 +91,7 @@ namespace RPG_Paper_Maker
         }
     }
 
+    [Serializable]
     public class EventCommandOther : EventCommand
     {
         public List<object> Command;

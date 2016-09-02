@@ -56,12 +56,13 @@ namespace RPG_Paper_Maker
         public static string TILESET_IMAGE_STRING = "<Tileset>";
         public static DialogProgressBar DialogProgressBar = null;
         public static string CurrentMainLang { get { return Game.System.Langs[0]; } }
+        public static MapEditor MapEditor;
 
         // COLORS
         public static System.Drawing.Color COLOR_BACKGROUND_PREVIEW_IMAGE = System.Drawing.Color.FromArgb(220, 220, 220);
 
         // CANCEL
-        public static Dictionary<string, List<Dictionary<int[], GameMapPortion>>> CancelRedo = new Dictionary<string, List<Dictionary<int[], GameMapPortion>>>();
+        public static Dictionary<string, List<Dictionary<int[], object>>> CancelRedo = new Dictionary<string, List<Dictionary<int[], object>>>();
         public static List<int[]> PortionsToAddCancel = new List<int[]>();
         public static Dictionary<string, int> CancelRedoIndex = new Dictionary<string, int>();
         public static bool CanStartCancel = true;
@@ -278,7 +279,9 @@ namespace RPG_Paper_Maker
                 TreeTag tag = (TreeTag)node.Tag;
                 if (tag.IsMap)
                 {
-                    node.Text = tag.MapName;
+                    MapInfos mapInfos = LoadBinaryDatas<MapInfos>(Path.Combine(MapsDirectoryPath, tag.RealMapName, "infos.map"));
+                    node.Tag = TreeTag.CreateMap(mapInfos.MapName, tag.RealMapName);
+                    node.Text = mapInfos.MapName;
                     node.ImageIndex = 1;
                     node.SelectedImageIndex = 1;
                 }
@@ -295,7 +298,7 @@ namespace RPG_Paper_Maker
 
         public static void PathErrorMessage(Exception e)
         {
-            MessageBox.Show("You get a path error. You can send a report to Wanok.rpm@gmail.com.\n" + e.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("You get a path error, enable to open a binary file.\n" + e.Message + "\n" + e.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public static void ShowWarningMessage(string m)
@@ -428,9 +431,14 @@ namespace RPG_Paper_Maker
             return string.Format("EV{0:D4}", num);
         }
 
+        public static string GetStringSwitch(int id)
+        {
+            return GetStringComboBox(id, Game.System.GetSwitchById(id).Name);
+        }
+
         public static string GetStringSwitch(object[] args)
         {
-            return GetStringComboBox((int)args[0], Game.System.GetSwitchById((int)args[0]).Name);
+            return GetStringSwitch((int)args[0]);
         }
 
         // -------------------------------------------------------------------
@@ -515,7 +523,7 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // LoadPortionMap
+        // Load / Save
         // -------------------------------------------------------------------
 
         public static GameMapPortion LoadPortionMap(string mapName, int i, int j)
@@ -525,9 +533,15 @@ namespace RPG_Paper_Maker
             else return null;
         }
 
-        // -------------------------------------------------------------------
-        // SavePortionMap
-        // -------------------------------------------------------------------
+        public static MapInfos LoadMapInfos(string mapName)
+        {
+            return LoadBinaryDatas<MapInfos>(Path.Combine(MapsDirectoryPath, mapName, "temp", "infos.map"));
+        }
+
+        public static Events LoadEvents(string mapName)
+        {
+            return LoadBinaryDatas<Events>(Path.Combine(MapsDirectoryPath, mapName, "temp", "events.map"));
+        }
 
         public static void SavePortionMap(GameMapPortion map, string mapName, int i, int j)
         {
@@ -541,6 +555,16 @@ namespace RPG_Paper_Maker
             {
                 SaveBinaryDatas(map, path);
             }
+        }
+
+        public static void SaveMapInfos(MapInfos mapInfos, string mapName)
+        {
+            SaveBinaryDatas(mapInfos, Path.Combine(MapsDirectoryPath, mapName, "temp", "infos.map"));
+        }
+
+        public static void SaveEventsMap(Events events, string mapName)
+        {
+            SaveBinaryDatas(events, Path.Combine(MapsDirectoryPath, mapName, "temp", "events.map"));
         }
 
         // -------------------------------------------------------------------
@@ -558,7 +582,7 @@ namespace RPG_Paper_Maker
 
         public static void ResetCancel()
         {
-            CancelRedo = new Dictionary<string, List<Dictionary<int[], GameMapPortion>>>();
+            CancelRedo = new Dictionary<string, List<Dictionary<int[], object>>>();
             PortionsToAddCancel = new List<int[]>();
             CancelRedoIndex = new Dictionary<string, int>();
             CanStartCancel = true;
@@ -566,14 +590,14 @@ namespace RPG_Paper_Maker
 
         public static void CreateCancelMap(string mapName)
         {
-            CancelRedo[mapName] = new List<Dictionary<int[], GameMapPortion>>();
+            CancelRedo[mapName] = new List<Dictionary<int[], object>>();
             CancelRedoIndex[mapName] = 0;
-            CancelRedo[mapName].Add(new Dictionary<int[], GameMapPortion>(new IntArrayComparer()));
+            CancelRedo[mapName].Add(new Dictionary<int[], object>(new IntArrayComparer()));
         }
 
-        public static void CreateCancel(string mapName)
+        public static void CreateCancel(string mapName, bool flagOK = false)
         {
-            if (CanStartCancel && (MapMouseManager.IsButtonDown(MouseButtons.Left) || KeyboardManager.IsButtonDown(Settings.KeyboardAssign.EditorDrawCursor) || MapMouseManager.IsButtonDown(MouseButtons.Right)))
+            if (flagOK || (CanStartCancel && (MapMouseManager.IsButtonDown(MouseButtons.Left) || KeyboardManager.IsButtonDown(Settings.KeyboardAssign.EditorDrawCursor) || MapMouseManager.IsButtonDown(MouseButtons.Right))))
             {
                 int size = CancelRedo[mapName].Count;
 
@@ -592,25 +616,45 @@ namespace RPG_Paper_Maker
                     CancelRedoIndex[mapName]--;
                 }
 
-                CancelRedo[mapName].Add(new Dictionary<int[], GameMapPortion>(new IntArrayComparer()));
+                CancelRedo[mapName].Add(new Dictionary<int[], object>(new IntArrayComparer()));
                 CancelRedoIndex[mapName]++;
                 CanStartCancel = false;
             }
         }
 
-        public static void AddPortionsToAddCancel(string mapName, int[] portion)
+        public static void AddPortionsToAddCancel(string mapName, int[] portion, int kind = 0)
         {
+            // Create a special portion
+            int[] newPortion = new int[portion.Length + 1];
+            newPortion[0] = kind;
+            for (int i = 1; i < newPortion.Length; i++)
+            {
+                newPortion[i] = portion[i - 1];
+            }
+
             // Adding to list
             for (int i = PortionsToAddCancel.Count - 1; i >= 0; i--)
             {
-                if (PortionsToAddCancel[i].SequenceEqual(portion)) return;
+                if (PortionsToAddCancel[i].SequenceEqual(newPortion)) return;
             }
-            PortionsToAddCancel.Add(portion);
+            PortionsToAddCancel.Add(newPortion);
 
             // Checking the previous cancel portion
-            if (!CancelRedo[mapName][CancelRedoIndex[mapName] - 1].ContainsKey(portion))
+            if (!CancelRedo[mapName][CancelRedoIndex[mapName] - 1].ContainsKey(newPortion))
             {
-                CancelRedo[mapName][CancelRedoIndex[mapName] - 1][portion] = LoadPortionMap(mapName, portion[0], portion[1]);
+                switch (kind)
+                {
+                    case 0:
+                        CancelRedo[mapName][CancelRedoIndex[mapName] - 1][newPortion] = LoadPortionMap(mapName, portion[0], portion[1]);
+                        break;
+                    case 1:
+                        Events events = LoadEvents(mapName);
+                        CancelRedo[mapName][CancelRedoIndex[mapName] - 1][newPortion] = events.CompleteList.ContainsKey(portion) ? events.CompleteList[portion] : null;
+                        break;
+                    case 2:
+                        CancelRedo[mapName][CancelRedoIndex[mapName] - 1][newPortion] = LoadMapInfos(mapName);
+                        break;
+                }
             }
         }
 
@@ -618,7 +662,20 @@ namespace RPG_Paper_Maker
         {
             for (int i = 0; i < PortionsToAddCancel.Count; i++)
             {
-                CancelRedo[mapName][CancelRedoIndex[mapName]][PortionsToAddCancel[i]] = LoadPortionMap(mapName, PortionsToAddCancel[i][0], PortionsToAddCancel[i][1]);
+                switch (PortionsToAddCancel[i][0])
+                {
+                    case 0:
+                        CancelRedo[mapName][CancelRedoIndex[mapName]][PortionsToAddCancel[i]] = LoadPortionMap(mapName, PortionsToAddCancel[i][1], PortionsToAddCancel[i][2]);
+                        break;
+                    case 1:
+                        Events events = LoadEvents(mapName);
+                        int[] portion = new int[] { PortionsToAddCancel[i][1], PortionsToAddCancel[i][2] };
+                        CancelRedo[mapName][CancelRedoIndex[mapName]][PortionsToAddCancel[i]] = events.CompleteList.ContainsKey(portion) ? events.CompleteList[portion] : null;
+                        break;
+                    case 2:
+                        CancelRedo[mapName][CancelRedoIndex[mapName]][PortionsToAddCancel[i]] = LoadMapInfos(mapName);
+                        break;
+                }
             }
             PortionsToAddCancel.Clear();
         }

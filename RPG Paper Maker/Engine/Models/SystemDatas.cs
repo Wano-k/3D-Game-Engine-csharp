@@ -10,6 +10,8 @@ namespace RPG_Paper_Maker
     [Serializable]
     public class SystemDatas
     {
+        public static int MAX_SWITCHES = 9999;
+
         public Dictionary<string,string> GameName;
         public List<string> Langs;
         public string StartMapName = "MAP0001";
@@ -48,7 +50,7 @@ namespace RPG_Paper_Maker
             Colors = SystemColor.GetDefaultColors();
 
             // Switches
-            for (int i = 1; i < 500; i++)
+            for (int i = 1; i <= 500; i++)
             {
                 Switches.Add(new SuperListItemNameWithoutLang(i));
             }

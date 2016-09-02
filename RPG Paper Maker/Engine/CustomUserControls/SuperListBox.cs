@@ -62,14 +62,30 @@ namespace RPG_Paper_Maker
             if (typeItem == typeof(SuperListItemName))
             {
                 TextBoxLang = new Engine.TextBoxLang();
+                TextBoxLang.Dock = DockStyle.Fill;
                 tableLayoutPanel1.Controls.Add(TextBoxLang, 0, 1);
                 TextBoxLang.GetTextBox().TextChanged += SuperListBox_TextChanged;
             }
             else if (typeItem == typeof(SuperListItemNameWithoutLang))
             {
+                TableLayoutPanel layout = new TableLayoutPanel();
+                layout.Dock = DockStyle.Fill;
+                layout.AutoSize = true;
+                layout.RowCount = 1;
+                layout.ColumnCount = 2;
+                Label labelName = new Label();
+                labelName.AutoSize = true;
+                labelName.Text = "Name:";
+                labelName.Anchor = AnchorStyles.Left;
+                layout.Controls.Add(labelName, 0, 0);
                 TextBox = new TextBox();
-                tableLayoutPanel1.Controls.Add(TextBox, 0, 1);
+                TextBox.Dock = DockStyle.Fill;
                 TextBox.TextChanged += SuperListBoxWithoutLang_TextChanged;
+                layout.Controls.Add(TextBox, 1, 0);
+                layout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+                layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+
+                tableLayoutPanel1.Controls.Add(layout, 0, 1);
             }
 
             if (IsSelectedItemWhenLosingFocus && listBox.Items.Count > 0) listBox.SelectedIndex = 0;
@@ -252,7 +268,7 @@ namespace RPG_Paper_Maker
         private void SelectedIndexChanged()
         {
             if (TypeItem == typeof(SuperListItemName) && listBox.SelectedItem != null) TextBoxLang.InitializeParameters(((SuperListItemName)listBox.SelectedItem).Names);
-            else if (TypeItem == typeof(SuperListItemNameWithoutLang) && listBox.SelectedItem != null) TextBox.Name = ((SuperListItemName)listBox.SelectedItem).Name;
+            else if (TypeItem == typeof(SuperListItemNameWithoutLang) && listBox.SelectedItem != null) TextBox.Text = ((SuperListItemNameWithoutLang)listBox.SelectedItem).Name;
         }
 
         // -------------------------------------------------------------------
@@ -371,7 +387,7 @@ namespace RPG_Paper_Maker
 
         private void SuperListBoxWithoutLang_TextChanged(object sender, EventArgs e)
         {
-            SetName(((SuperListItemNameWithoutLang)listBox.SelectedItem).Name);
+            SetName(TextBox.Text);
         }
 
         private void ListBox_LostFocus(object sender, EventArgs e)

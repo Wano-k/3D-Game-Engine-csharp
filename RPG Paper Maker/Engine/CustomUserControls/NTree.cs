@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPG_Paper_Maker
 {
-    delegate void TreeVisitor<T>(T nodeData);
-
+    [Serializable]
     public class NTree<T>
     {
         public T Data;

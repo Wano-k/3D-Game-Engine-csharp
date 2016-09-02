@@ -57,7 +57,7 @@ namespace RPG_Paper_Maker
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return 0;
         }
 
         // -------------------------------------------------------------------
@@ -205,6 +205,23 @@ namespace RPG_Paper_Maker
                 MessageBox.Show("Could not load " + path, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return MapEditor.TexNone;
             }
+        }
+
+        // -------------------------------------------------------------------
+        // GetCharacterAct
+        // -------------------------------------------------------------------
+
+        public SystemGraphic GetCharacterAct()
+        {
+            if (IsTileset() || IsNone())
+            {
+                return this;
+            }
+
+            SystemGraphic graphic = CreateCopy();
+            graphic.GraphicName = Path.GetFileNameWithoutExtension(graphic.GraphicName) + "_act" + Path.GetExtension(graphic.GraphicName);
+            if (File.Exists(graphic.GetGraphicPath())) return graphic;
+            else return this;
         }
 
         // -------------------------------------------------------------------

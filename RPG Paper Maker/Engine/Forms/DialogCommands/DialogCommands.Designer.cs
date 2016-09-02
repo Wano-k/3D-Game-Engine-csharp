@@ -689,7 +689,7 @@
             this.buttonShowText.Name = "buttonShowText";
             this.buttonShowText.Size = new System.Drawing.Size(207, 23);
             this.buttonShowText.TabIndex = 0;
-            this.buttonShowText.Text = "Show text...";
+            this.buttonShowText.Text = "Show message...";
             this.buttonShowText.UseVisualStyleBackColor = true;
             // 
             // buttonInputNumber

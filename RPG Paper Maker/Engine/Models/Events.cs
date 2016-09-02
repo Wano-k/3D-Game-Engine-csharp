@@ -9,9 +9,28 @@ namespace RPG_Paper_Maker
     [Serializable]
     public class Events
     {
-        // 1: portion, 3: coords
+        // 1: portion, 2: coords
         public Dictionary<int[], Dictionary<int[], SystemEvent>> CompleteList = new Dictionary<int[], Dictionary<int[], SystemEvent>>(new IntArrayComparer());
 
+
+        // -------------------------------------------------------------------
+        // CreateCopy
+        // -------------------------------------------------------------------
+
+        public Events CreateCopy()
+        {
+            Events events = new Events();
+            foreach (KeyValuePair<int[], Dictionary<int[], SystemEvent>> entry in CompleteList)
+            {
+                events.CompleteList[entry.Key] = new Dictionary<int[], SystemEvent>(new IntArrayComparer());
+                foreach (KeyValuePair<int[], SystemEvent> entry2 in entry.Value)
+                {
+                    events.CompleteList[entry.Key][entry2.Key] = entry2.Value.CreateCopy();
+                }
+            }
+
+            return events;
+        }
 
         // -------------------------------------------------------------------
         // Add

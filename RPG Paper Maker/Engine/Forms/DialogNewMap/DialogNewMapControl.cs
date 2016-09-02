@@ -104,6 +104,7 @@ namespace RPG_Paper_Maker.Controls
 
             if (difWidth > 0 || difHeight > 0)
             {
+                Events events = WANOK.LoadEvents(RealMapName);
                 int portionMaxX = (PreviousWidth - 1) / 16, portionMaxY = (PreviousHeight - 1) / 16;
                 int newPortionMaxX = (Width - 1) / 16, newPortionMaxY = (Height - 1) / 16;
 
@@ -111,29 +112,51 @@ namespace RPG_Paper_Maker.Controls
                 {
                     for (int j = 0; j <= portionMaxY; j++)
                     {
-                        string path = Path.Combine(WANOK.MapsDirectoryPath, RealMapName, "temp", i + "-" + j + ".pmap");
-                        if (File.Exists(path)) File.Delete(path);
+                        DeleteMapComplete(events, i, j);
                     }
                 }
                 for (int j = newPortionMaxY + 1; j <= portionMaxY; j++)
                 {
                     for (int i = 0; i <= portionMaxX; i++)
                     {
-                        string path = Path.Combine(WANOK.MapsDirectoryPath, RealMapName, "temp", i + "-" + j + ".pmap");
-                        if (File.Exists(path)) File.Delete(path);
+                        DeleteMapComplete(events, i, j);
                     }
                 }
+
                 for (int i = 0; i <= newPortionMaxX; i++)
                 {
                     DeleteMapItems(i, newPortionMaxY);
+                    DeleteMapEvents(events, i, newPortionMaxY);
                 }
                 for (int j = 0; j <= newPortionMaxY; j++)
                 {
                     DeleteMapItems(newPortionMaxX, j);
+                    DeleteMapEvents(events, newPortionMaxX, j);
                 }
-            }
 
-            WANOK.CreateCancelMap(RealMapName);
+                WANOK.SaveEventsMap(events, RealMapName);
+                WANOK.LoadCancel(Model.RealMapName);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // DeleteMapComplete
+        // -------------------------------------------------------------------
+
+        public void DeleteMapComplete(Events events, int i, int j)
+        {
+            string path = Path.Combine(WANOK.MapsDirectoryPath, RealMapName, "temp", i + "-" + j + ".pmap");
+            int[] portion = new int[] { i, j };
+            if (File.Exists(path))
+            {
+                WANOK.AddPortionsToAddCancel(Model.RealMapName, portion, 0);
+                File.Delete(path);
+            }
+            if (events.CompleteList.ContainsKey(portion))
+            {
+                WANOK.AddPortionsToAddCancel(Model.RealMapName, portion, 1);
+                events.CompleteList.Remove(portion);
+            }
         }
 
         // -------------------------------------------------------------------
@@ -145,18 +168,19 @@ namespace RPG_Paper_Maker.Controls
             string path = Path.Combine(WANOK.MapsDirectoryPath, RealMapName, "temp", i + "-" + j + ".pmap");
             if (File.Exists(path))
             {
-                // Loading
                 GameMapPortion gamePortion = WANOK.LoadBinaryDatas<GameMapPortion>(path);
+                WANOK.AddPortionsToAddCancel(Model.RealMapName, new int[] { i, j }, 0);
+
 
                 // Floors
                 List<int[]> coordsFloors = new List<int[]>();
                 foreach (int[] coords in gamePortion.Floors.Keys)
                 {
-                    coordsFloors.Add(coords);
+                    if (coords[0] >= Width || coords[3] >= Height) coordsFloors.Add(coords);
                 }
                 for (int k = 0; k < coordsFloors.Count; k++)
                 {
-                    if (coordsFloors[k][0] >= Width || coordsFloors[k][3] >= Height) gamePortion.Floors.Remove(coordsFloors[k]);
+                    gamePortion.Floors.Remove(coordsFloors[k]);
                 }
 
                 // Autotiles
@@ -166,14 +190,14 @@ namespace RPG_Paper_Maker.Controls
                     coordsAutotiles[entry.Key] = new List<int[]>();
                     foreach (int[] coords in entry.Value.Tiles.Keys)
                     {
-                        coordsAutotiles[entry.Key].Add(coords);
+                        if (coords[0] >= Width || coords[3] >= Height) coordsAutotiles[entry.Key].Add(coords);
                     }
                 }
                 foreach (int id in coordsAutotiles.Keys)
                 {
                     for (int k = 0; k < coordsAutotiles[id].Count; k++)
                     {
-                        if (coordsAutotiles[id][k][0] >= Width || coordsAutotiles[id][k][3] >= Height) gamePortion.Autotiles[id].Tiles.Remove(coordsAutotiles[id][k]);
+                        gamePortion.Autotiles[id].Tiles.Remove(coordsAutotiles[id][k]);
                     }
                     if (gamePortion.Autotiles[id].IsEmpty()) gamePortion.Autotiles.Remove(id);
                 }
@@ -185,21 +209,78 @@ namespace RPG_Paper_Maker.Controls
                     coordsSprites[entry.Key] = new List<int[]>();
                     foreach (int[] coords in entry.Value.ListSprites.Keys)
                     {
-                        coordsSprites[entry.Key].Add(coords);
+                        if (coords[0] >= Width || coords[3] >= Height) coordsSprites[entry.Key].Add(coords);
                     }
                 }
                 foreach (int[] texture in coordsSprites.Keys)
                 {
                     for (int k = 0; k < coordsSprites[texture].Count; k++)
                     {
-                        if (coordsSprites[texture][k][0] >= Width || coordsSprites[texture][k][3] >= Height) gamePortion.Sprites[texture].ListSprites.Remove(coordsSprites[texture][k]);
+                        gamePortion.Sprites[texture].ListSprites.Remove(coordsSprites[texture][k]);
                     }
                     if (gamePortion.Sprites[texture].IsEmpty()) gamePortion.Sprites.Remove(texture);
                 }
 
+                // Mountains
+                Dictionary<int, Dictionary<int, List<int[]>>> coordsMountains = new Dictionary<int, Dictionary<int, List<int[]>>>();
+                foreach (KeyValuePair<int, Mountains> entry in gamePortion.Mountains)
+                {
+                    coordsMountains[entry.Key] = new Dictionary<int, List<int[]>>();
+                    foreach (KeyValuePair<int, MountainsGroup> entry2 in entry.Value.Groups)
+                    {
+                        coordsMountains[entry.Key][entry2.Key] = new List<int[]>();
+                        foreach (int[] coords in entry2.Value.Tiles.Keys)
+                        {
+                            if (coords[0] >= Width || coords[3] >= Height) coordsMountains[entry.Key][entry2.Key].Add(coords);
+                        }
+                    }
+                }
+                foreach (int height in coordsMountains.Keys)
+                {
+                    foreach (int id in coordsMountains[height].Keys)
+                    {
+                        for (int k = 0; k < coordsMountains[height][id].Count; k++)
+                        {
+                            gamePortion.Mountains[height].Groups[id].Tiles.Remove(coordsMountains[height][id][k]);
+                        }
+                        if (gamePortion.Mountains[height].Groups[id].Tiles.Count == 0) gamePortion.Mountains[height].Groups.Remove(id);
+                    }
+                    if (gamePortion.Mountains[height].IsEmpty()) gamePortion.Mountains.Remove(height);
+                }
+
+
                 // Saving
                 if (gamePortion.IsEmpty()) File.Delete(path);
                 else WANOK.SaveBinaryDatas(gamePortion, path);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // DeleteMapEvents
+        // -------------------------------------------------------------------
+
+        public void DeleteMapEvents(Events events, int i, int j)
+        {
+            int[] portion = new int[] { i, j };
+            if (events.CompleteList.ContainsKey(portion))
+            {
+                Dictionary<int[], SystemEvent> dictionary = events.CompleteList[portion];
+
+                if (dictionary.Count > 0)
+                {
+                    WANOK.AddPortionsToAddCancel(Model.RealMapName, portion, 1);
+
+                    List<int[]> coordsEvents = new List<int[]>();
+                    foreach (int[] coords in dictionary.Keys)
+                    {
+                        if (coords[0] >= Width || coords[3] >= Height) coordsEvents.Add(coords);
+                    }
+                    for (int k = 0; k < coordsEvents.Count; k++)
+                    {
+                        dictionary.Remove(coordsEvents[k]);
+                    }
+                    if (dictionary.Count == 0) events.CompleteList.Remove(portion);
+                }
             }
         }
 
@@ -217,8 +298,11 @@ namespace RPG_Paper_Maker.Controls
             }
             else
             {
+                WANOK.CreateCancel(Model.RealMapName, true);
                 ResizingMap();
+                WANOK.AddPortionsToAddCancel(Model.RealMapName, new int[] { 0 }, 2);
                 WANOK.SaveBinaryDatas(Model, Path.Combine(WANOK.MapsDirectoryPath, RealMapName, "temp", "infos.map"));
+                WANOK.LoadCancel(Model.RealMapName);
             }
         }
     }

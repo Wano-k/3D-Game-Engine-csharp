@@ -198,7 +198,7 @@ namespace RPG_Paper_Maker
             {
                 GenTextures(portion);
             }
-            GenEvent(portion);
+            GenEvent(portion, globalPortion);
         }
 
         // -------------------------------------------------------------------
@@ -265,9 +265,9 @@ namespace RPG_Paper_Maker
         public void UpdatePortions(int[] portion)
         {
             Portions[portion].UpdateDictionaries(Device);
-            if (Portions[portion].IsEmpty()) DisposeBuffers(portion);
+            if (Portions[portion].IsEmpty()) DisposePortionBuffers(portion);
             else GenTextures(portion);
-            GenEvent(portion);
+            GenEvent(portion, MapEditor.Control.GetGlobalPortion(portion));
         }
 
         // -------------------------------------------------------------------
@@ -285,9 +285,8 @@ namespace RPG_Paper_Maker
             }
         }
 
-        public void GenEvent(int[] portion)
+        public void GenEvent(int[] portion, int[] globalPortion)
         {
-            int[] globalPortion = MapEditor.Control.GetGlobalPortion(portion);
             if (Events.CompleteList.ContainsKey(globalPortion)) EventsPortions[portion].GenEvents(Device, Events.CompleteList[globalPortion]);
         }
 
@@ -356,18 +355,19 @@ namespace RPG_Paper_Maker
         // DisposeBuffers
         // -------------------------------------------------------------------
 
-        public void DisposeBuffers(int[] portion, bool nullable = true)
+        public void DisposePortionBuffers(int[] portion, bool nullable = true)
         {
             if (Portions[portion] != null)
             {
                 Portions[portion].DisposeBuffers(Device, nullable);
             }
-            EventsPortions[portion].DisposeBuffers(Device, nullable);
         }
 
-        // -------------------------------------------------------------------
-        // DisposeVertexBuffer
-        // -------------------------------------------------------------------
+        public void DisposeEventBuffers(int[] portion, bool nullable = true)
+        {
+            EventsPortions[portion].DisposeBuffers(Device, nullable);
+
+        }
 
         public void DisposeVertexBuffer()
         {
@@ -377,7 +377,7 @@ namespace RPG_Paper_Maker
 
             foreach (KeyValuePair<int[], GameMapPortion> entry in Portions)
             {
-                if (entry.Value != null) DisposeBuffers(entry.Key);
+                if (entry.Value != null) DisposePortionBuffers(entry.Key);
             }
 
             foreach (KeyValuePair<int[], EventsPortion> entry in EventsPortions)

@@ -21,6 +21,7 @@ namespace RPG_Paper_Maker
 
         #region Event page 
 
+        [Serializable]
         public class SystemEventPage
         {
             public SystemGraphic Graphic;
@@ -29,21 +30,21 @@ namespace RPG_Paper_Maker
             public EventCommandConditions ConditionsTree;
             public NTree<EventCommand> CommandsTree;
 
-            
+            [Serializable]
             public class PageOptions
             {
                 public bool MoveAnimation;
-                public bool StopAnimation;
+                public SystemGraphic StopAnimation;
                 public bool DirectionFix;
                 public bool Through;
                 public bool SetWithCamera;
 
-                public PageOptions() : this(false, false, false, false, false)
+                public PageOptions() : this(false, null, false, false, false)
                 {
 
                 }
 
-                public PageOptions(bool moveAnimation, bool stopAnimation, bool directionFix, bool through, bool setWithCamera)
+                public PageOptions(bool moveAnimation, SystemGraphic stopAnimation, bool directionFix, bool through, bool setWithCamera)
                 {
                     MoveAnimation = moveAnimation;
                     StopAnimation = stopAnimation;
@@ -54,7 +55,7 @@ namespace RPG_Paper_Maker
 
                 public PageOptions CreateCopy()
                 {
-                    return new PageOptions(MoveAnimation, StopAnimation, DirectionFix, Through, SetWithCamera);
+                    return new PageOptions(MoveAnimation, StopAnimation == null ? null : StopAnimation.CreateCopy(), DirectionFix, Through, SetWithCamera);
                 }
             }
 
@@ -157,6 +158,15 @@ namespace RPG_Paper_Maker
         public void CreateNewPage(SystemEventPage page = null)
         {
             Pages.Insert(++CurrentPage, page == null ? new SystemEventPage() : page);
+        }
+
+        // -------------------------------------------------------------------
+        // GetCurrentPage
+        // -------------------------------------------------------------------
+
+        public SystemEventPage GetCurrentPage()
+        {
+            return Pages[CurrentPage];
         }
     }
 }

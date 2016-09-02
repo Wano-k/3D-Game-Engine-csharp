@@ -65,13 +65,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
-            this.radioButtonActionButton = new RPG_Paper_Maker.RadioButtonWithGroup();
-            this.radioButtonPlayerTouch = new RPG_Paper_Maker.RadioButtonWithGroup();
-            this.radioButtonEventTouch = new RPG_Paper_Maker.RadioButtonWithGroup();
-            this.radioButtonAutorun = new RPG_Paper_Maker.RadioButtonWithGroup();
-            this.radioButtonParallelProcess = new RPG_Paper_Maker.RadioButtonWithGroup();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.radioButtonDetection = new RPG_Paper_Maker.RadioButtonWithGroup();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -81,9 +75,15 @@
             this.checkBoxDirectionFix = new System.Windows.Forms.CheckBox();
             this.checkBoxThrough = new System.Windows.Forms.CheckBox();
             this.checkBoxSetWithCamera = new System.Windows.Forms.CheckBox();
-            this.graphicControl1 = new RPG_Paper_Maker.GraphicControl();
             this.CommandsView = new System.Windows.Forms.TreeView();
             this.conditionsPanel1 = new RPG_Paper_Maker.ConditionsPanel();
+            this.radioButtonActionButton = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.radioButtonPlayerTouch = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.radioButtonEventTouch = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.radioButtonAutorun = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.radioButtonParallelProcess = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.radioButtonDetection = new RPG_Paper_Maker.RadioButtonWithGroup();
+            this.graphicControl1 = new RPG_Paper_Maker.GraphicControl();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -603,66 +603,6 @@
             this.tableLayoutPanel13.Size = new System.Drawing.Size(161, 144);
             this.tableLayoutPanel13.TabIndex = 0;
             // 
-            // radioButtonActionButton
-            // 
-            this.radioButtonActionButton.AutoSize = true;
-            this.radioButtonActionButton.GroupName = null;
-            this.radioButtonActionButton.Location = new System.Drawing.Point(3, 3);
-            this.radioButtonActionButton.Name = "radioButtonActionButton";
-            this.radioButtonActionButton.Size = new System.Drawing.Size(88, 17);
-            this.radioButtonActionButton.TabIndex = 8;
-            this.radioButtonActionButton.TabStop = true;
-            this.radioButtonActionButton.Text = "Action button";
-            this.radioButtonActionButton.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonPlayerTouch
-            // 
-            this.radioButtonPlayerTouch.AutoSize = true;
-            this.radioButtonPlayerTouch.GroupName = null;
-            this.radioButtonPlayerTouch.Location = new System.Drawing.Point(3, 26);
-            this.radioButtonPlayerTouch.Name = "radioButtonPlayerTouch";
-            this.radioButtonPlayerTouch.Size = new System.Drawing.Size(84, 17);
-            this.radioButtonPlayerTouch.TabIndex = 9;
-            this.radioButtonPlayerTouch.TabStop = true;
-            this.radioButtonPlayerTouch.Text = "Player touch";
-            this.radioButtonPlayerTouch.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonEventTouch
-            // 
-            this.radioButtonEventTouch.AutoSize = true;
-            this.radioButtonEventTouch.GroupName = null;
-            this.radioButtonEventTouch.Location = new System.Drawing.Point(3, 49);
-            this.radioButtonEventTouch.Name = "radioButtonEventTouch";
-            this.radioButtonEventTouch.Size = new System.Drawing.Size(83, 17);
-            this.radioButtonEventTouch.TabIndex = 10;
-            this.radioButtonEventTouch.TabStop = true;
-            this.radioButtonEventTouch.Text = "Event touch";
-            this.radioButtonEventTouch.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonAutorun
-            // 
-            this.radioButtonAutorun.AutoSize = true;
-            this.radioButtonAutorun.GroupName = null;
-            this.radioButtonAutorun.Location = new System.Drawing.Point(3, 99);
-            this.radioButtonAutorun.Name = "radioButtonAutorun";
-            this.radioButtonAutorun.Size = new System.Drawing.Size(62, 17);
-            this.radioButtonAutorun.TabIndex = 11;
-            this.radioButtonAutorun.TabStop = true;
-            this.radioButtonAutorun.Text = "Autorun";
-            this.radioButtonAutorun.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonParallelProcess
-            // 
-            this.radioButtonParallelProcess.AutoSize = true;
-            this.radioButtonParallelProcess.GroupName = null;
-            this.radioButtonParallelProcess.Location = new System.Drawing.Point(3, 122);
-            this.radioButtonParallelProcess.Name = "radioButtonParallelProcess";
-            this.radioButtonParallelProcess.Size = new System.Drawing.Size(100, 17);
-            this.radioButtonParallelProcess.TabIndex = 12;
-            this.radioButtonParallelProcess.TabStop = true;
-            this.radioButtonParallelProcess.Text = "Parallel Process";
-            this.radioButtonParallelProcess.UseVisualStyleBackColor = true;
-            // 
             // tableLayoutPanel6
             // 
             this.tableLayoutPanel6.ColumnCount = 2;
@@ -677,20 +617,6 @@
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(161, 27);
             this.tableLayoutPanel6.TabIndex = 7;
-            // 
-            // radioButtonDetection
-            // 
-            this.radioButtonDetection.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioButtonDetection.AutoSize = true;
-            this.radioButtonDetection.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.radioButtonDetection.GroupName = null;
-            this.radioButtonDetection.Location = new System.Drawing.Point(3, 5);
-            this.radioButtonDetection.Name = "radioButtonDetection";
-            this.radioButtonDetection.Size = new System.Drawing.Size(57, 17);
-            this.radioButtonDetection.TabIndex = 7;
-            this.radioButtonDetection.TabStop = true;
-            this.radioButtonDetection.Text = "Detect";
-            this.radioButtonDetection.UseVisualStyleBackColor = false;
             // 
             // comboBox2
             // 
@@ -804,14 +730,6 @@
             this.checkBoxSetWithCamera.Text = "Set with camera";
             this.checkBoxSetWithCamera.UseVisualStyleBackColor = true;
             // 
-            // graphicControl1
-            // 
-            this.graphicControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.graphicControl1.Location = new System.Drawing.Point(3, 3);
-            this.graphicControl1.Name = "graphicControl1";
-            this.graphicControl1.Size = new System.Drawing.Size(119, 170);
-            this.graphicControl1.TabIndex = 3;
-            // 
             // CommandsView
             // 
             this.CommandsView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -837,6 +755,88 @@
             this.conditionsPanel1.Size = new System.Drawing.Size(282, 52);
             this.conditionsPanel1.TabIndex = 0;
             // 
+            // radioButtonActionButton
+            // 
+            this.radioButtonActionButton.AutoSize = true;
+            this.radioButtonActionButton.GroupName = null;
+            this.radioButtonActionButton.Location = new System.Drawing.Point(3, 3);
+            this.radioButtonActionButton.Name = "radioButtonActionButton";
+            this.radioButtonActionButton.Size = new System.Drawing.Size(88, 17);
+            this.radioButtonActionButton.TabIndex = 8;
+            this.radioButtonActionButton.TabStop = true;
+            this.radioButtonActionButton.Text = "Action button";
+            this.radioButtonActionButton.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonPlayerTouch
+            // 
+            this.radioButtonPlayerTouch.AutoSize = true;
+            this.radioButtonPlayerTouch.GroupName = null;
+            this.radioButtonPlayerTouch.Location = new System.Drawing.Point(3, 26);
+            this.radioButtonPlayerTouch.Name = "radioButtonPlayerTouch";
+            this.radioButtonPlayerTouch.Size = new System.Drawing.Size(84, 17);
+            this.radioButtonPlayerTouch.TabIndex = 9;
+            this.radioButtonPlayerTouch.TabStop = true;
+            this.radioButtonPlayerTouch.Text = "Player touch";
+            this.radioButtonPlayerTouch.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonEventTouch
+            // 
+            this.radioButtonEventTouch.AutoSize = true;
+            this.radioButtonEventTouch.GroupName = null;
+            this.radioButtonEventTouch.Location = new System.Drawing.Point(3, 49);
+            this.radioButtonEventTouch.Name = "radioButtonEventTouch";
+            this.radioButtonEventTouch.Size = new System.Drawing.Size(83, 17);
+            this.radioButtonEventTouch.TabIndex = 10;
+            this.radioButtonEventTouch.TabStop = true;
+            this.radioButtonEventTouch.Text = "Event touch";
+            this.radioButtonEventTouch.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonAutorun
+            // 
+            this.radioButtonAutorun.AutoSize = true;
+            this.radioButtonAutorun.GroupName = null;
+            this.radioButtonAutorun.Location = new System.Drawing.Point(3, 99);
+            this.radioButtonAutorun.Name = "radioButtonAutorun";
+            this.radioButtonAutorun.Size = new System.Drawing.Size(62, 17);
+            this.radioButtonAutorun.TabIndex = 11;
+            this.radioButtonAutorun.TabStop = true;
+            this.radioButtonAutorun.Text = "Autorun";
+            this.radioButtonAutorun.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonParallelProcess
+            // 
+            this.radioButtonParallelProcess.AutoSize = true;
+            this.radioButtonParallelProcess.GroupName = null;
+            this.radioButtonParallelProcess.Location = new System.Drawing.Point(3, 122);
+            this.radioButtonParallelProcess.Name = "radioButtonParallelProcess";
+            this.radioButtonParallelProcess.Size = new System.Drawing.Size(100, 17);
+            this.radioButtonParallelProcess.TabIndex = 12;
+            this.radioButtonParallelProcess.TabStop = true;
+            this.radioButtonParallelProcess.Text = "Parallel Process";
+            this.radioButtonParallelProcess.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDetection
+            // 
+            this.radioButtonDetection.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioButtonDetection.AutoSize = true;
+            this.radioButtonDetection.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.radioButtonDetection.GroupName = null;
+            this.radioButtonDetection.Location = new System.Drawing.Point(3, 5);
+            this.radioButtonDetection.Name = "radioButtonDetection";
+            this.radioButtonDetection.Size = new System.Drawing.Size(57, 17);
+            this.radioButtonDetection.TabIndex = 7;
+            this.radioButtonDetection.TabStop = true;
+            this.radioButtonDetection.Text = "Detect";
+            this.radioButtonDetection.UseVisualStyleBackColor = false;
+            // 
+            // graphicControl1
+            // 
+            this.graphicControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.graphicControl1.Location = new System.Drawing.Point(3, 3);
+            this.graphicControl1.Name = "graphicControl1";
+            this.graphicControl1.Size = new System.Drawing.Size(119, 170);
+            this.graphicControl1.TabIndex = 3;
+            // 
             // DialogEvent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -844,6 +844,7 @@
             this.CancelButton = this.cancel;
             this.ClientSize = new System.Drawing.Size(837, 573);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "DialogEvent";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

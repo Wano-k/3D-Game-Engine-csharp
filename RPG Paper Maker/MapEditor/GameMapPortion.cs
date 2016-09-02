@@ -445,7 +445,7 @@ namespace RPG_Paper_Maker
 
         public void Draw(GraphicsDevice device, AlphaTestEffect effect, Texture2D texture, Camera camera)
         {
-            // Drawing Sprites & montains
+            // Drawing mountains
             effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
             foreach (Mountains mountains in Mountains.Values)
             {

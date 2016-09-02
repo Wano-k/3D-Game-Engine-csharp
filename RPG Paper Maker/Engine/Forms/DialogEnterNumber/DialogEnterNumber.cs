@@ -27,9 +27,9 @@ namespace RPG_Paper_Maker
             ModelList = list == null ? new List<SuperListItem>() : list;
             label1.Text = "Enter a value between " + min + " and " + max + ":";
             Value = value;
-            numeric.Value = value;
             numeric.Minimum = min;
             numeric.Maximum = max;
+            numeric.Value = value;
 
             numeric.Select();
         }

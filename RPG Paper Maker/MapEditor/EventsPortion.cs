@@ -55,6 +55,7 @@ namespace RPG_Paper_Maker
             {
                 int frames = (int)ev.Pages[0].Graphic.Options[(int)SystemGraphic.OptionsEnum.Frames];
                 int index = (int)ev.Pages[0].Graphic.Options[(int)SystemGraphic.OptionsEnum.Index];
+                MapEditor.LoadSystemGraphic(ev.Pages[0].Graphic, WANOK.MapEditor.GraphicsDevice);
                 int width = MapEditor.TexCharacters[ev.Pages[0].Graphic].Width / frames;
                 int height = MapEditor.TexCharacters[ev.Pages[0].Graphic].Height / frames;
                 int[] texture = new int[] { (index % frames) * width, (index / frames) * height, width, height };
@@ -226,6 +227,14 @@ namespace RPG_Paper_Maker
                 {
                     SquaresVB = null;
                     SquaresIB = null;
+                }
+            }
+
+            foreach (Dictionary<int[], Sprites> entry in Sprites.Values)
+            {
+                foreach (Sprites sprites in entry.Values)
+                {
+                    sprites.DisposeBuffers(device, nullable);
                 }
             }
         }

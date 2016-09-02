@@ -18,7 +18,6 @@ namespace RPG_Paper_Maker
         private List<RadioButton> HeroesConditionRadios = new List<RadioButton>();
         private List<Control[]> HeroesSelectionItems = new List<Control[]>();
         private List<Control[]> HeroesConditionItems = new List<Control[]>();
-        public ListBox[] ListBoxesCanceling, ListBoxes;
 
 
         public List<object> Result = null;
@@ -46,10 +45,6 @@ namespace RPG_Paper_Maker
         public DialogCondition(List<object> condition)
         {
             InitializeComponent();
-
-            // ListBoxCancelling
-            ListBoxesCanceling = new ListBox[] { constantVariableHeroes.GetListBox() };
-            ListBoxes = new ListBox[] {  };
 
             // All tabs for enable
             SwitchesVariablesSelectionRadios.Add(radioButtonSwitch);
@@ -84,7 +79,9 @@ namespace RPG_Paper_Maker
                 listViewHeroes.Items.Add(WANOK.GetStringList(WANOK.Game.Heroes.HeroesList[i].Id, WANOK.Game.Heroes.HeroesList[i].Name));
             }
 
+
             // Default Selection
+            textBoxVariablesSwitch.InitializeSwitch(1);
             comboBoxSwitchOnOff.SelectedIndex = 0;
             comboBoxSelfSwitchOnOff.SelectedIndex = 0;
             comboBoxComparaisonVariable.InitValues();
@@ -106,36 +103,8 @@ namespace RPG_Paper_Maker
             tabControl1.TabPages.Remove(tabPageEnemies);
             tabControl1.TabPages.Remove(tabPageEvents);
             tabControl1.TabPages.Remove(tabPageOthers);
-
-            // Unselect list
-            UnselectAllLists();
         }
-
-        // -------------------------------------------------------------------
-        // UnselectAllCancelingLists
-        // -------------------------------------------------------------------
-
-        public void UnselectAllCancelingLists()
-        {
-            for (int i = 0; i < ListBoxesCanceling.Length; i++)
-            {
-                ListBoxesCanceling[i].ClearSelected();
-            }
-        }
-
-        // -------------------------------------------------------------------
-        // UnselectAllLists
-        // -------------------------------------------------------------------
-
-        public void UnselectAllLists()
-        {
-            UnselectAllCancelingLists();
-            for (int i = 0; i < ListBoxes.Length; i++)
-            {
-                ListBoxes[i].SelectedIndex = 0;
-            }
-        }
-
+        
         // -------------------------------------------------------------------
         // Checks
         // -------------------------------------------------------------------
