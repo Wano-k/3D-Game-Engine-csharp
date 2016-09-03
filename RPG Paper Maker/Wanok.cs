@@ -797,5 +797,14 @@ namespace RPG_Paper_Maker
                     return GeneralDrawtype.None;
             }
         }
+
+        // -------------------------------------------------------------------
+        // GetVector3Position
+        // -------------------------------------------------------------------
+
+        public static Vector3 GetVector3Position(int[] coords)
+        {
+            return new Vector3(coords[0] * SQUARE_SIZE, GetCoordsPixelHeight(coords), coords[3] * SQUARE_SIZE);
+        }
     }
 }

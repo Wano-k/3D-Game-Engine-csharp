@@ -443,21 +443,24 @@ namespace RPG_Paper_Maker
         // Draw
         // -------------------------------------------------------------------
 
-        public void Draw(GraphicsDevice device, AlphaTestEffect effect, Texture2D texture, Camera camera)
+        public void Draw(GraphicsDevice device, AlphaTestEffect effect, Texture2D texture, Camera camera, string DrawType)
         {
             // Drawing mountains
             effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
+            device.BlendState = BlendState.AlphaBlend;
+            effect.Alpha = DrawType == "ItemRelief" ? 1.0f : 0.5f;
             foreach (Mountains mountains in Mountains.Values)
             {
                 mountains.Draw(device, effect);
             }
+            device.BlendState = BlendState.NonPremultiplied;
 
-            // Drawing Floors
+            // Drawing Floors & autotiles
+            effect.Alpha = 1.0f;
             effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
             if (VBFloor != null)
             {
                 effect.Texture = texture;
-
                 device.SetVertexBuffer(VBFloor);
                 device.Indices = IBFloor;
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes)
@@ -466,13 +469,13 @@ namespace RPG_Paper_Maker
                     device.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, VerticesFloorArray, 0, VerticesFloorArray.Length, IndexesFloorArray, 0, VerticesFloorArray.Length / 2);
                 }
             }
-            
-            // Drawing Autotiles
             foreach (KeyValuePair<int, Autotiles> entry in Autotiles)
             {
                 entry.Value.Draw(device, effect);
             }
-
+            
+            // Drawing Sprites
+            effect.Alpha = DrawType == "ItemSprite" ? 1.0f : 0.5f;
             foreach (KeyValuePair<int[], Sprites> entry in Sprites)
             {
                 entry.Value.Draw(device, effect, camera, entry.Key[2] * WANOK.SQUARE_SIZE, entry.Key[3] * WANOK.SQUARE_SIZE);

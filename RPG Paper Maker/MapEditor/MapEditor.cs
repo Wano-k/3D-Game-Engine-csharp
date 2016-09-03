@@ -25,7 +25,7 @@ namespace RPG_Paper_Maker
         private FrameCounter FrameCounter = new FrameCounter();
 
         // Textures
-        public static Texture2D TexCursor, TexStartCursor, TexEventCursor, TexTileset, TexNone, TexGrid;
+        public static Texture2D TexCursor, TexStartCursor, TexEventCursor, TexEventSelectCursor, TexTileset, TexNone, TexGrid;
         public static Dictionary<int,Texture2D> TexAutotiles = new Dictionary<int, Texture2D>();
         public static Dictionary<int, Texture2D> TexReliefs = new Dictionary<int, Texture2D>();
         public static Dictionary<SystemGraphic, Texture2D> TexCharacters = new Dictionary<SystemGraphic, Texture2D>();
@@ -49,8 +49,10 @@ namespace RPG_Paper_Maker
             TexCursor = Texture2D.FromStream(GraphicsDevice, fs);
             fs = new FileStream("Config/bmp/start_cursor.png", FileMode.Open);
             TexStartCursor = Texture2D.FromStream(GraphicsDevice, fs);
-            fs = new FileStream("Config/bmp/tileset_cursor.png", FileMode.Open);
+            fs = new FileStream("Config/bmp/event_square.png", FileMode.Open);
             TexEventCursor = Texture2D.FromStream(GraphicsDevice, fs);
+            fs = new FileStream("Config/bmp/event_square_select.png", FileMode.Open);
+            TexEventSelectCursor = Texture2D.FromStream(GraphicsDevice, fs);
             TexNone = new Texture2D(GraphicsDevice, 1, 1);
             TexGrid = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
             TexGrid.SetData(new Color[] { new Color(Color.White, 0.5f) });
@@ -252,7 +254,7 @@ namespace RPG_Paper_Maker
                 effect.Projection = Control.Camera.Projection;
 
                 // Drawings components
-                Control.Map.Draw(gameTime, effect, Control.Camera);
+                Control.Map.Draw(gameTime, effect, Control.Camera, SelectedDrawType);
                 Control.CursorEditor.Draw(GraphicsDevice, gameTime, effect);
 
                 // Draw position

@@ -23,7 +23,9 @@ namespace RPG_Paper_Maker
         public bool DisplayGrid = true;
         public int[] GridHeight = new int[] { 0, 0 };
         private Square StartSquare = null;
-        private int[] Startposition;
+        public Square EventSquare = null;
+        private int[] StartPosition;
+        public int[] EventPosition = null;
         public bool Saved = true;
 
 
@@ -53,11 +55,13 @@ namespace RPG_Paper_Maker
             if (newTemp) WANOK.CreateCancelMap(MapInfos.RealMapName);
 
             // Start position
-
             if (mapName == WANOK.Game.System.StartMapName)
             {
                 SetStartInfos(WANOK.Game.System, WANOK.Game.System.StartPosition);
             }
+
+            // Event position
+            EventSquare = new Square(Device, MapEditor.TexEventSelectCursor, new int[] { 0, 0, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE });
 
             // Dispose textures
             if (MapEditor.TexTileset != null)
@@ -209,7 +213,7 @@ namespace RPG_Paper_Maker
         {
             if (StartSquare != null) StartSquare.DisposeBuffers(Device);
             StartSquare = new Square(Device, MapEditor.TexStartCursor, new int[] { 0, 0, WANOK.BASIC_SQUARE_SIZE, WANOK.BASIC_SQUARE_SIZE });
-            Startposition = startPosition;
+            StartPosition = startPosition;
         }
 
         // -------------------------------------------------------------------
@@ -308,20 +312,21 @@ namespace RPG_Paper_Maker
         // Draw
         // -------------------------------------------------------------------
 
-        public void Draw(GameTime gameTime, AlphaTestEffect effect, Camera camera)
+        public void Draw(GameTime gameTime, AlphaTestEffect effect, Camera camera, string DrawType)
         {
             // Drawing map portion & events
-            for(int i = -WANOK.PORTION_RADIUS; i <= WANOK.PORTION_RADIUS; i++)
+            for (int i = -WANOK.PORTION_RADIUS; i <= WANOK.PORTION_RADIUS; i++)
             {
                 for (int j = -WANOK.PORTION_RADIUS; j <= WANOK.PORTION_RADIUS; j++)
                 {
                     int[] portion = new int[] { i, j };
-
+                    
                     // map portion
                     GameMapPortion gameMap = Portions[portion];
-                    if (gameMap != null) gameMap.Draw(Device, effect, MapEditor.TexTileset, camera);
+                    if (gameMap != null) gameMap.Draw(Device, effect, MapEditor.TexTileset, camera, DrawType);
 
                     // events
+                    effect.Alpha = DrawType == "ItemEvent" ? 1.0f : 0.5f;
                     EventsPortions[portion].DrawSquares(Device, effect);
                     EventsPortions[portion].DrawSprites(Device, effect, camera);
                 }
@@ -331,11 +336,20 @@ namespace RPG_Paper_Maker
             // Drawing Start position
             if (StartSquare != null)
             {
-                StartSquare.Draw(Device, gameTime, effect, MapEditor.TexStartCursor, new Vector3(Startposition[0] * WANOK.SQUARE_SIZE, Startposition[1] * WANOK.SQUARE_SIZE + Startposition[2], Startposition[3] * WANOK.SQUARE_SIZE));
+                effect.Alpha = DrawType == "ItemEvent" ? 1.0f : 0.5f;
+                StartSquare.Draw(Device, gameTime, effect, MapEditor.TexStartCursor, WANOK.GetVector3Position(StartPosition));
+            }
+
+            // Drawing Start position
+            if (EventPosition != null)
+            {
+                effect.Alpha = DrawType == "ItemEvent" ? 1.0f : 0.5f;
+                EventSquare.Draw(Device, gameTime, effect, MapEditor.TexEventSelectCursor, WANOK.GetVector3Position(EventPosition));
             }
 
             // Drawing grid
             effect.Texture = MapEditor.TexGrid;
+            effect.Alpha = DrawType == "ItemEvent" ? 1.0f : 0.5f;
             Device.BlendState = BlendState.Additive;
             effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(0, WANOK.GetPixelHeight(GridHeight) + 0.1f, 0);
             if (DisplayGrid)
@@ -386,6 +400,7 @@ namespace RPG_Paper_Maker
             }
 
             if (StartSquare != null) StartSquare.DisposeBuffers(Device);
+            EventSquare.DisposeBuffers(Device);
         }
     }
 }

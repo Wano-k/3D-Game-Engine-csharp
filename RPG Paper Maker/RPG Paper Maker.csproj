@@ -607,6 +607,12 @@
     <Content Include="Config\bmp\editor_cursor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Config\bmp\event_square.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\bmp\event_square_select.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Config\bmp\start_cursor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
