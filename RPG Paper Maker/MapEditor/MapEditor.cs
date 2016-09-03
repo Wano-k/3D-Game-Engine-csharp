@@ -165,6 +165,40 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // GetCharacterTexture
+        // -------------------------------------------------------------------
+
+        public static Texture2D GetCharacterTexture(GraphicsDevice device, Texture2D originalTexture)
+        {
+            Texture2D newTexture = new Texture2D(device, 125 * WANOK.SQUARE_SIZE, 5 * WANOK.SQUARE_SIZE);
+            Color[] imageData = new Color[originalTexture.Width * originalTexture.Height];
+            originalTexture.GetData(imageData);
+
+            int count;
+            for (int a = 0; a < Autotiles.listA.Length; a++)
+            {
+                count = 0;
+                for (int b = 0; b < Autotiles.listB.Length; b++)
+                {
+                    for (int c = 0; c < Autotiles.listC.Length; c++)
+                    {
+                        for (int d = 0; d < Autotiles.listD.Length; d++)
+                        {
+                            WANOK.FillImage(device, newTexture, imageData, originalTexture.Width, new Rectangle(count * WANOK.SQUARE_SIZE, a * WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE / 2, WANOK.SQUARE_SIZE / 2), new Rectangle((Autotiles.AutotileBorder[Autotiles.listA[a]] % 4) * (WANOK.SQUARE_SIZE / 2), (Autotiles.AutotileBorder[Autotiles.listA[a]] / 4) * (WANOK.SQUARE_SIZE / 2), WANOK.SQUARE_SIZE / 2, WANOK.SQUARE_SIZE / 2));
+                            WANOK.FillImage(device, newTexture, imageData, originalTexture.Width, new Rectangle(count * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2), a * WANOK.SQUARE_SIZE, WANOK.SQUARE_SIZE / 2, WANOK.SQUARE_SIZE / 2), new Rectangle((Autotiles.AutotileBorder[Autotiles.listB[b]] % 4) * (WANOK.SQUARE_SIZE / 2), (Autotiles.AutotileBorder[Autotiles.listB[b]] / 4) * (WANOK.SQUARE_SIZE / 2), WANOK.SQUARE_SIZE / 2, WANOK.SQUARE_SIZE / 2));
+                            WANOK.FillImage(device, newTexture, imageData, originalTexture.Width, new Rectangle(count * WANOK.SQUARE_SIZE, a * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2), WANOK.SQUARE_SIZE / 2, WANOK.SQUARE_SIZE / 2), new Rectangle((Autotiles.AutotileBorder[Autotiles.listC[c]] % 4) * (WANOK.SQUARE_SIZE / 2), (Autotiles.AutotileBorder[Autotiles.listC[c]] / 4) * (WANOK.SQUARE_SIZE / 2), WANOK.SQUARE_SIZE / 2, WANOK.SQUARE_SIZE / 2));
+                            WANOK.FillImage(device, newTexture, imageData, originalTexture.Width, new Rectangle(count * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2), a * WANOK.SQUARE_SIZE + (WANOK.SQUARE_SIZE / 2), WANOK.SQUARE_SIZE / 2, WANOK.SQUARE_SIZE / 2), new Rectangle((Autotiles.AutotileBorder[Autotiles.listD[d]] % 4) * (WANOK.SQUARE_SIZE / 2), (Autotiles.AutotileBorder[Autotiles.listD[d]] / 4) * (WANOK.SQUARE_SIZE / 2), WANOK.SQUARE_SIZE / 2, WANOK.SQUARE_SIZE / 2));
+                            count++;
+                        }
+                    }
+                }
+            }
+            originalTexture.Dispose();
+
+            return newTexture;
+        }
+
+        // -------------------------------------------------------------------
         // LoadSettings
         // -------------------------------------------------------------------
 

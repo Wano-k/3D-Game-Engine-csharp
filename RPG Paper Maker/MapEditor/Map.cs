@@ -90,7 +90,7 @@ namespace RPG_Paper_Maker
             MapEditor.TexTileset = tileset.Graphic.LoadTexture(device);
             for (int i = 0; i < tileset.Autotiles.Count; i++)
             {
-                MapEditor.TexAutotiles[tileset.Autotiles[i]] = WANOK.Game.Tilesets.GetAutotileById(tileset.Autotiles[i]).Graphic.LoadTexture(Device);
+                MapEditor.TexAutotiles[tileset.Autotiles[i]] = MapEditor.GetCharacterTexture(device, WANOK.Game.Tilesets.GetAutotileById(tileset.Autotiles[i]).Graphic.LoadTexture(Device));
             }
             for (int i = 0; i < tileset.Reliefs.Count; i++)
             {

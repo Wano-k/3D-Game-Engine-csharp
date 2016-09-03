@@ -231,12 +231,24 @@ namespace RPG_Paper_Maker
         public static Texture2D GetSubImage(GraphicsDevice GraphicsDevice, Texture2D image, Rectangle rectangle)
         {
             Color[] imageData = new Color[image.Width * image.Height];
-            image.GetData<Color>(imageData);
+            image.GetData(imageData);
             Color[] imagePiece = GetImageData(imageData, image.Width, rectangle);
             Texture2D subtexture = new Texture2D(GraphicsDevice, rectangle.Width, rectangle.Height);
-            subtexture.SetData<Color>(imagePiece);
+            subtexture.SetData(imagePiece);
 
             return subtexture;
+        }
+
+        // -------------------------------------------------------------------
+        // FillImage
+        // -------------------------------------------------------------------
+
+        public static Texture2D FillImage(GraphicsDevice device, Texture2D texture, Color[] imageDataToCopy, int width, Rectangle rectangle, Rectangle rectangleToCopy)
+        {
+            Color[] imageDataSub = GetImageData(imageDataToCopy, width, rectangleToCopy);
+            texture.SetData(0, rectangle, imageDataSub, 0, imageDataSub.Length);
+
+            return texture;
         }
 
         // -------------------------------------------------------------------
