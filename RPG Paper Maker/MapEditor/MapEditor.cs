@@ -23,6 +23,8 @@ namespace RPG_Paper_Maker
         public Point MouseBeforeUpdate { get { return Control.MouseBeforeUpdate; } set { Control.MouseBeforeUpdate = value; } }
         public int PreviousWidth, PreviousHeight;
         private FrameCounter FrameCounter = new FrameCounter();
+        public static double ClickTimer;
+        double TimerDelay = 500;
 
         // Textures
         public static Texture2D TexCursor, TexStartCursor, TexEventCursor, TexEventSelectCursor, TexTileset, TexNone, TexGrid;
@@ -31,7 +33,7 @@ namespace RPG_Paper_Maker
         public static Dictionary<SystemGraphic, Texture2D> TexCharacters = new Dictionary<SystemGraphic, Texture2D>();
 
         public static int Debug = 0;
-
+        public static int[] Debug2 = null;
 
         // -------------------------------------------------------------------
         // Initialize
@@ -230,6 +232,15 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // InitCursorEventPosition
+        // -------------------------------------------------------------------
+
+        public void InitCursorEventPosition()
+        {
+            Control.Map.EventPosition = null;
+        }
+
+        // -------------------------------------------------------------------
         // Update
         // -------------------------------------------------------------------
 
@@ -254,8 +265,17 @@ namespace RPG_Paper_Maker
                 // Map editor update
                 Control.Update(GraphicsDevice, Control.Camera);
                 moving |= MouseBeforeUpdate != WANOK.MapMouseManager.GetPosition();
+                ClickTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
 
-                if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Left) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Left) && moving)) Control.Add(true);
+                if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Left) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Left) && moving))
+                {
+                    if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Left))
+                    {
+                        Control.Add(true, ClickTimer < TimerDelay);
+                        if (ClickTimer >= TimerDelay) ClickTimer = 0;
+                    }
+                    else Control.Add(true);
+                }
                 if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Right) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Right) && moving)) Control.Remove(true);
                 if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorDrawCursor)) Control.Add(false);
                 if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorRemoveCursor)) Control.Remove(false);
@@ -289,12 +309,14 @@ namespace RPG_Paper_Maker
 
                 // Drawings components
                 Control.Map.Draw(gameTime, effect, Control.Camera, SelectedDrawType);
+                effect.Alpha = 1.0f;
                 Control.CursorEditor.Draw(GraphicsDevice, gameTime, effect);
 
                 // Draw position
                 string pos = "[" + Control.CursorEditor.GetX() + "," + Control.CursorEditor.GetZ() + "]";
                 string fps = string.Format("FPS: {0}", (int)FrameCounter.AverageFramesPerSecond);
-
+                //string fps = Debug2 == null ? "null" : string.Format("FPS: {0}, {1}", Debug2[0], Debug2[1]);
+                //string fps = string.Format("FPS: {0}", Debug);
                 SpriteBatch.Begin();
                 SpriteBatch.DrawString(font, pos, new Vector2(GraphicsDevice.Viewport.Width - 10, GraphicsDevice.Viewport.Height - 10), Color.White, 0, font.MeasureString(pos), 1.0f, SpriteEffects.None, 0.5f);
                 SpriteBatch.DrawString(font, fps, new Vector2(GraphicsDevice.Viewport.Width - 10, 40), Color.White, 0, font.MeasureString(fps), 1.0f, SpriteEffects.None, 0.5f);

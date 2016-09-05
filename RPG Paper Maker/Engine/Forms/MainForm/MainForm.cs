@@ -15,7 +15,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
 namespace RPG_Paper_Maker
 {
     public delegate SuperListItem MethodGetSuperItemById(int id);
@@ -1272,6 +1271,19 @@ namespace RPG_Paper_Maker
         #endregion
 
         // -------------------------------------------------------------------
+        // Event Context Strip
+        // -------------------------------------------------------------------
+
+        #region event
+
+        private void toolStripMenuItemAddEvent_Click(object sender, EventArgs e)
+        {
+            MapEditor.Control.OpenEventDialog();
+        }
+
+        #endregion
+
+        // -------------------------------------------------------------------
         // TilesetSelector
         // -------------------------------------------------------------------
 
@@ -1339,7 +1351,14 @@ namespace RPG_Paper_Maker
 
         private void MapEditor_MouseDown(object sender, MouseEventArgs e)
         {
+            WANOK.MapMouseManager.SetPosition(e.X, e.Y);
+            MapEditor.MouseBeforeUpdate = WANOK.MapMouseManager.GetPosition();
             WANOK.MapMouseManager.SetMouseDownStatus(e);
+
+            if (e.Button == MouseButtons.Right && MapEditor.SelectedDrawType == "ItemEvent")
+            {
+                //contextMenuStripEvent.Show(MapEditor.PointToScreen(e.Location));
+            }
         }
 
         private void MapEditor_MouseUp(object sender, MouseEventArgs e)
@@ -1359,6 +1378,15 @@ namespace RPG_Paper_Maker
         // -------------------------------------------------------------------
 
         #region functions
+
+        // -------------------------------------------------------------------
+        // ShowSpecialTileset
+        // -------------------------------------------------------------------
+
+        public void ShowEventContextStrip(int x, int y)
+        {
+            contextMenuStripEvent.Show(MapEditor.PointToScreen(new Point(x, y)));
+        }
 
         // -------------------------------------------------------------------
         // ShowSpecialTileset
@@ -1666,6 +1694,7 @@ namespace RPG_Paper_Maker
         {
             MapEditor.SelectedDrawType = item;
             menuStrip2.Refresh();
+            MapEditor.InitCursorEventPosition();
         }
 
         // -------------------------------------------------------------------

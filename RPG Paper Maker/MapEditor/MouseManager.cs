@@ -21,6 +21,7 @@ namespace RPG_Paper_Maker
         private bool WheelUp = false;
         private bool WheelDown = false;
 
+
         // -------------------------------------------------------------------
         // InitializeMouse
         // -------------------------------------------------------------------

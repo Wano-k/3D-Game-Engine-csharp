@@ -293,10 +293,8 @@ namespace RPG_Paper_Maker
         {
             if (VB != null)
             {
-                if (!MapEditor.TexAutotiles.ContainsKey(Id))
-                    effect.Texture = MapEditor.TexNone;
-                else
-                    effect.Texture = MapEditor.TexAutotiles[Id];
+                if (!MapEditor.TexAutotiles.ContainsKey(Id)) effect.Texture = MapEditor.TexNone;
+                else effect.Texture = MapEditor.TexAutotiles[Id];
 
                 device.SetVertexBuffer(VB);
                 device.Indices = IB;
