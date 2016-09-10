@@ -976,18 +976,13 @@ namespace RPG_Paper_Maker
             */
         }
 
-        // Start
-
-        private void ItemStart_Click(object sender, EventArgs e)
-        {
-            SetSelectedDrawType("ItemStart");
-        }
-
         // Event
 
         private void ItemEvent_Click(object sender, EventArgs e)
         {
             SetSelectedDrawType("ItemEvent");
+            SetSelectedDrawTypeParticular(DrawType.None);
+            HideSpecialTileset();
         }
 
         // DrawMode
@@ -1281,6 +1276,11 @@ namespace RPG_Paper_Maker
             MapEditor.Control.OpenEventDialog();
         }
 
+        private void toolStripMenuItemStartPosition_Click(object sender, EventArgs e)
+        {
+            MapEditor.Control.AddStart();
+        }
+
         #endregion
 
         // -------------------------------------------------------------------
@@ -1444,7 +1444,7 @@ namespace RPG_Paper_Maker
 
         public bool CanHideSpecialTileset()
         {
-            return MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles || MapEditor.SelectedDrawType == "ItemRelief";
+            return MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles || MapEditor.SelectedDrawType == "ItemRelief" || MapEditor.SelectedDrawType == "ItemEvent";
         }
 
         // -------------------------------------------------------------------

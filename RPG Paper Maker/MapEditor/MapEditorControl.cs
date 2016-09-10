@@ -525,12 +525,12 @@ namespace RPG_Paper_Maker
             if (WANOK.MapMouseManager.IsButtonUp(MouseButtons.Left) || WANOK.MapMouseManager.IsButtonUp(MouseButtons.Right))
             {
                 PreviousMouseCoords = null;
-                if (SelectedDrawType != "ItemStart") WANOK.LoadCancel(Map.MapInfos.RealMapName);
+                WANOK.LoadCancel(Map.MapInfos.RealMapName);
             }
             if (WANOK.KeyboardManager.IsButtonUp(WANOK.Settings.KeyboardAssign.EditorDrawCursor) || WANOK.KeyboardManager.IsButtonUp(WANOK.Settings.KeyboardAssign.EditorRemoveCursor))
             {
                 PreviousCursorCoords = null;
-                if (SelectedDrawType != "ItemStart") WANOK.LoadCancel(Map.MapInfos.RealMapName);
+                WANOK.LoadCancel(Map.MapInfos.RealMapName);
             }
         }
 
@@ -566,9 +566,6 @@ namespace RPG_Paper_Maker
             WANOK.CanStartCancel = true;
             switch (SelectedDrawType)
             {
-                case "ItemStart":
-                    AddStart(isMouse);
-                    break;
                 case "ItemEvent":
                     AddEvent(isMouse, doubleClick);
                     break;
@@ -619,23 +616,17 @@ namespace RPG_Paper_Maker
         // AddStart
         // -------------------------------------------------------------------
 
-        public void AddStart(bool isMouse)
+        public void AddStart()
         {
-            // Getting coords
-            int[] coords = GetCoords(isMouse);
-            if (coords == null) return;
+            // Saving
+            SystemDatas system = WANOK.LoadBinaryDatas<SystemDatas>(WANOK.SystemPath);
+            system.StartMapName = Map.MapInfos.RealMapName;
+            system.StartPosition = Map.EventPosition;
+            WANOK.SaveBinaryDatas(system, WANOK.SystemPath);
+            WANOK.Game.System = system;
 
-            if (IsInArea(coords)){
-                // Saving
-                SystemDatas system = WANOK.LoadBinaryDatas<SystemDatas>(WANOK.SystemPath);
-                system.StartMapName = Map.MapInfos.RealMapName;
-                system.StartPosition = coords;
-                WANOK.SaveBinaryDatas(system, WANOK.SystemPath);
-                WANOK.Game.System = system;
-
-                // Updating in map
-                Map.SetStartInfos(coords);
-            }
+            // Updating in map
+            Map.SetStartInfos(Map.EventPosition);
         }
 
         #endregion

@@ -57,7 +57,7 @@ namespace RPG_Paper_Maker
                 int index = (int)ev.Pages[0].Graphic.Options[(int)SystemGraphic.OptionsEnum.Index];
                 MapEditor.LoadSystemGraphic(ev.Pages[0].Graphic, WANOK.MapEditor.GraphicsDevice);
                 int width = MapEditor.TexCharacters[ev.Pages[0].Graphic].Width / frames;
-                int height = MapEditor.TexCharacters[ev.Pages[0].Graphic].Height / frames;
+                int height = MapEditor.TexCharacters[ev.Pages[0].Graphic].Height / ((int)ev.Pages[0].Graphic.Options[(int)SystemGraphic.OptionsEnum.Diagonal] == 0 ? 4 : 8);
                 int[] texture = new int[] { (index % frames) * width, (index / frames) * height, width, height };
 
                 if (!Sprites[ev.Pages[0].Graphic].ContainsKey(texture)) Sprites[ev.Pages[0].Graphic][texture] = new Sprites();

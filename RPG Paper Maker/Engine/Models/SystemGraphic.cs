@@ -208,23 +208,6 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
-        // GetCharacterAct
-        // -------------------------------------------------------------------
-
-        public SystemGraphic GetCharacterAct()
-        {
-            if (IsTileset() || IsNone())
-            {
-                return this;
-            }
-
-            SystemGraphic graphic = CreateCopy();
-            graphic.GraphicName = Path.GetFileNameWithoutExtension(graphic.GraphicName) + "_act" + Path.GetExtension(graphic.GraphicName);
-            if (File.Exists(graphic.GetGraphicPath())) return graphic;
-            else return this;
-        }
-
-        // -------------------------------------------------------------------
         // GetDefaultEventGraphic
         // -------------------------------------------------------------------
 

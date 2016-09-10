@@ -361,7 +361,6 @@ namespace RPG_Paper_Maker
         {
             graphicControl1.panel.Frame = 0;
             Control.Model.Pages[tabControl1.SelectedIndex].Graphic = graphic;
-            if (Control.Model.Pages[tabControl1.SelectedIndex].Options.StopAnimation != null) Control.Model.Pages[tabControl1.SelectedIndex].Options.StopAnimation = graphic.GetCharacterAct();
         }
 
         private void graphicFrameTimer_Elapsed(object sender, EventArgs e)

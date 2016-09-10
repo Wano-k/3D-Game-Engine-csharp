@@ -98,26 +98,19 @@ namespace RPG_Paper_Maker
 
         public void CreatePortion(GraphicsDevice device, Texture2D texture2D, int[] texture, bool isTileset)
         {
-            // Building vertex buffer indexed
-            List<VertexPositionTexture> verticesList = new List<VertexPositionTexture>();
-            List<int> indexesList = new List<int>();
-            int[] indexes = new int[]
-            {
-                0, 1, 2, 0, 2, 3
-            };
             if (!isTileset || (texture[2] * WANOK.SQUARE_SIZE <= MapEditor.TexTileset.Width && texture[3] * WANOK.SQUARE_SIZE <= MapEditor.TexTileset.Height))
             {
+                int count = 0;
+                VerticesArray = new VertexPositionTexture[4];
                 foreach (VertexPositionTexture vertex in CreateTex(texture2D, texture, isTileset))
                 {
-                    verticesList.Add(vertex);
+                    VerticesArray[count++] = vertex;
                 }
-                for (int n = 0; n < 6; n++)
+                IndexesArray = new int[]
                 {
-                    indexesList.Add(indexes[n]);
-                }
+                    0, 1, 2, 0, 2, 3
+                };
 
-                VerticesArray = verticesList.ToArray();
-                IndexesArray = indexesList.ToArray();
                 IB = new IndexBuffer(device, IndexElementSize.ThirtyTwoBits, IndexesArray.Length, BufferUsage.None);
                 IB.SetData(IndexesArray);
                 VB = new VertexBuffer(device, VertexPositionTexture.VertexDeclaration, VerticesArray.Length, BufferUsage.None);

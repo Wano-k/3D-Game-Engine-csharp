@@ -31,13 +31,8 @@ namespace RPG_Paper_Maker
 
         public bool StopAnimation
         {
-            get { return Model.Pages[Model.CurrentPage].Options.StopAnimation != null; }
-            set
-            {
-                if (value) Model.Pages[Model.CurrentPage].Options.StopAnimation = Model.Pages[Model.CurrentPage].Graphic.GetCharacterAct();
-                else Model.Pages[Model.CurrentPage].Options.StopAnimation = null;
-                NotifyPropertyChanged("StopAnimation");
-            }
+            get { return Model.Pages[Model.CurrentPage].Options.StopAnimation; }
+            set { Model.Pages[Model.CurrentPage].Options.StopAnimation = value; NotifyPropertyChanged("StopAnimation"); }
         }
 
         public bool DirectionFix

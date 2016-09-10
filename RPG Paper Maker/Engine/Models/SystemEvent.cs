@@ -34,17 +34,17 @@ namespace RPG_Paper_Maker
             public class PageOptions
             {
                 public bool MoveAnimation;
-                public SystemGraphic StopAnimation;
+                public bool StopAnimation;
                 public bool DirectionFix;
                 public bool Through;
                 public bool SetWithCamera;
 
-                public PageOptions() : this(false, null, false, false, false)
+                public PageOptions() : this(false, false, false, false, false)
                 {
 
                 }
 
-                public PageOptions(bool moveAnimation, SystemGraphic stopAnimation, bool directionFix, bool through, bool setWithCamera)
+                public PageOptions(bool moveAnimation, bool stopAnimation, bool directionFix, bool through, bool setWithCamera)
                 {
                     MoveAnimation = moveAnimation;
                     StopAnimation = stopAnimation;
@@ -55,7 +55,7 @@ namespace RPG_Paper_Maker
 
                 public PageOptions CreateCopy()
                 {
-                    return new PageOptions(MoveAnimation, StopAnimation == null ? null : StopAnimation.CreateCopy(), DirectionFix, Through, SetWithCamera);
+                    return new PageOptions(MoveAnimation, StopAnimation, DirectionFix, Through, SetWithCamera);
                 }
             }
 

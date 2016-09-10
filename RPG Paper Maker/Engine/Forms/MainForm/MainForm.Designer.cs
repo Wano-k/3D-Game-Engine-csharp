@@ -59,7 +59,6 @@
             this.ItemReliefMontainSquareHeight = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemReliefMontainPixelHeight = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemReliefMontainAngle = new System.Windows.Forms.ToolStripMenuItem();
-            this.ItemStart = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemEvent = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemDrawMode = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemDrawMode1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -125,7 +124,7 @@
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemStartPosition = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainerMain)).BeginInit();
             this.SplitContainerMain.Panel1.SuspendLayout();
@@ -316,7 +315,6 @@
             this.ItemFloor,
             this.ItemSprite,
             this.ItemRelief,
-            this.ItemStart,
             this.ItemEvent,
             this.ItemDrawMode,
             this.ItemHeight});
@@ -504,15 +502,6 @@
             this.ItemReliefMontainAngle.Size = new System.Drawing.Size(191, 38);
             this.ItemReliefMontainAngle.Text = "Angle: 90";
             this.ItemReliefMontainAngle.Click += new System.EventHandler(this.ItemReliefMontainAngle_Click);
-            // 
-            // ItemStart
-            // 
-            this.ItemStart.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ItemStart.Image = global::RPG_Paper_Maker.Properties.Resources.start;
-            this.ItemStart.Name = "ItemStart";
-            this.ItemStart.Size = new System.Drawing.Size(80, 36);
-            this.ItemStart.Text = "Start";
-            this.ItemStart.Click += new System.EventHandler(this.ItemStart_Click);
             // 
             // ItemEvent
             // 
@@ -1040,7 +1029,7 @@
             this.toolStripMenuItem4,
             this.toolStripMenuItem5,
             this.toolStripSeparator5,
-            this.toolStripMenuItem6});
+            this.toolStripMenuItemStartPosition});
             this.contextMenuStripEvent.Name = "contextMenuStripEvent";
             this.contextMenuStripEvent.Size = new System.Drawing.Size(201, 170);
             // 
@@ -1085,11 +1074,12 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(197, 6);
             // 
-            // toolStripMenuItem6
+            // toolStripMenuItemStartPosition
             // 
-            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(200, 22);
-            this.toolStripMenuItem6.Text = "Place start position here";
+            this.toolStripMenuItemStartPosition.Name = "toolStripMenuItemStartPosition";
+            this.toolStripMenuItemStartPosition.Size = new System.Drawing.Size(200, 22);
+            this.toolStripMenuItemStartPosition.Text = "Place start position here";
+            this.toolStripMenuItemStartPosition.Click += new System.EventHandler(this.toolStripMenuItemStartPosition_Click);
             // 
             // MainForm
             // 
@@ -1194,7 +1184,6 @@
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ItemPlay;
         private System.Windows.Forms.ToolStripMenuItem ItemHeight;
-        private System.Windows.Forms.ToolStripMenuItem ItemStart;
         private System.Windows.Forms.ToolStripMenuItem ItemDataBase;
         private System.Windows.Forms.ToolBarButton toolBarButtonDataBase;
         private System.Windows.Forms.ToolStripMenuItem ItemSaveAll;
@@ -1233,7 +1222,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartPosition;
         public System.Windows.Forms.ContextMenuStrip contextMenuStripEvent;
     }
 }
