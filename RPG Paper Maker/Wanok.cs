@@ -609,7 +609,7 @@ namespace RPG_Paper_Maker
 
         public static void CreateCancel(string mapName, bool flagOK = false)
         {
-            if (flagOK || (CanStartCancel && (MapMouseManager.IsButtonDown(MouseButtons.Left) || KeyboardManager.IsButtonDown(Settings.KeyboardAssign.EditorDrawCursor) || MapMouseManager.IsButtonDown(MouseButtons.Right))))
+            if (flagOK || (CanStartCancel && (MapMouseManager.IsButtonDown(MouseButtons.Left) || KeyboardManager.IsButtonDown(Settings.KeyboardAssign.EditorDrawCursor) || MapMouseManager.IsButtonDown(MouseButtons.Right) || KeyboardManager.IsButtonDown(Settings.KeyboardAssign.EditorRemoveCursor))))
             {
                 int size = CancelRedo[mapName].Count;
 

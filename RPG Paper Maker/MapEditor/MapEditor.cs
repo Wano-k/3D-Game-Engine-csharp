@@ -25,6 +25,7 @@ namespace RPG_Paper_Maker
         private FrameCounter FrameCounter = new FrameCounter();
         public static double ClickTimer;
         double TimerDelay = 500;
+        public static bool IsViewMode = false;
 
         // Textures
         public static Texture2D TexCursor, TexStartCursor, TexEventCursor, TexEventSelectCursor, TexTileset, TexNone, TexGrid;
@@ -279,10 +280,28 @@ namespace RPG_Paper_Maker
                 if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Right) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Right) && moving)) Control.Remove(true);
                 if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorDrawCursor)) Control.Add(false);
                 if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorRemoveCursor)) Control.Remove(false);
+                if (SelectedDrawType == "ItemEvent")
+                {
+                    if (WANOK.KeyboardManager.IsButtonCtrlXDown()) {
+                        Control.CopiedEvent = Control.SelectedEvent().CreateCopy();
+                        if (Control.CopiedEvent != null) Control.RemoveEvent(true);
+                    }
+                    else if (WANOK.KeyboardManager.IsButtonCtrlCDown())
+                    {
+                        Control.CopiedEvent = Control.SelectedEvent();
+                        if (Control.CopiedEvent != null) Control.CopiedEvent = Control.CopiedEvent.CreateCopy();
+                    }
+                    else if (WANOK.KeyboardManager.IsButtonCtrlVDown())
+                    {
+                        if (Control.CopiedEvent != null) Control.AddEvent(Control.CopiedEvent.CreateCopy(), true);
+                    }
+                }
                 Control.ButtonUp();
 
                 // Options
                 Control.Options();
+
+                IsViewMode = SelectedDrawType == "ItemView";
 
                 // Update keyboard
                 MouseBeforeUpdate = WANOK.MapMouseManager.GetPosition();
@@ -310,7 +329,7 @@ namespace RPG_Paper_Maker
                 // Drawings components
                 Control.Map.Draw(gameTime, effect, Control.Camera, SelectedDrawType);
                 effect.Alpha = 1.0f;
-                Control.CursorEditor.Draw(GraphicsDevice, gameTime, effect);
+                if (!IsViewMode) Control.CursorEditor.Draw(GraphicsDevice, gameTime, effect);
 
                 // Draw position
                 string pos = "[" + Control.CursorEditor.GetX() + "," + Control.CursorEditor.GetZ() + "]";

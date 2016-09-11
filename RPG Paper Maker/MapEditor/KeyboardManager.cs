@@ -83,5 +83,25 @@ namespace RPG_Paper_Maker
         {
             return !OnKeyboard[k] && FirstKeyboard.Contains(k);
         }
+
+        public bool IsButtonCtrlDown(Keys k)
+        {
+            return IsButtonDownRepeat(Keys.LeftControl) && IsButtonDown(k);
+        }
+
+        public bool IsButtonCtrlXDown()
+        {
+            return IsButtonCtrlDown(Keys.X);
+        }
+
+        public bool IsButtonCtrlCDown()
+        {
+            return IsButtonCtrlDown(Keys.C);
+        }
+
+        public bool IsButtonCtrlVDown()
+        {
+            return IsButtonCtrlDown(Keys.V);
+        }
     }
 }

@@ -45,6 +45,7 @@ namespace RPG_Paper_Maker
         protected HashSet<int[]> PortionsToSave = new HashSet<int[]>(new IntArrayComparer());
         public int[] PreviousMouseCoords = null;
         public int[] PreviousCursorCoords = null;
+        public SystemEvent CopiedEvent = null;
 
         public delegate void MethodStock(int[] coords, params object[] args);
         public delegate object MethodReduce(object after, int localX, int localZ);
@@ -601,7 +602,8 @@ namespace RPG_Paper_Maker
                     if (SelectedDrawTypeParticular == DrawType.Montains) RemoveMountain(isMouse);
                     break;
                 case "ItemEvent":
-                    AddEvent(isMouse, false, true);
+                    if (isMouse) AddEvent(isMouse, false, true);
+                    else RemoveEvent();
                     break;
             }
         }
@@ -649,14 +651,13 @@ namespace RPG_Paper_Maker
 
             if (IsInArea(coords))
             {
-                if (displayContextMenu) ((MainForm)Application.OpenForms[0]).ShowEventContextStrip(MouseBeforeUpdate.X, MouseBeforeUpdate.Y);
-                if (Map.EventPosition == null || !Map.EventPosition.SequenceEqual(coords))
+                if (Map.EventPosition == null || !Map.EventPosition.SequenceEqual(coords)) Map.EventPosition = coords;
+                else if (doubleClick) OpenEventDialog(coords);
+                if (displayContextMenu)
                 {
-                    Map.EventPosition = coords;
-                }
-                else if (doubleClick)
-                {
-                    OpenEventDialog(coords);
+                    WANOK.KeyboardManager.InitializeKeyboard();
+                    WANOK.MapMouseManager.InitializeMouse();
+                    ((MainForm)Application.OpenForms[0]).ShowEventContextStrip(MouseBeforeUpdate.X, MouseBeforeUpdate.Y);
                 }
             }
         }
@@ -683,21 +684,45 @@ namespace RPG_Paper_Maker
             WANOK.KeyboardManager.InitializeKeyboard();
             WANOK.MapMouseManager.InitializeMouse();
             DialogEvent dialog = new DialogEvent(ev);
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (dialog.ShowDialog() == DialogResult.OK) AddEvent(dialog.GetEvent(), true);
+        }
+
+        public void AddEvent(SystemEvent ev, bool flagOK = false)
+        {
+            int[] globalPortion = GetGlobalPortion(Map.EventPosition[0], Map.EventPosition[3]);
+            int[] localPortion = GetPortion(Map.EventPosition[0], Map.EventPosition[3]);
+            CreateCancel(flagOK);
+            Map.Events.Add(globalPortion, Map.EventPosition, ev);
+            Map.EventsPortions[localPortion].RemoveSprite(Map.EventPosition);
+            if (ev.Pages[0].GraphicDrawType != DrawType.None)
             {
-                CreateCancel(true);
-                int[] portion = GetPortion(coords[0], coords[3]);
-                Map.Events.Add(globalPortion, coords, dialog.GetEvent());
-                Map.EventsPortions[portion].RemoveSprite(coords);
-                if (dialog.GetEvent().Pages[0].GraphicDrawType != DrawType.None)
-                {
-                    Map.LoadSpriteTexture(dialog.GetEvent().Pages[0].Graphic);
-                    Map.EventsPortions[portion].AddSprite(coords, dialog.GetEvent());
-                }
+                Map.LoadSpriteTexture(ev.Pages[0].Graphic);
+                Map.EventsPortions[localPortion].AddSprite(Map.EventPosition, ev);
+            }
+            WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, globalPortion, 1);
+            WANOK.SaveBinaryDatas(Map.Events, Path.Combine(WANOK.MapsDirectoryPath, Map.MapInfos.RealMapName, "temp", "events.map"));
+            WANOK.LoadCancel(Map.MapInfos.RealMapName);
+            Map.GenEvent(localPortion, globalPortion);
+            SetToNoSaved();
+        }
+
+        // -------------------------------------------------------------------
+        // RemoveEvent
+        // -------------------------------------------------------------------
+
+        public void RemoveEvent(bool flagOK = false)
+        {
+            if (SelectedEvent() != null)
+            {
+                int[] globalPortion = GetGlobalPortion(Map.EventPosition[0], Map.EventPosition[3]);
+                int[] localPortion = GetPortion(Map.EventPosition[0], Map.EventPosition[3]);
+                CreateCancel(flagOK);
+                Map.Events.Remove(globalPortion, Map.EventPosition);
+                Map.EventsPortions[localPortion].RemoveSprite(Map.EventPosition);
                 WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, globalPortion, 1);
                 WANOK.SaveBinaryDatas(Map.Events, Path.Combine(WANOK.MapsDirectoryPath, Map.MapInfos.RealMapName, "temp", "events.map"));
                 WANOK.LoadCancel(Map.MapInfos.RealMapName);
-                Map.GenEvent(portion, globalPortion);
+                Map.GenEvent(localPortion, globalPortion);
                 SetToNoSaved();
             }
         }
@@ -1588,6 +1613,16 @@ namespace RPG_Paper_Maker
                     }
                 }
             }
+        }
+
+        // -------------------------------------------------------------------
+        // SelectedEvent
+        // -------------------------------------------------------------------
+
+        public SystemEvent SelectedEvent()
+        {
+            if (Map.EventPosition == null) return null;
+            return Map.Events.GetEvent(GetGlobalPortion(Map.EventPosition[0], Map.EventPosition[3]), Map.EventPosition);
         }
 
         #endregion

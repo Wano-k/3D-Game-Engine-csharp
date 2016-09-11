@@ -448,7 +448,7 @@ namespace RPG_Paper_Maker
             // Drawing mountains
             effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE);
             device.BlendState = BlendState.AlphaBlend;
-            effect.Alpha = DrawType == "ItemRelief" ? 1.0f : 0.5f;
+            effect.Alpha = MapEditor.IsViewMode || DrawType == "ItemRelief" ? 1.0f : 0.5f;
             foreach (Mountains mountains in Mountains.Values)
             {
                 mountains.Draw(device, effect);
@@ -475,7 +475,7 @@ namespace RPG_Paper_Maker
             }
             
             // Drawing Sprites
-            effect.Alpha = DrawType == "ItemSprite" ? 1.0f : 0.5f;
+            effect.Alpha = MapEditor.IsViewMode || DrawType == "ItemSprite" ? 1.0f : 0.5f;
             foreach (KeyValuePair<int[], Sprites> entry in Sprites)
             {
                 entry.Value.Draw(device, effect, camera, entry.Key[2] * WANOK.SQUARE_SIZE, entry.Key[3] * WANOK.SQUARE_SIZE);

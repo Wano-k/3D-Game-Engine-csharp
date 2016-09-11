@@ -43,6 +43,25 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // Remove
+        // -------------------------------------------------------------------
+
+        public void Remove(int[] portion, int[] coords)
+        {
+            CompleteList[portion].Remove(coords);
+            if (CompleteList[portion].Count == 0) CompleteList.Remove(portion);
+        }
+
+        // -------------------------------------------------------------------
+        // GetEvent
+        // -------------------------------------------------------------------
+
+        public SystemEvent GetEvent(int[] portion, int[] coords)
+        {
+            return CompleteList.ContainsKey(portion) && CompleteList[portion].ContainsKey(coords) ? CompleteList[portion][coords] : null;
+        }
+
+        // -------------------------------------------------------------------
         // Count
         // -------------------------------------------------------------------
 

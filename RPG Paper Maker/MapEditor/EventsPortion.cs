@@ -93,7 +93,6 @@ namespace RPG_Paper_Maker
 
         public void GenEvents(GraphicsDevice device, Dictionary<int[], SystemEvent> dictionary)
         {
-            DisposeBuffers(device);
             if (dictionary.Count > 0) CreatePortion(device, dictionary);
             if (Sprites.Count > 0)
             {

@@ -291,6 +291,7 @@ namespace RPG_Paper_Maker
 
         public void GenEvent(int[] portion, int[] globalPortion)
         {
+            EventsPortions[portion].DisposeBuffers(Device);
             if (Events.CompleteList.ContainsKey(globalPortion)) EventsPortions[portion].GenEvents(Device, Events.CompleteList[globalPortion]);
         }
 
@@ -320,14 +321,14 @@ namespace RPG_Paper_Maker
                 for (int j = -WANOK.PORTION_RADIUS; j <= WANOK.PORTION_RADIUS; j++)
                 {
                     int[] portion = new int[] { i, j };
-                    
+
                     // map portion
                     GameMapPortion gameMap = Portions[portion];
                     if (gameMap != null) gameMap.Draw(Device, effect, MapEditor.TexTileset, camera, DrawType);
 
                     // events
-                    effect.Alpha = DrawType == "ItemEvent" ? 1.0f : 0.5f;
-                    EventsPortions[portion].DrawSquares(Device, effect);
+                    effect.Alpha = MapEditor.IsViewMode || DrawType == "ItemEvent" ? 1.0f : 0.5f;
+                    if (!MapEditor.IsViewMode) EventsPortions[portion].DrawSquares(Device, effect);
                     EventsPortions[portion].DrawSprites(Device, effect, camera);
                 }
             }
@@ -336,11 +337,11 @@ namespace RPG_Paper_Maker
             // Drawing Start position
             if (StartSquare != null)
             {
-                effect.Alpha = DrawType == "ItemEvent" ? 1.0f : 0.5f;
+                effect.Alpha = MapEditor.IsViewMode || DrawType == "ItemEvent" ? 1.0f : 0.5f;
                 StartSquare.Draw(Device, gameTime, effect, MapEditor.TexStartCursor, WANOK.GetVector3Position(StartPosition));
             }
 
-            // Drawing Start position
+            // Drawing event square selection
             if (EventPosition != null)
             {
                 effect.Alpha = DrawType == "ItemEvent" ? 1.0f : 0.5f;
@@ -352,7 +353,7 @@ namespace RPG_Paper_Maker
             effect.Alpha = DrawType == "ItemEvent" ? 1.0f : 0.5f;
             Device.BlendState = BlendState.Additive;
             effect.World = Matrix.Identity * Matrix.CreateScale(WANOK.SQUARE_SIZE, 1.0f, WANOK.SQUARE_SIZE) * Matrix.CreateTranslation(0, WANOK.GetPixelHeight(GridHeight) + 0.1f, 0);
-            if (DisplayGrid)
+            if (!MapEditor.IsViewMode && DisplayGrid)
             {
                 Device.SetVertexBuffer(VBGrid);
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes)
@@ -361,7 +362,6 @@ namespace RPG_Paper_Maker
                     Device.DrawPrimitives(PrimitiveType.LineList, 0, GridVerticesArray.Length / 2);
                 }
             }
-
             Device.BlendState = BlendState.NonPremultiplied;
         }
 

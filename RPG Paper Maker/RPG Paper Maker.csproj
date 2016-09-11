@@ -644,6 +644,7 @@
     <None Include="Resources\mousewheel.png" />
     <None Include="Resources\anglel.png" />
     <None Include="Resources\ev.png" />
+    <None Include="Resources\view.png" />
     <Content Include="RTP\Content\Pictures\Textures2D\Autotiles\ground.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -767,6 +767,16 @@ namespace RPG_Paper_Maker
             IsInItemHeightPixelMountain = false;
         }
 
+        // View 
+
+        private void ItemView_Click(object sender, EventArgs e)
+        {
+            bool test = CanShowSpecialTileset();
+            SetSelectedDrawType("ItemView");
+            SetSelectedDrawTypeParticular(DrawType.None);
+            if (test) ShowSpecialTileset();
+        }
+
         // Floors
 
         private void ItemFloor_Click(object sender, EventArgs e)
@@ -799,7 +809,7 @@ namespace RPG_Paper_Maker
 
         public void SelectFloor()
         {
-            bool test = CanHideSpecialTileset();
+            bool test = CanShowSpecialTileset();
             SetSelectedDrawType("ItemFloor");
             SetSelectedDrawTypeParticular(DrawType.Floors);
             if (test) HideSpecialTileset();
@@ -856,7 +866,7 @@ namespace RPG_Paper_Maker
 
         public void SelectSprite(DrawType type)
         {
-            bool test = CanHideSpecialTileset();
+            bool test = CanShowSpecialTileset();
             SetSelectedDrawType("ItemSprite");
             SetSelectedDrawTypeParticular(type);
             if (test) HideSpecialTileset();
@@ -980,9 +990,10 @@ namespace RPG_Paper_Maker
 
         private void ItemEvent_Click(object sender, EventArgs e)
         {
+            bool test = CanShowSpecialTileset();
             SetSelectedDrawType("ItemEvent");
             SetSelectedDrawTypeParticular(DrawType.None);
-            HideSpecialTileset();
+            if (test) HideSpecialTileset();
         }
 
         // DrawMode
@@ -1271,9 +1282,49 @@ namespace RPG_Paper_Maker
 
         #region event
 
+        private void contextMenuStripEvent_Opening(object sender, CancelEventArgs e)
+        {
+            if (MapEditor.Control.SelectedEvent() == null)
+            {
+                toolStripMenuItemAddEvent.Text = "New Event...";
+                toolStripMenuItemCutEvent.Enabled = false;
+                toolStripMenuItemCopyEvent.Enabled = false;
+                toolStripMenuItemDeleteEvent.Enabled = false;
+            }
+            else
+            {
+                toolStripMenuItemAddEvent.Text = "Edit Event...";
+                toolStripMenuItemCutEvent.Enabled = true;
+                toolStripMenuItemCopyEvent.Enabled = true;
+                toolStripMenuItemDeleteEvent.Enabled = true;
+            }
+            toolStripMenuItemPasteEvent.Enabled = MapEditor.Control.CopiedEvent != null;
+        }
+
         private void toolStripMenuItemAddEvent_Click(object sender, EventArgs e)
         {
             MapEditor.Control.OpenEventDialog();
+        }
+
+        private void toolStripMenuItemCutEvent_Click(object sender, EventArgs e)
+        {
+            MapEditor.Control.CopiedEvent = MapEditor.Control.SelectedEvent().CreateCopy();
+            MapEditor.Control.RemoveEvent(true);
+        }
+
+        private void toolStripMenuItemCopyEvent_Click(object sender, EventArgs e)
+        {
+            MapEditor.Control.CopiedEvent = MapEditor.Control.SelectedEvent().CreateCopy();
+        }
+
+        private void toolStripMenuItemPasteEvent_Click(object sender, EventArgs e)
+        {
+            MapEditor.Control.AddEvent(MapEditor.Control.CopiedEvent.CreateCopy(), true);
+        }
+
+        private void toolStripMenuItemDeleteEvent_Click(object sender, EventArgs e)
+        {
+            MapEditor.Control.RemoveEvent(true);
         }
 
         private void toolStripMenuItemStartPosition_Click(object sender, EventArgs e)
@@ -1424,7 +1475,7 @@ namespace RPG_Paper_Maker
 
         public bool CanShowSpecialTileset()
         {
-            return MapEditor.SelectedDrawTypeParticular != DrawType.Autotiles && MapEditor.SelectedDrawTypeParticular != DrawType.Montains;
+            return MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles || MapEditor.SelectedDrawTypeParticular == DrawType.Montains;
         }
 
         // -------------------------------------------------------------------
@@ -1436,15 +1487,6 @@ namespace RPG_Paper_Maker
             tableLayoutPanelTileset.RowStyles[0] = new RowStyle(SizeType.Absolute, 0);
             scrollPanelTileset.Controls.Clear();
             scrollPanelTileset.Controls.Add(TilesetSelectorPicture);
-        }
-
-        // -------------------------------------------------------------------
-        // CanHideSpecialTileset
-        // -------------------------------------------------------------------
-
-        public bool CanHideSpecialTileset()
-        {
-            return MapEditor.SelectedDrawTypeParticular == DrawType.Autotiles || MapEditor.SelectedDrawType == "ItemRelief" || MapEditor.SelectedDrawType == "ItemEvent";
         }
 
         // -------------------------------------------------------------------
@@ -1785,7 +1827,7 @@ namespace RPG_Paper_Maker
             TilesetSelectorPicture.Refresh();
             MapEditor.SetCurrentSpecialItemId(-1);
 
-            if (CanHideSpecialTileset()) ShowSpecialTileset();
+            if (CanShowSpecialTileset()) ShowSpecialTileset();
             else HideSpecialTileset();
         }
 
