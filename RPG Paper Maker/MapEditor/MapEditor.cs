@@ -249,9 +249,11 @@ namespace RPG_Paper_Maker
         {
             if (!Control.IsMapReloading && Control.Map != null)
             {
+                // Calculate FPS
                 var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 FrameCounter.Update(deltaTime);
 
+                // If resizing window, recalculate camera position
                 if (PreviousWidth != Width || PreviousHeight != Height)
                 {
                     ReCalculateCameraProjection();
@@ -268,6 +270,7 @@ namespace RPG_Paper_Maker
                 moving |= MouseBeforeUpdate != WANOK.MapMouseManager.GetPosition();
                 ClickTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
 
+                // Classic button down
                 if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Left) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Left) && moving))
                 {
                     if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Left))
@@ -280,11 +283,19 @@ namespace RPG_Paper_Maker
                 if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Right) || (WANOK.MapMouseManager.IsButtonDownRepeat(MouseButtons.Right) && moving)) Control.Remove(true);
                 if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorDrawCursor)) Control.Add(false);
                 if (WANOK.KeyboardManager.IsButtonDownRepeat(WANOK.Settings.KeyboardAssign.EditorRemoveCursor)) Control.Remove(false);
+
+                // Event button down / up
                 if (SelectedDrawType == "ItemEvent")
                 {
+                    if (WANOK.MapMouseManager.IsButtonDown(MouseButtons.Left))
+                    {
+                        Control.SelectedMoveEvent = Control.SelectedEvent();
+                        Control.SelectedMoveEventPosition = Control.Map.EventPosition;
+                    }
+
                     if (WANOK.KeyboardManager.IsButtonCtrlXDown()) {
                         Control.CopiedEvent = Control.SelectedEvent().CreateCopy();
-                        if (Control.CopiedEvent != null) Control.RemoveEvent(true);
+                        if (Control.CopiedEvent != null) Control.RemoveEvent(Control.Map.EventPosition, true);
                     }
                     else if (WANOK.KeyboardManager.IsButtonCtrlCDown())
                     {
@@ -295,12 +306,27 @@ namespace RPG_Paper_Maker
                     {
                         if (Control.CopiedEvent != null) Control.AddEvent(Control.CopiedEvent.CreateCopy(), true);
                     }
+
+                    if (WANOK.MapMouseManager.IsButtonUp(MouseButtons.Left))
+                    {
+                        if (Control.SelectedMoveEvent != null)
+                        {
+                            Control.CreateCancel(true);
+                            Control.RemoveEvent(Control.SelectedMoveEventPosition, false, false);
+                            Control.AddEvent(Control.SelectedMoveEvent, false, false);
+                            Control.SelectedMoveEvent = null;
+                            Control.SelectedMoveEventPosition = null;
+                        }
+                    }
                 }
+
+                // Button up
                 Control.ButtonUp();
 
                 // Options
                 Control.Options();
 
+                // Is view mode
                 IsViewMode = SelectedDrawType == "ItemView";
 
                 // Update keyboard

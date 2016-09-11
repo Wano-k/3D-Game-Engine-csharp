@@ -1309,7 +1309,7 @@ namespace RPG_Paper_Maker
         private void toolStripMenuItemCutEvent_Click(object sender, EventArgs e)
         {
             MapEditor.Control.CopiedEvent = MapEditor.Control.SelectedEvent().CreateCopy();
-            MapEditor.Control.RemoveEvent(true);
+            MapEditor.Control.RemoveEvent(MapEditor.Control.Map.EventPosition, true);
         }
 
         private void toolStripMenuItemCopyEvent_Click(object sender, EventArgs e)
@@ -1324,7 +1324,7 @@ namespace RPG_Paper_Maker
 
         private void toolStripMenuItemDeleteEvent_Click(object sender, EventArgs e)
         {
-            MapEditor.Control.RemoveEvent(true);
+            MapEditor.Control.RemoveEvent(MapEditor.Control.Map.EventPosition, true);
         }
 
         private void toolStripMenuItemStartPosition_Click(object sender, EventArgs e)

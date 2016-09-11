@@ -46,6 +46,8 @@ namespace RPG_Paper_Maker
         public int[] PreviousMouseCoords = null;
         public int[] PreviousCursorCoords = null;
         public SystemEvent CopiedEvent = null;
+        public SystemEvent SelectedMoveEvent = null;
+        public int[] SelectedMoveEventPosition = null;
 
         public delegate void MethodStock(int[] coords, params object[] args);
         public delegate object MethodReduce(object after, int localX, int localZ);
@@ -603,7 +605,7 @@ namespace RPG_Paper_Maker
                     break;
                 case "ItemEvent":
                     if (isMouse) AddEvent(isMouse, false, true);
-                    else RemoveEvent();
+                    else RemoveEvent(Map.EventPosition);
                     break;
             }
         }
@@ -687,11 +689,11 @@ namespace RPG_Paper_Maker
             if (dialog.ShowDialog() == DialogResult.OK) AddEvent(dialog.GetEvent(), true);
         }
 
-        public void AddEvent(SystemEvent ev, bool flagOK = false)
+        public void AddEvent(SystemEvent ev, bool flagOK = false, bool createCancel = true)
         {
             int[] globalPortion = GetGlobalPortion(Map.EventPosition[0], Map.EventPosition[3]);
             int[] localPortion = GetPortion(Map.EventPosition[0], Map.EventPosition[3]);
-            CreateCancel(flagOK);
+            if (createCancel) CreateCancel(flagOK);
             Map.Events.Add(globalPortion, Map.EventPosition, ev);
             Map.EventsPortions[localPortion].RemoveSprite(Map.EventPosition);
             if (ev.Pages[0].GraphicDrawType != DrawType.None)
@@ -710,15 +712,15 @@ namespace RPG_Paper_Maker
         // RemoveEvent
         // -------------------------------------------------------------------
 
-        public void RemoveEvent(bool flagOK = false)
+        public void RemoveEvent(int[] coords, bool flagOK = false, bool createCancel = true)
         {
-            if (SelectedEvent() != null)
+            if (coords != null)
             {
-                int[] globalPortion = GetGlobalPortion(Map.EventPosition[0], Map.EventPosition[3]);
-                int[] localPortion = GetPortion(Map.EventPosition[0], Map.EventPosition[3]);
-                CreateCancel(flagOK);
-                Map.Events.Remove(globalPortion, Map.EventPosition);
-                Map.EventsPortions[localPortion].RemoveSprite(Map.EventPosition);
+                int[] globalPortion = GetGlobalPortion(coords[0], coords[3]);
+                int[] localPortion = GetPortion(coords[0], coords[3]);
+                if (createCancel) CreateCancel(flagOK);
+                Map.Events.Remove(globalPortion, coords);
+                Map.EventsPortions[localPortion].RemoveSprite(coords);
                 WANOK.AddPortionsToAddCancel(Map.MapInfos.RealMapName, globalPortion, 1);
                 WANOK.SaveBinaryDatas(Map.Events, Path.Combine(WANOK.MapsDirectoryPath, Map.MapInfos.RealMapName, "temp", "events.map"));
                 WANOK.LoadCancel(Map.MapInfos.RealMapName);
