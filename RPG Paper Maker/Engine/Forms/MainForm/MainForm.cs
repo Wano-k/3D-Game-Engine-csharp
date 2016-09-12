@@ -1035,7 +1035,8 @@ namespace RPG_Paper_Maker
 
         private void TreeMap_MouseDown(object sender, MouseEventArgs e)
         {
-            UpdateSelectedTreeNode(TreeMap.GetNodeAt(e.Location));
+            TreeNode node = TreeMap.GetNodeAt(e.Location);
+            if (node != null) UpdateSelectedTreeNode(node);
             WANOK.SelectedNode = TreeMap.SelectedNode;
             TreeMap.SelectedNode = null;
         }
@@ -1205,11 +1206,11 @@ namespace RPG_Paper_Maker
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     TreeNode node = TreeMap.SelectedNode.Nodes.Insert(0, dialog.GetMapName());
+                    node.ImageIndex = 1;
+                    node.SelectedImageIndex = 1;
                     TreeMap.ExpandAll();
                     node.Tag = TreeTag.CreateMap(dialog.GetMapName(), dialog.GetRealMapName());
                     TreeMap.SelectedNode = node;
-                    node.ImageIndex = 1;
-                    node.SelectedImageIndex = 1;
                     SaveTreeMap();
                 }
             }
@@ -1660,10 +1661,10 @@ namespace RPG_Paper_Maker
             WhenClosingAnyProject();
             if (Directory.Exists(dir))
             {
-                WANOK.ResetCancel();
                 WANOK.DialogProgressBar.SetValue(100);
                 Control.CloseProject();
                 SetTitle(dir);
+                WANOK.ResetCancel();
                 TreeMap.Nodes.Clear();
                 WANOK.LoadTree(TreeMap, Path.Combine(new string[] { WANOK.CurrentDir, "Content", "Datas", "Maps", "TreeMapDatas.rpmdatas" }));
                 TreeMap.ExpandAll();
@@ -1860,10 +1861,12 @@ namespace RPG_Paper_Maker
                 {
                     Control.DeleteAllTemp();
                 }
+                Control.DeleteAllCancelRedoTemp();
             }
             else if (WANOK.SelectedNode != null && ((TreeTag)WANOK.SelectedNode.Tag).IsMap)
             {
                 Control.DeleteTemp(((TreeTag)WANOK.SelectedNode.Tag).RealMapName);
+                Control.DeleteAllCancelRedoTemp();
             }
         }
 

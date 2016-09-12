@@ -64,7 +64,8 @@ namespace RPG_Paper_Maker
         {
             if (WANOK.CancelRedoIndex[Map.MapInfos.RealMapName] > 0)
             {
-                foreach (KeyValuePair<int[], object> entry in WANOK.CancelRedo[Map.MapInfos.RealMapName][WANOK.CancelRedoIndex[Map.MapInfos.RealMapName] - 1])
+                Dictionary<int[], object> dic = WANOK.LoadBinaryDatas<Dictionary<int[], object>>(Path.Combine(WANOK.MapsDirectoryPath, Map.MapInfos.RealMapName, "tempCancelRedo", (WANOK.CancelRedoIndex[Map.MapInfos.RealMapName] - 1) + ".temp"));
+                foreach (KeyValuePair<int[], object> entry in dic)
                 {
                     UndoRedoApplyChanges(entry.Key, entry.Value);
                 }
@@ -75,9 +76,10 @@ namespace RPG_Paper_Maker
 
         public void Redo()
         {
-            if (WANOK.CancelRedoIndex[Map.MapInfos.RealMapName] < WANOK.CancelRedo[Map.MapInfos.RealMapName].Count - 1)
+            if (WANOK.CancelRedoIndex[Map.MapInfos.RealMapName] < Directory.GetFiles(Path.Combine(WANOK.MapsDirectoryPath, Map.MapInfos.RealMapName, "tempCancelRedo")).Length - 1)
             {
-                foreach (KeyValuePair<int[], object> entry in WANOK.CancelRedo[Map.MapInfos.RealMapName][WANOK.CancelRedoIndex[Map.MapInfos.RealMapName] + 1])
+                Dictionary<int[], object> dic = WANOK.LoadBinaryDatas<Dictionary<int[], object>>(Path.Combine(WANOK.MapsDirectoryPath, Map.MapInfos.RealMapName, "tempCancelRedo", (WANOK.CancelRedoIndex[Map.MapInfos.RealMapName] + 1) + ".temp"));
+                foreach (KeyValuePair<int[], object> entry in dic)
                 {
                     UndoRedoApplyChanges(entry.Key, entry.Value);
                 }

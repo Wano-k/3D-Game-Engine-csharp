@@ -294,6 +294,7 @@ namespace RPG_Paper_Maker.Controls
             {
                 Directory.CreateDirectory(Path.Combine(WANOK.MapsDirectoryPath, RealMapName));
                 Directory.CreateDirectory(Path.Combine(WANOK.MapsDirectoryPath, RealMapName, "temp"));
+                Directory.CreateDirectory(Path.Combine(WANOK.MapsDirectoryPath, RealMapName, "tempCancelRedo"));
                 WANOK.SaveBinaryDatas(Model, Path.Combine(WANOK.MapsDirectoryPath, RealMapName, "infos.map"));
                 WANOK.SaveBinaryDatas(new Events(), Path.Combine(WANOK.MapsDirectoryPath, RealMapName, "events.map"));
             }

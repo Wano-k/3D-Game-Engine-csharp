@@ -104,6 +104,7 @@ namespace RPG_Paper_Maker.Controls
                                 Directory.CreateDirectory(Path.Combine(fullPath, "Content", "Pictures", "UI", "Bars"));
                                 Directory.CreateDirectory(Path.Combine(fullPath, "Content", "Datas", "Maps", "MAP0001"));
                                 Directory.CreateDirectory(Path.Combine(fullPath, "Content", "Datas", "Maps", "MAP0001", "temp"));
+                                Directory.CreateDirectory(Path.Combine(fullPath, "Content", "Datas", "Maps", "MAP0001", "tempCancelRedo"));
                                 WANOK.SaveBinaryDatas(new MapInfos(), Path.Combine(fullPath, "Content", "Datas", "Maps", "MAP0001","infos.map"));
                                 WANOK.SaveBinaryDatas(new Events(), Path.Combine(fullPath, "Content", "Datas", "Maps", "MAP0001", "events.map"));
                                 ProjectName = ProjectName.Trim();

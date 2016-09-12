@@ -62,7 +62,6 @@ namespace RPG_Paper_Maker
         public static System.Drawing.Color COLOR_BACKGROUND_PREVIEW_IMAGE = System.Drawing.Color.FromArgb(220, 220, 220);
 
         // CANCEL
-        public static Dictionary<string, List<Dictionary<int[], object>>> CancelRedo = new Dictionary<string, List<Dictionary<int[], object>>>();
         public static List<int[]> PortionsToAddCancel = new List<int[]>();
         public static Dictionary<string, int> CancelRedoIndex = new Dictionary<string, int>();
         public static bool CanStartCancel = true;
@@ -592,9 +591,19 @@ namespace RPG_Paper_Maker
         // CANCEL
         // -------------------------------------------------------------------
 
+        public static void DeleteAllCancelRedoTemp()
+        {
+            string[] dirPaths = Directory.GetDirectories(MapsDirectoryPath);
+            foreach (string dirPath in dirPaths)
+            {
+                string[] filePaths = Directory.GetFiles(Path.Combine(dirPath, "tempCancelRedo"));
+                foreach (string filePath in filePaths) File.Delete(filePath);
+            }
+        }
+
         public static void ResetCancel()
         {
-            CancelRedo = new Dictionary<string, List<Dictionary<int[], object>>>();
+            DeleteAllCancelRedoTemp();
             PortionsToAddCancel = new List<int[]>();
             CancelRedoIndex = new Dictionary<string, int>();
             CanStartCancel = true;
@@ -602,33 +611,27 @@ namespace RPG_Paper_Maker
 
         public static void CreateCancelMap(string mapName)
         {
-            CancelRedo[mapName] = new List<Dictionary<int[], object>>();
             CancelRedoIndex[mapName] = 0;
-            CancelRedo[mapName].Add(new Dictionary<int[], object>(new IntArrayComparer()));
+            SaveBinaryDatas(new Dictionary<int[], object>(new IntArrayComparer()), Path.Combine(MapsDirectoryPath, mapName, "tempCancelRedo", "0.temp"));
         }
 
         public static void CreateCancel(string mapName, bool flagOK = false)
         {
             if (flagOK || (CanStartCancel && (MapMouseManager.IsButtonDown(MouseButtons.Left) || KeyboardManager.IsButtonDown(Settings.KeyboardAssign.EditorDrawCursor) || MapMouseManager.IsButtonDown(MouseButtons.Right) || KeyboardManager.IsButtonDown(Settings.KeyboardAssign.EditorRemoveCursor))))
             {
-                int size = CancelRedo[mapName].Count;
+                int size = Directory.GetFiles(Path.Combine(MapsDirectoryPath, mapName, "tempCancelRedo")).Length;
 
-                int lim = -1;
                 for (int i = 0; i < size; i++)
                 {
-                    if (lim == -1 && i > CancelRedoIndex[mapName]) lim = i;
-                    if (lim != -1)
-                    {
-                        CancelRedo[mapName].RemoveAt(lim);
-                    }
+                    if (i > CancelRedoIndex[mapName]) Directory.Delete(Path.Combine(MapsDirectoryPath, mapName, "tempCancelRedo", i + ".temp"));
                 }
-                if (CancelRedo[mapName].Count == MAX_CANCEL)
+                if (Directory.GetFiles(Path.Combine(MapsDirectoryPath, mapName, "tempCancelRedo")).Length == MAX_CANCEL)
                 {
-                    CancelRedo[mapName].RemoveAt(0);
+                    Directory.Delete(Path.Combine(MapsDirectoryPath, mapName, "tempCancelRedo", "0.temp"));
                     CancelRedoIndex[mapName]--;
                 }
 
-                CancelRedo[mapName].Add(new Dictionary<int[], object>(new IntArrayComparer()));
+                SaveBinaryDatas(new Dictionary<int[], object>(new IntArrayComparer()), Path.Combine(MapsDirectoryPath, mapName, "tempCancelRedo", Directory.GetFiles(Path.Combine(MapsDirectoryPath, mapName, "tempCancelRedo")).Length + ".temp"));
                 CancelRedoIndex[mapName]++;
                 CanStartCancel = false;
             }
@@ -652,21 +655,23 @@ namespace RPG_Paper_Maker
             PortionsToAddCancel.Add(newPortion);
 
             // Checking the previous cancel portion
-            if (!CancelRedo[mapName][CancelRedoIndex[mapName] - 1].ContainsKey(newPortion))
+            Dictionary<int[], object> dic = LoadBinaryDatas<Dictionary<int[], object>>(Path.Combine(MapsDirectoryPath, mapName, "tempCancelRedo", (CancelRedoIndex[mapName] - 1) + ".temp"));
+            if (!dic.ContainsKey(newPortion))
             {
                 switch (kind)
                 {
                     case 0:
-                        CancelRedo[mapName][CancelRedoIndex[mapName] - 1][newPortion] = LoadPortionMap(mapName, portion[0], portion[1]);
+                        dic[newPortion] = LoadPortionMap(mapName, portion[0], portion[1]);
                         break;
                     case 1:
                         Events events = LoadEvents(mapName);
-                        CancelRedo[mapName][CancelRedoIndex[mapName] - 1][newPortion] = events.CompleteList.ContainsKey(portion) ? events.CompleteList[portion] : null;
+                        dic[newPortion] = events.CompleteList.ContainsKey(portion) ? events.CompleteList[portion] : null;
                         break;
                     case 2:
-                        CancelRedo[mapName][CancelRedoIndex[mapName] - 1][newPortion] = LoadMapInfos(mapName);
+                        dic[newPortion] = LoadMapInfos(mapName);
                         break;
                 }
+                SaveBinaryDatas(dic, Path.Combine(MapsDirectoryPath, mapName, "tempCancelRedo", (CancelRedoIndex[mapName] - 1) + ".temp"));
             }
         }
 
@@ -674,20 +679,22 @@ namespace RPG_Paper_Maker
         {
             for (int i = 0; i < PortionsToAddCancel.Count; i++)
             {
+                Dictionary<int[], object> dic = LoadBinaryDatas<Dictionary<int[], object>>(Path.Combine(MapsDirectoryPath, mapName, "tempCancelRedo", CancelRedoIndex[mapName] + ".temp"));
                 switch (PortionsToAddCancel[i][0])
                 {
                     case 0:
-                        CancelRedo[mapName][CancelRedoIndex[mapName]][PortionsToAddCancel[i]] = LoadPortionMap(mapName, PortionsToAddCancel[i][1], PortionsToAddCancel[i][2]);
+                        dic[PortionsToAddCancel[i]] = LoadPortionMap(mapName, PortionsToAddCancel[i][1], PortionsToAddCancel[i][2]);
                         break;
                     case 1:
                         Events events = LoadEvents(mapName);
                         int[] portion = new int[] { PortionsToAddCancel[i][1], PortionsToAddCancel[i][2] };
-                        CancelRedo[mapName][CancelRedoIndex[mapName]][PortionsToAddCancel[i]] = events.CompleteList.ContainsKey(portion) ? events.CompleteList[portion] : null;
+                        dic[PortionsToAddCancel[i]] = events.CompleteList.ContainsKey(portion) ? events.CompleteList[portion] : null;
                         break;
                     case 2:
-                        CancelRedo[mapName][CancelRedoIndex[mapName]][PortionsToAddCancel[i]] = LoadMapInfos(mapName);
+                        dic[PortionsToAddCancel[i]] = LoadMapInfos(mapName);
                         break;
                 }
+                SaveBinaryDatas(dic, Path.Combine(MapsDirectoryPath, mapName, "tempCancelRedo", CancelRedoIndex[mapName] + ".temp"));
             }
             PortionsToAddCancel.Clear();
         }
