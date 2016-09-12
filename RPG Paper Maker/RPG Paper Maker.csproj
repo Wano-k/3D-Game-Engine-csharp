@@ -125,6 +125,12 @@
     <Compile Include="Engine\CustomUserControls\InterpolationPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Engine\CustomUserControls\MainPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Engine\CustomUserControls\MainPanel.Designer.cs">
+      <DependentUpon>MainPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Engine\CustomUserControls\NTree.cs" />
     <Compile Include="Engine\CustomUserControls\PassagePicture.cs">
       <SubType>Component</SubType>
@@ -443,6 +449,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\CustomUserControls\ConditionsPanel.resx">
       <DependentUpon>ConditionsPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Engine\CustomUserControls\MainPanel.resx">
+      <DependentUpon>MainPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\CustomUserControls\TextBoxVariables.resx">
       <DependentUpon>TextBoxVariables.cs</DependentUpon>

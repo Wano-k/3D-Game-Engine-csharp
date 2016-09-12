@@ -29,7 +29,10 @@ namespace RPG_Paper_Maker
             {
                 foreach (KeyValuePair<int[], SystemEvent> entry in dictionary)
                 {
-                    AddSprite(entry.Key, entry.Value);
+                    if (WANOK.GetGeneralDrawType(entry.Value.GetCurrentPage().GraphicDrawType) == GeneralDrawtype.Sprite)
+                    {
+                        AddSprite(entry.Key, entry.Value);
+                    }
                 }
             }
         }

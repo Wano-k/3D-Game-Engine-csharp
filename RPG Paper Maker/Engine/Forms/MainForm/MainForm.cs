@@ -28,6 +28,7 @@ namespace RPG_Paper_Maker
         public InterpolationPictureBox PictureBoxSpecialTileset = new InterpolationPictureBox();
         public ImageComboBox ComboBoxSpecialTileset1 = new ImageComboBox();
         public OpenFileDialog OpenProjectDialog = new OpenFileDialog();
+        public MainPanel FormMainPanel = new MainPanel();
 
         public string Version = "0.1.0.0";
         public string TitleName { get { return "RPG Paper Maker " + Version; } }
@@ -40,7 +41,6 @@ namespace RPG_Paper_Maker
         public bool IsInItemHeightPixel = false;
         public bool IsInItemHeightSquareMountain = false;
         public bool IsInItemHeightPixelMountain = false;
-
 
 
         // -------------------------------------------------------------------
@@ -73,6 +73,9 @@ namespace RPG_Paper_Maker
             {
                 AddToRecentList(listRecent[i]);
             }
+            FormMainPanel.Dock = DockStyle.Fill;
+            MainPanel.BackColor = SystemColors.Control;
+            MainPanel.Controls.Add(FormMainPanel);
 
             // Updating special infos
             Text = TitleName;
@@ -1030,6 +1033,13 @@ namespace RPG_Paper_Maker
 
         // Drag & drop
 
+        private void TreeMap_MouseDown(object sender, MouseEventArgs e)
+        {
+            UpdateSelectedTreeNode(TreeMap.GetNodeAt(e.Location));
+            WANOK.SelectedNode = TreeMap.SelectedNode;
+            TreeMap.SelectedNode = null;
+        }
+
         private void TreeMap_ItemDrag(object sender, ItemDragEventArgs e)
         {
             DoDragDrop(e.Item, DragDropEffects.Move);
@@ -1060,8 +1070,10 @@ namespace RPG_Paper_Maker
                     targetNode.Parent.Nodes.Insert(targetNode.Parent.Nodes.IndexOf(targetNode) + 1, draggedNode);
                     targetNode.Parent.Expand();
                 }
+                TreeMap.SelectedNode = draggedNode;
                 SaveTreeMap();
             }
+            UpdateSelectedTreeNode(draggedNode);
         }
 
         public void UpdateTreeMapKeyUp()
@@ -1079,6 +1091,7 @@ namespace RPG_Paper_Maker
                         movingNode.Remove();
                         parentNode.Nodes.Insert(index - 1, movingNode);
                         TreeMap.SelectedNode = movingNode;
+                        UpdateSelectedTreeNode(TreeMap.SelectedNode);
                     }
                 }
             }
@@ -1100,6 +1113,7 @@ namespace RPG_Paper_Maker
                         movingNode.Remove();
                         parentNode.Nodes.Insert(index + 1, movingNode);
                         TreeMap.SelectedNode = movingNode;
+                        UpdateSelectedTreeNode(TreeMap.SelectedNode);
                     }
                 }
             }
@@ -1111,6 +1125,7 @@ namespace RPG_Paper_Maker
         {
             if (e.Button == MouseButtons.Right)
             {
+                UpdateSelectedTreeNode(e.Node);
                 TreeMap.SelectedNode = e.Node;
 
                 // Enable/disable
@@ -1133,29 +1148,35 @@ namespace RPG_Paper_Maker
 
         private void TreeMap_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            TreeTag previousTag = (TreeTag)WANOK.SelectedNode.Tag;
-            TreeTag tag = (TreeTag)e.Node.Tag;
+            UpdateSelectedTreeNode(e.Node);
 
-            // If the previous node selected was a map and have been saved, we can delete temp files
-            if (previousTag.IsMap && !WANOK.ListMapToSave.Contains(previousTag.RealMapName))
+            if (WANOK.SelectedNode != e.Node)
             {
-                Control.DeleteTemp(previousTag.RealMapName);
-            }
-            if (tag.IsMap && !WANOK.ListMapToSave.Contains(tag.RealMapName))
-            {
-                Control.DeleteTemp(tag.RealMapName);
-            }
-            WANOK.SelectedNode = e.Node;
+                // Tags
+                TreeTag previousTag = (TreeTag)WANOK.SelectedNode.Tag;
+                TreeTag tag = (TreeTag)e.Node.Tag;
 
-            // Reload map if selecting a new map
-            if (tag.IsMap)
-            {
-                ShowMapEditor(true);
-                ReLoadMap(tag.RealMapName);
-            }
-            else
-            {
-                ShowMapEditor(false);
+                // If the previous node selected was a map and have been saved, we can delete temp files
+                if (previousTag.IsMap && !WANOK.ListMapToSave.Contains(previousTag.RealMapName))
+                {
+                    Control.DeleteTemp(previousTag.RealMapName);
+                }
+                if (tag.IsMap && !WANOK.ListMapToSave.Contains(tag.RealMapName))
+                {
+                    Control.DeleteTemp(tag.RealMapName);
+                }
+                WANOK.SelectedNode = e.Node;
+
+                // Reload map if selecting a new map
+                if (tag.IsMap)
+                {
+                    ShowMapEditor(true);
+                    ReLoadMap(tag.RealMapName);
+                }
+                else
+                {
+                    ShowMapEditor(false);
+                }
             }
         }
 
@@ -1496,6 +1517,7 @@ namespace RPG_Paper_Maker
         public void ShowProjectContain(bool b)
         {
             SplitContainerMain.Visible = b;
+            FormMainPanel.Visible = !b;
             SplitContainerTree.Visible = b;
             MapEditor.Visible = b;
             PanelSpecialMenu.Visible = b;
@@ -1651,6 +1673,8 @@ namespace RPG_Paper_Maker
                 ShowProjectContain(true);
                 EnableGame();
                 ShowMapEditor(false);
+                TreeMap.Select();
+                TreeMap.Focus();
             }
             else
             {
@@ -1665,12 +1689,46 @@ namespace RPG_Paper_Maker
 
         public void AddToRecentList(string path, int index = -1)
         {
+            // Item drop down open project
             if (index != -1) ItemOpenProject.DropDownItems.RemoveAt(index + 1);
             ToolStripItem item = ItemOpenProject.DropDownItems.Add(path);
             ItemOpenProject.DropDownItems.Insert(1, item);
             if (ItemOpenProject.DropDownItems.Count-1 > EngineSettings.MAX_RECENT_SIZE) ItemOpenProject.DropDownItems.RemoveAt(ItemOpenProject.DropDownItems.Count - 1);
             item.ForeColor = SystemColors.ControlLightLight;
             item.Click += delegate (object sender, EventArgs e){ OpenProject(Path.GetFileName(path), path); };
+
+            // Item main panel 
+            if (index != -1)
+            {
+                FormMainPanel.tableLayoutPanelRecentProject.Controls.Remove(FormMainPanel.tableLayoutPanelRecentProject.GetControlFromPosition(0, index));
+                FormMainPanel.tableLayoutPanelRecentProject.RowStyles.RemoveAt(index);
+                FormMainPanel.tableLayoutPanelRecentProject.RowCount--;
+                foreach (Control ExistControl in FormMainPanel.tableLayoutPanelRecentProject.Controls)
+                {
+                    if (FormMainPanel.tableLayoutPanelRecentProject.GetRow(ExistControl) > index) FormMainPanel.tableLayoutPanelRecentProject.SetRow(ExistControl, FormMainPanel.tableLayoutPanelRecentProject.GetRow(ExistControl) - 1);
+                }
+            }
+            LinkLabel label = new LinkLabel();
+            label.Text = Path.GetFileName(item.Text);
+            label.Anchor = AnchorStyles.Left;
+            label.AutoSize = true;
+            label.LinkColor = Color.CadetBlue;
+            label.ActiveLinkColor = Color.RoyalBlue;
+            label.VisitedLinkColor = Color.RoyalBlue;
+            label.LinkClicked += delegate (object sender, LinkLabelLinkClickedEventArgs e) { OpenProject(Path.GetFileName(path), path); };
+            foreach (Control ExistControl in FormMainPanel.tableLayoutPanelRecentProject.Controls)
+            {
+                FormMainPanel.tableLayoutPanelRecentProject.SetRow(ExistControl, FormMainPanel.tableLayoutPanelRecentProject.GetRow(ExistControl) + 1);
+            }
+            FormMainPanel.tableLayoutPanelRecentProject.Controls.Add(label, 0, 0);
+            FormMainPanel.tableLayoutPanelRecentProject.RowStyles.Add(new RowStyle(SizeType.Absolute, 25));
+            FormMainPanel.tableLayoutPanelRecentProject.RowCount++;
+            if (ItemOpenProject.DropDownItems.Count - 1 > EngineSettings.MAX_RECENT_SIZE)
+            {
+                FormMainPanel.tableLayoutPanelRecentProject.Controls.RemoveAt(FormMainPanel.tableLayoutPanelRecentProject.RowCount - 1);
+                FormMainPanel.tableLayoutPanelRecentProject.RowStyles.RemoveAt(FormMainPanel.tableLayoutPanelRecentProject.RowCount - 1);
+                FormMainPanel.tableLayoutPanelRecentProject.RowCount--;
+            }
         }
 
         // -------------------------------------------------------------------
@@ -1708,6 +1766,29 @@ namespace RPG_Paper_Maker
             }
 
             TreeMap.Nodes.Remove(dir);
+        }
+
+        // -------------------------------------------------------------------
+        // ChangeBackColorTreeNode
+        // -------------------------------------------------------------------
+
+        public void ChangeBackColorTreeNode(TreeNodeCollection nodes)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                node.BackColor = SystemColors.Window;
+                node.ForeColor = SystemColors.WindowText;
+                ChangeBackColorTreeNode(node.Nodes);
+            }
+        }
+    
+        public void UpdateSelectedTreeNode(TreeNode node)
+        {
+            // Set background color of selected item
+            ChangeBackColorTreeNode(TreeMap.Nodes);
+            node.BackColor = SystemColors.Highlight;
+            node.ForeColor = SystemColors.HighlightText;
+            TreeMap.Refresh();
         }
 
         // -------------------------------------------------------------------
