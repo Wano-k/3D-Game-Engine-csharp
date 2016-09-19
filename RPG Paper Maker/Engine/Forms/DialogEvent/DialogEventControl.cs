@@ -75,6 +75,5 @@ namespace RPG_Paper_Maker
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
             }
         }
-
     }
 }

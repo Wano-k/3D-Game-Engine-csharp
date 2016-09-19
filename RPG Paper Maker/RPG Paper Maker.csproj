@@ -162,6 +162,9 @@
     <Compile Include="Engine\CustomUserControls\TextBoxGraphic.Designer.cs">
       <DependentUpon>TextBoxGraphic.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\CustomUserControls\TreeViewMap.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Engine\Enums\ComparaisonMeasure.cs" />
     <Compile Include="Engine\Enums\EventCommandKind.cs" />
     <Compile Include="Engine\Enums\EventTrigger.cs" />

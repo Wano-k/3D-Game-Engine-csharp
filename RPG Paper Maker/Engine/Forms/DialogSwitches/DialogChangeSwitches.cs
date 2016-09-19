@@ -10,8 +10,10 @@ using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
-    public partial class DialogChangeSwitches : Form
+    public partial class DialogChangeSwitches : ModelForm
     {
+        EventCommandOther Model;
+
 
         // -------------------------------------------------------------------
         // Constructor
@@ -20,13 +22,32 @@ namespace RPG_Paper_Maker
         public DialogChangeSwitches(EventCommandOther model)
         {
             InitializeComponent();
-
+            Model = (EventCommandOther)model.CreateCopy();
             // Paint groupBox
             groupBox1.Paint += MainForm.PaintBorderGroupBox;
             groupBox2.Paint += MainForm.PaintBorderGroupBox;
 
             // Updating infos
-            textBoxVariables1.InitializeSwitch((int)model.Command[1]);
+            textBoxVariables1.InitializeSwitch((int)Model.Command[1]);
+        }
+
+        // -------------------------------------------------------------------
+        // GetModel
+        // -------------------------------------------------------------------
+
+        public override EventCommand GetModel()
+        {
+            return Model;
+        }
+
+        // -------------------------------------------------------------------
+        // EVENTS
+        // -------------------------------------------------------------------
+
+        private void ok_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 }

@@ -32,7 +32,7 @@ namespace RPG_Paper_Maker
 
         public EventCommandConditions(NTree<List<object>> tree)
         {
-            EventCommandKind = EventCommandKind.None;
+            EventCommandKind = EventCommandKind.Conditions;
             Tree = tree;
         }
 
@@ -87,7 +87,7 @@ namespace RPG_Paper_Maker
 
         public override string ToString()
         {
-            return "";
+            return "Conditions - TODO";
         }
     }
 

@@ -37,7 +37,7 @@
             this.SplitContainerTree = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanelTileset = new System.Windows.Forms.TableLayoutPanel();
             this.PanelSpecialMenu = new System.Windows.Forms.FlowLayoutPanel();
-            this.TreeMap = new System.Windows.Forms.TreeView();
+            this.TreeMap = new TreeViewMap();
             this.ImageListTreeMap = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.ItemView = new System.Windows.Forms.ToolStripMenuItem();
@@ -1151,7 +1151,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.SplitContainer SplitContainerMain;
         private System.Windows.Forms.SplitContainer SplitContainerTree;
-        private System.Windows.Forms.TreeView TreeMap;
+        private TreeViewMap TreeMap;
         private MapEditor MapEditor;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;

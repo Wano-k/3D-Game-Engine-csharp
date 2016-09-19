@@ -1037,7 +1037,7 @@ namespace RPG_Paper_Maker
         {
             TreeNode node = TreeMap.GetNodeAt(e.Location);
             if (node != null) UpdateSelectedTreeNode(node);
-            WANOK.SelectedNode = TreeMap.SelectedNode;
+            if (TreeMap.SelectedNode != null) WANOK.SelectedNode = TreeMap.SelectedNode;
             TreeMap.SelectedNode = null;
         }
 
@@ -1081,6 +1081,7 @@ namespace RPG_Paper_Maker
         {
             if (TreeMap.Visible)
             {
+                /*
                 TreeNode movingNode = TreeMap.SelectedNode;
                 TreeNode parentNode = movingNode.Parent;
                 if (parentNode != null)
@@ -1095,6 +1096,7 @@ namespace RPG_Paper_Maker
                         UpdateSelectedTreeNode(TreeMap.SelectedNode);
                     }
                 }
+                */
             }
         }
 
@@ -1102,6 +1104,7 @@ namespace RPG_Paper_Maker
         {
             if (TreeMap.Visible)
             {
+                /*
                 TreeNode movingNode = TreeMap.SelectedNode;
                 TreeNode parentNode = movingNode.Parent;
 
@@ -1117,6 +1120,7 @@ namespace RPG_Paper_Maker
                         UpdateSelectedTreeNode(TreeMap.SelectedNode);
                     }
                 }
+                */
             }
         }
 
@@ -1904,15 +1908,23 @@ namespace RPG_Paper_Maker
 
         public void ReLoadMap(string mapName)
         {
-            MapEditor.ReLoadMap(mapName);
-            TilesetSelectorPicture.LoadTexture(MapEditor.GetMapTileset().Graphic);
-            MapEditor.SetCurrentTextureBasic();
-            TilesetSelectorPicture.SetCurrentTextureBasic();
-            TilesetSelectorPicture.Refresh();
-            MapEditor.SetCurrentSpecialItemId(-1);
+            try
+            {
+                MapEditor.ReLoadMap(mapName);
+                TilesetSelectorPicture.LoadTexture(MapEditor.GetMapTileset().Graphic);
+                MapEditor.SetCurrentTextureBasic();
+                TilesetSelectorPicture.SetCurrentTextureBasic();
+                TilesetSelectorPicture.Refresh();
+                MapEditor.SetCurrentSpecialItemId(-1);
 
-            if (CanShowSpecialTileset()) ShowSpecialTileset();
-            else HideSpecialTileset();
+                if (CanShowSpecialTileset()) ShowSpecialTileset();
+                else HideSpecialTileset();
+            }
+            catch(Exception e)
+            {
+
+            }
+            
         }
 
         // -------------------------------------------------------------------

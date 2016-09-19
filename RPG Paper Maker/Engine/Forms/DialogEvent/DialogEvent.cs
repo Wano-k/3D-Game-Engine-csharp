@@ -24,6 +24,7 @@ namespace RPG_Paper_Maker
         private string CurrentMethodString = "";
         protected TableLayoutPanel TableLayoutListCommandsPanel = new TableLayoutPanel();
         private Label ListCommandsSelectedLabel = null;
+        private bool DontLooseFocus = false;
 
 
         protected override CreateParams CreateParams
@@ -252,14 +253,60 @@ namespace RPG_Paper_Maker
         }
 
         // -------------------------------------------------------------------
+        // GetStringEventCommand
+        // -------------------------------------------------------------------
+
+        public string GetStringEventCommand(EventCommandKind command)
+        {
+            switch (command)
+            {
+                case EventCommandKind.None:
+                    return "";
+                case EventCommandKind.ShowMessage:
+                    return "Show message...";
+                case EventCommandKind.ShowChoices:
+                    return "Show choices...";
+                case EventCommandKind.InputNumber:
+                    return "Input number...";
+                case EventCommandKind.ChangeWindowOptions:
+                    return "Change window options...";
+                case EventCommandKind.ChangeSwitches:
+                    return "Change switches...";
+                case EventCommandKind.Conditions:
+                    return "Conditions...";
+                default:
+                    return "";
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // GetDialogEventCommand
+        // -------------------------------------------------------------------
+
+        public Form GetDialogEventCommand(EventCommand eventCommand)
+        {
+            switch (eventCommand.EventCommandKind)
+            {
+                case EventCommandKind.None:
+                    return null;
+                case EventCommandKind.ChangeSwitches:
+                    return new DialogChangeSwitches((EventCommandOther)eventCommand);
+                case EventCommandKind.Conditions:
+                    return new DialogConditions((EventCommandConditions)eventCommand);
+                default:
+                    return null;
+            }
+        }
+
+        // -------------------------------------------------------------------
         // GenerateListCommandsPanel
         // -------------------------------------------------------------------
 
         public void GenerateListCommandsPanel()
         {
             // IA sorting list
-            List<EventCommandKind> list = EventCommandKind.GetValues();
-            list.Sort((a, b) => string.Compare(a.ToString(), b.ToString(), true));
+            List<EventCommandKind> list = Enum.GetValues(typeof(EventCommandKind)).Cast<EventCommandKind>().ToList();
+            list.Sort((a, b) => string.Compare(GetStringEventCommand(a), GetStringEventCommand(b), true));
             List<EventCommandKind> sortedList = new List<EventCommandKind>();
             foreach (EventCommandKind ev in list)
             {
@@ -295,7 +342,7 @@ namespace RPG_Paper_Maker
                 {
                     Label label = new Label();
                     label.Dock = DockStyle.Fill;
-                    label.Text = value.ToString();
+                    label.Text = GetStringEventCommand(value);
                     label.AutoSize = true;
                     label.Margin = new Padding(0);
                     label.Padding = new Padding(0);
@@ -329,15 +376,58 @@ namespace RPG_Paper_Maker
         {
             if (ListCommandsSelectedLabel != null)
             {
-                Form dialog = ((EventCommandKind)ListCommandsSelectedLabel.Tag).GetDialog();
-                if (dialog == null) WANOK.ShowActionMessage();
+                EventCommandKind kind = (EventCommandKind)ListCommandsSelectedLabel.Tag;
+                EventCommand eventCommand = null;
+                switch (kind)
+                {
+                    case EventCommandKind.None:
+                        eventCommand = new EventCommandOther();
+                        break;
+                    case EventCommandKind.ChangeSwitches:
+                        eventCommand = new EventCommandOther(EventCommandKind.ChangeSwitches, new List<object>(new object[] { 0, 1, 0 }));
+                        break;
+                    case EventCommandKind.Conditions:
+                        eventCommand = new EventCommandConditions();
+                        break;
+                    default:
+                        break;
+                }
+                ModelForm dialog = (ModelForm)GetDialogEventCommand(eventCommand);
+                if (kind == EventCommandKind.None) WANOK.ShowActionMessage();
                 else
                 {
+                    DontLooseFocus = true;
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
-
+                        ((NTree<EventCommand>)CommandsView.SelectedNode.Tag).Data = dialog.GetModel();
+                        CommandsView.SelectedNode.Text = WANOK.ListBeginning + dialog.GetModel().ToString();
+                        TreeNode node = CommandsView.Nodes.Add(WANOK.ListBeginning);
+                        NTree<EventCommand> commandTree = Control.Model.GetCurrentPage().CommandsTree.AddChildData(new EventCommandOther());
+                        node.Tag = commandTree;
+                        UpdateTreeCommandsSelection();
                     }
+                    DontLooseFocus = false;
                 }
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // UpdateTreeCommandsSelection
+        // -------------------------------------------------------------------
+
+        public void UpdateTreeCommandsSelection()
+        {
+            CurrentMethodString = ((NTree<EventCommand>)CommandsView.SelectedNode.Tag).Data.ToString();
+            if (((NTree<EventCommand>)CommandsView.SelectedNode.Tag).Data.EventCommandKind == EventCommandKind.None)
+            {
+                CommandUnderscoreTimer.Start();
+                GenerateListCommandsPanel();
+                TableLayoutListCommandsPanel.Location = new Point(CommandsView.SelectedNode.Bounds.X + 30, CommandsView.SelectedNode.Bounds.Y + CommandsView.SelectedNode.Bounds.Height);
+            }
+            else
+            {
+                StopUnderscoreTimer();
+                TableLayoutListCommandsPanel.Hide();
             }
         }
 
@@ -451,57 +541,77 @@ namespace RPG_Paper_Maker
             buttonDeletePage.Enabled = tabControl1.TabPages.Count > 1;
         }
 
+        private void CommandsView_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+        {
+            StopUnderscoreTimer();
+            TableLayoutListCommandsPanel.Hide();
+        }
+
         private void CommandsView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             UnLightAll();
             HightlightAllChildren(CommandsView.SelectedNode, SystemColors.Highlight, SystemColors.HighlightText);
-
-            CurrentMethodString = ((NTree<EventCommand>)CommandsView.SelectedNode.Tag).Data.ToString();
-            if (((NTree<EventCommand>)CommandsView.SelectedNode.Tag).Data.EventCommandKind == EventCommandKind.None)
-            {
-                CommandUnderscoreTimer.Start();
-                GenerateListCommandsPanel();
-                TableLayoutListCommandsPanel.Location = new Point(CommandsView.SelectedNode.Bounds.X + 30, CommandsView.SelectedNode.Bounds.Y + CommandsView.SelectedNode.Bounds.Height);
-            }
-            else
-            {
-                StopUnderscoreTimer();
-                TableLayoutListCommandsPanel.Hide();
-            }
+            UpdateTreeCommandsSelection();
         }
 
         private void CommandsView_LostFocus(object sender, EventArgs e)
         {
-            StopUnderscoreTimer();
-            TableLayoutListCommandsPanel.Hide();
-            UnLightAll();
-            CommandsView.SelectedNode = null;
+            if (!DontLooseFocus)
+            {
+                CurrentMethodString = "";
+                if (((NTree<EventCommand>)CommandsView.SelectedNode.Tag).Data.EventCommandKind == EventCommandKind.None) IsUnderScoreDisplayed = true;
+                StopUnderscoreTimer();
+                TableLayoutListCommandsPanel.Hide();
+                UnLightAll();
+
+                CommandsView.SelectedNode = null;
+            }
         }
 
         private void CommandsView_KeyDown(object sender, KeyEventArgs e)
         {
-            if (((NTree<EventCommand>)CommandsView.SelectedNode.Tag).Data.EventCommandKind == EventCommandKind.None)
-            {
-                // Setting the text written
-                int k = (int)e.KeyCode;
-                if (k == 13) OpenLabelDialogCommand();
-                else
+            if (CommandsView.SelectedNode != null){
+                if (((NTree<EventCommand>)CommandsView.SelectedNode.Tag).Data.EventCommandKind == EventCommandKind.None)
                 {
-                    if (k >= 65 && k <= 90) CurrentMethodString += e.KeyCode.ToString();
-                    else if (k == 32) CurrentMethodString += " ";
-                    else if (k == 8 && CurrentMethodString.Length > 0) CurrentMethodString = CurrentMethodString.Substring(0, CurrentMethodString.Length - 1);
-                    if (CurrentMethodString.Length > 0)
+                    // Setting the text written
+                    int k = (int)e.KeyCode;
+                    if (k != 13)
                     {
-                        CurrentMethodString = CurrentMethodString.ToLower();
-                        CurrentMethodString = CurrentMethodString.First().ToString().ToUpper() + CurrentMethodString.Substring(1);
-                    }
-                    CommandsView.SelectedNode.Text = WANOK.ListBeginning + CurrentMethodString + (IsUnderScoreDisplayed ? "_" : "");
+                        if (k >= 65 && k <= 90) CurrentMethodString += e.KeyCode.ToString();
+                        else if (k == 32) CurrentMethodString += " ";
+                        else if (k == 8 && CurrentMethodString.Length > 0) CurrentMethodString = CurrentMethodString.Substring(0, CurrentMethodString.Length - 1);
+                        if (CurrentMethodString.Length > 0)
+                        {
+                            CurrentMethodString = CurrentMethodString.ToLower();
+                            CurrentMethodString = CurrentMethodString.First().ToString().ToUpper() + CurrentMethodString.Substring(1);
+                        }
+                        CommandsView.SelectedNode.Text = WANOK.ListBeginning + CurrentMethodString + (IsUnderScoreDisplayed ? "_" : "");
 
-                    // Displaying IA research 
-                    GenerateListCommandsPanel();
-                    TableLayoutListCommandsPanel.Show();
+                        // Displaying IA research 
+                        GenerateListCommandsPanel();
+                        TableLayoutListCommandsPanel.Show();
+                    }
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
                 }
-                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void CommandsView_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (CommandsView.SelectedNode != null)
+            {
+                if (((NTree<EventCommand>)CommandsView.SelectedNode.Tag).Data.EventCommandKind == EventCommandKind.None)
+                {
+                    // Setting the text written
+                    int k = (int)e.KeyCode;
+                    if (k == 13)
+                    {
+                        OpenLabelDialogCommand();
+                    }
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
             }
         }
 
@@ -533,10 +643,12 @@ namespace RPG_Paper_Maker
         private void CommandsView_DoubleClick(object sender, EventArgs e)
         {
             DialogCommands dialog = new DialogCommands();
+            DontLooseFocus = true;
             if (dialog.ShowDialog() == DialogResult.OK)
             {
 
             }
+            DontLooseFocus = false;
         }
     }
 }

@@ -35,6 +35,7 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.radioButtonWithGroup5 = new RPG_Paper_Maker.RadioButtonWithGroup();
             this.radioButtonWithGroup4 = new RPG_Paper_Maker.RadioButtonWithGroup();
             this.radioButtonWithGroup3 = new RPG_Paper_Maker.RadioButtonWithGroup();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -46,7 +47,6 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.radioButtonWithGroup5 = new RPG_Paper_Maker.RadioButtonWithGroup();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -99,6 +99,7 @@
             this.ok.TabIndex = 0;
             this.ok.Text = "Ok";
             this.ok.UseVisualStyleBackColor = true;
+            this.ok.Click += new System.EventHandler(this.ok_Click);
             // 
             // cancel
             // 
@@ -157,6 +158,19 @@
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel6.Size = new System.Drawing.Size(238, 29);
             this.tableLayoutPanel6.TabIndex = 0;
+            // 
+            // radioButtonWithGroup5
+            // 
+            this.radioButtonWithGroup5.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.radioButtonWithGroup5.AutoSize = true;
+            this.radioButtonWithGroup5.GroupName = "\"operation\"";
+            this.radioButtonWithGroup5.Location = new System.Drawing.Point(170, 6);
+            this.radioButtonWithGroup5.Name = "radioButtonWithGroup5";
+            this.radioButtonWithGroup5.Size = new System.Drawing.Size(52, 17);
+            this.radioButtonWithGroup5.TabIndex = 7;
+            this.radioButtonWithGroup5.TabStop = true;
+            this.radioButtonWithGroup5.Text = "Invert";
+            this.radioButtonWithGroup5.UseVisualStyleBackColor = true;
             // 
             // radioButtonWithGroup4
             // 
@@ -294,19 +308,6 @@
             this.label1.Size = new System.Drawing.Size(16, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "to";
-            // 
-            // radioButtonWithGroup5
-            // 
-            this.radioButtonWithGroup5.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.radioButtonWithGroup5.AutoSize = true;
-            this.radioButtonWithGroup5.GroupName = "\"operation\"";
-            this.radioButtonWithGroup5.Location = new System.Drawing.Point(170, 6);
-            this.radioButtonWithGroup5.Name = "radioButtonWithGroup5";
-            this.radioButtonWithGroup5.Size = new System.Drawing.Size(52, 17);
-            this.radioButtonWithGroup5.TabIndex = 7;
-            this.radioButtonWithGroup5.TabStop = true;
-            this.radioButtonWithGroup5.Text = "Invert";
-            this.radioButtonWithGroup5.UseVisualStyleBackColor = true;
             // 
             // DialogChangeSwitches
             // 

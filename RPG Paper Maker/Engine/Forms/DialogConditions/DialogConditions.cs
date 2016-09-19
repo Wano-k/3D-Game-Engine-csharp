@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace RPG_Paper_Maker
 {
-    public partial class DialogConditions : Form
+    public partial class DialogConditions : ModelForm
     {
-        public EventCommandConditions Model;
+        private EventCommandConditions Model;
 
         protected override CreateParams CreateParams
         {
@@ -36,6 +36,15 @@ namespace RPG_Paper_Maker
             Model = (EventCommandConditions)conditions.CreateCopy();
 
             conditionsPanel.InitializeListParameters(Model.Tree);
+        }
+
+        // -------------------------------------------------------------------
+        // GetModel
+        // -------------------------------------------------------------------
+
+        public override EventCommand GetModel()
+        {
+            return Model;
         }
 
         // -------------------------------------------------------------------

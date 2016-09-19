@@ -18,6 +18,11 @@ namespace RPG_Paper_Maker
         public abstract void InitializeParameters(object[] value, List<object> others);
     }
 
+    public abstract class ModelForm : Form
+    {
+        public abstract EventCommand GetModel();
+    }
+
     [Serializable]
     public abstract class SuperListItem
     {
