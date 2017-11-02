@@ -618,7 +618,7 @@ namespace RPG_Paper_Maker
         private void CommandUnderscoreTimer_Tick(object sender, EventArgs e)
         {
             if (!IsUnderScoreDisplayed) CommandsView.SelectedNode.Text = WANOK.ListBeginning + CurrentMethodString + "_";
-            else CommandsView.SelectedNode.Text = CommandsView.SelectedNode.Text = WANOK.ListBeginning + CurrentMethodString;
+            else CommandsView.SelectedNode.Text = WANOK.ListBeginning + CurrentMethodString;
             IsUnderScoreDisplayed = !IsUnderScoreDisplayed;
         }
 
