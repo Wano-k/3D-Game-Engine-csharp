@@ -857,7 +857,10 @@ namespace RPG_Paper_Maker
             switch (DrawMode)
             {
                 case DrawMode.Pencil:
-                    if (isMouse) if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, EraseFloor);
+                    if (isMouse) 
+                    {
+                        if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, EraseFloor); 
+                    }
                     else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, EraseFloor);
                     EraseFloor(coords);
                     break;
@@ -1081,7 +1084,10 @@ namespace RPG_Paper_Maker
             {
                 case DrawMode.Pencil:
 
-                    if (isMouse) if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, EraseSprite);
+                    if (isMouse) 
+                    {
+                        if (PreviousMouseCoords != null) TraceLine(PreviousMouseCoords, coords, EraseSprite);
+                    }
                     else if (PreviousCursorCoords != null) TraceLine(PreviousCursorCoords, coords, EraseSprite);
                     EraseSprite(coords);
                     break;
